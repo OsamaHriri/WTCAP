@@ -6,38 +6,20 @@ function ul(index) {
     }
 }
 
-function dodrop(event) {
-    var dt = event.dataTransfer;
-    var files = dt.files;
-
-    var count = files.length;
-    output("File Count: " + count + "\n");
-
-    for (var i = 0; i < files.length; i++) {
-        output(" File " + i + ":\n(" + (typeof files[i]) + ") : <" + files[i] + " > " +
-            files[i].name + " " + files[i].size + "\n");
-    }
-}
-
-function output(text) {
-    document.getElementById("output").textContent += text;
-    //dump(text);
-}
-
 var termclick = false;
 
-function termclicked() {
-    var term = document.getElementById("term");
+function termclicked(var_id) {
+    var term = document.getElementById(var_id);
     term.style.color = "darkgreen";
     termclick = true
 }
 
-function createDIV() {
+function createDIV(var_id) {
     if (!termclick) {
-        var term = document.getElementById("term");
+        var term = document.getElementById(var_id);
         term.style.color = "grey";
         // update the div's location 
-        var divElement = document.createElement("DIV");
+        var divElement = document.getElementById("tagsdiv");
         // a list of tags we want to show the user (add "suggestions" for terms that were tagged before)
         var list = ["ايجابي", "سلبي", "انسان", "حيوان"];
         var size = list.length;
@@ -54,14 +36,17 @@ function createDIV() {
             divElement.appendChild(label);
             divElement.appendChild(checkbox);
         }
-        divElement.className = "myDivClass";
         document.body.appendChild(divElement);
+        var text = term.innerText;
+        var dif = document.getElementById("difdiv")
+            // add the definition you get from osama's python
+
     }
 }
 
-function resethover() {
+function resethover(var_id) {
     if (!termclick) {
-        var term = document.getElementById("term");
+        var term = document.getElementById(var_id);
         term.style.color = "black";
         var div = document.getElementsByTagName('DIV'),
             i;
