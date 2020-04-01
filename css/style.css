@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800");
+:root {
+    --underline-height: 0.5em;
+    --transition-duration: 0.5s;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    background: whitesmoke;
+    min-height: 100vh;
+    background: #ddd;
+}
+
+nav {
+    position: relative;
+    white-space: nowrap;
+    background: white;
+    padding: var(--underline-height) 0;
+    box-shadow: 0 1em 2em rgba(0, 0, 0, 0.05);
+    direction: rtl;
+}
+
+.underline {
+    display: block;
+    position: absolute;
+    z-index: 0;
+    bottom: 0;
+    right: 0;
+    height: var(--underline-height);
+    width: 20%;
+    background: black;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    -webkit-transition: -webkit-transform var(--transition-duration) ease-in-out;
+    transition: -webkit-transform var(--transition-duration) ease-in-out;
+    border-radius: 100% 100% 0 0;
+}
+
+.underline:nth-child(1) {
+    background: yellow;
+    -webkit-transition: calc(var(--transition-duration) * 0.8);
+    transition: calc(var(--transition-duration) * 0.8);
+}
+
+.underline:nth-child(2) {
+    background: cyan;
+    -webkit-transition: calc(var(--transition-duration) * 1.2);
+    transition: calc(var(--transition-duration) * 1.2);
+}
+
+.underline:nth-child(3) {
+    background: magenta;
+}
+
+.navbar {
+    text-decoration: none;
+    color: black;
+}
+
+.navbar:hover {
+    color: gray;
+}
+
+a {
+    display: inline-block;
+    z-index: 10;
+    width: 20%;
+    padding: 1em 0;
+    text-align: center;
+    cursor: pointer;
+}
+
+#main {
+    margin-left: 150px;
+    margin-right: 200px;
+}
+
+#output {
+    min-height: 200px;
+    white-space: pre;
+    border: 1px solid black;
+    width: 40%;
+    margin-left: 200px;
+}
+
+#uploader {
+    width: 300px;
+    height: 200px;
+    background: #f4b342;
+    padding: 10px;
+}
+
+#uploader.highlight {
+    background: #ff0;
+}
+
+#uploader.disabled {
+    background: #aaa;
+}
+
+#poem {
+    direction: rtl;
+    font-size: large;
+}
+
+.myDivClass {
+    width: 80px;
+    height: 100px;
+    margin-left: 150px;
+    background-color: lightblue;
+    border: solid 1px #666;
+}
