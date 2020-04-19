@@ -1,13 +1,17 @@
 from django.shortcuts import render
 from .scripts.almaany_translator_bot import ALmaanyBot
 from .scripts.graph import Graph
-import datetime
-# Create your views here.
 import requests
 import sys
 import os
 
 from subprocess import run, PIPE
+
+# Create your views here.
+
+
+def index(request):
+    return render(request, 'index.html')
 
 
 def button(request):

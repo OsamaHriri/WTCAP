@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>
-        Python button script
-    </title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
 <button onclick="location.href='{% url 'script' %}'">Execute Script</button>
 <hr>
 {% if data %}
@@ -29,5 +24,4 @@
     <br><br>
     <input type="submit" value="Execute External Python Script">
 </form>
-</body>
-</html>
+{% endblock content %}

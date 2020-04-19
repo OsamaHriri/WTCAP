@@ -1,0 +1,61 @@
+
+body {
+    font-family: system-ui, sans-serif;
+    min-height: 100vh;
+    background: #ddd;
+}
+
+/* nav bar css */
+
+nav {
+    direction: rtl;
+}
+
+.navbar-custom {
+    background-color: #c0d0e7;
+}
+
+.nav-item{
+    font-size:120%;
+}
+
+/* table css */
+
+#poem {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    direction: rtl;
+}
+
+#poem td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: 1.5em;
+}
+
+#poem tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#poem tr:hover {
+    background-color: #ddd;
+}
+
+form[type=submit] {
+    padding: 10px 20px 11px !important;
+    font-size: 21px !important;
+    background-color: #F36C8C;
+    font-weight: bold;
+    text-shadow: 1px 1px #F36C8C;
+    color: #ffffff;
+    border-radius: 100px;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+    border: 1px solid #F36C8C;
+    cursor: pointer;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+}
+

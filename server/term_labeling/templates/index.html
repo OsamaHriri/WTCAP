@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <div class="page-header">
+        <h1>Example Page Header</h1>
+    </div>
+    <!-- Default unchecked -->
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="defaultUnchecked"  onClick="toggle(this)">
+        <label class="custom-control-label" for="defaultUnchecked">Default unchecked</label>
+    </div>
+    <br/>
+    <form action="#">
+        <table id="poem">
+            <tr id="row1">
+                <td>
+                    <input type="checkbox" name="line1" value="1" id="line1"
+                           onchange="boxchecked(this, this.value)"/>
+                    <label for="line1">لَوَتْ بِالسَّلامِ بَنَانًا خَضيبا</label>
+                </td>
+                <td>
+                    <label for="line1"> وَلَحْظًا يشوقُ الفؤادَ الطَّرُوبا </label>
+                </td>
+            </tr>
+            <tr id="row2">
+                <td>
+                    <input type="checkbox" name="line2" value="2" id="line2"
+                           onchange="boxchecked(this, this.value)"/>
+                    <label for="line2">وَزَارَتْ على عَجَلٍ فاكْتَسى</label>
+                </td>
+                <td>
+                    <label for="line2"> لِزَوْرَتِها ((أَبْرَقُ الحَزْنِ)) طيبا </label>
+                </td>
+            </tr>
+            <tr id="row3">
+                <td>
+                    <input type="checkbox" name="line3" value="3" id="line3"
+                           onchange="boxchecked(this, this.value)"/>
+                    <label for="line3">فكانَ العبيرُ بها وَاشِيًا</label>
+                <td>
+                    <label for="line3">وَجَرْسُ الحُلِيِّ عليها رَقيبا</label>
+                </td>
+            </tr>
+            <tr id="row4">
+                <td>
+                    <input type="checkbox" name="line4" value="4" id="line4"
+                           onchange="boxchecked(this, this.value)"/>
+                    <label for="line4">وَلَمْ أَنْسَ لَيْلَتَنَا في العِنَا</label>
+                </td>
+                <td>
+                    <label for="line4">قِ لَفَّ الصَّبَا بِقَضيبٍ قَضيبا </label>
+                </td>
+            </tr>
+            <tr id="row5">
+                <td>
+                    <input type="checkbox" name="line5" value="5" id="line5"
+                           onchange="boxchecked(this, this.value)"/>
+                    <label for="line5">سُكُوتٌ يَحرُّ عليهِ الهوى </label>
+                </td>
+                <td>
+                    <label for="line5">وشكوى تَهِيجُ البُكا والنَّحيبا</label>
+                </td>
+            </tr>
+            <tr id="row6">
+                <td>
+                    <input type="checkbox" name="line6" value="6" id="line6"
+                           onchange="boxchecked(this, this.value)"/>
+                    <label for="line6">كَمَا افْتَنَّتِ الرّيحُ فِي مَرِّها </label>
+                </td>
+                <td>
+                    <label for="line6">فَطَوْرًا خُفُوتًا، وَطَوْرًا هُبُوبا</label>
+                </td>
+            </tr>
+            <tr id="row7">
+                <td>
+                    <input type="checkbox" name="line7" value="7" id="line7"
+                           onchange="boxchecked(this, this.value)"/>
+                    <label for="line7">عَنَتْ كَبِدي قَسْوةٌ منكِ ما </label>
+                </td>
+                <td>
+                    <label for="line7"> تَزالُ تُجدِّدُ فيها نُدُوبا</label>
+                </td>
+            </tr>
+            <tr id="row8">
+                <td>
+                    <input type="checkbox" name="line8" value="8" id="line8"
+                           onchange="boxchecked(this, this.value)"/>
+                    <label for="line8"> وَحُمِّلْتُ عِنْدَكِ ذَنْبَ المَشي </label>
+                </td>
+                <td>
+                    <label for="line8"> بِ، حَتّى كَأَنّي ابْتَدَعْتُ المَشِيبا </label>
+                </td>
+            </tr>
+            <tr id="row9">
+                <td>
+                    <input type="checkbox" name="line9" value="9" id="line9"
+                           onchange="boxchecked(this, this.value)"/>
+                    <label for="line9"> وَمَنْ يَطَّلِعْ شَرَفَ الأَرْبَعِي </label>
+                </td>
+                <td>
+                    <label for="line9"> ن يُحَيِّ مِنَ الشَّيْبِ زَوْرًا غريبا</label>
+                </td>
+            </tr>
+            <tr id="row10">
+                <td>
+                    <input type="checkbox" name="line10" value="10" id="line10"
+                           onchange="boxchecked(this, this.value)"/>
+                    <label for="line10"> بَلَوْنا ضَرَائبَ مَنْ قَدْ نَرى</label>
+                </td>
+                <td>
+                    <label for="line10">فَما إِنْ رَأَيْنا لِ((فَتْحٍ)) ضَرِيبا</label>
+                </td>
+            </tr>
+            <tr id="row11">
+                <td>
+                    <input type="checkbox" name="line11" value="11" id="line11"
+                           onchange="boxchecked(this, this.value)"/>
+                    <label for="line11">هُوَ المَرْءُ أَبْدَتْ لَهُ الحَادِثا </label>
+                </td>
+                <td>
+                    <label for="line11"> تُ عَزْمًا وَشِيكًا وَرَأْيًا صَلِيبا </label>
+                </td>
+            </tr>
+            <tr id="row12">
+                <td>
+                    <input type="checkbox" name="line12" value="12" id="line12"
+                           onchange="boxchecked(this, this.value)"/>
+                    <label for="line12">تَنَقَّل في خُلُقَى سُؤْدُدٍ:</label>
+                </td>
+                <td>
+                    <label for="line12"> سَمَاحًا مَرُجًّى، وَبَأْسًا مَهِيبا </label>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+{% endblock content %}
