@@ -4,7 +4,7 @@ from .scripts.graph import Graph
 import requests
 import sys
 import os
-
+from .scripts.mongodbConnector import Connector
 from subprocess import run, PIPE
 
 # Create your views here.
