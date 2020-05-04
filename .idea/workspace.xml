@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/term_labeling/scripts/mongodbConnector.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,24 +127,32 @@
       <option name="project" value="LOCAL" />
       <updated>1587302511432</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added moongoDB connector sever">
+      <created>1588621949511</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1588621949511</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added basic web scrapper" />
     <MESSAGE value="scrapper now retives all the data form the page and saves it in a txt file &#10;bot cant be callled from terminal by :&#10;python almaany_translator_bot.py &lt; wordToBeTranslated &gt;" />
     <MESSAGE value="added intial sever" />
-    <option name="LAST_COMMIT_MESSAGE" value="added intial sever" />
+    <MESSAGE value="added moongoDB connector sever" />
+    <option name="LAST_COMMIT_MESSAGE" value="added moongoDB connector sever" />
   </component>
   <component name="WindowStateProjectService">
     <state x="679" y="206" key="#almaany_translator_bot" timestamp="1584010089262">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="679" y="206" key="#almaany_translator_bot/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1584010089262" />
-    <state x="2587" y="183" width="869" height="810" key="CommitChangelistDialog2" timestamp="1587302510551">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="667" y="183" width="869" height="810" key="CommitChangelistDialog2" timestamp="1588621948793">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="667" y="183" width="869" height="810" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587295998297" />
+    <state x="667" y="183" width="869" height="810" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1588621948793" />
     <state x="2587" y="183" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1587302510551" />
     <state width="1899" height="282" key="GridCell.Tab.0.bottom" timestamp="1584011698989">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -177,9 +183,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587297406859" />
-    <state x="569" y="311" key="git4idea.merge.GitPullDialog" timestamp="1588621916997">
+    <state x="569" y="311" key="git4idea.merge.GitPullDialog" timestamp="1588621991705">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="569" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1588621916997" />
+    <state x="569" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1588621991705" />
   </component>
 </project>
