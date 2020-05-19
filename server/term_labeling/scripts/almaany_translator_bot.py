@@ -13,7 +13,7 @@ class ALmaanyBot:
         searchBar.send_keys(word)
         searchButton = self.driver.find_element_by_xpath('//*[@id="main-search"]/div/div/button').click()
         r = []
-        html_list = self.driver.find_element_by_xpath('//*[@id="page-content"]/div[1]/div[1]/div')
+        html_list = self.driver.find_element_by_xpath('//*[@id="page-content"]/div[1]/div[1]/div/ol[2]')
         items = html_list.find_elements_by_tag_name("li")
         print(items[1].text)
         for item in items:

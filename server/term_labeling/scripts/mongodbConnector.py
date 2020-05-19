@@ -21,7 +21,7 @@ class Connector:
         return list(self.poemsCollections.find({"id": str(poemID)}))
 
     def get_poems_by_poet(self, poet_id):
-        return list(self.poemsCollections.find({"poet_id": str(poet_id)}))
+        return list(self.poemsCollections.find({"poet_id": poet_id}))
 
     def get_poets(self):
         return list(self.poetsCollections.find())

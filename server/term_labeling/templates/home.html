@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-<button onclick="location.href='{% url 'script' %}'">Execute Script</button>
 <hr>
 {% if data %}
 {{data | safe}}
@@ -13,15 +12,15 @@
     {{data_external}}<br><br>
     {{data1}}
     <br><br>
-    <input type="submit" value="Execute External Python Script">
+    <input type="submit" value="Execute Definitoin Script">
 </form>
 <form action="{% url 'script2' %}" method="post">
     {% csrf_token %}
     Input Text:
-    <input type="text" name="param" required><br><br>
+    <input type="text" name="param1" required><br><br>
     {{data_external}}<br><br>
-    {{data1}}
+    {{data2}}
     <br><br>
-    <input type="submit" value="Execute External Python Script">
+    <input type="submit" value="Execute Tag Script">
 </form>
 {% endblock content %}

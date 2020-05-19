@@ -34,7 +34,7 @@ def external(request):
 
 
 def external2(request):
-    inp = request.POST.get('param')
+    inp = request.POST.get('param1')
     p = Graph()
     g, tags = p.getdata()
     head = []
@@ -46,5 +46,5 @@ def external2(request):
         if p is not None:
             break
     if p is not None:
-       return render(request, 'home.html', {'data1': p})
+       return render(request, 'home.html', {'data2': p})
     return render(request, 'home.html', {'data1':'not found'})
