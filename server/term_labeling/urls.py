@@ -5,6 +5,7 @@ urlpatterns = [
 
     # if you change the name here make sure to change it in the navbar in base.html
     path('', views.index, name='index'),
+    path('process_lines/', views.process_lines, name='process_lines'),
     path('label/', views.button, name='label'),
     path('output/', views.output, name="script"),
     path('external/', views.external, name="script1"),

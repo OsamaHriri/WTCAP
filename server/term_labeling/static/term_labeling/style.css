@@ -1,4 +1,6 @@
-
+*{
+    direction: rtl;
+}
 body {
     font-family: system-ui, sans-serif;
     min-height: 100vh;
@@ -21,25 +23,19 @@ nav {
 
 /* table css */
 
+#rowid{
+    border: 1px black;
+}
+
 #poem {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 100%;
-    direction: rtl;
+    width: 90%;
 }
 
 #poem td {
-    border: 1px solid #ddd;
     padding: 8px;
     font-size: 1.5em;
-}
-
-#poem tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-#poem tr:hover {
-    background-color: #ddd;
 }
 
 form[type=submit] {
@@ -59,3 +55,9 @@ form[type=submit] {
     -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
 }
 
+#submit-button{
+    color: deeppink;
+    position: absolute;
+    transition: .5s ease;
+    top: -198px;
+}
