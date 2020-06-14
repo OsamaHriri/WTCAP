@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/createGraph.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/createGraph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/dataset.csv" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/dataset.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/wordTagging.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/wordTagging.py" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,18 +52,6 @@
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="Python.wordTagging">
     <configuration name="almaany_translator_bot" type="PythonConfigurationType" factoryName="Python">
@@ -162,6 +145,18 @@
         <item itemvalue="Python.createGraph" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -272,9 +267,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587297406859" />
-    <state x="569" y="311" key="git4idea.merge.GitPullDialog" timestamp="1587296008127">
+    <state x="569" y="311" key="git4idea.merge.GitPullDialog" timestamp="1592136835907">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="569" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587296008127" />
+    <state x="569" y="311" key="git4idea.merge.GitPullDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1592136835907" />
+    <state x="2536" y="173" width="672" height="676" key="search.everywhere.popup" timestamp="1591706188187">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2536" y="173" width="672" height="676" key="search.everywhere.popup/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1591706188187" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/server/term_labeling/scripts/NLP-toolkit/TokenizerConstants.py</url>
+          <line>15</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
