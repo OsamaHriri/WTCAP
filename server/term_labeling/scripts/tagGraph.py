@@ -1,12 +1,5 @@
 from py2neo import Graph, Node
 
-class tagClass(object):
-    def __init__(self, number, name, parent):
-        self.id = number
-        self.name = name
-        self.parent = parent
-
-
 class Tag(object):
     def __init__(self):
         self.graph = Graph("bolt://localhost:7687", auth=("neo4j", "123123147"))
@@ -23,6 +16,7 @@ class Tag(object):
         self.removeParentQ = """ Match (t:Tag) -[p:Parent] -> (n:Tag) where n.name=$name delete p """
         self.setToRootQ= """ Match (n:Tag) where n.name=$name set n.parent=-1 """
         self.getAllTagsQ = """ Match (t:Tag) return t.name as name ,t.parent as parent , t.id as id """
+        self.getAllRootsQ = """ Match (t:Tag) where t.parent=-1 return t.name as name  """
 
     def ifExists(self, name):
         s = self.graph.run(self.searchQ, name=name).data()
@@ -37,11 +31,26 @@ class Tag(object):
         return self.graph.run(self.searchQ, name=name).data()[0]
 
     def getAllTags(self):
+        """
+        return all tags in the db.
+        :return:
+        """
         query = self.graph.run(self.getAllTagsQ).data()
         tags = []
         for p in query:
-            tags.append(tagClass(p["id"],p["name"],p["parent"]))
+            tags.append(p["name"])
         return tags
+
+    def getAllheads(self):
+        """
+        return all the heads(roots) in the hierarchy.
+        :return:
+        """
+        query = self.graph.run(self.getAllRootsQ).data()
+        heads = []
+        for p in query:
+            heads.append(p["name"])
+        return heads
 
     def getParent(self, name):
         """
@@ -142,7 +151,7 @@ class Tag(object):
         return True
 
 
-tag = Tag()
+#tag = Tag()
 # tag.getTags("عجل")
 # tag.addTag("بحر")
 #tag.addTag("a")
@@ -158,3 +167,4 @@ tag = Tag()
 
 #print(tag.getChildrens("العالم"))
 #print(tag.getParent("ماء"))
+#print( tag.getAllheads())
