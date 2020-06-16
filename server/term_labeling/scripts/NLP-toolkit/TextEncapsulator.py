@@ -192,7 +192,7 @@ class TextEncapsulator(object):
         #Printing:
         for si in range(len(self.Sentences)):
             for wi in range(len(self.Sentences[si].Words)):
-                print('Original String: ' + self.Sentences[si].Words[wi].OriginalString + \
+                print('Original String: ' + self.Sentences[si].Words[wi].OriginalString + 
                       ', Cliticlization Possibilities: '+str(len(self.Sentences[si].Words[wi].SurfaceFormMorphemes)) );
                 
                 for i in range(len(self.Sentences[si].Words[wi].SurfaceFormMorphemes)):
@@ -232,7 +232,57 @@ class TextEncapsulator(object):
                     print (output.getvalue()+'\n');
                     output.close();
     pass
-    
+
+    def return_as_dict(self):
+        # Printing:
+        for si in range(len(self.Sentences)):
+            for wi in range(len(self.Sentences[si].Words)):
+                print('Original String: ' + self.Sentences[si].Words[wi].OriginalString +
+                      ', Cliticlization Possibilities: ' + str(len(self.Sentences[si].Words[wi].SurfaceFormMorphemes)))
+
+                for i in range(len(self.Sentences[si].Words[wi].SurfaceFormMorphemes)):
+                    surfaceFormMorphemes = self.Sentences[si].Words[wi].SurfaceFormMorphemes[i]
+
+                    proclitics = surfaceFormMorphemes.Proclitics
+                    cliticless = surfaceFormMorphemes.Cliticless
+                    enclitics = surfaceFormMorphemes.Enclitics
+                    output = io.StringIO()
+                    output.write('    Certainty: ' + str(surfaceFormMorphemes.GetCertainty()) + '\n')
+                    output.write('\tCliticless String: ' + cliticless.OriginalString + '\n')
+                    output.write('\tProclitics: \n')
+                    for proclitic in proclitics[:]:
+                        output.write('\t\t')
+                        proclitic.POS.WriteArabicText(output)
+                        output.write('\n')
+                    output.write('\tEnclitics: \n')
+                    for enclitics in enclitics[:]:
+                        output.write('\t\t')
+                        enclitics.POS.WriteArabicText(output)
+                        output.write('\n')
+
+                    if (type(cliticless) is Particle):
+                        output.write(''.join(
+                            ['\tParticle: ', cliticless.UnvoweledForm, ', Voweled: ', cliticless.VoweledForm, '\n']))
+                    elif (type(cliticless) is UnderivedCliticless):
+                        output.write(''.join(
+                            ['\tUnderived Word: ', cliticless.UnvoweledForm, ', Voweled: ', cliticless.VoweledForm,
+                             '\n']))
+                    elif (type(cliticless) is DerivedCliticless):
+                        output.write(''.join(['\tDerived Word: ', cliticless.UnvoweledForm, ', Voweled: ', \
+                                              cliticless.VoweledForm, ' Pattern: ',
+                                              cliticless.VoweledPattern.VoweledForm, \
+                                              ', ID=[', str(cliticless.VoweledPattern.ID), '] ,' \
+                                                                                           'Root: ',
+                                              cliticless.Root.String, '\n']))
+
+                    output.write('\tDescription: ')
+                    cliticless.POS.WriteArabicText(output)
+                    output.write('\n\tTag: ')
+                    cliticless.POS.WriteTag(output)
+                    print(output.getvalue() + '\n')
+                    output.close()
+
+    pass
     def Print0(self):
         str = '';
         for i in range(len(self.Sentences)):

@@ -1,7 +1,7 @@
 import codecs
 import io
 import os
-
+import xmltodict
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 from TextEncapsulator import *
@@ -45,9 +45,11 @@ text.LoadFromFiles(baseDirectoryOfAlKhalilDB, rootsFolder,
                    overdueTaggingRulesXmlFile)
 
 
-def runit(phrase, functionality='lema', outputFormat = 'html'):
+def runit(phrase, functionality='lema', outputFormat = 'xml'):
     # Read input text into Qutuf:
-    text.String = "أسدان"
+
+
+    text.String = phrase
 
     # Process:
     text.Tokenize()
@@ -75,18 +77,20 @@ def runit(phrase, functionality='lema', outputFormat = 'html'):
     else:
         text.RenderXml(streamWriter, functionality)
     output = streamWriter.getvalue()
-    print("done")
+    # print(output)
     # Log to terminal:
     print('---------------------------------------------------------------------------')
-    text.Print()
+    # text.Print()
     print('---------------------------------------------------------------------------')
+    print(type(output))
 
     # Log to file:
     writer = codecs.open('test.txt', 'w', 'utf-8')
     writer.write(output)
     writer.close()
+    dict = xmltodict.parse(output,encoding='utf-8')
+    print(dict)
+    return dict
 
-    return output
 
-
-print(runit(""))
+runit("محمدٌ كالغيث")
