@@ -157,7 +157,7 @@ class Tag(object):
 
 
 
-tag = Tag()
+#tag = Tag()
 # tag.getTags("عجل")
 # tag.addTag("بحر")
 #tag.addTag("a")
@@ -174,4 +174,4 @@ tag = Tag()
 #print(tag.getChildrens("العالم"))
 #print(tag.getParent("ماء"))
 #print( tag.getAllheads())
-print(tag.getAllTagsbyjson())
+#print(tag.getAllTagsbyjson())

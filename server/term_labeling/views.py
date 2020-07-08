@@ -6,9 +6,11 @@ from .scripts.tagGraph import Tag
 import requests
 from .scripts import connector
 import pyarabic.araby as araby
+from threading import Thread, Lock
 import sys
 import os
-
+from db_mutex import DBMutexError, DBMutexTimeoutError
+from db_mutex.db_mutex import db_mutex
 from subprocess import run, PIPE
 
 # Create your views here.
@@ -207,10 +209,18 @@ def save_term_tags(request):
         term = araby.strip_tashkeel(term)
         tag = data.get('tag')
         t = Tagging()
-        suc = t.tagWord(term, tag, 1, 1, 1, 1)
+        mutex.acquire()
+        try:
+            suc = t.tagWord(term, tag, 1, 1, 1, 1)
+        finally:
+            mutex.release()
+
         if suc:
             return HttpResponse("Success")  # Sending an success response
         else:
             return HttpResponse("not found")
     else:
         return HttpResponse("not success")
+
+
+mutex = Lock()
