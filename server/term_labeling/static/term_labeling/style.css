@@ -1,6 +1,7 @@
-*{
+* {
     direction: rtl;
 }
+
 body {
     font-family: system-ui, sans-serif;
     min-height: 100vh;
@@ -17,13 +18,13 @@ nav {
     background-color: #c0d0e7;
 }
 
-.nav-item{
-    font-size:120%;
+.nav-item {
+    font-size: 120%;
 }
 
 /* table css */
 
-#rowid{
+#rowid {
     border: 1px black;
 }
 
@@ -36,6 +37,10 @@ nav {
 #poem td {
     padding: 8px;
     font-size: 1.5em;
+}
+
+.tblcheckbox {
+    visibility: hidden;
 }
 
 form[type=submit] {
@@ -55,9 +60,236 @@ form[type=submit] {
     -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
 }
 
-#submit-button{
+#submit-button {
     color: deeppink;
     position: absolute;
     transition: .5s ease;
     top: -198px;
+}
+
+.term:hover {
+    color: cornflowerblue;
+}
+
+.btn {
+    padding: .1rem .55rem;
+    font-size: 1.2rem;
+    alignment: center;
+}
+
+.dropbtn {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #008CBA;
+    border-radius: 4px;
+    cursor: pointer;
+    min-width: 230px;
+    background-color: Transparent;
+    color: black;
+    transition-duration: 0.4s;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #008CBA; /* Green */
+    color: white;
+}
+
+#termInput {
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 14px 20px 12px 45px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+}
+
+#termInput:focus {
+    outline: 3px solid #ddd;
+}
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f6f6f6;
+    min-width: 300px;
+    max-height: 300px;
+    overflow: auto;
+    border: 1px solid #ddd;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.row a:hover {
+    background-color: #ddd;
+}
+
+
+/* tree style */
+
+.treeview {
+    float: left;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-radius: 25px;
+    border: 2px solid #6666BB;
+    padding: 20px;
+    margin-bottom: 10px;
+    max-height: 400px;
+    overflow: auto;
+}
+
+.treeview:hover input ~ label:before,
+.treeview.hover input ~ label:before {
+    opacity: 1;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -ms-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+
+.treeview ul {
+    -webkit-transition-duration: 1s;
+    -moz-transition-duration: 1s;
+    -ms-transition-duration: 1s;
+    -o-transition-duration: 1s;
+    transition-duration: 1s;
+    list-style: none;
+    padding-left: 1em;
+}
+
+.treeview ul li {
+    padding-bottom: 0.2em;
+}
+
+.treeview ul li span {
+    -webkit-transition-property: color;
+    -moz-transition-property: color;
+    -ms-transition-property: color;
+    -o-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 1s;
+    -moz-transition-duration: 1s;
+    -ms-transition-duration: 1s;
+    -o-transition-duration: 1s;
+    transition-duration: 1s;
+}
+
+.treeview ul li span:hover {
+    color: forestgreen;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -ms-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+
+.treeview input {
+    display: none;
+}
+
+.treeview input:checked ~ ul {
+    display: none;
+}
+
+.treeview input ~ label {
+    cursor: pointer;
+}
+
+.treeview input ~ label:before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    margin-left: -1em;
+    margin-top: 0.4em;
+    border-width: 4px;
+    border-style: solid;
+    border-top-color: transparent;
+    border-right-color: yellow;
+    border-bottom-color: yellow;
+    border-left-color: transparent;
+    opacity: 0;
+    -webkit-transition-property: opacity;
+    -moz-transition-property: opacity;
+    -ms-transition-property: opacity;
+    -o-transition-property: opacity;
+    transition-property: opacity;
+    -webkit-transition-duration: 1s;
+    -moz-transition-duration: 1s;
+    -ms-transition-duration: 1s;
+    -o-transition-duration: 1s;
+    transition-duration: 1s;
+}
+
+.treeview input:checked ~ label:before {
+    margin-left: -0.8em;
+    border-width: 5px;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: darkred;
+}
+
+/* Selected Tags Section Style */
+
+.selected_container {
+    border-radius: 25px;
+    border: 2px solid #6666BB;
+    padding: 20px;
+    margin-bottom: 10px;
+    max-height: 300px;
+    overflow: auto;
+}
+
+.tag-btn {
+    border: 1.5px solid darkslateblue;
+    background: transparent;
+    border-radius: 10px;
+    position: relative;
+    padding: 5px;
+    margin: 3px;
+    transition: width 0.2s ease-in-out;
+    width: auto;
+}
+
+.tag-btn:hover {
+    border-color: crimson;
+    color: black;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Suggested Tags Section Style */
+
+.suggested_container {
+    border-radius: 25px;
+    border: 2px solid #6666BB;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.sug-btn {
+    border: 1.5px solid darkslateblue;
+    background: transparent;
+    border-radius: 10px;
+    position: relative;
+    padding: 5px;
+    margin: 3px;
+    transition: width 0.2s ease-in-out;
+    display: block;
+    width: auto;
+}
+
+.sug-btn:hover {
+    border-color: cadetblue;
+    color: darkslateblue;
+    transition: all 0.2s ease-in-out;
 }

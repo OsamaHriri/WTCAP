@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block stylesheets %}
+<script src="{% static 'term_labeling/select_poet_js.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'term_labeling/select_poet_style.css'%}">
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="container is-rtl">
+    <br>
+    <h2 class="header"> Page to test selecting a poet and his poem </h2>
+
+
+    <div class="container">
+        <!-- Choose poet -->
+
+        <div class="row">
+            <div class=".col-md-">
+
+                <p> إختيار شاعر</p>
+                <button id="poetbtn" onclick="myFunction('poetDropDown')" class="dropbtn">شاعر</button>
+                <div id="poetDropDown" class="dropdown-content right">
+                    <input type="text" placeholder="إبحث..." id="poetInput"
+                           onkeyup="filterFunction('poetDropDown',this.id)">
+                    {% for poet in poets %}
+                    <a id="{{poet.id}}" class="poet-link" href="#" onclick="choosePoet(this)"> {{ poet.name }} </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Choose poem -->
+
+        <div class="row">
+            <div class=".col-md-">
+                <p> إختيار شعر</p>
+                <button id="poembtn" onclick="myFunction('poemDropDown')" class="dropbtn">شعر</button>
+                <div id="poemDropDown" class="dropdown-content right">
+                    <input type="text" placeholder="إبحث..." id="poemInput" onkeyup="filterFunction()">
+                    {% for poem in poems %}
+                    <a id="{{poem.id}}" class="poems-link" href="#" onclick="choosePoem(this)"> {{ poem.name }} </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <button class="btn" href="#">select</button>
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}

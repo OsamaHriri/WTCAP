@@ -1,34 +1,129 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container" onload="initialize_index()">
+<div class="container-fluid" onload="initialize_index()">
     <br>
     <div class="page-header">
         <h1>Poem Selection Example</h1>
     </div>
+    <br>
+    <div class="row">
+        <!-- Tags Section -->
+        <div class="col-sm-4 px-lg-5 border">
+            <!-- Selected Tags Section-->
+            <div class="selected_container">
+                <h5> Selected Tags </h5>
+            </div>
+
+            <!-- Suggested Tags Section-->
+            <div class="suggested_container">
+                <h5> Suggested Tags </h5>
+                <button class="sug-btn" onclick="add_tag(this)">
+                    <span class="add-icon">+</span>
+                    <span class="btn-txt">تجربة</span>
+                </button>
+            </div>
+
+            <!-- Tree Section -->
+            <div class="treeview hover">
+                <h5> Tags </h5>
+                <ul>
+                    <li>
+                        <input type="checkbox" id="cb-1">
+                        <label for="cb-1">
+                            <span onclick="item_clicked(this)">العالم</span>
+                        </label>
+                        <ul>
+                            <li><span onclick="item_clicked(this)">هواء</span></li>
+                            <li>
+                                <input type="checkbox" id="cb-1-2">
+                                <label for="cb-1-2">
+                                    <span onclick="item_clicked(this)">نار</span>
+                                </label>
+                                <ul>
+                                    <li><span onclick="item_clicked(this)">فحم</span></li>
+                                    <li><span onclick="item_clicked(this)">حطب</span></li>
+                                </ul>
+                            </li>
+                            <li><span onclick="item_clicked(this)">الضوء</span></li>
+                            <li><span onclick="item_clicked(this)">سماء</span></li>
+                            <li><span onclick="item_clicked(this)">الغابة</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="cb-2">
+                        <label for="cb-2">
+                            <span onclick="item_clicked(this)">زمن</span>
+                        </label>
+                        <ul>
+                            <li><span onclick="item_clicked(this)">الموسم</span></li>
+                            <li><span onclick="item_clicked(this)">أسبوع</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Poem Section -->
+        <div class="col-sm-8">
+            <table class="table table-striped table-hover" id="poem">
+                {% for poem in poems.context %}
+                <tr>
+                    <td>
+                        <input type="checkbox" name="{{ forloop.counter }}" value="{{ forloop.counter }}"
+                               id="{{ forloop.counter }}" class="tblcheckbox"
+                               onchange="box_checked(this, this.value)"/>
+                        <label for="{{ forloop.counter }}"> {{ poem.row_index }} </label>
+                    </td>
+                    <td>
+                        <label for="{{ forloop.counter }}"> {{ poem.sadr }} </label>
+                    </td>
+                    <td>
+                        <label for="{{ forloop.counter }}"> {{ poem.ajuz }} </label>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </div>
+
     <!-- Default unchecked -->
+    <!--
     <div class="custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input" id="defaultUnchecked" onClick="toggle(this)">
         <label class="custom-control-label" for="defaultUnchecked">تحديد الكل</label>
     </div>
     <br/>
-    <form action = "{% url 'process_lines' %}" method="POST" name="poem-form">{% csrf_token %}
-        <table class="table table-striped table-hover" id="poem">
-            {% for poem in poems %}
-            <tr>
-                <td>
-                    <input type="checkbox" name="{{ forloop.counter }}" value="{{ forloop.counter }}" id="{{ forloop.counter }}"
-                           onchange="box_checked(this, this.value)"/>
-                    <label for="{{ forloop.counter }}"> {{ poem.content.first }} </label>
-                </td>
-                <td>
-                    <label for="{{ forloop.counter }}"> {{ poem.content.second }} </label>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
+    <form action="{% url 'process_lines' %}" method="POST" name="poem-form">{% csrf_token %}
+
         <input type='submit' id="submit-button" value=' حلّل '>
-    </form>
+    </form>-->
 </div>
 
 {% endblock content %}
+
+
+{% block scripts %}
+
+<script>
+    /*
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "termTree/",
+            dataType: 'json',
+            success: function (data) {
+                $.each(data.tree, function (key, value) {
+                    console.log(value);
+                    $.each(value, function (key, v) {
+                        console.log(v);
+                    });
+                });
+            },
+            error: function (e) {
+                alert("returned error " + e.tags);
+            }
+        });
+    });*/
+</script>
+{% endblock scripts %}

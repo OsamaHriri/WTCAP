@@ -3,7 +3,11 @@
 <html lang="ar">
 
 <head>
-    <title>Semantic Arabic Tagging</title>
+    {% if title %}
+    <title> Arabic Tagging - {{ title }} </title>
+    {% else %}
+    <title> Arabic Tagging </title>
+    {% endif %}
     <!--
 
 
@@ -16,6 +20,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/style.css'%}">
+    {% block stylesheets %} {% endblock %}
 </head>
 
 <body>
@@ -26,7 +31,8 @@
             <div class="navbar-nav">
                 <a class="nav-item nav-link active" href="{% url 'index' %}">الصفحة الرئيسية <span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" href="{% url 'label' %}">Tag terms</a>
-                <a class="nav-item nav-link" href="{% url 'process_lines' %}">process lines</a>
+                <a class="nav-item nav-link" href="{% url 'select_poet_page' %}">Selecting Page</a>
+                <a class="nav-item nav-link" href="{% url 'tags' %}">Tags</a>
             </div>
         </div>
     </nav>
@@ -34,11 +40,10 @@
 <!--/.Navbar -->
 <div class="container"> {% block content %} {% endblock %}</div>
 
-
-<!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -46,6 +51,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+<!-- Optional JavaScript -->
+{% block scripts %} {% endblock %}
 
 </body>
 </html>
