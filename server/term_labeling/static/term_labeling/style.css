@@ -1,3 +1,5 @@
+@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css";
+
 * {
     direction: rtl;
 }
@@ -106,7 +108,6 @@ form[type=submit] {
     outline: 3px solid #ddd;
 }
 
-
 .dropdown-content {
     display: none;
     position: absolute;
@@ -127,116 +128,6 @@ form[type=submit] {
 
 .row a:hover {
     background-color: #ddd;
-}
-
-
-/* tree style */
-
-.treeview {
-    float: left;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    border-radius: 25px;
-    border: 2px solid #6666BB;
-    padding: 20px;
-    margin-bottom: 10px;
-    max-height: 400px;
-    overflow: auto;
-}
-
-.treeview:hover input ~ label:before,
-.treeview.hover input ~ label:before {
-    opacity: 1;
-    -webkit-transition-duration: 0.5s;
-    -moz-transition-duration: 0.5s;
-    -ms-transition-duration: 0.5s;
-    -o-transition-duration: 0.5s;
-    transition-duration: 0.5s;
-}
-
-.treeview ul {
-    -webkit-transition-duration: 1s;
-    -moz-transition-duration: 1s;
-    -ms-transition-duration: 1s;
-    -o-transition-duration: 1s;
-    transition-duration: 1s;
-    list-style: none;
-    padding-left: 1em;
-}
-
-.treeview ul li {
-    padding-bottom: 0.2em;
-}
-
-.treeview ul li span {
-    -webkit-transition-property: color;
-    -moz-transition-property: color;
-    -ms-transition-property: color;
-    -o-transition-property: color;
-    transition-property: color;
-    -webkit-transition-duration: 1s;
-    -moz-transition-duration: 1s;
-    -ms-transition-duration: 1s;
-    -o-transition-duration: 1s;
-    transition-duration: 1s;
-}
-
-.treeview ul li span:hover {
-    color: forestgreen;
-    -webkit-transition-duration: 0.3s;
-    -moz-transition-duration: 0.3s;
-    -ms-transition-duration: 0.3s;
-    -o-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-}
-
-.treeview input {
-    display: none;
-}
-
-.treeview input:checked ~ ul {
-    display: none;
-}
-
-.treeview input ~ label {
-    cursor: pointer;
-}
-
-.treeview input ~ label:before {
-    content: "";
-    width: 0;
-    height: 0;
-    position: absolute;
-    margin-left: -1em;
-    margin-top: 0.4em;
-    border-width: 4px;
-    border-style: solid;
-    border-top-color: transparent;
-    border-right-color: yellow;
-    border-bottom-color: yellow;
-    border-left-color: transparent;
-    opacity: 0;
-    -webkit-transition-property: opacity;
-    -moz-transition-property: opacity;
-    -ms-transition-property: opacity;
-    -o-transition-property: opacity;
-    transition-property: opacity;
-    -webkit-transition-duration: 1s;
-    -moz-transition-duration: 1s;
-    -ms-transition-duration: 1s;
-    -o-transition-duration: 1s;
-    transition-duration: 1s;
-}
-
-.treeview input:checked ~ label:before {
-    margin-left: -0.8em;
-    border-width: 5px;
-    border-top-color: transparent;
-    border-right-color: transparent;
-    border-bottom-color: transparent;
-    border-left-color: darkred;
 }
 
 /* Selected Tags Section Style */
@@ -292,4 +183,138 @@ form[type=submit] {
     border-color: cadetblue;
     color: darkslateblue;
     transition: all 0.2s ease-in-out;
+}
+
+/* tree style */
+.treeview {
+    float: right;
+    /*-webkit-user-select: none;*/
+    /*-moz-user-select: none;*/
+    -ms-user-select: none;
+    user-select: none;
+    border-radius: 25px;
+    border: 2px solid #6666BB;
+    padding: 20px;
+    margin-bottom: 10px;
+    max-height: 400px;
+    overflow: auto;
+    width: 200px;
+}
+
+ul.tree {
+    margin: 0;
+    padding: 20px 2px;
+    list-style-type: arabic-indic;
+    direction: RTL;
+    text-align: right;
+}
+
+ul.tree li {
+    list-style: none;
+    margin-left: -15px;
+    position: relative;
+}
+
+ul.tree li input {
+    cursor: pointer;
+    height: 1em;
+    right: -11px;
+    margin-right: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 2em;
+    z-index: 2;
+}
+
+ul.tree li input:checked + ul {
+    height: auto;
+    margin: 0 0 0 19px;
+}
+
+ul.tree li input:checked + ul:before {
+    content: "\f068";
+    font-family: Fontawesome, serif;
+    font-size: 15px;
+    right: -3px;
+    top: 3px;
+    position: absolute;
+}
+
+ul.tree li input:checked + ul > li {
+    display: block;
+    left: 3px;
+    margin: 0 0 -3px;
+}
+
+ul.tree li input:checked + ul > li last-child {
+    margin: 0 0 -0.063em;
+}
+
+ul.tree li input + ul {
+    padding: 0 0 0 -39px;
+}
+
+ul.tree li input + ul:before {
+    content: "\f067";
+    font-family: Fontawesome, serif;
+    font-size: 15px;
+    right: -3px;
+    top: 3px;
+    position: absolute;
+}
+
+ul.tree li input + ul > li {
+    display: none;
+    margin-right: 10px;
+    padding-right: 1px;
+}
+
+ul.tree li label {
+    cursor: pointer;
+    margin-bottom: 0;
+    margin-right: 17px;
+}
+
+ul.tree > li {
+    margin-right: 1px !important;
+}
+
+ul.tree > li a {
+    color: #606061;
+    display: block;
+    text-decoration: none;
+}
+
+ul.tree > li a:before {
+    content: "";
+    display: block;
+    float: right;
+    font-family: Fontawesome, serif;
+    font-size: 15px;
+    margin-left: -5px;
+}
+
+ul.tree > li > a:before {
+    content: "\f0c9";
+    display: block;
+    float: right;
+    font-family: Fontawesome, serif;
+    font-size: 15px;
+    margin-left: -5px;
+}
+
+ul.tree > li > a > label {
+    margin-right: 0;
+}
+
+ul.tree > li > ul > li > a > label:before,
+ul.tree > li > ul > li > ul > li > a > label:before {
+    content: "\f0c9";
+    display: block;
+    position: absolute;
+    font-family: Fontawesome, serif;
+    font-size: 15px;
+    right: -3px;
+    top: 3px;
 }

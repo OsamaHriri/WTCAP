@@ -58,9 +58,13 @@ poem = {'id': '2066', 'poet_id': 25, 'name': 'قصيدة رقم 11، الكام�
 
 
 def index(request):
+    t = Tag()
+    json_tags = t.getAllTagsbyjson()
+    print(json_tags[0])
     context = {
         'poems': poem,
-        'title': 'Home'
+        'title': 'Home',
+        'tags': json_tags[0]
     }
     return render(request, 'index.html', context)
 
@@ -152,11 +156,15 @@ def output(request):
 
 
 def newexternal(request):
-    if request.method == 'GET':
+    """
+    this one returns the json representation of the tags
+    """
+    if request.method == 'POST':
         print("getting here")
         t = Tag()
         json_tags = t.getAllTagsbyjson()
         if json_tags is not None:
+            print("sending")
             return HttpResponse(json_tags)  # Sending an success response
         else:
             return HttpResponse("not found")
@@ -205,7 +213,7 @@ def save_term_tags(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
-        #remove term tashkeel
+        # remove term tashkeel
         term = araby.strip_tashkeel(term)
         tag = data.get('tag')
         t = Tagging()

@@ -25,44 +25,55 @@
             </div>
 
             <!-- Tree Section -->
-            <div class="treeview hover">
+            <div class="treeview">
                 <h5> Tags </h5>
-                <ul>
-                    <li>
-                        <input type="checkbox" id="cb-1">
-                        <label for="cb-1">
-                            <span onclick="item_clicked(this)">العالم</span>
-                        </label>
+
+                <ul class="tree">
+
+                    <li id="root1">
+                        <label for="root1"> <a onclick="item_clicked(this)">العالم</a> </label>
+                        <input checked="" id="test" value="" type="checkbox">
                         <ul>
-                            <li><span onclick="item_clicked(this)">هواء</span></li>
-                            <li>
-                                <input type="checkbox" id="cb-1-2">
-                                <label for="cb-1-2">
-                                    <span onclick="item_clicked(this)">نار</span>
-                                </label>
+                            <li id="numba2">
+                                <label for="numba2"> <a onclick="item_clicked(this)">هواء</a> </label>
+                                <input checked="" id="test2" value="" type="checkbox">
                                 <ul>
-                                    <li><span onclick="item_clicked(this)">فحم</span></li>
-                                    <li><span onclick="item_clicked(this)">حطب</span></li>
+                                    <li id="numba3">
+                                        <a>
+                                            <label for="numba3" onclick="item_clicked(this)">نار</label>
+                                            <input checked="" id="test3" value="" type="checkbox">
+                                        </a>
+                                    </li>
+                                    <li id="numba4">
+                                        <a>
+                                            <label for="numba4" onclick="item_clicked(this)">فحم</label>
+                                            <input checked="" id="test4" value="" type="checkbox">
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
-                            <li><span onclick="item_clicked(this)">الضوء</span></li>
-                            <li><span onclick="item_clicked(this)">سماء</span></li>
-                            <li><span onclick="item_clicked(this)">الغابة</span></li>
                         </ul>
                     </li>
-                    <li>
-                        <input type="checkbox" id="cb-2">
-                        <label for="cb-2">
-                            <span onclick="item_clicked(this)">زمن</span>
-                        </label>
-                        <ul>
-                            <li><span onclick="item_clicked(this)">الموسم</span></li>
-                            <li><span onclick="item_clicked(this)">أسبوع</span></li>
-                        </ul>
+                    <li id="numba5">
+                        <a>
+                            <label for="numba5" onclick="item_clicked(this)">فحم</label>
+                            <input checked="" id="test5" value="" type="checkbox">
+                        </a>
+                    </li>
+                    <li id="numba6">
+                        <label for="numba6"><a>فحم</a></label>
+                        <input checked="" id="test6" value="" type="checkbox">
+
                     </li>
                 </ul>
+                {% for tag in tags %}
+                <p>
+                    {{ tag.context }}
+                </p>
+                {% endfor %}
             </div>
         </div>
+
         <!-- Poem Section -->
         <div class="col-sm-8">
             <table class="table table-striped table-hover" id="poem">
@@ -105,25 +116,4 @@
 
 {% block scripts %}
 
-<script>
-    /*
-    $(document).ready(function () {
-        $.ajax({
-            type: "GET",
-            url: "termTree/",
-            dataType: 'json',
-            success: function (data) {
-                $.each(data.tree, function (key, value) {
-                    console.log(value);
-                    $.each(value, function (key, v) {
-                        console.log(v);
-                    });
-                });
-            },
-            error: function (e) {
-                alert("returned error " + e.tags);
-            }
-        });
-    });*/
-</script>
 {% endblock scripts %}

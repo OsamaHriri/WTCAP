@@ -83,17 +83,16 @@ function hi(id) {
             $(this).css("color", "green");
             console.log("choosen term " + this.innerHTML);
             selected_term = this.innerHTML;
-            /*
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: "newexternal/",
                 dataType: "json",
                 success: function (data) {
-                    const tbl = document.getElementById("poem");
-                    const cell1 = tbl.rows[id].cells[1];
-                    cell1.innerHTML = buildhtml(split_data);
+                    console.log("success is assured");
+
+                    window.alert(data)
                 }
-            });*/
+            });
         });
     });
 }
