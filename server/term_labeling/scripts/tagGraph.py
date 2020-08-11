@@ -1,4 +1,9 @@
 from py2neo import Graph, Node
+from django.http import JsonResponse
+from django.core.serializers.json import DjangoJSONEncoder
+from json import dumps
+
+
 
 class Tag(object):
     def __init__(self):
@@ -153,8 +158,9 @@ class Tag(object):
 
     def getAllTagsbyjson(self):
         query = self.graph.run(self.jsonQuery).data()
+        for item in query:
+            print(item)
         return query
-
 
 
 #tag = Tag()

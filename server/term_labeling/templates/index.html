@@ -28,46 +28,56 @@
             <div class="treeview">
                 <h5> Tags </h5>
 
-                {% for tag in tags.root.tags.parent %}
-                    <p> {{tag}} </p>
+                {% for tag in tags.root %}
+                   <p> {{tag.tags.name}} </p>
+                    {% for tag in tag.tags.parent %}
+                    <p> {{tag.name}} </p>
+                        {% for tag in tag.parent %}
+                        <p> {{tag.name}} </p>
+                            {% for tag in tag.parent %}
+                        <p> {{tag.name}} </p>
+                         {% endfor %}
+                         {% endfor %}
+                     {% endfor %}
+                 <p> {{'------'}} </p>
                 {% endfor %}
 
-                <ul class="tree">
-                    <li id="root1">
-                        <label for="root1"> <a onclick="item_clicked(this)">العالم</a> </label>
-                        <input checked="" id="test" value="" type="checkbox">
-                        <ul>
-                            <li id="numba2">
-                                <label for="numba2"> <a onclick="item_clicked(this)">هواء</a> </label>
-                                <input checked="" id="test2" value="" type="checkbox">
-                                <ul>
-                                    <li id="numba3">
-                                        <a>
-                                            <label for="numba3" onclick="item_clicked(this)">نار</label>
-                                            <input checked="" id="test3" value="" type="checkbox">
-                                        </a>
-                                    </li>
-                                    <li id="numba4">
-                                        <a>
-                                            <label for="numba4" onclick="item_clicked(this)">فحم</label>
-                                            <input checked="" id="test4" value="" type="checkbox">
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li id="numba5">
-                        <a>
-                            <label for="numba5" onclick="item_clicked(this)">فحم</label>
-                            <input checked="" id="test5" value="" type="checkbox">
-                        </a>
-                    </li>
-                    <li id="numba6">
-                        <label for="numba6"><a>فحم</a></label>
-                        <input checked="" id="test6" value="" type="checkbox">
-                    </li>
-                </ul>
+<!--                <ul class="tree">-->
+<!--                    <li id="root1">-->
+<!--                        <label for="root1"> <a onclick="item_clicked(this)">العالم</a> </label>-->
+<!--                        <input checked="" id="test" value="" type="checkbox">-->
+<!--                        <ul>-->
+<!--                            <li id="numba2">-->
+<!--                                <label for="numba2"> <a onclick="item_clicked(this)">هواء</a> </label>-->
+<!--                                <input checked="" id="test2" value="" type="checkbox">-->
+<!--                                <ul>-->
+<!--                                    <li id="numba3">-->
+<!--                                        <a>-->
+<!--                                            <label for="numba3" onclick="item_clicked(this)">نار</label>-->
+<!--                                            <input checked="" id="test3" value="" type="checkbox">-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li id="numba4">-->
+<!--                                        <a>-->
+<!--                                            <label for="numba4" onclick="item_clicked(this)">فحم</label>-->
+<!--                                            <input checked="" id="test4" value="" type="checkbox">-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                    <li id="numba5">-->
+<!--                        <a>-->
+<!--                            <label for="numba5" onclick="item_clicked(this)">فحم</label>-->
+<!--                            <input checked="" id="test5" value="" type="checkbox">-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li id="numba6">-->
+<!--                        <label for="numba6"><a>فحم</a></label>-->
+<!--                        <input checked="" id="test6" value="" type="checkbox">-->
+<!--                    </li>-->
+<!--                </ul>-->
             </div>
         </div>
 

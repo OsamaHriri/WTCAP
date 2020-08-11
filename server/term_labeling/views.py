@@ -9,8 +9,6 @@ import pyarabic.araby as araby
 from threading import Thread, Lock
 import sys
 import os
-from db_mutex import DBMutexError, DBMutexTimeoutError
-from db_mutex.db_mutex import db_mutex
 from subprocess import run, PIPE
 
 # Create your views here.
@@ -66,6 +64,8 @@ def index(request):
         'title': 'Home',
         'tags': {"root" : json_tags}
     }
+
+
     return render(request, 'index.html', context)
 
 
