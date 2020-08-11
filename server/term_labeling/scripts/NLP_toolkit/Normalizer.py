@@ -1,4 +1,4 @@
-
+from progress.bar import ChargingBar as Bar
 '''
 Created on ١١‏/٠٣‏/٢٠١٠
 
@@ -23,13 +23,15 @@ class Normalizer(object):
         
     def Normalize(self, sentences, updateBy):
         # Normalize Sentences >> Words
+        bar = Bar('Normalizing', max=len(sentences)*2)
         for i in range(len(sentences)):
             for j in range(len(sentences[i].Words)):
                 sentences[i].Words[j].FirstNormalizationForm = sentences[i].Words[j].OriginalString;
                 for key, value in FirstNormDict.items():
                     sentences[i].Words[j].FirstNormalizationForm = sentences[i].Words[j].FirstNormalizationForm.replace(key, value);
                     if(updateBy == 1):
-                        sentences[i].Words[j].String = sentences[i].Words[j].FirstNormalizationForm;
+                        sentences[i].Words[j].String = sentences[i].Words[j].FirstNormalizationForm
+            bar.next()
 
         for i in range(len(sentences)):
             for j in range(len(sentences[i].Words)):
@@ -37,7 +39,9 @@ class Normalizer(object):
                 for key, value in SecondNormDict.items():
                     sentences[i].Words[j].SecondNormalizationForm = sentences[i].Words[j].SecondNormalizationForm.replace(key, value);
                     if(updateBy == 2):
-                        sentences[i].Words[j].String = sentences[i].Words[j].SecondNormalizationForm;
+                        sentences[i].Words[j].String = sentences[i].Words[j].SecondNormalizationForm
+            bar.next()
+        bar.finish()
                                
     pass
             

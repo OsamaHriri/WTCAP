@@ -8,7 +8,7 @@ from ArabicStringUtility import *
 from CliticlessPOS import *
 from TokenType import TokenType
 import SurfaceFormMorphemes
-
+from progress.bar import ChargingBar as Bar
 class CompoundParsing(object):
     """
      # PyUML: Do not remove this line! # XMI_ID:_q0LRgY35Ed-gg8GOK1TmhA
@@ -25,9 +25,10 @@ class CompoundParsing(object):
     pass
 
     def Parsing(self, textEncapsulator, specialWords):
-        compoundNounsDict = specialWords.CompoundNouns 
-        
+        compoundNounsDict = specialWords.CompoundNouns
+        bar = Bar('Parsing', max=len(textEncapsulator.Sentences[:]))
         for sentence in textEncapsulator.Sentences[:]:
+            bar.next()
             index = 0 
             while index < len(sentence.Words)-2:
                 if(not (sentence.Words[index].TokenType.Id == TokenType.Constants.Id.ArabicText and 
@@ -60,7 +61,8 @@ class CompoundParsing(object):
                     #remove second Part
                     sentence.Words.remove(sentence.Words[index+1]) 
                     
-                index += 1 
+                index += 1
+        bar.finish()
                     
         
     pass

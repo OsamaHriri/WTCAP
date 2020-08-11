@@ -4,7 +4,10 @@ Created on ٢٨‏/٠٦‏/٢٠١٠
 @Created by: Muhammad Altabba
 '''
 from LettersConstants import DiacriticsConstants
-
+import time
+import random
+import datetime
+from eventlet.timeout import Timeout
 
 class ArabicStringUtility(object):
     """
@@ -22,31 +25,37 @@ class ArabicStringUtility(object):
     pass
 
     def IsCompatible(self, string, voweledForm):
-        stringIndexer = 0;
-        voweledPatternsIndexer = 0;
+
+        time_start = datetime.datetime.now()
+
+        stringIndexer = 0
+        voweledPatternsIndexer = 0
+
         while stringIndexer < len(string):
-            while stringIndexer < len(string) and voweledPatternsIndexer < len(voweledForm) \
-                    and (voweledForm[voweledPatternsIndexer] == string[stringIndexer] \
+
+            while stringIndexer < len(string) and voweledPatternsIndexer < len(voweledForm)  and (voweledForm[voweledPatternsIndexer] == string[stringIndexer]
                          or (string[stringIndexer] not in DiacriticsConstants.AllDiacritics and voweledForm[
                         voweledPatternsIndexer] in ['ل', 'ع', 'ف'])):
-                stringIndexer += 1;
-                voweledPatternsIndexer += 1;
+                stringIndexer += 1
+                voweledPatternsIndexer += 1
             if voweledPatternsIndexer == len(voweledForm):
-                return True;
-            while (stringIndexer < len(string) \
-                   and voweledForm[voweledPatternsIndexer] not in DiacriticsConstants.AllDiacritics \
+                return True
+            while (stringIndexer < len(string)
+                   and voweledForm[voweledPatternsIndexer] not in DiacriticsConstants.AllDiacritics
                    and string[stringIndexer] in DiacriticsConstants.AllDiacritics):
-                stringIndexer += 1;
+                stringIndexer += 1
             if stringIndexer == len(string):
-                return True;
+                return True
 
-            if (string[stringIndexer] in DiacriticsConstants.AllDiacritics \
+            if (string[stringIndexer] in DiacriticsConstants.AllDiacritics
                     and voweledForm[voweledPatternsIndexer] in DiacriticsConstants.AllDiacritics):
                 # ويكون عندها التشكيلين غير متساويين بسبب الحلقة الصغيرة السابقة
-                return False;
+                return False
             while (voweledForm[voweledPatternsIndexer] in DiacriticsConstants.AllDiacritics):
-                voweledPatternsIndexer += 1;
-        return True;
+                voweledPatternsIndexer += 1
+            stringIndexer+=1
+
+        return True
 
     pass
 

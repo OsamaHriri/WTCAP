@@ -1,11 +1,7 @@
 from django.shortcuts import render
-from .scripts.almaany_translator_bot import ALmaanyBot
-from .scripts.graph import Graph
+from server.term_labeling.scripts import ALmaanyBot
+from server.term_labeling.scripts import Graph
 import requests
-import sys
-import os
-
-from subprocess import run, PIPE
 
 # Create your views here.
 

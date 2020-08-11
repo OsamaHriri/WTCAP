@@ -45,7 +45,7 @@ class PrematureTagger(RuleBasedExpertSystemTagger):
             for j in range(len(textEncapsulator.Sentences[i].Words)):
                 #Add code here  Like:
                 if False:
-                    textEncapsulator.Sentences[i].Words[j].PrematureTags['Neglected'] = 1;
+                    textEncapsulator.Sentences[i].Words[j].PrematureTags['Neglected'] = 1
             pass
     pass
     

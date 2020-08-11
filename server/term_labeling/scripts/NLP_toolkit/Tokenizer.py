@@ -5,7 +5,7 @@ Created on ١٠‏/٠٣‏/٢٠١٠
 @Created by: Muhammad Altabba
 '''
 from Sentence import*
-
+from progress.bar import ChargingBar as Bar
 from Word import *
 from  TokenType import TokenType
 # from  Models.Lexicon import *
@@ -47,7 +47,8 @@ class Tokenizer(object):
         sentenceStart = 0 
         wordsList = [] 
         sentences = [] 
-        i = 0 
+        i = 0
+        bar = Bar('Tokezing', max=len(string))
         while i < len(string):
             if self.FinalCharsType[i] != 's' and self.FinalCharsType[i+1] == 's':
                 if self.FinalCharsType[i] in WhiteSpacesList:
@@ -66,14 +67,12 @@ class Tokenizer(object):
             if self.FinalCharsType[i] == 's':
                 isEndOfSentence = False 
                 sentenceEnd = i + 1 
-                while i+1 < len(string)\
-                and (string[i] == string[i+1]\
-                or string[i+1] == ' '\
-                or (self.isSentenceSeperator(string[i]) and self.isSentenceSeperator(string[i+1]))):
+                while i+1 < len(string) and (string[i] == string[i+1]  or string[i+1] == ' ' or (self.isSentenceSeperator(string[i]) and self.isSentenceSeperator(string[i+1]))):
                     if self.isSentenceSeperator(string[i]):
                         isEndOfSentence = True 
                         sentenceEnd = i + 2 
-                    i += 1                     
+                    i += 1
+                    bar.next()
                 word = Word(string[wordStart:i+1]) 
                 if string[i] in WhiteSpacesList:
                     word.TokenType = TokenType(2)  # (2, "White Space")
@@ -89,7 +88,9 @@ class Tokenizer(object):
                     sentenceStart = i + 1 
                     wordsList = [] 
             
-            i += 1 
+            i += 1
+            bar.next()
+        bar.finish()
         return sentences 
     pass
 
