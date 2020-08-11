@@ -17,4 +17,5 @@ urlpatterns = [
     path('external2/', views.external2, name="script2"),
     path('termTree/', views.termTree, name="termTree"),
     path('save_term_tags/', views.save_term_tags, name='save_term_tags'),
+    path('suggest_tags/', views.suggest_tags, name='suggest_tags'),
 ]

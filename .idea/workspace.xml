@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/wordTagging.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/wordTagging.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +45,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/server" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AdvancedSE" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -75,7 +77,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.wordTagging">
+  <component name="RunManager" selected="Python.tagGraph">
     <configuration name="almaany_translator_bot" type="PythonConfigurationType" factoryName="Python">
       <module name="semantic-labeling-arabic" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -166,8 +168,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.wordTagging" />
         <item itemvalue="Python.tagGraph" />
+        <item itemvalue="Python.wordTagging" />
         <item itemvalue="Python.createGraph" />
       </list>
     </recent_temporary>
@@ -243,7 +245,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594224628475</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="tag frequency">
+      <created>1596389857722</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1596389857722</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,7 +280,8 @@
     <MESSAGE value="merge db , bugs fix and documentation." />
     <MESSAGE value="get all tag roots function + bugs fix" />
     <MESSAGE value="mutex" />
-    <option name="LAST_COMMIT_MESSAGE" value="mutex" />
+    <MESSAGE value="tag frequency" />
+    <option name="LAST_COMMIT_MESSAGE" value="tag frequency" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2587" y="183" width="869" height="810" key="CommitChangelistDialog2" timestamp="1587302475442">

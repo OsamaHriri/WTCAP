@@ -76,30 +76,36 @@ class Tagging(object):
 
     def searchTagsOfWord(self, word):
         """
-        get all the tags of given word , perform distinct function on the answer.
+        get all the tags of given word .
         :param word:
         :return:
         """
         if not self.ifExists(word=word):
             return []
         search = self.graph.run(self.getTagOfWordQ, word=word).data()
-        return search
+        sum = 0
+        for s in search:
+            sum += s['Tag']['frequency']
+        for s in search:
+            s['Tag']['frequency'] = s['Tag']['frequency'] / sum
+        return {'suggestions':search}
 
-#t = Tagging()
-#t.tagWord("الارض", "العالم", 3,1,1, 3)
-#t.tagWord("الارض", "العالم", 3,1,1, 4)
-#t.tagWord("الارض", "بحر", 3,1,1, 3)
-#t.tagWord("الارض", "العالم", 3,1,1, 5)
-#t.tagWord("الارض", "بحر", 3,1,1, 7)
-#t.tagWord("الارض", "سمار", 3,1,1, 3)
-#t.tagWord("بحر", "العالم", 1,0,2, 1)
-#t.tagWord("بحر", "العالم", 1,0,2, 1)
-#t.tagWord("بحر", "العالم", 1,0,2, 1)
-#t.tagWord("بحر", "العالم", 4,0,3, 33)
-#t.tagWord("بحر", "ماء", 2,1,4, 2)
-#t.tagWord("محيطأ", "ماء", 2,0,5, 2)
-#t.tagWord("محيطأ", "ماء", 2,0,5, 2)
-#t.tagWord("محيطأ", "ماء", 2,0,5, 2)
-#t.tagWord("محيط", "ماء", 2,0,57, 2)
-#t.tagWord("محيط", "ماء", 2,0,58, 2)
-#print(t.searchTagsOfWord("الارض"))
+
+t = Tagging()
+# t.tagWord("الارض", "العالم", 3,1,1, 3)
+# t.tagWord("الارض", "العالم", 3,1,1, 4)
+# t.tagWord("الارض", "بحر", 3,1,1, 3)
+# t.tagWord("الارض", "العالم", 3,1,1, 5)
+# t.tagWord("الارض", "بحر", 3,1,1, 7)
+# t.tagWord("الارض", "سمار", 3,1,1, 3)
+# t.tagWord("بحر", "العالم", 1,0,2, 1)
+# t.tagWord("بحر", "العالم", 1,0,2, 1)
+# t.tagWord("بحر", "العالم", 1,0,2, 1)
+# t.tagWord("بحر", "العالم", 4,0,3, 33)
+# t.tagWord("بحر", "ماء", 2,1,4, 2)
+# t.tagWord("محيطأ", "ماء", 2,0,5, 2)
+# t.tagWord("محيطأ", "ماء", 2,0,5, 2)
+# t.tagWord("محيطأ", "ماء", 2,0,5, 2)
+# t.tagWord("محيط", "ماء", 2,0,57, 2)
+# t.tagWord("محيط", "ماء", 2,0,58, 2)
+print(t.searchTagsOfWord("الارض"))

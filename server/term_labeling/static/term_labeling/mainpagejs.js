@@ -83,6 +83,7 @@ function hi(id) {
             $(this).css("color", "green");
             console.log("choosen term " + this.innerHTML);
             selected_term = this.innerHTML;
+            load_suggestions(selected_term)
             $.ajax({
                 type: "POST",
                 url: "newexternal/",
@@ -169,5 +170,19 @@ function reset() {
     }
 
     //add thingy that closes the row in table
+
+}
+
+function load_suggestions(term){
+     $.ajax({
+                    type: "GET",
+                    url: "suggest_tags/",
+                    data: {'term':term},
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        window.alert(data)
+                    }
+                });
 
 }

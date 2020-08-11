@@ -3,6 +3,7 @@ from django.shortcuts import render
 from .scripts.almaany_translator_bot import ALmaanyBot
 from .scripts.graph import Graph
 from .scripts.tagGraph import Tag
+from .scripts.wordTagging import Tagging
 import requests
 from .scripts import connector
 import pyarabic.araby as araby
@@ -230,5 +231,16 @@ def save_term_tags(request):
     else:
         return HttpResponse("not success")
 
+def suggest_tags(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        term = araby.strip_tashkeel(term)
+        t= Tagging()
+        suggestions=t.searchTagsOfWord(term)
+        if suggestions is not None:
+            return JsonResponse(suggestions)
+        else:
+            return HttpResponse("not found")
 
 mutex = Lock()
