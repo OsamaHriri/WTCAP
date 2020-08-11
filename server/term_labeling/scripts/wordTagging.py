@@ -11,7 +11,7 @@ class Tagging(object):
         self.searchQ3 = """ Match (w:Word)-[r:tag]->(t:Tag) where t.name=$tag and w.name=$word and r.poemID=$poem and r.sader=$sader and r.position=$position and r.row=$row return r  """
         self.createReletionQ = """ Match (w:Word) ,(t:Tag) where w.name=$word and t.name=$tag create (w)-[:tag{position: $position,poemID: $poem,row : $row,sader : $sader}]->(t) """
         self.removeWordQ = """ Match (w:Word) where w.name=$word detach delete w """
-        self.getTagOfWordQ = """ Match (w:Word) -[r:tag]-> (t:Tag) where w.name=$word return t.name as name"""
+        self.getTagOfWordQ = """ Match (w:Word) -[r:tag]-> (t:Tag) with w , t , count(r) as c where w.name=$word  return {name :t.name  , frequency: c } as Tag order by c Desc """
 
     def ifExists(self, word=None, tag=None, ):
         """
@@ -80,18 +80,26 @@ class Tagging(object):
         :param word:
         :return:
         """
-        l = []
         if not self.ifExists(word=word):
-            return l
-        search = self.graph.run(self.getTagOfWordQ, word=word)
-        for t in search:
-            l.append(t["name"])
-        return list(dict.fromkeys(l))
+            return []
+        search = self.graph.run(self.getTagOfWordQ, word=word).data()
+        return search
 
-t = Tagging()
-t.tagWord("الارض", "العالم", 3,1,1, 3)
-t.tagWord("بحر", "العالم", 1,0,2, 1)
-t.tagWord("بحر", "العالم", 4,0,3, 33)
-t.tagWord("بحر", "ماء", 2,1,4, 2)
-t.tagWord("محيط", "ماء", 2,0,5, 2)
-print(t.searchTagsOfWord("بحر"))
+#t = Tagging()
+#t.tagWord("الارض", "العالم", 3,1,1, 3)
+#t.tagWord("الارض", "العالم", 3,1,1, 4)
+#t.tagWord("الارض", "بحر", 3,1,1, 3)
+#t.tagWord("الارض", "العالم", 3,1,1, 5)
+#t.tagWord("الارض", "بحر", 3,1,1, 7)
+#t.tagWord("الارض", "سمار", 3,1,1, 3)
+#t.tagWord("بحر", "العالم", 1,0,2, 1)
+#t.tagWord("بحر", "العالم", 1,0,2, 1)
+#t.tagWord("بحر", "العالم", 1,0,2, 1)
+#t.tagWord("بحر", "العالم", 4,0,3, 33)
+#t.tagWord("بحر", "ماء", 2,1,4, 2)
+#t.tagWord("محيطأ", "ماء", 2,0,5, 2)
+#t.tagWord("محيطأ", "ماء", 2,0,5, 2)
+#t.tagWord("محيطأ", "ماء", 2,0,5, 2)
+#t.tagWord("محيط", "ماء", 2,0,57, 2)
+#t.tagWord("محيط", "ماء", 2,0,58, 2)
+#print(t.searchTagsOfWord("الارض"))

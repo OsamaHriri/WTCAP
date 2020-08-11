@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<object id="svg1" data="../static/images/graph.svg" type="image/svg+xml"></object>
+<script>
+    document.getElementById("svg1").addEventListener("load", function () {
+        var doc = this.getSVGDocument();
+        var rect = doc.querySelector("rect"); // suppose our image contains a <rect>
+        rect.setAttribute("fill", "green");
+    });
+</script>
+
+{% endblock content %}
+
+
+{% block scripts %}
+<script src="{% static 'term_labeling/build/sigma.min.js' %}"></script>
+{% endblock scripts %}

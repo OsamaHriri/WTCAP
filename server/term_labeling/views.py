@@ -1,104 +1,79 @@
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from server.term_labeling.scripts import ALmaanyBot
-from server.term_labeling.scripts import Graph
+from .scripts.almaany_translator_bot import ALmaanyBot
+from .scripts.graph import Graph
+from .scripts.tagGraph import Tag
 import requests
+from .scripts import connector
+import pyarabic.araby as araby
+from threading import Thread, Lock
+import sys
+import os
+from db_mutex import DBMutexError, DBMutexTimeoutError
+from db_mutex.db_mutex import db_mutex
+from subprocess import run, PIPE
 
 # Create your views here.
 
 # create dummy data of line and context
+from .scripts.wordTagging import Tagging
 
-poem = [
-    {
-        'index': '1',
-        'content': {
-            'first': 'لَوَتْ بِالسَّلامِ بَنَانًا خَضيبا',
-            'second': 'وَلَحْظًا يشوقُ الفؤادَ الطَّرُوبا'
-        }
-    },
-    {
-        'index': '2',
-        'content': {
-            'first': 'َزَارَتْ على عَجَلٍ فاكْتَسى',
-            'second': 'لِزَوْرَتِها ((أَبْرَقُ الحَزْنِ)) طيبا'
-        }
-    },
-    {
-        'index': '3',
-        'content': {
-            'first': 'فكانَ العبيرُ بها وَاشِيًا',
-            'second': 'وَجَرْسُ الحُلِيِّ عليها رَقيبا'
-        }
-    },
-    {
-        'index': '4',
-        'content': {
-            'first': 'وَلَمْ أَنْسَ لَيْلَتَنَا في العِنَا',
-            'second': 'وقِ لَفَّ الصَّبَا بِقَضيبٍ قَضيبا '
-        }
-    }, {
-        'index': '5',
-        'content': {
-            'first': 'سُكُوتٌ يَحرُّ عليهِ الهوى',
-            'second': 'وشكوى تَهِيجُ البُكا والنَّحيبا'
-        }
-    },
-    {
-        'index': '6',
-        'content': {
-            'first': 'َمَا افْتَنَّتِ الرّيحُ فِي مَرِّها',
-            'second': 'فَطَوْرًا خُفُوتًا، وَطَوْرًا هُبُوبا'
-        }
-    },
-    {
-        'index': '7',
-        'content': {
-            'first': 'عَنَتْ كَبِدي قَسْوةٌ منكِ ما',
-            'second': 'تَزالُ تُجدِّدُ فيها نُدُوبا'
-        }
-    },
-    {
-        'index': '8',
-        'content': {
-            'first': 'وَحُمِّلْتُ عِنْدَكِ ذَنْبَ المَشي',
-            'second': 'بِ، حَتّى كَأَنّي ابْتَدَعْتُ المَشِيبا'
-        }
-    },
-    {
-        'index': '9',
-        'content': {
-            'first': ' وَمَنْ يَطَّلِعْ شَرَفَ الأَرْبَعِي ',
-            'second': 'ن يُحَيِّ مِنَ الشَّيْبِ زَوْرًا غريبا'
-        }
-    },
-    {
-        'index': '10',
-        'content': {
-            'first': ' بَلَوْنا ضَرَائبَ مَنْ قَدْ نَرى',
-            'second': 'فَما إِنْ رَأَيْنا لِ((فَتْحٍ)) ضَرِيبا'
-        }
-    },
-    {
-        'index': '11',
-        'content': {
-            'first': 'هُوَ المَرْءُ أَبْدَتْ لَهُ الحَادِثا ',
-            'second': ' تُ عَزْمًا وَشِيكًا وَرَأْيًا صَلِيبا '
-        }
-    },
-    {
-        'index': '12',
-        'content': {
-            'first': 'تَنَقَّل في خُلُقَى سُؤْدُدٍ:',
-            'second': ' سَمَاحًا مَرُجًّى، وَبَأْسًا مَهِيبا '
-        }
-    },
-]
+poem = {'id': '2066', 'poet_id': 25, 'name': 'قصيدة رقم 11، الكامل،لبِّسِ', 'context': [
+    {'row_index': '1', 'sadr': 'أَيَئِسْتَ مِنْ أَسْماءَ أَمْ لم تَيْأَسِ ',
+     'ajuz': 'وَصَرَمْتَ شَبْكَ حِبَالِها المُتَلبِّسِ '},
+    {'row_index': '2', 'sadr': 'لا تَحْزُنَنْكَ فَإِنَّها كَلْبِيَّةٌ ',
+     'ajuz': 'كَالرِّئْمِ يَبْرُق وَجْهُهَا في المَكْنِسِ '},
+    {'row_index': '3', 'sadr': 'وَبَدَا سَلاَسِلُ مُزْبِدٍ مُتَوَقِّدٍ ',
+     'ajuz': 'كالجَمْرِ تُذْكيهِ الصَّبَا وَمُكَرَّسِ '},
+    {'row_index': '4', 'sadr': 'وَكَأَنَّ طَعْمَ مُدَامَةٍ جَبَلِيَّةٍ ',
+     'ajuz': 'قَدْ عُتِّقَتْ سَنَتَيْنِ لمَّا تُنْكَسِ '},
+    {'row_index': '5', 'sadr': 'والزَّنْجَبِيلَ وَطَعْمَ عَذْبٍ بَارِدٍ',
+     'ajuz': 'يَعْلُو ثَنَاياها مِنَ المُتَنَفِّسِ '},
+    {'row_index': '6', 'sadr': 'دَعْهَا وَسَلِّ طِلابَها بجُلَالَةٍ ',
+     'ajuz': 'عَيْرَانَةٍ كالفَحْلِ حَرْفٍ عِرْمِسِ '},
+    {'row_index': '7', 'sadr': 'لِلصَّيْعَرِيَّةِ فَوْقَ حَاجِبِ عَيْنِها ',
+     'ajuz': 'أثَرٌ يُبَيِّنُهُ وَلمَّا يَدْرُسِ '},
+    {'row_index': '8', 'sadr': 'تَسْتَنُّ في ثِنْيِ الجَدِيلِ وَتَنْتَحِي ',
+     'ajuz': 'كالثَّوْرِ رِيعَ مِنَ الحِلَابِ الأخْنَسِ '},
+    {'row_index': '9', 'sadr': 'وَكَأَنَّ جادِيًّا به وأرَنْدَجًا ',
+     'ajuz': 'وَبِوَجْهِهِ سُفْعٌ كَلَوْنِالسُّنْدُسِ '},
+    {'row_index': '10', 'sadr': 'جُلْذِيَّةٌ تَطِسُ الإكامَ نَجِيحَةٌ ',
+     'ajuz': 'كَالْجَأْبِ يَنْفُضُ طَلَّهُ المُتَشَمِّسِ '},
+    {'row_index': '11', 'sadr': 'أنْضَيْتُها بَعْدَ المِرَاحِ إِلى ٱمْرِئٍ ',
+     'ajuz': 'جَلْدِ القُوَى في كُلِّ ساعَةِ مَحْبِسِ '},
+    {'row_index': '12', 'sadr': 'طَلْقٍ يَرَاحُ إِلى النَّدَى مُتَبَلِّجٍ ',
+     'ajuz': 'كالبَدْرِ لا فَهٍّ ولا مُتَعَبِّسِ '},
+    {'row_index': '13', 'sadr': 'إلى ٱبْنِ هِنْدٍ خَذْرَفَتْ أخْفَافُها ',
+     'ajuz': 'تَهْوِي لِمُعْتَمِدٍ بَعِيدِ المَحْدِسِ '},
+    {'row_index': '14', 'sadr': 'المُشْتَرِي حُسْنَ الثَّنَاءِ بِمَالِهِ ',
+     'ajuz': 'وإذا تَوَجَّهَ مُعْطيًا لم يَحْبِسِ '},
+    {'row_index': '15', 'sadr': 'وَلأَنْتَ أَجْوَدُ مِنْ خَلِيجٍمُرْسَلٍ ',
+     'ajuz': 'مُتَتَابِعِ التَّيَّارِ غَيْرِ مُسَجَّسِ '},
+    {'row_index': '16', 'sadr': 'حِيْبَتْ لَهُ جَبْلَاءُ مِنْ فوقِ الصَّفَا ',
+     'ajuz': 'مَجْرٌ يَمُرُّ على الخَلِيجِ الأخْرَس '},
+    {'row_index': '17', 'sadr': 'لُقْمانُ مُنْتَصِرًا وَقُسٌّ ناطِقًا ',
+     'ajuz': 'ولأَنْتَ أجْرَأُ صَوْلَةً مِنْ بَيْهَسِ '},
+    {'row_index': '18', 'sadr': 'يَقِصُ السِّبَاعَ كَأَنَّ حِلًّا فَوْقَهُ ',
+     'ajuz': 'ضَخْمٌ مُذَمِّرُهُ شَدِيدُ الأنْحُسِ '}]}
 
 
 def index(request):
+    t = Tag()
+    json_tags = t.getAllTagsbyjson()
+    print(json_tags[0])
     context = {
-        'poems': poem
+        'poems': poem,
+        'title': 'Home',
+        'tags': json_tags[0]
     }
     return render(request, 'index.html', context)
+
+
+def tags(request):
+    context = {
+        'title': 'Tags'
+    }
+    return render(request, 'tags.html', context)
 
 
 def process_lines(request):
@@ -116,6 +91,59 @@ def process_lines(request):
     return render(request, 'process_lines.html', context)
 
 
+def select_poet_page(request):
+    c = connector.Connector()
+    poets = c.get_poets()
+    poems = c.get_poems()
+    context = {
+        'poets': poets,
+        'poems': poems,
+        'title': 'Selection'
+    }
+    return render(request, 'select_poet.html', context)
+
+
+def poet_poems(request):
+    """
+    :param HTTP request:
+    :return: STRING of poems for this poet, split by ,
+    """
+    if request.method == 'GET':
+        poetId = request.GET['poet_id']
+        c = connector.Connector()
+        poems = c.get_poems_by_poet(poetId)
+        idlist = ""
+        for pp in poems:
+            idlist = idlist + pp['id'] + ","
+        if idlist is not None:
+            print(idlist)
+            return HttpResponse(idlist)
+        else:
+            return HttpResponse("not found")
+    else:
+        return HttpResponse("not success")
+
+
+def all_poems(request):
+    """
+    not sure if you need this one
+    try using the poem list you already rendered with the page
+    """
+    if request.method == 'GET':
+        c = connector.Connector()
+        poems = c.get_poems()
+        idlist = ""
+        for pp in poems:
+            idlist = idlist + pp['id'] + ","
+        if idlist is not None:
+            print(idlist)
+            return HttpResponse(idlist)
+        else:
+            return HttpResponse("not found")
+    else:
+        return HttpResponse("not success")
+
+
 def button(request):
     return render(request, 'home.html')
 
@@ -127,11 +155,27 @@ def output(request):
     return render(request, 'home.html', {'data': data})
 
 
+def newexternal(request):
+    """
+    this one returns the json representation of the tags
+    """
+    if request.method == 'POST':
+        print("getting here")
+        t = Tag()
+        json_tags = t.getAllTagsbyjson()
+        if json_tags is not None:
+            print("sending")
+            return HttpResponse(json_tags)  # Sending an success response
+        else:
+            return HttpResponse("not found")
+    else:
+        return HttpResponse("not success")
+
+
 def external(request):
     inp = request.POST.get('param')
     bot = ALmaanyBot()
     out = bot.search(inp)
-
     return render(request, 'home.html', {'data1': out})
 
 
@@ -150,3 +194,41 @@ def external2(request):
     if p is not None:
         return render(request, 'home.html', {'data1': p})
     return render(request, 'home.html', {'data1': 'not found'})
+
+
+def termTree(request):
+    if request.method == 'GET':
+        t = Tag()
+        json_tags = t.getAllTagsbyjson()
+        json_tags = {'tree': json_tags}
+        if json_tags is not None:
+            return JsonResponse(json_tags)  # Sending an success response
+        else:
+            return HttpResponse("not found")
+    else:
+        return HttpResponse("not success")
+
+
+def save_term_tags(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        # remove term tashkeel
+        term = araby.strip_tashkeel(term)
+        tag = data.get('tag')
+        t = Tagging()
+        mutex.acquire()
+        try:
+            suc = t.tagWord(term, tag, 1, 1, 1, 1)
+        finally:
+            mutex.release()
+
+        if suc:
+            return HttpResponse("Success")  # Sending an success response
+        else:
+            return HttpResponse("not found")
+    else:
+        return HttpResponse("not success")
+
+
+mutex = Lock()

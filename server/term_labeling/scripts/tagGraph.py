@@ -17,6 +17,7 @@ class Tag(object):
         self.setToRootQ= """ Match (n:Tag) where n.name=$name set n.parent=-1 """
         self.getAllTagsQ = """ Match (t:Tag) return t.name as name ,t.parent as parent , t.id as id """
         self.getAllRootsQ = """ Match (t:Tag) where t.parent=-1 return t.name as name  """
+        self.jsonQuery = """ MATCH r=(t:Tag)-[:Parent*]->(rs:Tag)  where t.parent=-1 WITH COLLECT(r) AS rs CALL apoc.convert.toTree(rs, true ,{ nodes: { Tag:['name']} }) yield value   RETURN value as tags """
 
     def ifExists(self, name):
         s = self.graph.run(self.searchQ, name=name).data()
@@ -150,6 +151,11 @@ class Tag(object):
         self.graph.run(self.updateAttQ, name=name)
         return True
 
+    def getAllTagsbyjson(self):
+        query = self.graph.run(self.jsonQuery).data()
+        return query
+
+
 
 #tag = Tag()
 # tag.getTags("عجل")
@@ -168,3 +174,4 @@ class Tag(object):
 #print(tag.getChildrens("العالم"))
 #print(tag.getParent("ماء"))
 #print( tag.getAllheads())
+#print(tag.getAllTagsbyjson())
