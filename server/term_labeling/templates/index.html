@@ -28,8 +28,11 @@
             <div class="treeview">
                 <h5> Tags </h5>
 
-                <ul class="tree">
+                {% for tag in tags.root.tags.parent %}
+                    <p> {{tag}} </p>
+                {% endfor %}
 
+                <ul class="tree">
                     <li id="root1">
                         <label for="root1"> <a onclick="item_clicked(this)">العالم</a> </label>
                         <input checked="" id="test" value="" type="checkbox">
