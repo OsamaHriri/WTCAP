@@ -60,11 +60,11 @@ poem = {'id': '2066', 'poet_id': 25, 'name': 'قصيدة رقم 11، الكام�
 def index(request):
     t = Tag()
     json_tags = t.getAllTagsbyjson()
-    print(json_tags[0])
+
     context = {
         'poems': poem,
         'title': 'Home',
-        'tags': json_tags[0]
+        'tags': {"root" : json_tags}
     }
     return render(request, 'index.html', context)
 

@@ -88,7 +88,7 @@ function hi(id) {
                 url: "newexternal/",
                 dataType: "json",
                 success: function (data) {
-                    console.log("success is assured");
+                    console.log(data);
 
                     window.alert(data)
                 }
