@@ -59,14 +59,15 @@ poem = {'id': '2066', 'poet_id': 25, 'name': 'قصيدة رقم 11، الكام�
 def index(request):
     t = Tag()
     json_tags = t.getAllTagsbyjson()
+    all_tags = t.getAllTags()
 
     context = {
         'poems': poem,
         'title': 'Home',
-        'tags': {"root" : json_tags}
+        'tags': {"root": json_tags},
+        'all_tags': all_tags
     }
-
-
+    print(all_tags)
     return render(request, 'index.html', context)
 
 
@@ -231,16 +232,18 @@ def save_term_tags(request):
     else:
         return HttpResponse("not success")
 
+
 def suggest_tags(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
         term = araby.strip_tashkeel(term)
-        t= Tagging()
-        suggestions=t.searchTagsOfWord(term)
+        t = Tagging()
+        suggestions = t.searchTagsOfWord(term)
         if suggestions is not None:
             return JsonResponse(suggestions)
         else:
             return HttpResponse("not found")
+
 
 mutex = Lock()

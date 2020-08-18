@@ -27,6 +27,7 @@ function toggle(source) {
 
 let selected_tags = [];
 let selected_term = "";
+let selected_obj = "";
 
 function box_checked(obj) {
     const id = obj.id;
@@ -80,20 +81,11 @@ function box_checked(obj) {
 function hi(id) {
     $(function () {
         $(".term").click(function () {
-            $(this).css("color", "green");
+            $(this).css("color", "orange");
+            selected_obj = $(this);
             console.log("choosen term " + this.innerHTML);
             selected_term = this.innerHTML;
-            load_suggestions(selected_term)
-            $.ajax({
-                type: "POST",
-                url: "newexternal/",
-                dataType: "json",
-                success: function (data) {
-                    console.log(data);
-
-                    window.alert(data)
-                }
-            });
+            load_suggestions(selected_term);
         });
     });
 }
@@ -143,6 +135,7 @@ function build_tag(tag_name) {
 function save_term_tag() {
     console.log(selected_term);
     console.log(selected_tags);
+    selected_obj.css("color", "green");
     for (const tag of selected_tags) {
         console.log("on " + tag);
         $.ajax({
@@ -169,20 +162,36 @@ function reset() {
         buttons[i].remove();
     }
 
+    const container2 = document.getElementsByClassName('suggested_container')[0];
+    const buttons2 = container2.getElementsByTagName('button');
+    for (let i = buttons2.length - 1; i >= 0; --i) {
+        buttons2[i].remove();
+    }
     //add thingy that closes the row in table
 
 }
 
-function load_suggestions(term){
-     $.ajax({
-                    type: "GET",
-                    url: "suggest_tags/",
-                    data: {'term':term},
-                    dataType: "json",
-                    success: function (data) {
-                        console.log(data);
-                        window.alert(data)
-                    }
-                });
+function load_suggestions(term) {
+    $.ajax({
+        type: "GET",
+        url: "suggest_tags/",
+        data: {'term': term},
+        dataType: "json",
+        success: function (data) {
+            const suggestions = data.suggestions;
+            suggestions.forEach(build_suggestion)
+        }
+    });
+}
+
+function build_suggestion(item, index){
+    console.log(item);
+    console.log(item.Tag.name + " " + item.Tag.frequency);
+
+        const container = document.getElementsByClassName('suggested_container')[0];
+        container.insertAdjacentHTML('beforeend', '<button class="sug-btn" onclick="add_tag(this)">\n' +
+            '                    <span class="add-icon">+</span>\n' +
+            '                    <span class="btn-txt">' + item.Tag.name + '-' + item.Tag.frequency + '</span>\n' +
+            '                </button>')
 
 }
