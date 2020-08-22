@@ -81,17 +81,17 @@ class Tagging(object):
         :return:
         """
         if not self.ifExists(word=word):
-            return []
+            return {'suggestions': []}
         search = self.graph.run(self.getTagOfWordQ, word=word).data()
         sum = 0
         for s in search:
             sum += s['Tag']['frequency']
         for s in search:
-            s['Tag']['frequency'] = s['Tag']['frequency'] / sum
+            s['Tag']['frequency'] = round(float(s['Tag']['frequency'] / sum) , 2)
         return {'suggestions':search}
 
 
-t = Tagging()
+#t = Tagging()
 # t.tagWord("الارض", "العالم", 3,1,1, 3)
 # t.tagWord("الارض", "العالم", 3,1,1, 4)
 # t.tagWord("الارض", "بحر", 3,1,1, 3)
@@ -108,4 +108,4 @@ t = Tagging()
 # t.tagWord("محيطأ", "ماء", 2,0,5, 2)
 # t.tagWord("محيط", "ماء", 2,0,57, 2)
 # t.tagWord("محيط", "ماء", 2,0,58, 2)
-print(t.searchTagsOfWord("الارض"))
+#print(t.searchTagsOfWord("الارض"))

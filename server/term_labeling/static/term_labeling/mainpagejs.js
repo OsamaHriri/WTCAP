@@ -28,6 +28,7 @@ function toggle(source) {
 let selected_tags = [];
 let selected_term = "";
 let selected_obj = "";
+let orange = "rgb(255, 165, 0)";
 
 function box_checked(obj) {
     const id = obj.id;
@@ -76,11 +77,13 @@ function box_checked(obj) {
     hi(id);
 }
 
-
 //can remove
 function hi(id) {
     $(function () {
         $(".term").click(function () {
+            reset()
+            if (selected_obj != "" && selected_obj.css("color") === orange )
+                selected_obj.css("color", "black");
             $(this).css("color", "orange");
             selected_obj = $(this);
             console.log("choosen term " + this.innerHTML);
@@ -97,7 +100,7 @@ setTimeout(function () {
 function add_tag(obj) {
     //const me = $(obj);
     const text = obj.getElementsByClassName("btn-txt");
-    const tag_text = text[0].innerText;
+    const tag_text = text[0].innerText.slice(0,text[0].innerText.lastIndexOf("-"))
     build_tag(tag_text);
 }
 
@@ -172,6 +175,7 @@ function reset() {
 }
 
 function load_suggestions(term) {
+     console.log("XD")
     $.ajax({
         type: "GET",
         url: "suggest_tags/",

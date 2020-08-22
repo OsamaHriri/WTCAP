@@ -67,7 +67,6 @@ def index(request):
         'tags': {"root": json_tags},
         'all_tags': all_tags
     }
-    print(all_tags)
     return render(request, 'index.html', context)
 
 
@@ -239,7 +238,12 @@ def suggest_tags(request):
         term = data.get('term')
         term = araby.strip_tashkeel(term)
         t = Tagging()
-        suggestions = t.searchTagsOfWord(term)
+        mutex.acquire()
+        try:
+            suggestions = t.searchTagsOfWord(term)
+            print(suggestions)
+        finally:
+            mutex.release()
         if suggestions is not None:
             return JsonResponse(suggestions)
         else:

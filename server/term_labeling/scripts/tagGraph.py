@@ -158,8 +158,6 @@ class Tag(object):
 
     def getAllTagsbyjson(self):
         query = self.graph.run(self.jsonQuery).data()
-        for item in query:
-            print(item)
         return query
 
 
