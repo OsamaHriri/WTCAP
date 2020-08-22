@@ -81,7 +81,6 @@ function box_checked(obj) {
 function hi(id) {
     $(function () {
         $(".term").click(function () {
-            reset()
             if (selected_obj != "" && selected_obj.css("color") === orange )
                 selected_obj.css("color", "black");
             $(this).css("color", "orange");
@@ -174,8 +173,25 @@ function reset() {
 
 }
 
+
+function reset2() {
+    selected_tags = [];
+    const container = document.getElementsByClassName('selected_container')[0];
+    const buttons = container.getElementsByTagName('button');
+    for (let i = buttons.length - 1; i >= 0; --i) {
+        buttons[i].remove();
+    }
+
+    const container2 = document.getElementsByClassName('suggested_container')[0];
+    const buttons2 = container2.getElementsByTagName('button');
+    for (let i = buttons2.length - 1; i >= 0; --i) {
+        buttons2[i].remove();
+    }
+    //add thingy that closes the row in table
+
+}
+
 function load_suggestions(term) {
-     console.log("XD")
     $.ajax({
         type: "GET",
         url: "suggest_tags/",
@@ -183,6 +199,7 @@ function load_suggestions(term) {
         dataType: "json",
         success: function (data) {
             const suggestions = data.suggestions;
+            reset2()
             suggestions.forEach(build_suggestion)
         }
     });
