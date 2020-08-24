@@ -188,17 +188,15 @@ form[type=submit] {
 /* tree style */
 .treeview {
     float: right;
-    /*-webkit-user-select: none;*/
-    /*-moz-user-select: none;*/
     -ms-user-select: none;
     user-select: none;
     border-radius: 25px;
     border: 2px solid #6666BB;
     padding: 20px;
     margin-bottom: 10px;
-    max-height: 400px;
+    max-height: 500px;
     overflow: auto;
-    width: 200px;
+    width: 266px;
 }
 
 ul.tree {

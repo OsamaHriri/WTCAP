@@ -12,6 +12,7 @@ function initialize_index() {
             checkboxes[i].checked = false;
         }
     }
+
 }
 
 /* this method is for the select all checkbox */
@@ -27,6 +28,10 @@ function toggle(source) {
 
 let selected_tags = [];
 let selected_term = "";
+let selected_obj = "";
+let orange = "rgb(255, 165, 0)";
+let All_tags =[]
+let depth = 0
 
 function box_checked(obj) {
     const id = obj.id;
@@ -75,25 +80,17 @@ function box_checked(obj) {
     hi(id);
 }
 
-
 //can remove
 function hi(id) {
     $(function () {
         $(".term").click(function () {
-            $(this).css("color", "green");
+            if (selected_obj != "" && selected_obj.css("color") === orange )
+                selected_obj.css("color", "black");
+            $(this).css("color", "orange");
+            selected_obj = $(this);
             console.log("choosen term " + this.innerHTML);
             selected_term = this.innerHTML;
-            load_suggestions(selected_term)
-            $.ajax({
-                type: "POST",
-                url: "newexternal/",
-                dataType: "json",
-                success: function (data) {
-                    console.log(data);
-
-                    window.alert(data)
-                }
-            });
+            load_suggestions(selected_term);
         });
     });
 }
@@ -105,14 +102,184 @@ setTimeout(function () {
 function add_tag(obj) {
     //const me = $(obj);
     const text = obj.getElementsByClassName("btn-txt");
-    const tag_text = text[0].innerText;
+    const tag_text = text[0].innerText.slice(0,text[0].innerText.lastIndexOf("-"))
     build_tag(tag_text);
+}
+
+let tagging = false;
+let ul1;
+let ul2;
+
+function getParent(text){
+
+    return $.ajax({
+        type: "GET",
+        url: "get_parent/",
+        data: {'term': text},
+        dataType: "json",
+        success: function (data) {
+            parent = data.parent;
+            return parent
+        }
+    });
+
+
+
+}
+
+function getHeaders(text){
+
+    $.ajax({
+        type: "GET",
+        url: "get_roots/",
+        data: {'term': text},
+        dataType: "json",
+        success: function (data) {
+            roots = data.roots;
+            roots.forEach(build_il_headers)
+            return ;
+        }
+    });
+
+
+
+}
+
+function emptyTree(){
+    var ul = document.querySelector('.tree');
+    var listLength = ul.children.length;
+    for (i = 0; i < listLength; i++) {
+    ul.removeChild(ul.children[0]);
+       }
+     if (typeof ul1 != 'undefined') {
+    listLength = ul1.children.length;
+    for (i = 0; i < listLength; i++) {
+        ul1.removeChild(ul1.children[0]);
+      }
+    }
+    if (typeof ul2 != 'undefined') {
+    listLength = ul2.children.length;
+    for (i = 0; i < listLength; i++) {
+        ul2.removeChild(ul2.children[0]);
+      }
+    }}
+
+function check_event(event){
+    event.preventDefault();
+    switch (event.which) {
+        case 1:
+            tagging=false
+            break;
+        case 2:
+
+        case 3:
+            tagging = true
+            break;
+        default:
+            alert('You have a strange Mouse!');
+    }
+}
+
+
+function item_clicked1(obj,event){
+   check_event(event)
+   emptyTree()
+   depth = depth -1 ;
+   if (depth === 1)
+     flag = false
+   event.stopPropagation()
+   if(event.target === obj)
+      item_clicked(obj);
+   return
+}
+
+function item_clicked2(obj,event){
+   check_event(event)
+   emptyTree()
+    if( depth === 1)
+        flag = true
+   event.stopPropagation()
+   if(event.target === obj)
+      item_clicked(obj);
+   return
+}
+
+function item_clicked3(obj,event){
+    check_event(event)
+    emptyTree()
+    depth = depth + 1;
+    if(depth === 1)
+        flag = false
+    event.stopPropagation()
+   if(event.target === obj)
+      item_clicked(obj);
+   return
 }
 
 function item_clicked(obj) {
     const elem = $(obj);
     const text = elem[0].innerText;
-    build_tag(text);
+    console.log(text)
+    if (tagging == true)
+        build_tag(text);
+    else{
+        var ul = document.querySelector('.tree');
+        getParent(text).done( function(data){
+        var parent = data.parent;
+        if (parent.length === 0 && flag === true) {
+        getHeaders();
+        depth =0
+        flag = false;
+        return;
+       }
+       var current = document.createElement("il");
+       if(parent.length> 0){
+       var pNode=document.createElement("il");
+       pNode.appendChild(document.createTextNode(parent[0].parent.name));
+       pNode.setAttribute('onclick', "item_clicked1(this,event)");
+       pNode.setAttribute('class', "parent");
+       ul.appendChild(pNode);
+       ul1 = document.createElement('ul');
+       pNode.appendChild(ul1)
+       ul1.appendChild(current)
+       }
+       current.appendChild(document.createTextNode(text));
+       current.setAttribute('onclick', "item_clicked2(this,event)");
+       current.setAttribute('class', "node");
+       if(parent.length == 0)
+          ul.appendChild(current);
+       ul2 = document.createElement('ul');
+       current.appendChild(ul2)
+         $.ajax({
+        type: "GET",
+        url: "get_children/",
+        data: {'term': text},
+        dataType: "json",
+        success: function (data) {
+            const children = data.children;
+            children.forEach(build_il)
+            return ;
+        }
+    });
+
+        }); }
+    }
+
+function build_il(item , index ){
+       //var ul = document.querySelector('.tree');
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(item.child.name));
+        li.setAttribute('onclick', "item_clicked3(this,event)");
+        li.setAttribute('class', "child");
+        ul2.appendChild(li);
+}
+function build_il_headers(item , index ){
+        var ul = document.querySelector('.tree');
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(item.root.name));
+        li.setAttribute('onclick', "item_clicked3(this,event)");
+        li.setAttribute('class', "child");
+        ul.appendChild(li);
 }
 
 function remove_tag(obj) {
@@ -143,6 +310,7 @@ function build_tag(tag_name) {
 function save_term_tag() {
     console.log(selected_term);
     console.log(selected_tags);
+    selected_obj.css("color", "green");
     for (const tag of selected_tags) {
         console.log("on " + tag);
         $.ajax({
@@ -169,20 +337,55 @@ function reset() {
         buttons[i].remove();
     }
 
+    const container2 = document.getElementsByClassName('suggested_container')[0];
+    const buttons2 = container2.getElementsByTagName('button');
+    for (let i = buttons2.length - 1; i >= 0; --i) {
+        buttons2[i].remove();
+    }
     //add thingy that closes the row in table
 
 }
 
-function load_suggestions(term){
-     $.ajax({
-                    type: "GET",
-                    url: "suggest_tags/",
-                    data: {'term':term},
-                    dataType: "json",
-                    success: function (data) {
-                        console.log(data);
-                        window.alert(data)
-                    }
-                });
+
+function reset2() {
+    selected_tags = [];
+    const container = document.getElementsByClassName('selected_container')[0];
+    const buttons = container.getElementsByTagName('button');
+    for (let i = buttons.length - 1; i >= 0; --i) {
+        buttons[i].remove();
+    }
+
+    const container2 = document.getElementsByClassName('suggested_container')[0];
+    const buttons2 = container2.getElementsByTagName('button');
+    for (let i = buttons2.length - 1; i >= 0; --i) {
+        buttons2[i].remove();
+    }
+    //add thingy that closes the row in table
+
+}
+
+function load_suggestions(term) {
+    $.ajax({
+        type: "GET",
+        url: "suggest_tags/",
+        data: {'term': term},
+        dataType: "json",
+        success: function (data) {
+            const suggestions = data.suggestions;
+            reset2()
+            suggestions.forEach(build_suggestion)
+        }
+    });
+}
+
+function build_suggestion(item, index){
+    console.log(item);
+    console.log(item.Tag.name + " " + item.Tag.frequency);
+
+        const container = document.getElementsByClassName('suggested_container')[0];
+        container.insertAdjacentHTML('beforeend', '<button class="sug-btn" onclick="add_tag(this)">\n' +
+            '                    <span class="add-icon">+</span>\n' +
+            '                    <span class="btn-txt">' + item.Tag.name + '-' + item.Tag.frequency + '</span>\n' +
+            '                </button>')
 
 }

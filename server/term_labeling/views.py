@@ -59,14 +59,14 @@ poem = {'id': '2066', 'poet_id': 25, 'name': 'قصيدة رقم 11، الكام�
 def index(request):
     t = Tag()
     json_tags = t.getAllTagsbyjson()
+    all_tags = t.getAllTags()
 
     context = {
         'poems': poem,
         'title': 'Home',
-        'tags': {"root" : json_tags}
+        'tags': {"root": json_tags},
+        'all_tags': all_tags
     }
-
-
     return render(request, 'index.html', context)
 
 
@@ -231,15 +231,57 @@ def save_term_tags(request):
     else:
         return HttpResponse("not success")
 
+
 def suggest_tags(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
         term = araby.strip_tashkeel(term)
-        t= Tagging()
-        suggestions=t.searchTagsOfWord(term)
+        t = Tagging()
+        mutex.acquire()
+        try:
+            suggestions = t.searchTagsOfWord(term)
+        finally:
+            mutex.release()
         if suggestions is not None:
             return JsonResponse(suggestions)
+        else:
+            return HttpResponse("not found")
+
+def get_children(request):
+
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        t = Tag()
+        children = t.getChildrens(term)
+        if children is not None:
+            return JsonResponse(children)
+        else:
+            return HttpResponse("not found")
+
+
+def get_parent(request):
+
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        t = Tag()
+        parent = t.getParent(term)
+        if parent is not None:
+            return JsonResponse(parent)
+        else:
+            return HttpResponse("not found")
+
+def get_roots(request):
+
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        t = Tag()
+        roots = t.getAllheads()
+        if roots is not None:
+            return JsonResponse(roots)
         else:
             return HttpResponse("not found")
 
