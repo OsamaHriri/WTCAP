@@ -5,6 +5,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/views.py" afterDir="false" />
@@ -274,7 +276,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598094592198</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Hierarchy Tree traversal + bugs fix">
+      <created>1598269630147</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1598269630147</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -306,7 +315,8 @@
     <MESSAGE value="suggestion tags" />
     <MESSAGE value="bugs fix: color and frequency" />
     <MESSAGE value="bugs fix in frontend" />
-    <option name="LAST_COMMIT_MESSAGE" value="bugs fix in frontend" />
+    <MESSAGE value="Hierarchy Tree traversal + bugs fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Hierarchy Tree traversal + bugs fix" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2587" y="183" width="869" height="810" key="CommitChangelistDialog2" timestamp="1587302475442">

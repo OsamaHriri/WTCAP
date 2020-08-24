@@ -29,27 +29,25 @@
                     {% for tag in all_tags %}
                     <a class="tags-link" href="#" onclick="chooseTag(this)"> {{ tag }} </a>
                     {% endfor %}
+
+                </div>
+
+                <div>
+                    <label >Tagging</label>
+                  <input type="checkbox" checked id="c1" class="checkb" onclick="Tagging()" />
+                  <label for="c1"></label>
+
                 </div>
 
                 <ul class="tree">
 
-                    {% for tag in tags.root %}
-                    <li id="root1">
-                        <label for="root1"> <a onclick="item_clicked3(this,event)">{{tag.tags.name}}</a></label>
-                        <input checked="" id="test" class="child" value="" type="checkbox">
-                        <!--<p> {{tag.tags.name}} </p>-->
-                        <ul>
-                            {% for tag in tag.tags.parent %}
 
-                            <li id="numba2" >
-
-                                <!-- <p> {{tag.name}} </p>-->
-
-                                {% endfor %}
-                        </ul>
-                        {% endfor %}
                 </ul>
                 <p> {{'------'}} </p>
+                 <div>
+                  <input type="text" id="newTag"placeholder="addtag.." name="addtag" style="width:150px">
+                  <button type="button"><i class="fa fa-check-square" aria-hidden="true" onclick="submit_clicked()" ></i></button>
+                 </div>
 
                 <!--                <ul class="tree">-->
                 <!--                    <li id="root1">-->
