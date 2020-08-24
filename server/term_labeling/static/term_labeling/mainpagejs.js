@@ -12,6 +12,7 @@ function initialize_index() {
             checkboxes[i].checked = false;
         }
     }
+
 }
 
 /* this method is for the select all checkbox */
@@ -29,6 +30,8 @@ let selected_tags = [];
 let selected_term = "";
 let selected_obj = "";
 let orange = "rgb(255, 165, 0)";
+let All_tags =[]
+let depth = 0
 
 function box_checked(obj) {
     const id = obj.id;
@@ -103,10 +106,180 @@ function add_tag(obj) {
     build_tag(tag_text);
 }
 
+let tagging = false;
+let ul1;
+let ul2;
+
+function getParent(text){
+
+    return $.ajax({
+        type: "GET",
+        url: "get_parent/",
+        data: {'term': text},
+        dataType: "json",
+        success: function (data) {
+            parent = data.parent;
+            return parent
+        }
+    });
+
+
+
+}
+
+function getHeaders(text){
+
+    $.ajax({
+        type: "GET",
+        url: "get_roots/",
+        data: {'term': text},
+        dataType: "json",
+        success: function (data) {
+            roots = data.roots;
+            roots.forEach(build_il_headers)
+            return ;
+        }
+    });
+
+
+
+}
+
+function emptyTree(){
+    var ul = document.querySelector('.tree');
+    var listLength = ul.children.length;
+    for (i = 0; i < listLength; i++) {
+    ul.removeChild(ul.children[0]);
+       }
+     if (typeof ul1 != 'undefined') {
+    listLength = ul1.children.length;
+    for (i = 0; i < listLength; i++) {
+        ul1.removeChild(ul1.children[0]);
+      }
+    }
+    if (typeof ul2 != 'undefined') {
+    listLength = ul2.children.length;
+    for (i = 0; i < listLength; i++) {
+        ul2.removeChild(ul2.children[0]);
+      }
+    }}
+
+function check_event(event){
+    event.preventDefault();
+    switch (event.which) {
+        case 1:
+            tagging=false
+            break;
+        case 2:
+
+        case 3:
+            tagging = true
+            break;
+        default:
+            alert('You have a strange Mouse!');
+    }
+}
+
+
+function item_clicked1(obj,event){
+   check_event(event)
+   emptyTree()
+   depth = depth -1 ;
+   if (depth === 1)
+     flag = false
+   event.stopPropagation()
+   if(event.target === obj)
+      item_clicked(obj);
+   return
+}
+
+function item_clicked2(obj,event){
+   check_event(event)
+   emptyTree()
+    if( depth === 1)
+        flag = true
+   event.stopPropagation()
+   if(event.target === obj)
+      item_clicked(obj);
+   return
+}
+
+function item_clicked3(obj,event){
+    check_event(event)
+    emptyTree()
+    depth = depth + 1;
+    if(depth === 1)
+        flag = false
+    event.stopPropagation()
+   if(event.target === obj)
+      item_clicked(obj);
+   return
+}
+
 function item_clicked(obj) {
     const elem = $(obj);
     const text = elem[0].innerText;
-    build_tag(text);
+    console.log(text)
+    if (tagging == true)
+        build_tag(text);
+    else{
+        var ul = document.querySelector('.tree');
+        getParent(text).done( function(data){
+        var parent = data.parent;
+        if (parent.length === 0 && flag === true) {
+        getHeaders();
+        depth =0
+        flag = false;
+        return;
+       }
+       var current = document.createElement("il");
+       if(parent.length> 0){
+       var pNode=document.createElement("il");
+       pNode.appendChild(document.createTextNode(parent[0].parent.name));
+       pNode.setAttribute('onclick', "item_clicked1(this,event)");
+       pNode.setAttribute('class', "parent");
+       ul.appendChild(pNode);
+       ul1 = document.createElement('ul');
+       pNode.appendChild(ul1)
+       ul1.appendChild(current)
+       }
+       current.appendChild(document.createTextNode(text));
+       current.setAttribute('onclick', "item_clicked2(this,event)");
+       current.setAttribute('class', "node");
+       if(parent.length == 0)
+          ul.appendChild(current);
+       ul2 = document.createElement('ul');
+       current.appendChild(ul2)
+         $.ajax({
+        type: "GET",
+        url: "get_children/",
+        data: {'term': text},
+        dataType: "json",
+        success: function (data) {
+            const children = data.children;
+            children.forEach(build_il)
+            return ;
+        }
+    });
+
+        }); }
+    }
+
+function build_il(item , index ){
+       //var ul = document.querySelector('.tree');
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(item.child.name));
+        li.setAttribute('onclick', "item_clicked3(this,event)");
+        li.setAttribute('class', "child");
+        ul2.appendChild(li);
+}
+function build_il_headers(item , index ){
+        var ul = document.querySelector('.tree');
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(item.root.name));
+        li.setAttribute('onclick', "item_clicked3(this,event)");
+        li.setAttribute('class', "child");
+        ul.appendChild(li);
 }
 
 function remove_tag(obj) {

@@ -35,40 +35,16 @@
 
                     {% for tag in tags.root %}
                     <li id="root1">
-                        <label for="root1"> <a onclick="item_clicked(this)">{{tag.tags.name}}</a></label>
-                        <input checked="" id="test" value="" type="checkbox">
+                        <label for="root1"> <a onclick="item_clicked3(this,event)">{{tag.tags.name}}</a></label>
+                        <input checked="" id="test" class="child" value="" type="checkbox">
                         <!--<p> {{tag.tags.name}} </p>-->
                         <ul>
                             {% for tag in tag.tags.parent %}
 
-                            <li id="numba2">
-                                <label for="numba2"> <a onclick="item_clicked(this)"> {{tag.name}} </a> </label>
-                                <input checked="" id="test2" value="" type="checkbox">
+                            <li id="numba2" >
+
                                 <!-- <p> {{tag.name}} </p>-->
-                                <ul>
-                                    {% for tag in tag.parent %}
 
-                                    <li id="numba3">
-                                        <a>
-                                            <label for="numba3" onclick="item_clicked(this)">{{tag.name}}</label>
-                                            <input checked="" id="test3" value="" type="checkbox">
-                                        </a>
-                                        <!--<p> {{tag.name}} </p>-->
-                                        <ul>
-                                            {% for tag in tag.parent %}
-
-                                            <li id="numba4"><a>
-                                                <label for="numba4" onclick="item_clicked(this)">{{tag.name}}</label>
-                                                <input checked="" id="test4" value="" type="checkbox">
-                                            </a>
-                                                <!-- <p> {{tag.name}} </p>-->
-                                            </li>
-
-                                            {% endfor %}
-                                        </ul>
-
-                                        {% endfor %}
-                                </ul>
                                 {% endfor %}
                         </ul>
                         {% endfor %}
@@ -154,6 +130,3 @@
 {% endblock content %}
 
 
-{% block scripts %}
-
-{% endblock scripts %}

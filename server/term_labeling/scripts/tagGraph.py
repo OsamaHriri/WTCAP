@@ -8,8 +8,8 @@ from json import dumps
 class Tag(object):
     def __init__(self):
         self.graph = Graph("bolt://localhost:7687", auth=("neo4j", "123123147"))
-        self.getParentQ = """ MATCH (t:Tag) -[p:Parent]-> (n:Tag) WHERE n.name=$name return t.name as name """
-        self.getChildrenQ = """ MATCH (t:Tag) -[p:Parent]-> (n:Tag) WHERE t.name=$name return n.name as name """
+        self.getParentQ = """ MATCH (t:Tag) -[p:Parent]-> (n:Tag) WHERE n.name=$name return {name :t.name} as parent"""
+        self.getChildrenQ = """ MATCH (t:Tag) -[p:Parent]-> (n:Tag) WHERE t.name=$name return {name : n.name} as child """
         self.getMaxIDQ = """ Match (t:Tag) return Max(tointeger(t.id)) as max """
         self.searchQ = """ Match (t:Tag) where t.name=$name return t.id as id ,t.name as name ,t.parent as parent """
         self.updatechildrenQ = """ Match (t:Tag) -[:Parent] ->(n:Tag) -[:Parent] -> (c:Tag) where n.name=$name create (t)-[:Parent]->(c) """
@@ -21,7 +21,7 @@ class Tag(object):
         self.removeParentQ = """ Match (t:Tag) -[p:Parent] -> (n:Tag) where n.name=$name delete p """
         self.setToRootQ= """ Match (n:Tag) where n.name=$name set n.parent=-1 """
         self.getAllTagsQ = """ Match (t:Tag) return t.name as name ,t.parent as parent , t.id as id """
-        self.getAllRootsQ = """ Match (t:Tag) where t.parent=-1 return t.name as name  """
+        self.getAllRootsQ = """ Match (t:Tag) where t.parent=-1 return {name : t.name } as root  """
         self.jsonQuery = """ MATCH r=(t:Tag)-[:Parent*]->(rs:Tag)  where t.parent=-1 WITH COLLECT(r) AS rs CALL apoc.convert.toTree(rs, true ,{ nodes: { Tag:['name']} }) yield value   RETURN value as tags """
 
     def ifExists(self, name):
@@ -52,11 +52,8 @@ class Tag(object):
         return all the heads(roots) in the hierarchy.
         :return:
         """
-        query = self.graph.run(self.getAllRootsQ).data()
-        heads = []
-        for p in query:
-            heads.append(p["name"])
-        return heads
+        roots = self.graph.run(self.getAllRootsQ).data()
+        return {'roots' : roots}
 
     def getParent(self, name):
         """
@@ -64,12 +61,7 @@ class Tag(object):
            # return empty list if the tag is a root.
            """
         search = self.graph.run(self.getParentQ, name=name).data()
-        if len(search) == 0:
-            return []
-        parent = []
-        for p in search:
-            parent.append(p["name"])
-        return parent[0]
+        return {'parent' : search}
 
     def getChildrens(self,name):
         """
@@ -77,10 +69,7 @@ class Tag(object):
                   # return empty list if the tag is a leaf.
                   """
         search = self.graph.run(self.getChildrenQ, name=name).data()
-        childrens = []
-        for p in search:
-            childrens.append(p["name"])
-        return childrens
+        return {'children' : search}
 
 
     def addTag(self, name, parent=None):
@@ -176,6 +165,6 @@ class Tag(object):
 #    print(t.name,t.id,t.parent)
 
 #print(tag.getChildrens("العالم"))
-#print(tag.getParent("ماء"))
+#print(tag.getParent("العالم"))
 #print( tag.getAllheads())
 #print(tag.getAllTagsbyjson())

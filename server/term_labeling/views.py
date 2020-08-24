@@ -241,7 +241,6 @@ def suggest_tags(request):
         mutex.acquire()
         try:
             suggestions = t.searchTagsOfWord(term)
-            print(suggestions)
         finally:
             mutex.release()
         if suggestions is not None:
@@ -249,5 +248,41 @@ def suggest_tags(request):
         else:
             return HttpResponse("not found")
 
+def get_children(request):
+
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        t = Tag()
+        children = t.getChildrens(term)
+        if children is not None:
+            return JsonResponse(children)
+        else:
+            return HttpResponse("not found")
+
+
+def get_parent(request):
+
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        t = Tag()
+        parent = t.getParent(term)
+        if parent is not None:
+            return JsonResponse(parent)
+        else:
+            return HttpResponse("not found")
+
+def get_roots(request):
+
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        t = Tag()
+        roots = t.getAllheads()
+        if roots is not None:
+            return JsonResponse(roots)
+        else:
+            return HttpResponse("not found")
 
 mutex = Lock()
