@@ -302,12 +302,36 @@ def get_roots(request):
 
     if request.method == 'GET':
         data = request.GET
-        term = data.get('term')
         t = Tag()
         roots = t.getAllheads()
         if roots is not None:
             return JsonResponse(roots)
         else:
             return HttpResponse("not found")
+
+
+def add_root(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        t = Tag()
+        bool = t.addTag(term)
+        if bool is not None:
+            return JsonResponse(bool)
+        else:
+            return HttpResponse("not found")
+
+def add_tag(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        parent = data.get('parent')
+        t = Tag()
+        bool = t.addTag(term,parent)
+        if bool is not None:
+            return JsonResponse(bool)
+        else:
+            return HttpResponse("not found")
+
 
 mutex = Lock()

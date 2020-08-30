@@ -22,4 +22,6 @@ urlpatterns = [
     path('get_children/', views.get_children, name='get_children'),
     path('get_parent/', views.get_parent, name='get_parent'),
     path('get_roots/', views.get_roots, name='get_roots'),
+    path('add_root/', views.add_root, name='add_root'),
+    path('add_tag/', views.add_tag, name='add_tag'),
 ]

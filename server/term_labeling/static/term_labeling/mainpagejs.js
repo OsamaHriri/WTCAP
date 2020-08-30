@@ -12,7 +12,6 @@ function initialize_index() {
             checkboxes[i].checked = false;
         }
     }
-
 }
 
 /* this method is for the select all checkbox */
@@ -30,7 +29,7 @@ let selected_tags = [];
 let selected_term = "";
 let selected_obj = "";
 let orange = "rgb(255, 165, 0)";
-let All_tags =[]
+let tagParent = ""
 let depth = 0
 
 function box_checked(obj) {
@@ -106,9 +105,70 @@ function add_tag(obj) {
     build_tag(tag_text);
 }
 
-let tagging = false;
+let tagging = true;
 let ul1;
 let ul2;
+
+function addNewRoot(text){
+       return $.ajax({
+        type: "GET",
+        url: "add_root/",
+        data: {'term': text},
+        dataType: "json",
+    });
+
+    }
+
+function add_new_tag(text){
+       return $.ajax({
+        type: "GET",
+        url: "add_tag/",
+        data: {'term': text,'parent':tagParent},
+        dataType: "json",
+    });
+    }
+
+function submit_clicked(){
+    text = document.getElementById("newTag").value
+    if(text==="")
+      window.alert("The field is empty ,Please insert a tag before clicking");
+    else{
+       if(tagParent === ""){
+        addNewRoot(text).done(function(d){
+        if(d.Tag === false)
+           window.alert("The tag already exist");
+        else {
+        emptyTree();
+        getHeaders();
+        }
+        });
+       } else {
+            add_new_tag(text).done(function(d){
+            if(d.Tag === false)
+            window.alert("The tag already exist");
+            else if (d.parent === false)
+            window.alert("The parent doesnt exist");
+            else {
+            temp = document.getElementById("c")
+            emptyTree();
+            item_clicked(temp);
+            }
+
+           });
+       }
+
+    }
+    document.getElementById("newTag").value = "";
+}
+
+function Tagging(){
+
+    var checkBox = document.getElementById("c1");
+    if (checkBox.checked == true)
+    tagging = true;
+    else tagging = false;
+}
+
 
 function getParent(text){
 
@@ -117,22 +177,13 @@ function getParent(text){
         url: "get_parent/",
         data: {'term': text},
         dataType: "json",
-        success: function (data) {
-            parent = data.parent;
-            return parent
-        }
     });
-
-
-
 }
 
-function getHeaders(text){
-
+function getHeaders(){
     $.ajax({
         type: "GET",
         url: "get_roots/",
-        data: {'term': text},
         dataType: "json",
         success: function (data) {
             roots = data.roots;
@@ -145,11 +196,13 @@ function getHeaders(text){
 
 }
 
+
 function emptyTree(){
     var ul = document.querySelector('.tree');
     var listLength = ul.children.length;
     for (i = 0; i < listLength; i++) {
     ul.removeChild(ul.children[0]);
+
        }
      if (typeof ul1 != 'undefined') {
     listLength = ul1.children.length;
@@ -164,71 +217,69 @@ function emptyTree(){
       }
     }}
 
-function check_event(event){
-    event.preventDefault();
-    switch (event.which) {
-        case 1:
-            tagging=false
-            break;
-        case 2:
-
-        case 3:
-            tagging = true
-            break;
-        default:
-            alert('You have a strange Mouse!');
-    }
-}
 
 
 function item_clicked1(obj,event){
-   check_event(event)
-   emptyTree()
+    event.stopPropagation()
+    if (tagging == true){
+        const elem = $(obj);
+        const text = elem[0].innerText.split(/\r?\n/)[0]
+        build_tag(text);
+        return;  }
    depth = depth -1 ;
+   emptyTree()
    if (depth === 1)
      flag = false
    event.stopPropagation()
-   if(event.target === obj)
-      item_clicked(obj);
+   if(event.target === obj){
+      item_clicked(obj);}
    return
 }
 
 function item_clicked2(obj,event){
-   check_event(event)
+    event.stopPropagation()
+    if (tagging == true){
+        const elem = $(obj);
+        const text = elem[0].innerText.split(/\r?\n/)[0]
+        build_tag(text);
+        return;  }
    emptyTree()
-    if( depth === 1)
-        flag = true
+   if( depth === 1 && tagging === false)
+      flag = true
    event.stopPropagation()
-   if(event.target === obj)
-      item_clicked(obj);
-   return
+   if(event.target === obj){
+      item_clicked(obj);}
+   return;
 }
 
 function item_clicked3(obj,event){
-    check_event(event)
-    emptyTree()
+    event.stopPropagation()
+    if (tagging == true){
+        const elem = $(obj);
+        const text = elem[0].textContent.split(/\r?\n/)[0]
+        build_tag(text);
+        return;  }
     depth = depth + 1;
+    emptyTree()
     if(depth === 1)
         flag = false
     event.stopPropagation()
-   if(event.target === obj)
-      item_clicked(obj);
-   return
+   if(event.target === obj){
+      item_clicked(obj);}
+   return;
 }
 
 function item_clicked(obj) {
     const elem = $(obj);
     const text = elem[0].innerText;
-    console.log(text)
-    if (tagging == true)
-        build_tag(text);
-    else{
+    tagParent = text
         var ul = document.querySelector('.tree');
         getParent(text).done( function(data){
         var parent = data.parent;
         if (parent.length === 0 && flag === true) {
         getHeaders();
         depth =0
+        tagParent=""
         flag = false;
         return;
        }
@@ -246,6 +297,8 @@ function item_clicked(obj) {
        current.appendChild(document.createTextNode(text));
        current.setAttribute('onclick', "item_clicked2(this,event)");
        current.setAttribute('class', "node");
+       current.setAttribute('id', "c");
+       current.setAttribute("style", "color: green");
        if(parent.length == 0)
           ul.appendChild(current);
        ul2 = document.createElement('ul');
@@ -262,7 +315,7 @@ function item_clicked(obj) {
         }
     });
 
-        }); }
+        });
     }
 
 function build_il(item , index ){
@@ -271,6 +324,7 @@ function build_il(item , index ){
         li.appendChild(document.createTextNode(item.child.name));
         li.setAttribute('onclick', "item_clicked3(this,event)");
         li.setAttribute('class', "child");
+        li.setAttribute("style", "color: black");
         ul2.appendChild(li);
 }
 function build_il_headers(item , index ){
@@ -298,13 +352,16 @@ function build_tag(tag_name) {
     if (selected_term === "") {
         window.alert("first choose a term");
     } else {
+        if (selected_tags.indexOf(tag_name) >-1)
+          window.alert("term already exist");
+        else {
         selected_tags.push(tag_name);
         const container = document.getElementsByClassName('selected_container')[0];
         container.insertAdjacentHTML('beforeend', '<button class="tag-btn" onclick="remove_tag(this)">\n' +
             '                    <span class="rmv-icon">x</span>\n' +
             '                    <span class="btn-txt">' + tag_name + '</span>\n' +
             '                </button>')
-    }
+    }}
 }
 
 function save_term_tag() {
@@ -389,3 +446,6 @@ function build_suggestion(item, index){
             '                </button>')
 
 }
+
+
+window.onload = getHeaders();

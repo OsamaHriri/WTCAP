@@ -78,17 +78,17 @@ class Tag(object):
           # if the parent not None , the parent need to exist in db.
           """
         if self.ifExists(name):
-            return False
+            return {"Tag": False}
         maxID = self.graph.run(self.getMaxIDQ).data()[0]["max"] + 1
         if parent is None:
             self.graph.create(Node("Tag", id=maxID, name=name,parent=-1))
-            return True
+            return {"Tag":True}
         if not self.ifExists(parent):
-            return False
+            return {"Tag":True,"parent":False}
         parentID= self.getAttrOfTag(parent)["id"]
         self.graph.create(Node("Tag", id=maxID, name=name, parent=parentID))
         self.graph.run(self.createReletionQ,name=name,parent=parent)
-        return True
+        return {"Tag":True,"parent":True}
 
     def removeTag(self, name):
         """
