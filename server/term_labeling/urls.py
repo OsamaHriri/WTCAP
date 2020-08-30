@@ -6,6 +6,7 @@ urlpatterns = [
 
     # if you change the name here make sure to change it in the navbar in base.html
     path('', views.index, name='index'),
+    path('main_tag_page/', views.main_tag_page, name='main_tag_page'),
     path('tags/', views.tags, name='tags'),
     path('process_lines/', views.process_lines, name='process_lines'),
     path('select_poet_page/', views.select_poet_page, name='select_poet_page'),
