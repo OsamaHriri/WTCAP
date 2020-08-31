@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid" onload="initialize_index()">
+    <br>
+    <div class="page-header">
+        <h1>Poem Selection Example</h1>
+    </div>
+    <br>
+    <div class="row">
+        <!-- Tags Section -->
+        <div class="col-sm-4 px-lg-5 border">
+            <!-- Selected Tags Section-->
+            <div class="selected_container">
+                <h5> Selected Tags </h5>
+            </div>
+
+            <!-- Suggested Tags Section-->
+            <div class="suggested_container">
+                <h5> Suggested Tags </h5>
+            </div>
+
+            <!-- Tree Section -->
+            <div class="treeview">
+                <h5> Tags </h5>
+<!--                <button id="tagsearchbtn" onclick="myFunction('tagsDropDown')" class="dropbtn">search</button>-->
+                <div id="tagsDropDown" class="dropdown-content right">
+                    <input type="text" placeholder="إبحث..." id="tagInput">
+                    {% for tag in all_tags %}
+                    <a class="tags-link" href="#" onclick="chooseTag(this)"> {{ tag }} </a>
+                    {% endfor %}
+
+                </div>
+
+                <div>
+                    <label >Tagging</label>
+                  <input type="checkbox" checked id="c1" class="checkb" onclick="Tagging()" />
+                  <label for="c1"></label>
+
+                </div>
+
+                <ul class="tree">
+
+
+                </ul>
+                <p> {{'------'}} </p>
+                 <div>
+                  <input type="text" id="newTag"placeholder="addtag.." name="addtag" style="width:150px">
+                  <button type="button"><i class="fa fa-check-square" aria-hidden="true" onclick="submit_clicked()" ></i></button>
+                 </div>
+
+                <!--                <ul class="tree">-->
+                <!--                    <li id="root1">-->
+                <!--                        <label for="root1"> <a onclick="item_clicked(this)">العالم</a> </label>-->
+                <!--                        <input checked="" id="test" value="" type="checkbox">-->
+                <!--                        <ul>-->
+                <!--                            <li id="numba2">-->
+                <!--                                <label for="numba2"> <a onclick="item_clicked(this)">هواء</a> </label>-->
+                <!--                                <input checked="" id="test2" value="" type="checkbox">-->
+                <!--                                <ul>-->
+                <!--                                    <li id="numba3">-->
+                <!--                                        <a>-->
+                <!--                                            <label for="numba3" onclick="item_clicked(this)">نار</label>-->
+                <!--                                            <input checked="" id="test3" value="" type="checkbox">-->
+                <!--                                        </a>-->
+                <!--                                    </li>-->
+                <!--                                    <li id="numba4">-->
+                <!--                                        <a>-->
+                <!--                                            <label for="numba4" onclick="item_clicked(this)">فحم</label>-->
+                <!--                                            <input checked="" id="test4" value="" type="checkbox">-->
+                <!--                                        </a>-->
+                <!--                                    </li>-->
+                <!--                                </ul>-->
+                <!--                            </li>-->
+                <!--                        </ul>-->
+                <!--                    </li>-->
+                <!--                    <li id="numba5">-->
+                <!--                        <a>-->
+                <!--                            <label for="numba5" onclick="item_clicked(this)">فحم</label>-->
+                <!--                            <input checked="" id="test5" value="" type="checkbox">-->
+                <!--                        </a>-->
+                <!--                    </li>-->
+                <!--                    <li id="numba6">-->
+                <!--                        <label for="numba6"><a>فحم</a></label>-->
+                <!--                        <input checked="" id="test6" value="" type="checkbox">-->
+                <!--                    </li>-->
+                <!--                </ul>-->
+            </div>
+        </div>
+
+        <!-- Poem Section -->
+        <div class="col-sm-8">
+            <table class="table table-striped table-hover" id="poem">
+                {% for poem in poems.context %}
+                <tr>
+                    <td>
+                        <input type="checkbox" name="{{ forloop.counter }}" value="{{ forloop.counter }}"
+                               id="{{ forloop.counter }}" class="tblcheckbox"
+                               onchange="box_checked(this, this.value)"/>
+                        <label for="{{ forloop.counter }}"> {{ poem.row_index }} </label>
+                    </td>
+                    <td>
+                        <label for="{{ forloop.counter }}"> {{ poem.sadr }} </label>
+                    </td>
+                    <td>
+                        <label for="{{ forloop.counter }}"> {{ poem.ajuz }} </label>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </div>
+
+    <!-- Default unchecked -->
+    <!--
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="defaultUnchecked" onClick="toggle(this)">
+        <label class="custom-control-label" for="defaultUnchecked">تحديد الكل</label>
+    </div>
+    <br/>
+    <form action="{% url 'process_lines' %}" method="POST" name="poem-form">{% csrf_token %}
+
+        <input type='submit' id="submit-button" value=' حلّل '>
+    </form>-->
+</div>
+
+{% endblock content %}
+
+
