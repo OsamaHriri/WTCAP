@@ -308,6 +308,14 @@
     <option name="LAST_COMMIT_MESSAGE" value="Hierarchy Tree traversal + bugs fix" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="-1368" y="178" key="#Notifications" timestamp="1598874071123">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1368" y="178" key="#Notifications/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1598874071123" />
+    <state x="-1364" y="61" key="CommitChangelistDialog2" timestamp="1598874108786">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1364" y="61" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1598874108786" />
     <state width="1237" height="87" key="GridCell.Tab.0.bottom" timestamp="1594046196512">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
@@ -332,10 +340,15 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="407" y="52" key="RollbackChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1598866131459" />
-    <state x="266" y="31" key="Vcs.Push.Dialog.v2" timestamp="1594217055782">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="-1113" y="435" key="VCS.ChangelistChooser" timestamp="1598874085125">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1113" y="435" key="VCS.ChangelistChooser/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1598874085125" />
+    <state x="-1521" y="47" key="Vcs.Push.Dialog.v2" timestamp="1598874049692">
+      <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="266" y="31" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1594217055782" />
+    <state x="-1521" y="47" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1598874049692" />
     <state x="450" y="258" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1598784338818">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
