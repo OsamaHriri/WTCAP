@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block stylesheets %}
+<script src="{% static 'term_labeling/manage_tags.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'term_labeling/manage_tags_style.css'%}">
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="container-fluid" onload="initialize_index()">
+    <br>
+    <div class="page-header">
+        <h1>Manage Tags</h1>
+    </div>
+    <br>
+    <div class="row">
+                    <!-- Tree Section -->
+            <div class="treeview">
+                <h5> Tags </h5>
+
+                <div>
+                    <label >Tagging</label>
+                  <input type="checkbox" checked id="c1" class="checkb" onclick="Tagging()" />
+                  <label for="c1"></label>
+
+                </div>
+
+                <ul class="tree">
+
+                </ul>
+                <p> {{'------'}} </p>
+                 <div>
+                  <input type="text" id="newTag"placeholder="addtag.." name="addtag" style="width:150px">
+                  <button type="button"><i class="fa fa-check-square" aria-hidden="true" onclick="submit_clicked()" ></i></button>
+                 </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}
+
