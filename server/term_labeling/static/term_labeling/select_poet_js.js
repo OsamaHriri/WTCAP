@@ -1,5 +1,6 @@
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
+let poemid = 2066
 function myFunction(id) {
     document.getElementById(id).classList.toggle("show");
     /*
@@ -38,15 +39,19 @@ function choosePoet(obj) {
     let btn = document.getElementById("poetbtn");
     btn.innerText = value;
     myFunction("poetDropDown");
+
     keep_relevant(id);
+
 }
 
 function choosePoem(obj) {
     const id = obj.id;
-    const value = obj.text;
+    const value =  obj.text ;
     let btn = document.getElementById("poembtn");
     btn.innerText = value;
+    poemid =  id
     myFunction("poemDropDown");
+
 }
 
 function keep_relevant(id) {
@@ -67,4 +72,24 @@ function keep_relevant(id) {
             return data;
         }
     });
+
+}
+
+function submitPoem(){
+    console.log(poemid)
+    window.location = '/main_tag_page/?poem_iid='+ poemid ;
+//    $.ajax({
+//            //url: '../../url/load_tagging_page/',
+//            trye: 'GET',
+//            url: '../main_tag_page/',
+//            data: {
+//                'poem_iid': poemid
+//            },
+//            dataType: 'json'
+//            // success: function (data) {
+//            //     if (data.is_present) {
+//            //         alert("A user with this username already exists.");
+//            //     }
+//            // }
+//        });
 }
