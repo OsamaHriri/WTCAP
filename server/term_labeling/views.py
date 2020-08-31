@@ -99,7 +99,7 @@ def tags(request):
     context = {
         'title': 'Tags'
     }
-    return render(request, 'tags.html', context)
+    return render(request, 'manage_tags.html', context)
 
 
 def process_lines(request):
