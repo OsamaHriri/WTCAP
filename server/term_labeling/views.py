@@ -74,25 +74,25 @@ def main_tag_page(request):
     }
     return render(request, 'main_tag_page.html', context)
 
-#
-# def index(request):
-    # t = Tag()
-    # json_tags = t.getAllTagsbyjson()
-    # all_tags = t.getAllTags()
-    # c = Connector()
-    # if request.method == 'POST':
-    #     id = request.POST['poem_iid']
-    # else:
-    #     id = 2066
-    # poem = (c.get_poem(id))[0]
-    #
-    # context = {
-    #     'poems': poem,
-    #     'title': 'Home',
-    #     'tags': {"root": json_tags},
-    #     'all_tags': all_tags
-    # }
-    # return render(request, 'index.html', context)
+
+def index(request):
+    t = Tag()
+    json_tags = t.getAllTagsbyjson()
+    all_tags = t.getAllTags()
+    c = Connector()
+    if request.method == 'POST':
+        id = request.POST['poem_iid']
+    else:
+        id = 2066
+    poem = (c.get_poem(id))[0]
+
+    context = {
+        'poems': poem,
+        'title': 'Home',
+        'tags': {"root": json_tags},
+        'all_tags': all_tags
+    }
+    return render(request, 'index.html', context)
 
 
 def tags(request):
