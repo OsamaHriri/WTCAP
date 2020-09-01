@@ -10,6 +10,7 @@ class Tag(object):
         self.graph = Graph("bolt://localhost:7687", auth=("neo4j", "123123147"))
         self.getParentQ = """ MATCH (t:Tag) -[p:Parent]-> (n:Tag) WHERE n.name=$name return {name :t.name} as parent"""
         self.getChildrenQ = """ MATCH (t:Tag) -[p:Parent]-> (n:Tag) WHERE t.name=$name return {name : n.name} as child """
+        self.getBrothersQ = """ MATCH (t:Tag) -[p:Parent]-> (n:Tag) WHERE t.name=$parent and n.name<>$name return {name : n.name} as brother """
         self.getMaxIDQ = """ Match (t:Tag) return Max(tointeger(t.id)) as max """
         self.searchQ = """ Match (t:Tag) where t.name=$name return t.id as id ,t.name as name ,t.parent as parent """
         self.updatechildrenQ = """ Match (t:Tag) -[:Parent] ->(n:Tag) -[:Parent] -> (c:Tag) where n.name=$name create (t)-[:Parent]->(c) """
@@ -70,6 +71,14 @@ class Tag(object):
                   """
         search = self.graph.run(self.getChildrenQ, name=name).data()
         return {'children' : search}
+
+    def getBrothers(self, name , parent):
+        """
+                  # return the tags children's name.
+                  # return empty list if the tag is a leaf.
+                  """
+        search = self.graph.run(self.getBrothersQ, name=name ,parent=parent).data()
+        return {'brothers': search}
 
 
     def addTag(self, name, parent=None):
