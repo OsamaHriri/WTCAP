@@ -149,7 +149,7 @@ function submit_clicked(){
             else if (d.parent === false)
             window.alert("The parent doesnt exist");
             else {
-            temp = document.getElementById("c")
+            temp = document.getElementById("c").innerText.split(/\r?\n/)[0]
             emptyTree();
             item_clicked(temp);
             }
@@ -165,7 +165,7 @@ function Tagging(){
 
     var checkBox = document.getElementById("c1");
     if (checkBox.checked == true)
-    tagging = true;
+         tagging = true;
     else tagging = false;
 }
 
@@ -201,98 +201,93 @@ function emptyTree(){
     var ul = document.querySelector('.tree');
     var listLength = ul.children.length;
     for (i = 0; i < listLength; i++) {
-    ul.removeChild(ul.children[0]);
-
+        ul.removeChild(ul.children[0]);
        }
-     if (typeof ul1 != 'undefined') {
-    listLength = ul1.children.length;
-    for (i = 0; i < listLength; i++) {
-        ul1.removeChild(ul1.children[0]);
-      }
+    if (typeof ul1 != 'undefined') {
+        listLength = ul1.children.length;
+        for (i = 0; i < listLength; i++) {
+           ul1.removeChild(ul1.children[0]);
+        }
     }
     if (typeof ul2 != 'undefined') {
-    listLength = ul2.children.length;
-    for (i = 0; i < listLength; i++) {
-        ul2.removeChild(ul2.children[0]);
-      }
+        listLength = ul2.children.length;
+        for (i = 0; i < listLength; i++) {
+           ul2.removeChild(ul2.children[0]);
+        }
     }}
 
 
 
 function item_clicked1(obj,event){
-    event.stopPropagation()
+    event.stopPropagation();
+    const elem = $(obj);
+    const text = elem[0].innerText.split(/\r?\n/)[0];
     if (tagging == true){
-        const elem = $(obj);
-        const text = elem[0].innerText.split(/\r?\n/)[0]
-        build_tag(text);
-        return;  }
-   depth = depth -1 ;
-   emptyTree()
-   if (depth === 1)
-     flag = false
-   event.stopPropagation()
-   if(event.target === obj){
-      item_clicked(obj);}
-   return
+       build_tag(text);
+       return;
+     }
+    if(event.target != obj)
+       return;
+    depth = depth -1;
+    emptyTree();
+    if (depth === 1)
+       flag = false;
+    item_clicked(text);
 }
 
 function item_clicked2(obj,event){
-    event.stopPropagation()
+    event.stopPropagation();
+    const elem = $(obj);
+    const text = elem[0].innerText.split(/\r?\n/)[0];
     if (tagging == true){
-        const elem = $(obj);
-        const text = elem[0].innerText.split(/\r?\n/)[0]
-        build_tag(text);
-        return;  }
-   emptyTree()
-   if( depth === 1 && tagging === false)
-      flag = true
-   event.stopPropagation()
-   if(event.target === obj){
-      item_clicked(obj);}
-   return;
+       build_tag(text);
+       return;
+     }
+    if(event.target != obj)
+       return;
+    emptyTree();
+    if( depth === 1 && tagging === false)
+       flag = true;
+    item_clicked(text);
 }
 
 function item_clicked3(obj,event){
-    event.stopPropagation()
+    event.stopPropagation();
+    const elem = $(obj);
+    const text = elem[0].textContent.split(/\r?\n/)[0];
     if (tagging == true){
-        const elem = $(obj);
-        const text = elem[0].textContent.split(/\r?\n/)[0]
         build_tag(text);
-        return;  }
+        return;
+    }
     depth = depth + 1;
-    emptyTree()
+    emptyTree();
     if(depth === 1)
-        flag = false
-    event.stopPropagation()
-   if(event.target === obj){
-      item_clicked(obj);}
-   return;
+        flag = false;
+    item_clicked(text);
 }
 
-function item_clicked(obj) {
-    const elem = $(obj);
-    const text = elem[0].innerText;
-    tagParent = text
-        var ul = document.querySelector('.tree');
-        getParent(text).done( function(data){
-        var parent = data.parent;
-        if (parent.length === 0 && flag === true) {
-        getHeaders();
-        depth =0
-        tagParent=""
-        flag = false;
-        return;
+function item_clicked(text) {
+    tagParent = text;
+    var ul = document.querySelector('.tree');
+    getParent(text).done( function(data){
+       var parent = data.parent;
+       if (parent.length === 0 && flag === true) {
+           getHeaders();
+           depth =0;
+           tagParent="";
+           flag = false;
+           return;
        }
        var current = document.createElement("il");
        if(parent.length> 0){
-       var pNode=document.createElement("il");
-       pNode.appendChild(document.createTextNode(parent[0].parent.name));
-       pNode.setAttribute('onclick', "item_clicked1(this,event)");
-       pNode.setAttribute('class', "parent");
-       ul.appendChild(pNode);
-       ul1 = document.createElement('ul');
-       pNode.appendChild(ul1)
-       ul1.appendChild(current)
+           var pNode=document.createElement("il");
+           pNode.appendChild(document.createTextNode(parent[0].parent.name));
+           pNode.setAttribute('onclick', "item_clicked1(this,event)");
+           pNode.setAttribute('class', "parent");
+           ul.appendChild(pNode);
+           ul1 = document.createElement('ul');
+           pNode.appendChild(ul1);
+           ul1.appendChild(current);
        }
        current.appendChild(document.createTextNode(text));
        current.setAttribute('onclick', "item_clicked2(this,event)");
@@ -300,23 +295,22 @@ function item_clicked(obj) {
        current.setAttribute('id', "c");
        current.setAttribute("style", "color: green");
        if(parent.length == 0)
-          ul.appendChild(current);
+           ul.appendChild(current);
        ul2 = document.createElement('ul');
-       current.appendChild(ul2)
-         $.ajax({
-        type: "GET",
-        url: "get_children/",
-        data: {'term': text},
-        dataType: "json",
-        success: function (data) {
+       current.appendChild(ul2);
+       $.ajax({
+           type: "GET",
+           url: "get_children/",
+           data: {'term': text},
+           dataType: "json",
+           success: function (data) {
             const children = data.children;
             children.forEach(build_il)
             return ;
-        }
+           }
+       });
     });
-
-        });
-    }
+   }
 
 function build_il(item , index ){
        //var ul = document.querySelector('.tree');
@@ -327,6 +321,7 @@ function build_il(item , index ){
         li.setAttribute("style", "color: black");
         ul2.appendChild(li);
 }
+
 function build_il_headers(item , index ){
         var ul = document.querySelector('.tree');
         var li = document.createElement("li");

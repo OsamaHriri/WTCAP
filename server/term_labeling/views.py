@@ -322,6 +322,7 @@ def add_root(request):
             return HttpResponse("not found")
 
 def add_tag(request):
+
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
@@ -333,5 +334,16 @@ def add_tag(request):
         else:
             return HttpResponse("not found")
 
+def get_brothers(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        parent = data.get('parent')
+        t = Tag()
+        brothers = t.getBrothers(term ,parent)
+        if brothers is not None:
+            return JsonResponse(brothers)
+        else:
+            return HttpResponse("not found")
 
 mutex = Lock()
