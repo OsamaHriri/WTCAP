@@ -1,9 +1,3 @@
-/*
-this method initializes the main page (index):
-1. set all checkboxes to false
- */
-
-
 function initialize_index() {
     let checkboxes;
     checkboxes = document['poem-form'].getElementsByTagName('input');
@@ -14,23 +8,12 @@ function initialize_index() {
     }
 }
 
-/* this method is for the select all checkbox */
-function toggle(source) {
-    box_checked(source);
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    for (let i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i] !== source)
-            checkboxes[i].checked = source.checked;
-    }
-
-}
-
 let selected_tags = [];
 let selected_term = "";
 let selected_obj = "";
 let orange = "rgb(255, 165, 0)";
-let tagParent = ""
-let depth = 0
+let tagParent = "";
+let depth = 0;
 
 function box_checked(obj) {
     const id = obj.id;
@@ -83,7 +66,7 @@ function box_checked(obj) {
 function hi(id) {
     $(function () {
         $(".term").click(function () {
-            if (selected_obj != "" && selected_obj.css("color") === orange )
+            if (selected_obj !== "" && selected_obj.css("color") === orange )
                 selected_obj.css("color", "black");
             $(this).css("color", "orange");
             selected_obj = $(this);
@@ -92,6 +75,23 @@ function hi(id) {
             load_suggestions(selected_term);
         });
     });
+}
+
+function filterSearch(){
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("mySearchInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
 }
 
 setTimeout(function () {
@@ -153,25 +153,19 @@ function submit_clicked(){
             emptyTree();
             item_clicked(temp);
             }
-
            });
        }
-
     }
     document.getElementById("newTag").value = "";
 }
 
 function Tagging(){
-
-    var checkBox = document.getElementById("c1");
-    if (checkBox.checked == true)
-         tagging = true;
-    else tagging = false;
+    const checkBox = document.getElementById("c1");
+    tagging = checkBox.checked == true;
 }
 
 
 function getParent(text){
-
     return $.ajax({
         type: "GET",
         url: "get_parent/",
@@ -186,47 +180,41 @@ function getHeaders(){
         url: "get_roots/",
         dataType: "json",
         success: function (data) {
-            roots = data.roots;
-            roots.forEach(build_il_headers)
-            return ;
+            let roots = data.roots;
+            roots.forEach(build_il_headers);
         }
     });
-
-
-
 }
 
-
 function emptyTree(){
-    var ul = document.querySelector('.tree');
-    var listLength = ul.children.length;
-    for (i = 0; i < listLength; i++) {
+    const ul = document.querySelector('.tree');
+    let listLength = ul.children.length;
+    for (let i = 0; i < listLength; i++) {
         ul.removeChild(ul.children[0]);
        }
     if (typeof ul1 != 'undefined') {
         listLength = ul1.children.length;
-        for (i = 0; i < listLength; i++) {
+        for (let i = 0; i < listLength; i++) {
            ul1.removeChild(ul1.children[0]);
         }
     }
     if (typeof ul2 != 'undefined') {
         listLength = ul2.children.length;
-        for (i = 0; i < listLength; i++) {
+        for (let i = 0; i < listLength; i++) {
            ul2.removeChild(ul2.children[0]);
         }
-    }}
-
-
+    }
+}
 
 function item_clicked1(obj,event){
     event.stopPropagation();
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
-    if (tagging == true){
+    if (tagging === true){
        build_tag(text);
        return;
      }
-    if(event.target != obj)
+    if(event.target !== obj)
        return;
     depth = depth -1;
     emptyTree();
@@ -239,11 +227,11 @@ function item_clicked2(obj,event){
     event.stopPropagation();
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
-    if (tagging == true){
+    if (tagging === true){
        build_tag(text);
        return;
      }
-    if(event.target != obj)
+    if(event.target !== obj)
        return;
     emptyTree();
     if( depth === 1 && tagging === false)
@@ -255,7 +243,7 @@ function item_clicked3(obj,event){
     event.stopPropagation();
     const elem = $(obj);
     const text = elem[0].textContent.split(/\r?\n/)[0];
-    if (tagging == true){
+    if (tagging === true){
         build_tag(text);
         return;
     }
@@ -268,20 +256,20 @@ function item_clicked3(obj,event){
 
 function item_clicked(text) {
     tagParent = text;
-    var ul = document.querySelector('.tree');
+    const ul = document.querySelector('.tree');
     getParent(text).done( function(data){
-       var parent = data.parent;
-       if (parent.length === 0 && flag === true) {
+        const parent = data.parent;
+        if (parent.length === 0 && flag === true) {
            getHeaders();
            depth =0;
            tagParent="";
            flag = false;
            return;
        }
-       var current = document.createElement("il");
-       if(parent.length> 0){
-           var pNode=document.createElement("il");
-           pNode.appendChild(document.createTextNode(parent[0].parent.name));
+        const current = document.createElement("il");
+        if(parent.length> 0){
+            const pNode = document.createElement("il");
+            pNode.appendChild(document.createTextNode(parent[0].parent.name));
            pNode.setAttribute('onclick', "item_clicked1(this,event)");
            pNode.setAttribute('class', "parent");
            ul.appendChild(pNode);
@@ -294,7 +282,7 @@ function item_clicked(text) {
        current.setAttribute('class', "node");
        current.setAttribute('id', "c");
        current.setAttribute("style", "color: green");
-       if(parent.length == 0)
+       if(parent.length === 0)
            ul.appendChild(current);
        ul2 = document.createElement('ul');
        current.appendChild(ul2);
@@ -305,8 +293,7 @@ function item_clicked(text) {
            dataType: "json",
            success: function (data) {
             const children = data.children;
-            children.forEach(build_il)
-            return ;
+            children.forEach(build_il);
            }
        });
     });
@@ -395,7 +382,6 @@ function reset() {
         buttons2[i].remove();
     }
     //add thingy that closes the row in table
-
 }
 
 
@@ -413,7 +399,6 @@ function reset2() {
         buttons2[i].remove();
     }
     //add thingy that closes the row in table
-
 }
 
 function load_suggestions(term) {

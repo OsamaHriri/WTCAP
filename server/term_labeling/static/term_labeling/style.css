@@ -45,70 +45,13 @@ nav {
     visibility: hidden;
 }
 
-form[type=submit] {
-    padding: 10px 20px 11px !important;
-    font-size: 21px !important;
-    background-color: #F36C8C;
-    font-weight: bold;
-    text-shadow: 1px 1px #F36C8C;
-    color: #ffffff;
-    border-radius: 100px;
-    -moz-border-radius: 100px;
-    -webkit-border-radius: 100px;
-    border: 1px solid #F36C8C;
-    cursor: pointer;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
-    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
-    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
-}
-
-#submit-button {
-    color: deeppink;
-    position: absolute;
-    transition: .5s ease;
-    top: -198px;
-}
-
 .term:hover {
     color: cornflowerblue;
 }
 
-.btn {
-    padding: .1rem .55rem;
-    font-size: 1.2rem;
-    alignment: center;
-}
+/* Search tags css */
 
-.dropbtn {
-    padding: 10px;
-    font-size: 16px;
-    border: 2px solid #008CBA;
-    border-radius: 4px;
-    cursor: pointer;
-    min-width: 230px;
-    background-color: Transparent;
-    color: black;
-    transition-duration: 0.4s;
-}
-
-.dropbtn:hover, .dropbtn:focus {
-    background-color: #008CBA; /* Green */
-    color: white;
-}
-
-#termInput {
-    box-sizing: border-box;
-    font-size: 16px;
-    padding: 14px 20px 12px 45px;
-    border: none;
-    border-bottom: 1px solid #ddd;
-}
-
-#termInput:focus {
-    outline: 3px solid #ddd;
-}
-
-.dropdown-content {
+#tagsDropDown{
     display: none;
     position: absolute;
     background-color: #f6f6f6;
@@ -117,18 +60,49 @@ form[type=submit] {
     overflow: auto;
     border: 1px solid #ddd;
     z-index: 1;
+    text-align: right;
 }
 
-.dropdown-content a {
+#tagsDropDown li {
     color: black;
-    padding: 12px 16px;
-    text-decoration: none;
+    padding: 10px 12px;
     display: block;
 }
 
-.row a:hover {
+#tagsDropDown li:hover {
     background-color: #ddd;
 }
+/*NEW SEARCH THINGY*/
+
+.chosen-value {
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.2rem;
+  background-color: #fafcfd;
+  border: 3px solid transparent;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.chosen-value::-webkit-input-placeholder {
+  color: #333;
+}
+.chosen-value:hover {
+  background-color: #ff908b;
+  cursor: pointer;
+}
+.chosen-value:hover::-webkit-input-placeholder {
+  color: #333;
+}
+.chosen-value:focus, .chosen-value.open {
+  box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.2);
+  outline: 0;
+  background-color: #ff908b;
+  color: #000;
+}
+.chosen-value:focus::-webkit-input-placeholder, .chosen-value.open::-webkit-input-placeholder {
+  color: #000;
+}
+
 
 /* Selected Tags Section Style */
 
@@ -139,6 +113,7 @@ form[type=submit] {
     margin-bottom: 10px;
     max-height: 300px;
     overflow: auto;
+    position: sticky;
 }
 
 .tag-btn {
