@@ -66,7 +66,7 @@ function box_checked(obj) {
 function hi(id) {
     $(function () {
         $(".term").click(function () {
-            if (selected_obj !== "" && selected_obj.css("color") === orange )
+            if (selected_obj !== "" && selected_obj.css("color") === orange)
                 selected_obj.css("color", "black");
             $(this).css("color", "orange");
             selected_obj = $(this);
@@ -77,7 +77,7 @@ function hi(id) {
     });
 }
 
-function filterSearch(){
+function filterSearch() {
     var input, filter, ul, li, a, i, txtValue;
     input = document.getElementById("mySearchInput");
     filter = input.value.toUpperCase();
@@ -101,7 +101,7 @@ setTimeout(function () {
 function add_tag(obj) {
     //const me = $(obj);
     const text = obj.getElementsByClassName("btn-txt");
-    const tag_text = text[0].innerText.slice(0,text[0].innerText.lastIndexOf("-"))
+    const tag_text = text[0].innerText.slice(0, text[0].innerText.lastIndexOf("-"))
     build_tag(tag_text);
 }
 
@@ -109,63 +109,63 @@ let tagging = true;
 let ul1;
 let ul2;
 
-function addNewRoot(text){
-       return $.ajax({
+function addNewRoot(text) {
+    return $.ajax({
         type: "GET",
         url: "add_root/",
         data: {'term': text},
         dataType: "json",
     });
 
-    }
+}
 
-function add_new_tag(text){
-       return $.ajax({
+function add_new_tag(text) {
+    return $.ajax({
         type: "GET",
         url: "add_tag/",
-        data: {'term': text,'parent':tagParent},
+        data: {'term': text, 'parent': tagParent},
         dataType: "json",
     });
-    }
+}
 
-function submit_clicked(){
+function submit_clicked() {
     text = document.getElementById("newTag").value
-    if(text==="")
-      window.alert("The field is empty ,Please insert a tag before clicking");
-    else{
-       if(tagParent === ""){
-        addNewRoot(text).done(function(d){
-        if(d.Tag === false)
-           window.alert("The tag already exist");
-        else {
-        emptyTree();
-        getHeaders();
+    if (text === "")
+        window.alert("The field is empty ,Please insert a tag before clicking");
+    else {
+        if (tagParent === "") {
+            addNewRoot(text).done(function (d) {
+                if (d.Tag === false)
+                    window.alert("The tag already exist");
+                else {
+                    emptyTree();
+                    getHeaders();
+                }
+            });
+        } else {
+            add_new_tag(text).done(function (d) {
+                if (d.Tag === false)
+                    window.alert("The tag already exist");
+                else if (d.parent === false)
+                    window.alert("The parent doesnt exist");
+                else {
+                    temp = document.getElementById("c").innerText.split(/\r?\n/)[0]
+                    emptyTree();
+                    item_clicked(temp);
+                }
+            });
         }
-        });
-       } else {
-            add_new_tag(text).done(function(d){
-            if(d.Tag === false)
-            window.alert("The tag already exist");
-            else if (d.parent === false)
-            window.alert("The parent doesnt exist");
-            else {
-            temp = document.getElementById("c").innerText.split(/\r?\n/)[0]
-            emptyTree();
-            item_clicked(temp);
-            }
-           });
-       }
     }
     document.getElementById("newTag").value = "";
 }
 
-function Tagging(){
+function Tagging() {
     const checkBox = document.getElementById("c1");
     tagging = checkBox.checked == true;
 }
 
 
-function getParent(text){
+function getParent(text) {
     return $.ajax({
         type: "GET",
         url: "get_parent/",
@@ -174,7 +174,7 @@ function getParent(text){
     });
 }
 
-function getHeaders(){
+function getHeaders() {
     $.ajax({
         type: "GET",
         url: "get_roots/",
@@ -186,70 +186,70 @@ function getHeaders(){
     });
 }
 
-function emptyTree(){
+function emptyTree() {
     const ul = document.querySelector('.tree');
     let listLength = ul.children.length;
     for (let i = 0; i < listLength; i++) {
         ul.removeChild(ul.children[0]);
-       }
+    }
     if (typeof ul1 != 'undefined') {
         listLength = ul1.children.length;
         for (let i = 0; i < listLength; i++) {
-           ul1.removeChild(ul1.children[0]);
+            ul1.removeChild(ul1.children[0]);
         }
     }
     if (typeof ul2 != 'undefined') {
         listLength = ul2.children.length;
         for (let i = 0; i < listLength; i++) {
-           ul2.removeChild(ul2.children[0]);
+            ul2.removeChild(ul2.children[0]);
         }
     }
 }
 
-function item_clicked1(obj,event){
+function item_clicked1(obj, event) {
     event.stopPropagation();
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
-    if (tagging === true){
-       build_tag(text);
-       return;
-     }
-    if(event.target !== obj)
-       return;
-    depth = depth -1;
+    if (tagging === true) {
+        build_tag(text);
+        return;
+    }
+    if (event.target !== obj)
+        return;
+    depth = depth - 1;
     emptyTree();
     if (depth === 1)
-       flag = false;
+        flag = false;
     item_clicked(text);
 }
 
-function item_clicked2(obj,event){
+function item_clicked2(obj, event) {
     event.stopPropagation();
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
-    if (tagging === true){
-       build_tag(text);
-       return;
-     }
-    if(event.target !== obj)
-       return;
+    if (tagging === true) {
+        build_tag(text);
+        return;
+    }
+    if (event.target !== obj)
+        return;
     emptyTree();
-    if( depth === 1 && tagging === false)
-       flag = true;
+    if (depth === 1 && tagging === false)
+        flag = true;
     item_clicked(text);
 }
 
-function item_clicked3(obj,event){
+function item_clicked3(obj, event) {
     event.stopPropagation();
     const elem = $(obj);
     const text = elem[0].textContent.split(/\r?\n/)[0];
-    if (tagging === true){
+    if (tagging === true) {
         build_tag(text);
         return;
     }
     depth = depth + 1;
     emptyTree();
-    if(depth === 1)
+    if (depth === 1)
         flag = false;
     item_clicked(text);
 }
@@ -257,65 +257,65 @@ function item_clicked3(obj,event){
 function item_clicked(text) {
     tagParent = text;
     const ul = document.querySelector('.tree');
-    getParent(text).done( function(data){
+    getParent(text).done(function (data) {
         const parent = data.parent;
         if (parent.length === 0 && flag === true) {
-           getHeaders();
-           depth =0;
-           tagParent="";
-           flag = false;
-           return;
-       }
+            getHeaders();
+            depth = 0;
+            tagParent = "";
+            flag = false;
+            return;
+        }
         const current = document.createElement("il");
-        if(parent.length> 0){
+        if (parent.length > 0) {
             const pNode = document.createElement("il");
             pNode.appendChild(document.createTextNode(parent[0].parent.name));
-           pNode.setAttribute('onclick', "item_clicked1(this,event)");
-           pNode.setAttribute('class', "parent");
-           ul.appendChild(pNode);
-           ul1 = document.createElement('ul');
-           pNode.appendChild(ul1);
-           ul1.appendChild(current);
-       }
-       current.appendChild(document.createTextNode(text));
-       current.setAttribute('onclick', "item_clicked2(this,event)");
-       current.setAttribute('class', "node");
-       current.setAttribute('id', "c");
-       current.setAttribute("style", "color: green");
-       if(parent.length === 0)
-           ul.appendChild(current);
-       ul2 = document.createElement('ul');
-       current.appendChild(ul2);
-       $.ajax({
-           type: "GET",
-           url: "get_children/",
-           data: {'term': text},
-           dataType: "json",
-           success: function (data) {
-            const children = data.children;
-            children.forEach(build_il);
-           }
-       });
+            pNode.setAttribute('onclick', "item_clicked1(this,event)");
+            pNode.setAttribute('class', "parent");
+            ul.appendChild(pNode);
+            ul1 = document.createElement('ul');
+            pNode.appendChild(ul1);
+            ul1.appendChild(current);
+        }
+        current.appendChild(document.createTextNode(text));
+        current.setAttribute('onclick', "item_clicked2(this,event)");
+        current.setAttribute('class', "node");
+        current.setAttribute('id', "c");
+        current.setAttribute("style", "color: green");
+        if (parent.length === 0)
+            ul.appendChild(current);
+        ul2 = document.createElement('ul');
+        current.appendChild(ul2);
+        $.ajax({
+            type: "GET",
+            url: "get_children/",
+            data: {'term': text},
+            dataType: "json",
+            success: function (data) {
+                const children = data.children;
+                children.forEach(build_il);
+            }
+        });
     });
-   }
-
-function build_il(item , index ){
-       //var ul = document.querySelector('.tree');
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode(item.child.name));
-        li.setAttribute('onclick', "item_clicked3(this,event)");
-        li.setAttribute('class', "child");
-        li.setAttribute("style", "color: black");
-        ul2.appendChild(li);
 }
 
-function build_il_headers(item , index ){
-        var ul = document.querySelector('.tree');
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode(item.root.name));
-        li.setAttribute('onclick', "item_clicked3(this,event)");
-        li.setAttribute('class', "child");
-        ul.appendChild(li);
+function build_il(item, index) {
+    //var ul = document.querySelector('.tree');
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode(item.child.name));
+    li.setAttribute('onclick', "item_clicked3(this,event)");
+    li.setAttribute('class', "child");
+    li.setAttribute("style", "color: black");
+    ul2.appendChild(li);
+}
+
+function build_il_headers(item, index) {
+    var ul = document.querySelector('.tree');
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode(item.root.name));
+    li.setAttribute('onclick', "item_clicked3(this,event)");
+    li.setAttribute('class', "child");
+    ul.appendChild(li);
 }
 
 function remove_tag(obj) {
@@ -334,16 +334,17 @@ function build_tag(tag_name) {
     if (selected_term === "") {
         window.alert("first choose a term");
     } else {
-        if (selected_tags.indexOf(tag_name) >-1)
-          window.alert("term already exist");
+        if (selected_tags.indexOf(tag_name) > -1)
+            window.alert("term already exist");
         else {
-        selected_tags.push(tag_name);
-        const container = document.getElementsByClassName('selected_container')[0];
-        container.insertAdjacentHTML('beforeend', '<button class="tag-btn" onclick="remove_tag(this)">\n' +
-            '                    <span class="rmv-icon">x</span>\n' +
-            '                    <span class="btn-txt">' + tag_name + '</span>\n' +
-            '                </button>')
-    }}
+            selected_tags.push(tag_name);
+            const container = document.getElementsByClassName('selected_container')[0];
+            container.insertAdjacentHTML('beforeend', '<button class="tag-btn" onclick="remove_tag(this)">\n' +
+                '                    <span class="rmv-icon">x</span>\n' +
+                '                    <span class="btn-txt">' + tag_name + '</span>\n' +
+                '                </button>')
+        }
+    }
 }
 
 function save_term_tag() {
@@ -409,23 +410,47 @@ function load_suggestions(term) {
         dataType: "json",
         success: function (data) {
             const suggestions = data.suggestions;
-            reset2()
+            reset2();
             suggestions.forEach(build_suggestion)
         }
     });
 }
 
-function build_suggestion(item, index){
+function build_suggestion(item, index) {
     console.log(item);
     console.log(item.Tag.name + " " + item.Tag.frequency);
 
-        const container = document.getElementsByClassName('suggested_container')[0];
-        container.insertAdjacentHTML('beforeend', '<button class="sug-btn" onclick="add_tag(this)">\n' +
-            '                    <span class="add-icon">+</span>\n' +
-            '                    <span class="btn-txt">' + item.Tag.name + '-' + item.Tag.frequency + '</span>\n' +
-            '                </button>')
-
+    const container = document.getElementsByClassName('suggested_container')[0];
+    container.insertAdjacentHTML('beforeend', '<button class="sug-btn" onclick="add_tag(this)" \n' +
+        '                    <span class="add-icon">+</span>\n' +
+        '                    <span class="btn-txt">' + item.Tag.name + '-' + item.Tag.frequency + '</span>\n' +
+        '                </button>')
 }
 
-
 window.onload = getHeaders();
+
+// disable right click and show custom context menu
+$(".sug-btn").bind('contextmenu', function (e) {
+    const id = this.id;
+    // $("#txt_id").val(id);
+
+    const top = e.pageY + 5;
+    const left = e.pageX;
+    console.log(top + ' ' + left);
+
+    // Show contextmenu
+    $("#context-menu").toggle(100).css({
+        top: top + "px",
+        left: left + "px"
+    });
+});
+
+$(document).bind('contextmenu click',function(){
+  $("#context-menu").hide();
+});
+
+// disable context-menu from custom menu
+$('#context-menu').bind('contextmenu',function(){
+  return false;
+});
+

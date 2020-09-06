@@ -3,11 +3,17 @@
 
 {% block stylesheets %}
 <script src="{% static 'term_labeling/mainpagejs.js' %}"></script>
-<link rel="stylesheet" type="text/css" href="{% static 'term_labeling/style.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'term_labeling/manage_tags_style.css'%}">
 {% endblock stylesheets %}
 
 
 {% block content %}
+<div id="context-menu">
+  <a href="#">
+    <img src="{% static 'term_labeling/img/searchIcon.png' %}" alt="Search icon" /> Find in hierarchy
+  </a>
+</div>
+
 <div class="container-fluid" onload="initialize_index()">
     <br>
     <div class="page-header">
