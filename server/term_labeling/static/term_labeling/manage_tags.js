@@ -9,7 +9,7 @@ let tagParent = "";
 let depth = 0;
 let ul1;
 let ul2;
-
+let flag
 
 function addNewRoot(text){
        return $.ajax({
@@ -64,6 +64,65 @@ function getBrothers(text ,parent){
         data: {'term': text ,'parent' : parent},
         dataType: "json",
     });
+}
+
+function getDepth(text){
+
+    return $.ajax({
+        type: "GET",
+        url: "get_depth/",
+        data: {'term': text},
+        dataType: "json",
+    });
+}
+
+function remove_tag(text){
+    return $.ajax({
+        type: "GET",
+        url: "remove_tag/",
+        data: {'term': text},
+        dataType: "json",
+    });
+}
+
+function searchTag(obj){
+    getDepth(obj.innerText).done(function(d){
+        const elem = $(obj);
+        const text = elem[0].innerText.split(/\r?\n/)[0]
+        depth = d.depth + 1 ;
+        emptyTree()
+        if(depth === 1)
+           flag = false
+        item_clicked(text)
+    });
+}
+
+function deleteTag(){
+    if (depth != 0){
+       temp = document.getElementById("c").innerText.split(/\r?\n/)[0]}
+    else {
+       window.alert("Please click on a tag to delete.");
+       return;
+    }
+    emptyTree();
+    getParent(temp).done( function (d){
+         var parent = d.parent
+         remove_tag(temp).done(function(d2){
+             if(parent.length === 0){
+                  getHeaders();
+                  depth =0
+                  tagParent=""
+                  flag = false;
+             } else {
+                  depth = depth - 1
+                  if (depth === 1)
+                     flag = false
+                  item_clicked(parent[0].parent.name)
+             }
+
+         });
+    });
+
 }
 
 function submit_clicked(){
@@ -142,7 +201,6 @@ function item_clicked3(obj,event){
 }
 
 function item_clicked(text) {
-    console.log()
     tagParent = text
     var ul = document.querySelector('.tree');
     getParent(text).done( function(data){
@@ -250,3 +308,20 @@ function emptyTree(){
               ul2.removeChild(ul2.children[0]);
            }
         }}
+
+function filterSearch() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("mySearchInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}

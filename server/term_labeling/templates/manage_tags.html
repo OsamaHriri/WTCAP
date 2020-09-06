@@ -23,7 +23,7 @@
             <div id="tagsDropDown">
                 <ul id="myUL">
                     {% for tag in all_tags %}
-                    <li><a href="#"> {{ tag }} </a></li>
+                    <li><a href="#" onclick="searchTag(this)"> {{ tag }} </a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -32,7 +32,7 @@
             </ul>
             <p> {{'------'}} </p>
             <div>
-                <button onclick=""> Delete</button>
+                <button onclick="deleteTag()"> Delete</button>
                 <input type="text" id="newTag" placeholder="addtag.." name="addtag" style="width:150px">
                 <button type="button"><i class="fa fa-check-square" aria-hidden="true" onclick="submit_clicked()"></i>
                 </button>

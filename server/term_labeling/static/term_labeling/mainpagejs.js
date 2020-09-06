@@ -128,6 +128,28 @@ function add_new_tag(text) {
     });
 }
 
+function getDepth(text){
+
+    return $.ajax({
+        type: "GET",
+        url: "get_depth/",
+        data: {'term': text},
+        dataType: "json",
+    });
+}
+
+function searchTag(obj){
+    getDepth(obj.innerText).done(function(d){
+        const elem = $(obj);
+        const text = elem[0].innerText.split(/\r?\n/)[0]
+        depth = d.depth + 1 ;
+        emptyTree()
+        if(depth === 1)
+           flag = false
+        item_clicked(text)
+    });
+}
+
 function submit_clicked() {
     text = document.getElementById("newTag").value
     if (text === "")

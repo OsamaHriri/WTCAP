@@ -352,4 +352,26 @@ def get_brothers(request):
             return HttpResponse("not found")
 
 
+def get_depth(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        t = Tag()
+        depth = t.findDepth(term)
+        if depth is not None:
+            return JsonResponse(depth)
+        else:
+            return HttpResponse("not found")
+
+def remove_tag(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        t = Tag()
+        flag = t.removeTag(term)
+        if flag is not None:
+            return JsonResponse(flag)
+        else:
+            return HttpResponse("not found")
+
 mutex = Lock()

@@ -9,6 +9,7 @@ class Tag(object):
     def __init__(self):
         self.graph = Graph("bolt://localhost:7687", auth=("neo4j", "123123147"))
         self.getParentQ = """ MATCH (t:Tag) -[p:Parent]-> (n:Tag) WHERE n.name=$name return {name :t.name} as parent"""
+        self.getParentQ1 = """ MATCH (t:Tag) -[p:Parent]-> (n:Tag) WHERE n.name=$name return t.name as name"""
         self.getChildrenQ = """ MATCH (t:Tag) -[p:Parent]-> (n:Tag) WHERE t.name=$name return {name : n.name} as child """
         self.getBrothersQ = """ MATCH (t:Tag) -[p:Parent]-> (n:Tag) WHERE t.name=$parent and n.name<>$name return {name : n.name} as brother """
         self.getMaxIDQ = """ Match (t:Tag) return Max(tointeger(t.id)) as max """
@@ -64,6 +65,14 @@ class Tag(object):
         search = self.graph.run(self.getParentQ, name=name).data()
         return {'parent' : search}
 
+    def getParentInline(self, name):
+        """
+           # return the tags parent's name.
+           # return empty list if the tag is a root.
+           """
+        search = self.graph.run(self.getParentQ1, name=name).data()[0]
+        return search
+
     def getChildrens(self,name):
         """
                   # return the tags children's name.
@@ -105,14 +114,14 @@ class Tag(object):
           # when removing tags , we remove all of their relation with words(from word tagging) and tags.
           """
         if not self.ifExists(name):
-            return False
+            return {"remove":False }
         if self.getAttrOfTag(name)["parent"] ==-1:
             self.graph.run(self.updateRootAttQ, name=name)
         else:
             self.graph.run(self.updatechildrenQ, name=name)
             self.graph.run(self.updateAttrQ, name=name )
         self.graph.run(self.removeTagQ, name=name)
-        return True
+        return {"remove":True}
 
     def checkCycle(self,source ,target):
         """
@@ -159,6 +168,18 @@ class Tag(object):
         return query
 
 
+    def findDepth(self ,target):
+        t = self.getAttrOfTag(target)
+        depth = 0
+        while t["parent"] != -1:
+            depth = depth + 1
+            t = self.getAttrOfTag(self.getParentInline(t["name"])["name"])
+
+        return {"depth" : depth}
+
+
+
+
 #tag = Tag()
 # tag.getTags("عجل")
 # tag.addTag("بحر")
@@ -177,3 +198,5 @@ class Tag(object):
 #print(tag.getParent("العالم"))
 #print( tag.getAllheads())
 #print(tag.getAllTagsbyjson())
+#print(tag.findDepth("العالم"))
+#print(tag.findDepth("ماء"))
