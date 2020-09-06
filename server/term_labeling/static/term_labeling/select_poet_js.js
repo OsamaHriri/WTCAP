@@ -1,6 +1,6 @@
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
-let poemid = 2066
+let poemid = 2066;
 function myFunction(id) {
     document.getElementById(id).classList.toggle("show");
     /*
@@ -75,21 +75,7 @@ function keep_relevant(id) {
 
 }
 
-function submitPoem(){
-    console.log(poemid)
-    window.location = '/main_tag_page/?poem_iid='+ poemid ;
-//    $.ajax({
-//            //url: '../../url/load_tagging_page/',
-//            trye: 'GET',
-//            url: '../main_tag_page/',
-//            data: {
-//                'poem_iid': poemid
-//            },
-//            dataType: 'json'
-//            // success: function (data) {
-//            //     if (data.is_present) {
-//            //         alert("A user with this username already exists.");
-//            //     }
-//            // }
-//        });
+function submitPoem() {
+    console.log(poemid);
+    window.location = '/main_tag_page/?poem_iid=' + poemid;
 }
