@@ -1,0 +1,14 @@
+* {
+    direction: rtl;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    min-height: 100vh;
+    background: white;
+}
+
+/* nav bar css */
+.navbar{
+    background-color: #112D32;
+}

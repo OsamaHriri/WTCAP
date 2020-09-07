@@ -25,4 +25,6 @@ urlpatterns = [
     re_path('add_root/$', views.add_root, name='add_root'),
     re_path('add_tag/$', views.add_tag, name='add_tag'),
     re_path('get_brothers/$', views.get_brothers, name='get_brothers'),
+    re_path('get_depth/$', views.get_depth, name='get_depth'),
+    re_path('remove_tag/$', views.remove_tag, name='remove_tag'),
 ]

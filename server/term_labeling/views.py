@@ -17,6 +17,8 @@ from subprocess import run, PIPE
 
 # create dummy data of line and context
 from .scripts.wordTagging import Tagging
+
+
 # poem = {'id': '2066', 'poet_id': 25, 'name': 'قصيدة رقم 11، الكامل،لبِّسِ', 'context': [
 #     {'row_index': '1', 'sadr': 'أَيَئِسْتَ مِنْ أَسْماءَ أَمْ لم تَيْأَسِ ',
 #      'ajuz': 'وَصَرَمْتَ شَبْكَ حِبَالِها المُتَلبِّسِ '},
@@ -96,8 +98,11 @@ def index(request):
 
 
 def tags(request):
+    t = Tag()
+    all_tags = t.getAllTags()
     context = {
-        'title': 'Tags'
+        'title': 'Tags',
+        'all_tags': all_tags
     }
     return render(request, 'manage_tags.html', context)
 
@@ -273,8 +278,8 @@ def suggest_tags(request):
         else:
             return HttpResponse("not found")
 
-def get_children(request):
 
+def get_children(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
@@ -287,7 +292,6 @@ def get_children(request):
 
 
 def get_parent(request):
-
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
@@ -298,8 +302,8 @@ def get_parent(request):
         else:
             return HttpResponse("not found")
 
-def get_roots(request):
 
+def get_roots(request):
     if request.method == 'GET':
         data = request.GET
         t = Tag()
@@ -321,18 +325,19 @@ def add_root(request):
         else:
             return HttpResponse("not found")
 
-def add_tag(request):
 
+def add_tag(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
         parent = data.get('parent')
         t = Tag()
-        bool = t.addTag(term,parent)
+        bool = t.addTag(term, parent)
         if bool is not None:
             return JsonResponse(bool)
         else:
             return HttpResponse("not found")
+
 
 def get_brothers(request):
     if request.method == 'GET':
@@ -340,9 +345,32 @@ def get_brothers(request):
         term = data.get('term')
         parent = data.get('parent')
         t = Tag()
-        brothers = t.getBrothers(term ,parent)
+        brothers = t.getBrothers(term, parent)
         if brothers is not None:
             return JsonResponse(brothers)
+        else:
+            return HttpResponse("not found")
+
+
+def get_depth(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        t = Tag()
+        depth = t.findDepth(term)
+        if depth is not None:
+            return JsonResponse(depth)
+        else:
+            return HttpResponse("not found")
+
+def remove_tag(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        t = Tag()
+        flag = t.removeTag(term)
+        if flag is not None:
+            return JsonResponse(flag)
         else:
             return HttpResponse("not found")
 

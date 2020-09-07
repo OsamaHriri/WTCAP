@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block stylesheets %}
 <script src="{% static 'term_labeling/manage_tags.js' %}"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/manage_tags_style.css'%}">
@@ -13,24 +14,34 @@
     </div>
     <br>
     <div class="row">
-                    <!-- Tree Section -->
-            <div class="treeview">
-                <h5> Tags </h5>
-
-                <ul class="tree">
-
+        <!-- Tree Section -->
+        <div class="treeview">
+            <h5> Tags </h5>
+            <input type="text" id="mySearchInput" onclick="$('#tagsDropDown').toggle();" onkeyup="filterSearch()"
+                   placeholder="إبحث..."
+                   title="إبحث...">
+            <div id="tagsDropDown">
+                <ul id="myUL">
+                    {% for tag in all_tags %}
+                    <li><a href="#" onclick="searchTag(this)"> {{ tag }} </a></li>
+                    {% endfor %}
                 </ul>
-                <p> {{'------'}} </p>
-                 <div>
-                  <input type="text" id="newTag"placeholder="addtag.." name="addtag" style="width:150px">
-                  <button type="button"><i class="fa fa-check-square" aria-hidden="true" onclick="submit_clicked()" ></i></button>
-                 </div>
-
             </div>
-        </div>
+            <ul class="tree">
 
+            </ul>
+            <p> {{'------'}} </p>
+            <div>
+                <button onclick="deleteTag()"> Delete</button>
+                <input type="text" id="newTag" placeholder="addtag.." name="addtag" style="width:150px">
+                <button type="button"><i class="fa fa-check-square" aria-hidden="true" onclick="submit_clicked()"></i>
+                </button>
+            </div>
+
+        </div>
     </div>
 </div>
+
 
 {% endblock content %}
 

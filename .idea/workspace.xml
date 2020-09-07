@@ -6,6 +6,7 @@
       <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/views.py" afterDir="false" />
@@ -303,7 +304,21 @@
       <option name="project" value="LOCAL" />
       <updated>1598872875868</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="manage tags page">
+      <created>1598970173594</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1598970173595</updated>
+    </task>
+    <task id="LOCAL-00018" summary="manage tags page">
+      <created>1599388634969</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1599388634970</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -338,7 +353,8 @@
     <MESSAGE value="Hierarchy Tree traversal + bugs fix" />
     <MESSAGE value="add &quot;add Tag&quot; feature to the hierarchy, color the selected element and bugs fix." />
     <MESSAGE value="...." />
-    <option name="LAST_COMMIT_MESSAGE" value="...." />
+    <MESSAGE value="manage tags page" />
+    <option name="LAST_COMMIT_MESSAGE" value="manage tags page" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2587" y="183" width="869" height="810" key="CommitChangelistDialog2" timestamp="1587302475442">
