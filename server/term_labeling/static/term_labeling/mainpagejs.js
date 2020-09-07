@@ -128,7 +128,7 @@ function add_new_tag(text) {
     });
 }
 
-function getDepth(text){
+function getDepth(text) {
 
     return $.ajax({
         type: "GET",
@@ -138,16 +138,19 @@ function getDepth(text){
     });
 }
 
-function searchTag(obj){
-    getDepth(obj.innerText).done(function(d){
+function searchTag(obj) {
+
+    getDepth(obj.innerText).done(function (d) {
         const elem = $(obj);
-        const text = elem[0].innerText.split(/\r?\n/)[0]
-        depth = d.depth + 1 ;
-        emptyTree()
-        if(depth === 1)
-           flag = false
-        item_clicked(text)
+        const text = elem[0].innerText.split(/\r?\n/)[0];
+        depth = d.depth + 1;
+        emptyTree();
+        if (depth === 1)
+            flag = false;
+        item_clicked(text);
+        $('#tagsDropDown').toggle();
     });
+
 }
 
 function submit_clicked() {
@@ -467,12 +470,12 @@ $(".sug-btn").bind('contextmenu', function (e) {
     });
 });
 
-$(document).bind('contextmenu click',function(){
-  $("#context-menu").hide();
+$(document).bind('contextmenu click', function () {
+    $("#context-menu").hide();
 });
 
 // disable context-menu from custom menu
-$('#context-menu').bind('contextmenu',function(){
-  return false;
+$('#context-menu').bind('contextmenu', function () {
+    return false;
 });
 
