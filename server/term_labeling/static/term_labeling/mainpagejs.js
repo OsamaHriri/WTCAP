@@ -147,8 +147,8 @@ function searchTag(obj) {
         emptyTree();
         if (depth === 1)
             flag = false;
-        item_clicked(text);
         $('#tagsDropDown').toggle();
+        item_clicked(text);
     });
 
 }
@@ -186,7 +186,7 @@ function submit_clicked() {
 
 function Tagging() {
     const checkBox = document.getElementById("c1");
-    tagging = checkBox.checked == true;
+    tagging = checkBox.checked === true;
 }
 
 
@@ -454,28 +454,34 @@ function build_suggestion(item, index) {
 
 window.onload = getHeaders();
 
-// disable right click and show custom context menu
-$(".sug-btn").bind('contextmenu', function (e) {
-    const id = this.id;
-    // $("#txt_id").val(id);
-
-    const top = e.pageY + 5;
-    const left = e.pageX;
-    console.log(top + ' ' + left);
-
-    // Show contextmenu
-    $("#context-menu").toggle(100).css({
-        top: top + "px",
-        left: left + "px"
+$(document).ready(function () {
+    // disable right click and show custom context menu
+    $("h5").bind('contextmenu', function (e) {
+        const top = e.pageY + 5;
+        const left = e.pageX;
+        // Show contextmenu
+        $(".context-menu").toggle(100).css({
+            top: top + "px",
+            left: left + "px"
+        });
+        // disable default context menu
+        return false;
     });
-});
 
-$(document).bind('contextmenu click', function () {
-    $("#context-menu").hide();
-});
+    // Hide context menu
+    $(document).bind('contextmenu click', function () {
+        $(".context-menu").hide();
+    });
 
-// disable context-menu from custom menu
-$('#context-menu').bind('contextmenu', function () {
-    return false;
-});
+    // disable context-menu from custom menu
+    $('.context-menu').bind('contextmenu', function () {
+        return false;
+    });
 
+    // Clicked context-menu item
+    $('.context-menu a').click(function () {
+
+        $(".context-menu").hide();
+    });
+
+});
