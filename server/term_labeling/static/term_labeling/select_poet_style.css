@@ -11,7 +11,7 @@
 }
 
 .dropbtn:hover, .dropbtn:focus {
-    background-color: blue;/*#008CBA;  Green *!*/
+    background-color: #008CBA; /*Green *!*/
     color: white;
 }
 
@@ -29,6 +29,8 @@
 
 .row {
     padding: 20px;
+    display: flex;
+    align-items: center;
 }
 
 .dropdown-content {

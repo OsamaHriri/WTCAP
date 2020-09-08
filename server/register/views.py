@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
 
@@ -14,4 +13,5 @@ def register(response):
     else:
         form = RegisterForm()
 
-    return render(response, "register.html", {"form":form})
+    return render(response, "register.html", {"form": form,
+                                              "title": 'Register'})

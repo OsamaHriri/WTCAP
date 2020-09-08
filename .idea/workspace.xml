@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/img/search.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/base_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/base_style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/register/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/register/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/register/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/register/templates/registration/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/register/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/register/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags_style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,15 +58,15 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server" />
-      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Nareed\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\term_labeling\img" />
       <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\templates" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server" />
+      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
     </key>
   </component>
   <component name="RunManager" selected="Python.tagGraph">
@@ -182,7 +181,8 @@
       <workItem from="1594115072554" duration="20675000" />
       <workItem from="1594206376136" duration="6027000" />
       <workItem from="1599501406552" duration="3694000" />
-      <workItem from="1599510196315" duration="7412000" />
+      <workItem from="1599510196315" duration="7626000" />
+      <workItem from="1599554794707" duration="5628000" />
     </task>
     <task id="LOCAL-00001" summary="Added basic web scrapper">
       <created>1583940146050</created>
@@ -317,7 +317,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599503140811</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="right click thingy">
+      <created>1599518385333</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1599518385333</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -354,13 +361,14 @@
     <MESSAGE value="...." />
     <MESSAGE value="manage tags page" />
     <MESSAGE value="search select closes suggestions" />
-    <option name="LAST_COMMIT_MESSAGE" value="search select closes suggestions" />
+    <MESSAGE value="right click thingy" />
+    <option name="LAST_COMMIT_MESSAGE" value="right click thingy" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="237" y="118" key="CommitChangelistDialog2" timestamp="1599503139816">
+    <state x="237" y="118" key="CommitChangelistDialog2" timestamp="1599518384455">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="237" y="118" key="CommitChangelistDialog2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1599503139816" />
+    <state x="237" y="118" key="CommitChangelistDialog2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1599518384455" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1599511867436">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -385,9 +393,10 @@
     </state>
     <state width="618" height="266" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1594044589965" />
     <state width="1237" height="87" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1594046196512" />
-    <state x="266" y="31" key="Vcs.Push.Dialog.v2" timestamp="1594217055782">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="399" y="47" key="Vcs.Push.Dialog.v2" timestamp="1599518396609">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="399" y="47" key="Vcs.Push.Dialog.v2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1599518396609" />
     <state x="266" y="31" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1594217055782" />
     <state x="93" y="100" width="1037" height="847" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1599503344691">
       <screen x="0" y="0" width="1920" height="1040" />

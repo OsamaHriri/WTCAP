@@ -101,7 +101,7 @@ setTimeout(function () {
 function add_tag(obj) {
     //const me = $(obj);
     const text = obj.getElementsByClassName("btn-txt");
-    const tag_text = text[0].innerText.slice(0, text[0].innerText.lastIndexOf("-"))
+    const tag_text = text[0].innerText.slice(0, text[0].innerText.lastIndexOf("-"));
     build_tag(tag_text);
 }
 
@@ -129,7 +129,6 @@ function add_new_tag(text) {
 }
 
 function getDepth(text) {
-
     return $.ajax({
         type: "GET",
         url: "get_depth/",
@@ -139,7 +138,6 @@ function getDepth(text) {
 }
 
 function searchTag(obj) {
-
     getDepth(obj.innerText).done(function (d) {
         const elem = $(obj);
         const text = elem[0].innerText.split(/\r?\n/)[0];
@@ -449,14 +447,13 @@ function build_suggestion(item, index) {
     container.insertAdjacentHTML('beforeend', '<button class="sug-btn" onclick="add_tag(this)" \n' +
         '                    <span class="add-icon">+</span>\n' +
         '                    <span class="btn-txt">' + item.Tag.name + '-' + item.Tag.frequency + '</span>\n' +
-        '                </button>')
-}
+        '                </button>');
 
-window.onload = getHeaders();
-
-$(document).ready(function () {
     // disable right click and show custom context menu
-    $("h5").bind('contextmenu', function (e) {
+    $(".sug-btn").bind('contextmenu', function (e) {
+        const tag_text = this.innerText.slice(1, this.innerText.lastIndexOf("-"));
+        $("#txt_id").val(tag_text);
+
         const top = e.pageY + 5;
         const left = e.pageX;
         // Show contextmenu
@@ -480,8 +477,25 @@ $(document).ready(function () {
 
     // Clicked context-menu item
     $('.context-menu a').click(function () {
-
         $(".context-menu").hide();
     });
+}
 
-});
+function suggestionRightClick() {
+    let sugg = $('#txt_id').val();
+    sugg = sugg.replace(/^\s+|\s+$/g, '');
+    searchSuggestion(sugg);
+}
+
+function searchSuggestion(text) {
+    getDepth(text).done(function (d) {
+        depth = d.depth + 1;
+        emptyTree();
+        if (depth === 1)
+            flag = false;
+        item_clicked(text);
+    });
+}
+
+//Load initial headers
+window.onload = getHeaders();

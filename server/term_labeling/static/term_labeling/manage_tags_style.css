@@ -26,6 +26,10 @@
     color: cornflowerblue;
 }
 
+/*#fixed_cont{*/
+/*    position: fixed;*/
+/*}*/
+
 /* Search tags css */
 
 #tagsDropDown {
@@ -157,7 +161,6 @@
 
 /* tree style */
 .treeview {
-    float: right;
     -ms-user-select: none;
     user-select: none;
     border-radius: 25px;
@@ -166,7 +169,6 @@
     margin-bottom: 10px;
     max-height: 500px;
     overflow: auto;
-    width: 266px;
 }
 
 ul.tree {
