@@ -101,7 +101,7 @@ setTimeout(function () {
 function add_tag(obj) {
     //const me = $(obj);
     const text = obj.getElementsByClassName("btn-txt");
-    const tag_text = text[0].innerText.slice(0, text[0].innerText.lastIndexOf("-"))
+    const tag_text = text[0].innerText.slice(0, text[0].innerText.lastIndexOf("-"));
     build_tag(tag_text);
 }
 
@@ -128,8 +128,7 @@ function add_new_tag(text) {
     });
 }
 
-function getDepth(text){
-
+function getDepth(text) {
     return $.ajax({
         type: "GET",
         url: "get_depth/",
@@ -138,16 +137,18 @@ function getDepth(text){
     });
 }
 
-function searchTag(obj){
-    getDepth(obj.innerText).done(function(d){
+function searchTag(obj) {
+    getDepth(obj.innerText).done(function (d) {
         const elem = $(obj);
-        const text = elem[0].innerText.split(/\r?\n/)[0]
-        depth = d.depth + 1 ;
-        emptyTree()
-        if(depth === 1)
-           flag = false
-        item_clicked(text)
+        const text = elem[0].innerText.split(/\r?\n/)[0];
+        depth = d.depth + 1;
+        emptyTree();
+        if (depth === 1)
+            flag = false;
+        $('#tagsDropDown').toggle();
+        item_clicked(text);
     });
+
 }
 
 function submit_clicked() {
@@ -183,7 +184,7 @@ function submit_clicked() {
 
 function Tagging() {
     const checkBox = document.getElementById("c1");
-    tagging = checkBox.checked == true;
+    tagging = checkBox.checked === true;
 }
 
 
@@ -446,33 +447,55 @@ function build_suggestion(item, index) {
     container.insertAdjacentHTML('beforeend', '<button class="sug-btn" onclick="add_tag(this)" \n' +
         '                    <span class="add-icon">+</span>\n' +
         '                    <span class="btn-txt">' + item.Tag.name + '-' + item.Tag.frequency + '</span>\n' +
-        '                </button>')
+        '                </button>');
+
+    // disable right click and show custom context menu
+    $(".sug-btn").bind('contextmenu', function (e) {
+        const tag_text = this.innerText.slice(1, this.innerText.lastIndexOf("-"));
+        $("#txt_id").val(tag_text);
+
+        const top = e.pageY + 5;
+        const left = e.pageX;
+        // Show contextmenu
+        $(".context-menu").toggle(100).css({
+            top: top + "px",
+            left: left + "px"
+        });
+        // disable default context menu
+        return false;
+    });
+
+    // Hide context menu
+    $(document).bind('contextmenu click', function () {
+        $(".context-menu").hide();
+    });
+
+    // disable context-menu from custom menu
+    $('.context-menu').bind('contextmenu', function () {
+        return false;
+    });
+
+    // Clicked context-menu item
+    $('.context-menu a').click(function () {
+        $(".context-menu").hide();
+    });
 }
 
-window.onload = getHeaders();
+function suggestionRightClick() {
+    let sugg = $('#txt_id').val();
+    sugg = sugg.replace(/^\s+|\s+$/g, '');
+    searchSuggestion(sugg);
+}
 
-// disable right click and show custom context menu
-$(".sug-btn").bind('contextmenu', function (e) {
-    const id = this.id;
-    // $("#txt_id").val(id);
-
-    const top = e.pageY + 5;
-    const left = e.pageX;
-    console.log(top + ' ' + left);
-
-    // Show contextmenu
-    $("#context-menu").toggle(100).css({
-        top: top + "px",
-        left: left + "px"
+function searchSuggestion(text) {
+    getDepth(text).done(function (d) {
+        depth = d.depth + 1;
+        emptyTree();
+        if (depth === 1)
+            flag = false;
+        item_clicked(text);
     });
-});
+}
 
-$(document).bind('contextmenu click',function(){
-  $("#context-menu").hide();
-});
-
-// disable context-menu from custom menu
-$('#context-menu').bind('contextmenu',function(){
-  return false;
-});
-
+//Load initial headers
+window.onload = getHeaders();

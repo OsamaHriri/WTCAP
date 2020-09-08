@@ -26,6 +26,10 @@
     color: cornflowerblue;
 }
 
+/*#fixed_cont{*/
+/*    position: fixed;*/
+/*}*/
+
 /* Search tags css */
 
 #tagsDropDown {
@@ -57,7 +61,7 @@
     background-color: #ddd;
 }
 
-#tagsDropDown a{
+#tagsDropDown a {
     color: black;
     text-decoration: none;
 }
@@ -157,7 +161,6 @@
 
 /* tree style */
 .treeview {
-    float: right;
     -ms-user-select: none;
     user-select: none;
     border-radius: 25px;
@@ -166,7 +169,6 @@
     margin-bottom: 10px;
     max-height: 500px;
     overflow: auto;
-    width: 266px;
 }
 
 ul.tree {
@@ -291,9 +293,23 @@ ul.tree > li > ul > li > ul > li > a > label:before {
 #context-menu {
     display: none;
     position: absolute;
-    border: 1px solid black;
-    border-radius: 3px;
-    width: 200px;
-    background: white;
-    box-shadow: 10px 10px 5px #888888;
+    border-radius: 10px;
+    width: auto;
+    background: #6e6658;
+    z-index: 100;
+    padding: 5px 10px 3px;
+}
+
+.context-menu a {
+    color: white;
+    text-decoration: none;
+}
+
+.context-menu a:hover{
+    color: #112D32;
+}
+
+.context-menu a img {
+    width: 30px;
+    height: 30px;
 }

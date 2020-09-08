@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Markazi+Text&display=swap');
 * {
     direction: rtl;
 }
@@ -11,4 +12,6 @@ body {
 /* nav bar css */
 .navbar{
     background-color: #112D32;
+    font-family: 'Markazi Text', serif;
+    font-size: 1.3em;
 }
