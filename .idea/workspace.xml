@@ -349,10 +349,14 @@
     <option name="LAST_COMMIT_MESSAGE" value="manage tags page" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="608" y="115" key="CommitChangelistDialog2" timestamp="1599560602385">
+    <state x="608" y="115" key="CommitChangelistDialog2" timestamp="1599560689322">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="608" y="115" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1599560602385" />
+    <state x="608" y="115" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1599560689322" />
+    <state x="184" y="85" key="DiffContextDialog" timestamp="1599560704807">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="184" y="85" key="DiffContextDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1599560704807" />
     <state width="1237" height="87" key="GridCell.Tab.0.bottom" timestamp="1594046196512">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
@@ -386,10 +390,10 @@
     </state>
     <state x="336" y="87" width="609" height="536" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1594141939472" />
     <state x="336" y="92" width="609" height="536" key="find.popup/0.0.1280.720@0.0.1280.720" timestamp="1594131666226" />
-    <state x="569" y="311" key="git4idea.merge.GitPullDialog" timestamp="1599560635026">
+    <state x="569" y="311" key="git4idea.merge.GitPullDialog" timestamp="1599560697590">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="569" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1599560635026" />
+    <state x="569" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1599560697590" />
     <state x="717" y="420" key="git4idea.ui.GitStashDialog" timestamp="1599560627355">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
