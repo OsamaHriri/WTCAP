@@ -3,15 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/views.py" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,27 +50,15 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server" />
+      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\templates" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server" />
-      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
-    </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="Python.tagGraph">
     <configuration name="almaany_translator_bot" type="PythonConfigurationType" factoryName="Python">
@@ -176,6 +156,18 @@
         <item itemvalue="Python.createGraph" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -357,11 +349,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="manage tags page" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2587" y="183" width="869" height="810" key="CommitChangelistDialog2" timestamp="1587302475442">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="608" y="115" key="CommitChangelistDialog2" timestamp="1599560570554">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="667" y="183" width="869" height="810" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587295998297" />
-    <state x="2587" y="183" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1587302475442" />
+    <state x="608" y="115" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1599560570554" />
     <state width="1237" height="87" key="GridCell.Tab.0.bottom" timestamp="1594046196512">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
@@ -386,11 +377,6 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="266" y="31" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1594217055782" />
-    <state x="615" y="320" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587296047407" />
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1587297406859">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587297406859" />
     <state x="450" y="258" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594170374336">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -400,12 +386,9 @@
     </state>
     <state x="336" y="87" width="609" height="536" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1594141939472" />
     <state x="336" y="92" width="609" height="536" key="find.popup/0.0.1280.720@0.0.1280.720" timestamp="1594131666226" />
-    <state x="569" y="311" key="git4idea.merge.GitPullDialog" timestamp="1587296008127">
+    <state x="569" y="311" key="git4idea.merge.GitPullDialog" timestamp="1599560583765">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="569" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587296008127" />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/semantic_labeling_arabic$tagGraph.coverage" NAME="tagGraph Coverage Results" MODIFIED="1594044587836" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/server/term_labeling/scripts" />
+    <state x="569" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1599560583765" />
   </component>
 </project>
