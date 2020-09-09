@@ -2,14 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/img/plusIcon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/main_tags_style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags_style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="semantic-labeling-arabic" />
@@ -55,6 +76,7 @@
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Nareed\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\term_labeling\img" />
+      <recent name="C:\Users\Nareed\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\images" />
       <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\templates" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic" />
@@ -177,7 +199,11 @@
       <workItem from="1594206376136" duration="6027000" />
       <workItem from="1599501406552" duration="3694000" />
       <workItem from="1599510196315" duration="7626000" />
-      <workItem from="1599554794707" duration="8449000" />
+      <workItem from="1599554794707" duration="10005000" />
+      <workItem from="1599571548830" duration="3492000" />
+      <workItem from="1599593737903" duration="2774000" />
+      <workItem from="1599600373512" duration="18000" />
+      <workItem from="1599637581094" duration="10716000" />
     </task>
     <task id="LOCAL-00001" summary="Added basic web scrapper">
       <created>1583940146050</created>
@@ -326,7 +352,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599560682240</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Right click on tags">
+      <created>1599564500286</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1599564500286</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -365,13 +398,18 @@
     <MESSAGE value="search select closes suggestions" />
     <MESSAGE value="right click thingy" />
     <MESSAGE value="Fixed right click" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed right click" />
+    <MESSAGE value="Right click on tags" />
+    <option name="LAST_COMMIT_MESSAGE" value="Right click on tags" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="237" y="118" key="CommitChangelistDialog2" timestamp="1599560680868">
+    <state x="706" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1599644297179">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="237" y="118" key="CommitChangelistDialog2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1599560680868" />
+    <state x="706" y="323" key="#com.intellij.fileTypes.FileTypeChooser/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1599644297179" />
+    <state x="237" y="118" key="CommitChangelistDialog2" timestamp="1599564498921">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="237" y="118" key="CommitChangelistDialog2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1599564498921" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1599511867436">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -396,10 +434,10 @@
     </state>
     <state width="618" height="266" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1594044589965" />
     <state width="1237" height="87" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1594046196512" />
-    <state x="399" y="47" key="Vcs.Push.Dialog.v2" timestamp="1599560683905">
+    <state x="399" y="47" key="Vcs.Push.Dialog.v2" timestamp="1599564502292">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="399" y="47" key="Vcs.Push.Dialog.v2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1599560683905" />
+    <state x="399" y="47" key="Vcs.Push.Dialog.v2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1599564502292" />
     <state x="266" y="31" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1594217055782" />
     <state x="93" y="100" width="1037" height="847" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1599503344691">
       <screen x="0" y="0" width="1920" height="1040" />

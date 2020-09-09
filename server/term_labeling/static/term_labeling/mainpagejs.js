@@ -70,7 +70,6 @@ function hi(id) {
                 selected_obj.css("color", "black");
             $(this).css("color", "orange");
             selected_obj = $(this);
-            console.log("choosen term " + this.innerHTML);
             selected_term = this.innerHTML;
             load_suggestions(selected_term);
         });
@@ -337,7 +336,6 @@ function remove_tag(obj) {
     const index = selected_tags.indexOf(text);
     if (index > -1) {
         selected_tags.splice(index, 1);
-        console.log("after removal : " + selected_tags)
     }
     elem.remove();
 }
@@ -367,11 +365,8 @@ function build_tag(tag_name) {
 }
 
 function save_term_tag() {
-    console.log(selected_term);
-    console.log(selected_tags);
     selected_obj.css("color", "green");
     for (const tag of selected_tags) {
-        console.log("on " + tag);
         $.ajax({
             type: "GET",
             url: "save_term_tags/",
@@ -436,9 +431,6 @@ function load_suggestions(term) {
 }
 
 function build_suggestion(item, index) {
-    console.log(item);
-    console.log(item.Tag.name + " " + item.Tag.frequency);
-
     const container = document.getElementsByClassName('suggested_container')[0];
     container.insertAdjacentHTML('beforeend', '<button class="sug-btn" onclick="add_tag(this)" \n' +
         '                    <span class="add-icon">+</span>\n' +

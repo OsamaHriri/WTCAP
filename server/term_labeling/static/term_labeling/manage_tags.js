@@ -209,6 +209,7 @@ function item_clicked(text) {
             var pNode = document.createElement("il");
             pNode.appendChild(document.createTextNode(parent[0].parent.name));
             pNode.setAttribute('onclick', "item_clicked1(this,event)");
+            pNode.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
             pNode.setAttribute('class', "parent");
             ul.appendChild(pNode);
             ul1 = document.createElement('ul');
@@ -217,6 +218,7 @@ function item_clicked(text) {
         }
         current.appendChild(document.createTextNode(text));
         current.setAttribute('onclick', "item_clicked2(this,event)");
+        current.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
         current.setAttribute('class', "node");
         current.setAttribute('id', "c");
         current.setAttribute("style", "color: green");
@@ -253,6 +255,7 @@ function build_il(item, index) {
     var li = document.createElement("li");
     li.appendChild(document.createTextNode(item.child.name));
     li.setAttribute('onclick', "item_clicked3(this,event)");
+    li.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
     li.setAttribute('class', "child");
     li.setAttribute("style", "color: black");
     ul2.appendChild(li);
@@ -263,6 +266,7 @@ function build_il_brothers(item, index) {
     var li = document.createElement("li");
     li.appendChild(document.createTextNode(item.brother.name));
     li.setAttribute('onclick', "item_clicked2(this,event)");
+    li.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
     li.setAttribute('class', "node");
     li.setAttribute("style", "color: black");
     ul1.appendChild(li);
@@ -274,8 +278,39 @@ function build_il_headers(item, index) {
     var li = document.createElement("li");
     li.appendChild(document.createTextNode(item.root.name));
     li.setAttribute('onclick', "item_clicked3(this,event)");
+    li.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
     li.setAttribute('class', "child");
     ul.appendChild(li);
+}
+
+function right_click_tag(obj, e) {
+    event.stopPropagation();
+    //prevent default menu
+    e.preventDefault();
+    const text = obj.innerText.split(/\r?\n/)[0];
+    console.log(text);
+    const top = e.pageY + 5;
+    const left = e.pageX;
+    // Show contextmenu
+    $(".context-menu").toggle(100).css({
+        top: top + "px",
+        left: left + "px"
+    });
+
+    // Hide context menu
+    $(document).bind('contextmenu click', function () {
+        $(".context-menu").hide();
+    });
+
+    // disable context-menu from custom menu
+    $('.context-menu').bind('contextmenu', function () {
+        return false;
+    });
+
+    // Clicked context-menu item
+    $('.context-menu a').click(function () {
+        $(".context-menu").hide();
+    });
 }
 
 
