@@ -25,6 +25,7 @@ class Tag(object):
         self.getAllTagsQ = """ Match (t:Tag) return t.name as name ,t.parent as parent , t.id as id """
         self.getAllRootsQ = """ Match (t:Tag) where t.parent=-1 return {name : t.name } as root  """
         self.jsonQuery = """ MATCH r=(t:Tag)-[:Parent*]->(rs:Tag)  where t.parent=-1 WITH COLLECT(r) AS rs CALL apoc.convert.toTree(rs, true ,{ nodes: { Tag:['name']} }) yield value   RETURN value as tags """
+        self.setParentQ = """ match(t:Tag) , match(n:Tag)  where t.name=$parent and n.name =$ name set n.parent = t.id create (t)-[:Parent]->(n) """
 
     def ifExists(self, name):
         s = self.graph.run(self.searchQ, name=name).data()
@@ -154,8 +155,6 @@ class Tag(object):
                 self.graph.run(self.removeParentQ, name=name)
                 self.graph.run(self.setToRootQ , name=name)
                 return True
-        if not self.ifExists(name) or not self.ifExists(newParent):
-            return False
         if self.checkCycle(name ,newParent):
             return False
         self.graph.run(self.removeParentQ , name=name)
@@ -177,6 +176,23 @@ class Tag(object):
 
         return {"depth" : depth}
 
+    def newParent(self ,name , newParent):
+        if not self.ifExists(name):
+            return {"add": False}
+        t = self.getParentInline(name)["name"]
+        self.addTag(newParent)
+        if not self.changeParent(name,newParent):
+            return {"add": False}
+        else :
+            if self.getAttrOfTag(name)["parent"] == -1 :
+                 self.graph.run(self.setParentQ , name = newParent , parent = t)
+            return {"add" : True}
+
+
+
+
+
+
 
 
 
@@ -187,9 +203,11 @@ class Tag(object):
 #tag.addTag("b","a")
 #tag.addTag("c","b")
 #tag.changeParent("a","c")
+#tag.newParent("b","d")
 #tag.removeTag("c")
 #tag.removeTag("a")
 #tag.removeTag("b")
+#tag.removeTag("d")
 
 #for t in tag.getAllTags():
 #    print(t.name,t.id,t.parent)

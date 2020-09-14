@@ -29,6 +29,15 @@ function add_new_tag(text) {
     });
 }
 
+function add_new_tag(text , parent) {
+    return $.ajax({
+        type: "GET",
+        url: "add_parent/",
+        data: {'term': text, 'parent': parent},
+        dataType: "json",
+    });
+}
+
 function getHeaders() {
     $.ajax({
         type: "GET",
@@ -116,6 +125,23 @@ function deleteTag() {
 
         });
     });
+
+}
+
+function new_parent(){
+
+    text = document.getElementById("parent-name").value
+    console.log(text)
+    if (text === "")
+        window.alert("The field is empty ,Please insert a tag before clicking");
+    else {
+        add_parent(text,righclicked).done(function (d){
+            if(d.add== false)
+                window.alert("Error , the parent is one of the term descendant");
+       });
+
+
+    }
 
 }
 
@@ -283,12 +309,15 @@ function build_il_headers(item, index) {
     ul.appendChild(li);
 }
 
+let righclicked = ""
+
 function right_click_tag(obj, e) {
-    event.stopPropagation();
+    e.stopPropagation();
     //prevent default menu
     e.preventDefault();
+
     const text = obj.innerText.split(/\r?\n/)[0];
-    console.log(text);
+    righclicked = text
     const top = e.pageY + 5;
     const left = e.pageX;
     // Show contextmenu
@@ -350,3 +379,4 @@ function filterSearch() {
         }
     }
 }
+

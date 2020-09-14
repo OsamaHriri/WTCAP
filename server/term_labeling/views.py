@@ -374,4 +374,17 @@ def remove_tag(request):
         else:
             return HttpResponse("not found")
 
+def add_parent(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        parent = data.get('parent')
+        t = Tag()
+        flag = t.newParent(term,parent)
+        if flag is not None:
+            return JsonResponse(flag)
+        else:
+            return HttpResponse("not found")
+
+
 mutex = Lock()
