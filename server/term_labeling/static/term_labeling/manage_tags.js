@@ -29,10 +29,19 @@ function add_new_tag(text) {
     });
 }
 
-function add_new_tag(text , parent) {
+function add_parent(text , parent) {
     return $.ajax({
         type: "GET",
         url: "add_parent/",
+        data: {'term': text, 'parent': parent},
+        dataType: "json",
+    });
+}
+
+function add_child(text , parent) {
+    return $.ajax({
+        type: "GET",
+        url: "add_tag/",
         data: {'term': text, 'parent': parent},
         dataType: "json",
     });
@@ -87,6 +96,15 @@ function remove_tag(text) {
     });
 }
 
+function editTag(text , edit) {
+    return $.ajax({
+        type: "GET",
+        url: "edit_tag/",
+        data: {'term': text , 'edit':edit},
+        dataType: "json",
+    });
+}
+
 function searchTag(obj) {
     getDepth(obj.innerText).done(function (d) {
         const elem = $(obj);
@@ -128,22 +146,86 @@ function deleteTag() {
 
 }
 
+function delete_tag(){
+    getParent(rightclicked).done(function (d) {
+        var parent = d.parent;
+        remove_tag(rightclicked).done(function (d2) {
+            if (parent.length === 0) {
+                emptyTree();
+                getHeaders();
+                depth = 0;
+                tagParent = "";
+                flag = false;
+            } else {
+                search2(parent[0].parent.name)
+            }
+        });
+
+    });
+
+
+
+}
+
 function new_parent(){
 
     text = document.getElementById("parent-name").value
-    console.log(text)
     if (text === "")
         window.alert("The field is empty ,Please insert a tag before clicking");
     else {
-        add_parent(text,righclicked).done(function (d){
-            if(d.add== false)
-                window.alert("Error , the parent is one of the term descendant");
+        if (text === rightclicked){
+            window.alert("Error , you can`t add the term itself as parent");
+            return
+        }
+        add_parent(rightclicked,text).done(function (d){
+            if(d.add== false){
+                window.alert("Error , the parent already exist somewhere");
+                return }
+            document.getElementById("parent-name").value = ""
+            search2(rightclicked)
        });
-
-
     }
 
 }
+
+function edit_tag(){
+    text = document.getElementById("edited-name").value
+    editTag(rightclicked ,text).done(function(d){
+        if(d.edit === false){
+           window.alert("Error , the edit name already exist");
+                return }
+        document.getElementById("edited-name").value = ""
+        emptyTree()
+        if(tagParent === rightclicked)
+            item_clicked(text)
+        else {
+            item_clicked(tagParent)
+        }
+    });
+
+
+}
+function new_child(){
+     text = document.getElementById("child-name").value
+     if (text === "")
+            window.alert("The field is empty ,Please insert a tag before clicking");
+        else {
+            if (text === rightclicked){
+                window.alert("Error , you can`t add the term itself as child");
+                return
+            }
+            add_child(text,rightclicked).done(function (d){
+                 if (d.Tag === false){
+                    window.alert("The tag already exist");
+                    return }
+                document.getElementById("child-name").value = ""
+                search2(rightclicked)
+           });
+        }
+
+
+}
+
 
 function submit_clicked() {
     text = document.getElementById("newTag").value;
@@ -152,7 +234,6 @@ function submit_clicked() {
     else {
         if (tagParent === "") {
             addNewRoot(text).done(function (d) {
-                console.log("hey");
                 if (d.Tag === false)
                     window.alert("The tag already exist");
                 else {
@@ -309,7 +390,7 @@ function build_il_headers(item, index) {
     ul.appendChild(li);
 }
 
-let righclicked = ""
+let rightclicked = ""
 
 function right_click_tag(obj, e) {
     e.stopPropagation();
@@ -317,7 +398,7 @@ function right_click_tag(obj, e) {
     e.preventDefault();
 
     const text = obj.innerText.split(/\r?\n/)[0];
-    righclicked = text
+    rightclicked = text
     const top = e.pageY + 5;
     const left = e.pageX;
     // Show contextmenu
@@ -378,5 +459,15 @@ function filterSearch() {
             li[i].style.display = "none";
         }
     }
+}
+
+function search2(text) {
+    getDepth(text).done(function (d) {
+        depth = d.depth + 1;
+        emptyTree();
+        if (depth === 1)
+            flag = false;
+        item_clicked(text);
+    });
 }
 

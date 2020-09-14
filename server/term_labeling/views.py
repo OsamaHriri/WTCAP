@@ -386,5 +386,15 @@ def add_parent(request):
         else:
             return HttpResponse("not found")
 
-
+def edit_tag(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        edit = data.get('edit')
+        t = Tag()
+        flag = t.editTag(term , edit)
+        if flag is not None:
+            return JsonResponse(flag)
+        else:
+            return HttpResponse("not found")
 mutex = Lock()

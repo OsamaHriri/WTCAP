@@ -9,7 +9,7 @@ class Tag(object):
     def __init__(self):
         self.graph = Graph("bolt://localhost:7687", auth=("neo4j", "123123147"))
         self.getParentQ = """ MATCH (t:Tag) -[p:Parent]-> (n:Tag) WHERE n.name=$name return {name :t.name} as parent"""
-        self.getParentQ1 = """ MATCH (t:Tag) -[p:Parent]-> (n:Tag) WHERE n.name=$name return t.name as name"""
+        self.getParentQ1 = """ MATCH (t:Tag) -[p:Parent]-> (n:Tag) WHERE n.name=$name return t.name as name ,t.parent as parent"""
         self.getChildrenQ = """ MATCH (t:Tag) -[p:Parent]-> (n:Tag) WHERE t.name=$name return {name : n.name} as child """
         self.getBrothersQ = """ MATCH (t:Tag) -[p:Parent]-> (n:Tag) WHERE t.name=$parent and n.name<>$name return {name : n.name} as brother """
         self.getMaxIDQ = """ Match (t:Tag) return Max(tointeger(t.id)) as max """
@@ -25,8 +25,8 @@ class Tag(object):
         self.getAllTagsQ = """ Match (t:Tag) return t.name as name ,t.parent as parent , t.id as id """
         self.getAllRootsQ = """ Match (t:Tag) where t.parent=-1 return {name : t.name } as root  """
         self.jsonQuery = """ MATCH r=(t:Tag)-[:Parent*]->(rs:Tag)  where t.parent=-1 WITH COLLECT(r) AS rs CALL apoc.convert.toTree(rs, true ,{ nodes: { Tag:['name']} }) yield value   RETURN value as tags """
-        self.setParentQ = """ match(t:Tag) , match(n:Tag)  where t.name=$parent and n.name =$ name set n.parent = t.id create (t)-[:Parent]->(n) """
-
+        self.setParentQ = """ match (t:Tag) ,(n:Tag)  where t.name=$parent and n.name =$ name set n.parent = t.id create (t)-[:Parent]->(n) """
+        self.editTagQ = """ match (t:Tag) where t.name =$name set t.name=$newName """
     def ifExists(self, name):
         s = self.graph.run(self.searchQ, name=name).data()
         if len(s) == 0:
@@ -136,13 +136,13 @@ class Tag(object):
         if t["parent"] == s["id"] :
             return True
         while t["parent"] != -1 :
-            temp = self.getAttrOfTag(self.getParent(t["name"]))
+            temp = self.getParentInline(t["name"])
             if temp["parent"] == s["id"]:
                 return True
             t=temp
         return False
 
-    def changeParent(self, name, newParent=None):
+    def change_Parent(self, name, newParent=None):
         """
           # if parent is none , we changed tag parentid to -1(root).
           # newparent need to be in db.
@@ -177,22 +177,31 @@ class Tag(object):
         return {"depth" : depth}
 
     def newParent(self ,name , newParent):
-        if not self.ifExists(name):
+        if not self.addTag(newParent)["Tag"]:
             return {"add": False}
-        t = self.getParentInline(name)["name"]
-        self.addTag(newParent)
-        if not self.changeParent(name,newParent):
-            return {"add": False}
+        if not self.getAttrOfTag(name)["parent"] == -1 :
+            t = self.getParentInline(name)["name"]
+            self.graph.run(self.setParentQ, name=newParent, parent=t)
+        self.change_Parent(name,newParent)
+        return {"add" : True}
+
+
+    def changeParent(self ,name , newParent):
+        if not self.ifExists(newParent):
+            return {"change":False}
+        if not self.getAttrOfTag(name)["parent"] == -1 :
+            t = self.getParentInline(name)["name"]
+            self.graph.run(self.setParentQ, name=newParent, parent=t)
+        if not self.change_Parent(name,newParent):
+            return {"change": False}
         else :
-            if self.getAttrOfTag(name)["parent"] == -1 :
-                 self.graph.run(self.setParentQ , name = newParent , parent = t)
-            return {"add" : True}
+            return {"change" : True}
 
-
-
-
-
-
+    def editTag(self, name, newName):
+        if  self.ifExists(newName):
+            return {"edit":False}
+        self.graph.run(self.editTagQ, name= name , newName=newName)
+        return {"edit":True}
 
 
 
@@ -201,9 +210,10 @@ class Tag(object):
 # tag.addTag("بحر")
 #tag.addTag("a")
 #tag.addTag("b","a")
+#tag.addTag("d","a")
 #tag.addTag("c","b")
-#tag.changeParent("a","c")
-#tag.newParent("b","d")
+#tag.change_Parent("a","c")
+#tag.newParent("d","b")
 #tag.removeTag("c")
 #tag.removeTag("a")
 #tag.removeTag("b")
