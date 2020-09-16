@@ -38,6 +38,15 @@ function add_parent(text , parent) {
     });
 }
 
+function changeParent(text , parent) {
+    return $.ajax({
+        type: "GET",
+        url: "change_parent/",
+        data: {'term': text, 'parent': parent},
+        dataType: "json",
+    });
+}
+
 function add_child(text , parent) {
     return $.ajax({
         type: "GET",
@@ -146,6 +155,32 @@ function deleteTag() {
 
 }
 
+function change_parent(){
+     text = document.getElementById("change-parent").value
+     if (text === "")
+         window.alert("The field is empty ,Please insert a tag before clicking");
+     else{
+         if (text === rightclicked){
+            window.alert("Error , you can`t add the term itself as parent");
+            return
+        }
+         changeParent(rightclicked,text).done(function(d){
+            if(d.exist === false){
+                 window.alert("The parent doesnt exist ,Please insert a valid one");
+                 return
+            }
+            if (d.change === false){
+                 window.alert("Error ,you can't add a descendant tag as parent");
+                 return
+            }
+            document.getElementById("change-parent").value = ""
+            search2(rightclicked)
+            $('#changeParentModal').modal('hide')
+         });
+
+     }
+}
+
 function delete_tag(){
     getParent(rightclicked).done(function (d) {
         var parent = d.parent;
@@ -183,6 +218,7 @@ function new_parent(){
                 return }
             document.getElementById("parent-name").value = ""
             search2(rightclicked)
+            $('#insertParentModal').modal('hide')
        });
     }
 
@@ -200,6 +236,7 @@ function edit_tag(){
             item_clicked(text)
         else {
             item_clicked(tagParent)
+            $('#editNameModal').modal('hide')
         }
     });
 
@@ -220,6 +257,7 @@ function new_child(){
                     return }
                 document.getElementById("child-name").value = ""
                 search2(rightclicked)
+                $('#insertChildModal').modal('hide')
            });
         }
 
@@ -398,6 +436,8 @@ function right_click_tag(obj, e) {
     e.preventDefault();
 
     const text = obj.innerText.split(/\r?\n/)[0];
+    if(e.target!=obj)
+        return;
     rightclicked = text
     const top = e.pageY + 5;
     const left = e.pageX;

@@ -397,4 +397,18 @@ def edit_tag(request):
             return JsonResponse(flag)
         else:
             return HttpResponse("not found")
+
+def change_parent(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        parent = data.get('parent')
+        t = Tag()
+        flag = t.changeParent(term ,parent)
+        if flag is not None:
+            return JsonResponse(flag)
+        else:
+            return HttpResponse("not found")
+
+
 mutex = Lock()

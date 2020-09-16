@@ -188,14 +188,11 @@ class Tag(object):
 
     def changeParent(self ,name , newParent):
         if not self.ifExists(newParent):
-            return {"change":False}
-        if not self.getAttrOfTag(name)["parent"] == -1 :
-            t = self.getParentInline(name)["name"]
-            self.graph.run(self.setParentQ, name=newParent, parent=t)
+            return {"exist":False ,"change":False}
         if not self.change_Parent(name,newParent):
-            return {"change": False}
+            return {"exist":True ,"change":False}
         else :
-            return {"change" : True}
+            return {"exist":True ,"change" :True}
 
     def editTag(self, name, newName):
         if  self.ifExists(newName):

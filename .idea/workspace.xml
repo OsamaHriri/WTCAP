@@ -330,7 +330,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600077838134</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="hierarchy right click features">
+      <created>1600103997667</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1600103997667</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -368,7 +375,8 @@
     <MESSAGE value="manage tags page" />
     <MESSAGE value="add new feature delete and search" />
     <MESSAGE value="add parent feature" />
-    <option name="LAST_COMMIT_MESSAGE" value="add parent feature" />
+    <MESSAGE value="hierarchy right click features" />
+    <option name="LAST_COMMIT_MESSAGE" value="hierarchy right click features" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2587" y="183" width="869" height="810" key="CommitChangelistDialog2" timestamp="1587302475442">

@@ -34,6 +34,11 @@
                 <i class="fa fa-trash-o"></i> Delete all
             </a>
         </li>
+         <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="change" data-toggle="modal" data-target="#changeParentModal">
+                <i class="fa fa-level-up"></i> Change parent
+            </a>
+        </li>
     </ul>
 </div>
 
@@ -51,7 +56,27 @@
                        placeholder="Parent name" required type="text">
             </div>
             <div class="modal-footer ">
-                <button class="btn btn-secondary" value="Add" data-dismiss="modal" onclick="new_parent()">حفظ</button><br>
+                <button class="btn btn-secondary" value="Add"  onclick="new_parent()">حفظ</button><br>
+                <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="changeParentModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Change parent</h4>
+            </div>
+            <div class="modal-body">
+                <input class="form-control" id="change-parent" name="parent-name"
+                       placeholder="Parent name" required type="text">
+            </div>
+            <div class="modal-footer ">
+                <button class="btn btn-secondary" value="Add"  onclick="change_parent()">حفظ</button><br>
                 <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
             </div>
         </div>
@@ -72,7 +97,7 @@
                        placeholder="Child name" required type="text">
             </div>
             <div class="modal-footer ">
-                <button class="btn btn-secondary" value="Add" data-dismiss="modal" onclick="new_child()">حفظ</button><br>
+                <button class="btn btn-secondary" value="Add"  onclick="new_child()">حفظ</button><br>
                 <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
             </div>
         </div>
@@ -94,7 +119,7 @@
                        placeholder="new name" required type="text">
             </div>
             <div class="modal-footer ">
-                <button class="btn bk-btn-default" value="Add" data-dismiss="modal" onclick="edit_tag()">حفظ</button><br>
+                <button class="btn bk-btn-default" value="Add"  onclick="edit_tag()">حفظ</button><br>
                 <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
             </div>
         </div>
