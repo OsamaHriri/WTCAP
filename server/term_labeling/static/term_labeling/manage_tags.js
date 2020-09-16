@@ -105,6 +105,15 @@ function remove_tag(text) {
     });
 }
 
+function remove_tag_children(text) {
+    return $.ajax({
+        type: "GET",
+        url: "delete_all/",
+        data: {'term': text},
+        dataType: "json",
+    });
+}
+
 function editTag(text , edit) {
     return $.ajax({
         type: "GET",
@@ -197,9 +206,24 @@ function delete_tag(){
         });
 
     });
+}
 
+function delete_all(){
+    getParent(rightclicked).done(function (d) {
+        var parent = d.parent;
+        remove_tag_children(rightclicked).done(function (d2) {
+            if (parent.length === 0) {
+                emptyTree();
+                getHeaders();
+                depth = 0;
+                tagParent = "";
+                flag = false;
+            } else {
+                search2(parent[0].parent.name)
+            }
+        });
 
-
+    });
 }
 
 function new_parent(){

@@ -27,6 +27,8 @@ class Tag(object):
         self.jsonQuery = """ MATCH r=(t:Tag)-[:Parent*]->(rs:Tag)  where t.parent=-1 WITH COLLECT(r) AS rs CALL apoc.convert.toTree(rs, true ,{ nodes: { Tag:['name']} }) yield value   RETURN value as tags """
         self.setParentQ = """ match (t:Tag) ,(n:Tag)  where t.name=$parent and n.name =$ name set n.parent = t.id create (t)-[:Parent]->(n) """
         self.editTagQ = """ match (t:Tag) where t.name =$name set t.name=$newName """
+        self.deleteAllQ = """ MATCH p=(a:Tag {name:$name})-[:Parent*0..]->(b:Tag) WITH COLLECT(b) AS ns1 UNWIND ns1 AS n WITH COLLECT(DISTINCT n) AS ns2 FOREACH(y IN ns2 | DETACH DELETE y);"""
+
     def ifExists(self, name):
         s = self.graph.run(self.searchQ, name=name).data()
         if len(s) == 0:
@@ -199,6 +201,14 @@ class Tag(object):
             return {"edit":False}
         self.graph.run(self.editTagQ, name= name , newName=newName)
         return {"edit":True}
+
+    def deleteAllChildrens(self,name):
+        if not self.ifExists(name):
+            return {"delete":False}
+        self.graph.run(self.deleteAllQ ,name = name)
+        return {"delete":True}
+
+
 
 
 

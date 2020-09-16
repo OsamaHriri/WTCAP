@@ -30,4 +30,5 @@ urlpatterns = [
     re_path('add_parent/$', views.add_parent, name='add_parent'),
     re_path('edit_tag/$', views.edit_tag, name='edit_tag'),
     re_path('change_parent/$', views.change_parent, name='change_parent'),
+    re_path('delete_all/$', views.delete_all, name='delete_all'),
 ]

@@ -410,5 +410,16 @@ def change_parent(request):
         else:
             return HttpResponse("not found")
 
+def delete_all(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        t = Tag()
+        flag = t.deleteAllChildrens(term)
+        if flag is not None:
+            return JsonResponse(flag)
+        else:
+            return HttpResponse("not found")
+
 
 mutex = Lock()
