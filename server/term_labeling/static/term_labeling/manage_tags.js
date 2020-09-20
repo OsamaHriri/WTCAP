@@ -29,6 +29,33 @@ function add_new_tag(text) {
     });
 }
 
+function add_parent(text , parent) {
+    return $.ajax({
+        type: "GET",
+        url: "add_parent/",
+        data: {'term': text, 'parent': parent},
+        dataType: "json",
+    });
+}
+
+function changeParent(text , parent) {
+    return $.ajax({
+        type: "GET",
+        url: "change_parent/",
+        data: {'term': text, 'parent': parent},
+        dataType: "json",
+    });
+}
+
+function add_child(text , parent) {
+    return $.ajax({
+        type: "GET",
+        url: "add_tag/",
+        data: {'term': text, 'parent': parent},
+        dataType: "json",
+    });
+}
+
 function getHeaders() {
     $.ajax({
         type: "GET",
@@ -78,6 +105,24 @@ function remove_tag(text) {
     });
 }
 
+function remove_tag_children(text) {
+    return $.ajax({
+        type: "GET",
+        url: "delete_all/",
+        data: {'term': text},
+        dataType: "json",
+    });
+}
+
+function editTag(text , edit) {
+    return $.ajax({
+        type: "GET",
+        url: "edit_tag/",
+        data: {'term': text , 'edit':edit},
+        dataType: "json",
+    });
+}
+
 function searchTag(obj) {
     getDepth(obj.innerText).done(function (d) {
         const elem = $(obj);
@@ -119,6 +164,131 @@ function deleteTag() {
 
 }
 
+function change_parent(){
+     text = document.getElementById("change-parent").value
+     if (text === "")
+         window.alert("The field is empty ,Please insert a tag before clicking");
+     else{
+         if (text === rightclicked){
+            window.alert("Error , you can`t add the term itself as parent");
+            return
+        }
+         changeParent(rightclicked,text).done(function(d){
+            if(d.exist === false){
+                 window.alert("The parent doesnt exist ,Please insert a valid one");
+                 return
+            }
+            if (d.change === false){
+                 window.alert("Error ,you can't add a descendant tag as parent");
+                 return
+            }
+            document.getElementById("change-parent").value = ""
+            search2(rightclicked)
+            $('#changeParentModal').modal('hide')
+         });
+
+     }
+}
+
+function delete_tag(){
+    getParent(rightclicked).done(function (d) {
+        var parent = d.parent;
+        remove_tag(rightclicked).done(function (d2) {
+            if (parent.length === 0) {
+                emptyTree();
+                getHeaders();
+                depth = 0;
+                tagParent = "";
+                flag = false;
+            } else {
+                search2(parent[0].parent.name)
+            }
+        });
+
+    });
+}
+
+function delete_all(){
+    getParent(rightclicked).done(function (d) {
+        var parent = d.parent;
+        remove_tag_children(rightclicked).done(function (d2) {
+            if (parent.length === 0) {
+                emptyTree();
+                getHeaders();
+                depth = 0;
+                tagParent = "";
+                flag = false;
+            } else {
+                search2(parent[0].parent.name)
+            }
+        });
+
+    });
+}
+
+function new_parent(){
+
+    text = document.getElementById("parent-name").value
+    if (text === "")
+        window.alert("The field is empty ,Please insert a tag before clicking");
+    else {
+        if (text === rightclicked){
+            window.alert("Error , you can`t add the term itself as parent");
+            return
+        }
+        add_parent(rightclicked,text).done(function (d){
+            if(d.add== false){
+                window.alert("Error , the parent already exist somewhere");
+                return }
+            document.getElementById("parent-name").value = ""
+            search2(rightclicked)
+            $('#insertParentModal').modal('hide')
+       });
+    }
+
+}
+
+function edit_tag(){
+    text = document.getElementById("edited-name").value
+    editTag(rightclicked ,text).done(function(d){
+        if(d.edit === false){
+           window.alert("Error , the edit name already exist");
+                return }
+        document.getElementById("edited-name").value = ""
+        emptyTree()
+        if(tagParent === rightclicked)
+            item_clicked(text)
+        else {
+            item_clicked(tagParent)
+            $('#editNameModal').modal('hide')
+        }
+    });
+
+
+}
+function new_child(){
+     text = document.getElementById("child-name").value
+     if (text === "")
+            window.alert("The field is empty ,Please insert a tag before clicking");
+        else {
+            if (text === rightclicked){
+                window.alert("Error , you can`t add the term itself as child");
+                return
+            }
+            add_child(text,rightclicked).done(function (d){
+                 if (d.Tag === false){
+                    window.alert("The tag already exist");
+                    return }
+                document.getElementById("child-name").value = ""
+                search2(rightclicked)
+                $('#insertChildModal').modal('hide')
+           });
+        }
+
+
+}
+
+
 function submit_clicked() {
     text = document.getElementById("newTag").value;
     if (text === "")
@@ -126,7 +296,6 @@ function submit_clicked() {
     else {
         if (tagParent === "") {
             addNewRoot(text).done(function (d) {
-                console.log("hey");
                 if (d.Tag === false)
                     window.alert("The tag already exist");
                 else {
@@ -209,6 +378,7 @@ function item_clicked(text) {
             var pNode = document.createElement("il");
             pNode.appendChild(document.createTextNode(parent[0].parent.name));
             pNode.setAttribute('onclick', "item_clicked1(this,event)");
+            pNode.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
             pNode.setAttribute('class', "parent");
             ul.appendChild(pNode);
             ul1 = document.createElement('ul');
@@ -217,6 +387,7 @@ function item_clicked(text) {
         }
         current.appendChild(document.createTextNode(text));
         current.setAttribute('onclick', "item_clicked2(this,event)");
+        current.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
         current.setAttribute('class', "node");
         current.setAttribute('id', "c");
         current.setAttribute("style", "color: green");
@@ -253,6 +424,7 @@ function build_il(item, index) {
     var li = document.createElement("li");
     li.appendChild(document.createTextNode(item.child.name));
     li.setAttribute('onclick', "item_clicked3(this,event)");
+    li.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
     li.setAttribute('class', "child");
     li.setAttribute("style", "color: black");
     ul2.appendChild(li);
@@ -263,6 +435,7 @@ function build_il_brothers(item, index) {
     var li = document.createElement("li");
     li.appendChild(document.createTextNode(item.brother.name));
     li.setAttribute('onclick', "item_clicked2(this,event)");
+    li.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
     li.setAttribute('class', "node");
     li.setAttribute("style", "color: black");
     ul1.appendChild(li);
@@ -274,8 +447,44 @@ function build_il_headers(item, index) {
     var li = document.createElement("li");
     li.appendChild(document.createTextNode(item.root.name));
     li.setAttribute('onclick', "item_clicked3(this,event)");
+    li.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
     li.setAttribute('class', "child");
     ul.appendChild(li);
+}
+
+let rightclicked = ""
+
+function right_click_tag(obj, e) {
+    e.stopPropagation();
+    //prevent default menu
+    e.preventDefault();
+
+    const text = obj.innerText.split(/\r?\n/)[0];
+    if(e.target!=obj)
+        return;
+    rightclicked = text
+    const top = e.pageY + 5;
+    const left = e.pageX;
+    // Show contextmenu
+    $(".context-menu").toggle(100).css({
+        top: top + "px",
+        left: left + "px"
+    });
+
+    // Hide context menu
+    $(document).bind('contextmenu click', function () {
+        $(".context-menu").hide();
+    });
+
+    // disable context-menu from custom menu
+    $('.context-menu').bind('contextmenu', function () {
+        return false;
+    });
+
+    // Clicked context-menu item
+    $('.context-menu a').click(function () {
+        $(".context-menu").hide();
+    });
 }
 
 
@@ -315,3 +524,14 @@ function filterSearch() {
         }
     }
 }
+
+function search2(text) {
+    getDepth(text).done(function (d) {
+        depth = d.depth + 1;
+        emptyTree();
+        if (depth === 1)
+            flag = false;
+        item_clicked(text);
+    });
+}
+

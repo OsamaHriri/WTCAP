@@ -3,8 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/mongodbConnector.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/mongodbConnector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/views.py" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,7 +28,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="IgnoredFileRootStore">
     <option name="generatedRoots">
@@ -53,7 +57,6 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Nareed\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\term_labeling\img" />
       <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\templates" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic" />
@@ -62,6 +65,18 @@
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
     </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
   </component>
   <component name="RunManager" selected="Python.tagGraph">
     <configuration name="almaany_translator_bot" type="PythonConfigurationType" factoryName="Python">
@@ -160,18 +175,6 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -186,9 +189,6 @@
       <workItem from="1594052577120" duration="4703000" />
       <workItem from="1594115072554" duration="20675000" />
       <workItem from="1594206376136" duration="6027000" />
-      <workItem from="1599501406552" duration="3694000" />
-      <workItem from="1599510196315" duration="7626000" />
-      <workItem from="1599554794707" duration="5628000" />
     </task>
     <task id="LOCAL-00001" summary="Added basic web scrapper">
       <created>1583940146050</created>
@@ -316,28 +316,35 @@
       <option name="project" value="LOCAL" />
       <updated>1599388634970</updated>
     </task>
-    <task id="LOCAL-00019" summary="search select closes suggestions">
-      <created>1599503140811</created>
+    <task id="LOCAL-00019" summary="add new feature delete and search">
+      <created>1599404082305</created>
       <option name="number" value="00019" />
       <option name="presentableId" value="LOCAL-00019" />
       <option name="project" value="LOCAL" />
-      <updated>1599503140811</updated>
+      <updated>1599404082305</updated>
     </task>
-    <task id="LOCAL-00020" summary="right click thingy">
-      <created>1599518385333</created>
+    <task id="LOCAL-00020" summary="add parent feature">
+      <created>1600077838134</created>
       <option name="number" value="00020" />
       <option name="presentableId" value="LOCAL-00020" />
       <option name="project" value="LOCAL" />
-      <updated>1599518385333</updated>
+      <updated>1600077838134</updated>
     </task>
-    <task id="LOCAL-00021" summary="Merge branch 'master' of https://gitlab.com/u_of_haifa_is_dpt/capstone_tsvi_kuflik/semantic-labeling-arabic&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml">
-      <created>1599561051177</created>
+    <task id="LOCAL-00021" summary="hierarchy right click features">
+      <created>1600103997667</created>
       <option name="number" value="00021" />
       <option name="presentableId" value="LOCAL-00021" />
       <option name="project" value="LOCAL" />
-      <updated>1599561051177</updated>
+      <updated>1600103997667</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="change parent">
+      <created>1600260212693</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1600260212694</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -373,33 +380,18 @@
     <MESSAGE value="add &quot;add Tag&quot; feature to the hierarchy, color the selected element and bugs fix." />
     <MESSAGE value="...." />
     <MESSAGE value="manage tags page" />
-    <MESSAGE value="search select closes suggestions" />
-    <MESSAGE value="right click thingy" />
-    <MESSAGE value="Merge branch 'master' of https://gitlab.com/u_of_haifa_is_dpt/capstone_tsvi_kuflik/semantic-labeling-arabic&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://gitlab.com/u_of_haifa_is_dpt/capstone_tsvi_kuflik/semantic-labeling-arabic&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
+    <MESSAGE value="add new feature delete and search" />
+    <MESSAGE value="add parent feature" />
+    <MESSAGE value="hierarchy right click features" />
+    <MESSAGE value="change parent" />
+    <option name="LAST_COMMIT_MESSAGE" value="change parent" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600330234525">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="2587" y="183" width="869" height="810" key="CommitChangelistDialog2" timestamp="1587302475442">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1600330234525" />
-    <state x="717" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600276843664">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="717" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1600276843664" />
-    <state x="-1230" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1600082950610">
-      <screen x="-1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="-1230" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1600082950610" />
-    <state x="237" y="118" key="CommitChangelistDialog2" timestamp="1599561050820">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="237" y="118" key="CommitChangelistDialog2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1599518384455" />
-    <state x="237" y="118" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1599561050820" />
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1599511867436">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1599511867436" />
+    <state x="667" y="183" width="869" height="810" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587295998297" />
+    <state x="2587" y="183" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1587302475442" />
     <state width="1237" height="87" key="GridCell.Tab.0.bottom" timestamp="1594046196512">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
@@ -420,36 +412,30 @@
     </state>
     <state width="618" height="266" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1594044589965" />
     <state width="1237" height="87" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1594046196512" />
-    <state x="399" y="47" key="Vcs.Push.Dialog.v2" timestamp="1599518396609">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="266" y="31" key="Vcs.Push.Dialog.v2" timestamp="1594217055782">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="399" y="47" key="Vcs.Push.Dialog.v2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1599518396609" />
     <state x="266" y="31" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1594217055782" />
-    <state x="93" y="100" width="1037" height="847" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1599503344691">
+    <state x="615" y="320" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587296047407" />
+    <state x="656" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1587297406859">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="93" y="100" width="1037" height="847" key="com.intellij.history.integration.ui.views.FileHistoryDialog/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1599503344691" />
-    <state x="-1264" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1600005895199">
-      <screen x="-1920" y="0" width="1920" height="1040" />
+    <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587297406859" />
+    <state x="450" y="258" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594170374336">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="-1264" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1600005895199" />
-    <state x="675" y="395" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1599511473704">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="675" y="395" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1599511473704" />
     <state x="450" y="258" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1594170374336" />
     <state x="336" y="87" width="609" height="536" key="find.popup" timestamp="1594141939472">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="336" y="87" width="609" height="536" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1594141939472" />
     <state x="336" y="92" width="609" height="536" key="find.popup/0.0.1280.720@0.0.1280.720" timestamp="1594131666226" />
-    <state x="569" y="311" key="git4idea.merge.GitPullDialog" timestamp="1600591891214">
+    <state x="569" y="311" key="git4idea.merge.GitPullDialog" timestamp="1587296008127">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="569" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1600591891214" />
-    <state x="616" y="173" width="672" height="676" key="search.everywhere.popup" timestamp="1599516113573">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="616" y="173" width="672" height="676" key="search.everywhere.popup/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1599516113573" />
+    <state x="569" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587296008127" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/semantic_labeling_arabic$tagGraph.coverage" NAME="tagGraph Coverage Results" MODIFIED="1594044587836" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/server/term_labeling/scripts" />
   </component>
 </project>

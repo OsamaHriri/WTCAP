@@ -374,4 +374,52 @@ def remove_tag(request):
         else:
             return HttpResponse("not found")
 
+def add_parent(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        parent = data.get('parent')
+        t = Tag()
+        flag = t.newParent(term,parent)
+        if flag is not None:
+            return JsonResponse(flag)
+        else:
+            return HttpResponse("not found")
+
+def edit_tag(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        edit = data.get('edit')
+        t = Tag()
+        flag = t.editTag(term , edit)
+        if flag is not None:
+            return JsonResponse(flag)
+        else:
+            return HttpResponse("not found")
+
+def change_parent(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        parent = data.get('parent')
+        t = Tag()
+        flag = t.changeParent(term ,parent)
+        if flag is not None:
+            return JsonResponse(flag)
+        else:
+            return HttpResponse("not found")
+
+def delete_all(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        t = Tag()
+        flag = t.deleteAllChildrens(term)
+        if flag is not None:
+            return JsonResponse(flag)
+        else:
+            return HttpResponse("not found")
+
+
 mutex = Lock()

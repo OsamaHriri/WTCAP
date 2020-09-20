@@ -3,7 +3,7 @@
 
 {% block stylesheets %}
 <script src="{% static 'term_labeling/mainpagejs.js' %}"></script>
-<link rel="stylesheet" type="text/css" href="{% static 'term_labeling/manage_tags_style.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'term_labeling/main_tags_style.css'%}">
 {% endblock stylesheets %}
 
 
@@ -47,11 +47,6 @@
                         <li><a href="#" onclick="searchTag(this)"> {{ tag }} </a></li>
                         {% endfor %}
                     </ul>
-                </div>
-                <div>
-                    <label>Tagging</label>
-                    <input type="checkbox" checked id="c1" class="checkb" onclick="Tagging()"/>
-                    <label for="c1"></label>
                 </div>
                 <ul class="tree">
                 </ul>

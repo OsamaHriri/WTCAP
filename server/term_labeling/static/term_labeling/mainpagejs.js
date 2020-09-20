@@ -70,7 +70,6 @@ function hi(id) {
                 selected_obj.css("color", "black");
             $(this).css("color", "orange");
             selected_obj = $(this);
-            console.log("choosen term " + this.innerHTML);
             selected_term = this.innerHTML;
             load_suggestions(selected_term);
         });
@@ -105,7 +104,6 @@ function add_tag(obj) {
     build_tag(tag_text);
 }
 
-let tagging = true;
 let ul1;
 let ul2;
 
@@ -152,7 +150,7 @@ function searchTag(obj) {
 }
 
 function submit_clicked() {
-    text = document.getElementById("newTag").value
+    text = document.getElementById("newTag").value;
     if (text === "")
         window.alert("The field is empty ,Please insert a tag before clicking");
     else {
@@ -180,11 +178,6 @@ function submit_clicked() {
         }
     }
     document.getElementById("newTag").value = "";
-}
-
-function Tagging() {
-    const checkBox = document.getElementById("c1");
-    tagging = checkBox.checked === true;
 }
 
 
@@ -230,13 +223,10 @@ function emptyTree() {
 }
 
 function item_clicked1(obj, event) {
+    //clicking on parent
     event.stopPropagation();
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
-    if (tagging === true) {
-        build_tag(text);
-        return;
-    }
     if (event.target !== obj)
         return;
     depth = depth - 1;
@@ -247,29 +237,23 @@ function item_clicked1(obj, event) {
 }
 
 function item_clicked2(obj, event) {
+    //clicking on child depth 1
     event.stopPropagation();
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
-    if (tagging === true) {
-        build_tag(text);
-        return;
-    }
     if (event.target !== obj)
         return;
     emptyTree();
-    if (depth === 1 && tagging === false)
+    if (depth === 1)
         flag = true;
     item_clicked(text);
 }
 
 function item_clicked3(obj, event) {
+    //clicking on child depth 2
     event.stopPropagation();
     const elem = $(obj);
     const text = elem[0].textContent.split(/\r?\n/)[0];
-    if (tagging === true) {
-        build_tag(text);
-        return;
-    }
     depth = depth + 1;
     emptyTree();
     if (depth === 1)
@@ -294,6 +278,7 @@ function item_clicked(text) {
             const pNode = document.createElement("il");
             pNode.appendChild(document.createTextNode(parent[0].parent.name));
             pNode.setAttribute('onclick', "item_clicked1(this,event)");
+            pNode.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
             pNode.setAttribute('class', "parent");
             ul.appendChild(pNode);
             ul1 = document.createElement('ul');
@@ -302,6 +287,7 @@ function item_clicked(text) {
         }
         current.appendChild(document.createTextNode(text));
         current.setAttribute('onclick', "item_clicked2(this,event)");
+        current.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
         current.setAttribute('class', "node");
         current.setAttribute('id', "c");
         current.setAttribute("style", "color: green");
@@ -326,7 +312,8 @@ function build_il(item, index) {
     //var ul = document.querySelector('.tree');
     var li = document.createElement("li");
     li.appendChild(document.createTextNode(item.child.name));
-    li.setAttribute('onclick', "item_clicked3(this,event)");
+    li.setAttribute('onclick', "item_clicked3(this, event)");
+    li.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
     li.setAttribute('class', "child");
     li.setAttribute("style", "color: black");
     ul2.appendChild(li);
@@ -337,6 +324,7 @@ function build_il_headers(item, index) {
     var li = document.createElement("li");
     li.appendChild(document.createTextNode(item.root.name));
     li.setAttribute('onclick', "item_clicked3(this,event)");
+    li.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
     li.setAttribute('class', "child");
     ul.appendChild(li);
 }
@@ -348,9 +336,15 @@ function remove_tag(obj) {
     const index = selected_tags.indexOf(text);
     if (index > -1) {
         selected_tags.splice(index, 1);
-        console.log("after removal : " + selected_tags)
     }
     elem.remove();
+}
+
+function right_click_tag(obj, e) {
+    event.stopPropagation();
+    //prevent default menu
+    e.preventDefault();
+    build_tag(obj.innerText.split(/\r?\n/)[0])
 }
 
 function build_tag(tag_name) {
@@ -371,11 +365,8 @@ function build_tag(tag_name) {
 }
 
 function save_term_tag() {
-    console.log(selected_term);
-    console.log(selected_tags);
     selected_obj.css("color", "green");
     for (const tag of selected_tags) {
-        console.log("on " + tag);
         $.ajax({
             type: "GET",
             url: "save_term_tags/",
@@ -440,9 +431,6 @@ function load_suggestions(term) {
 }
 
 function build_suggestion(item, index) {
-    console.log(item);
-    console.log(item.Tag.name + " " + item.Tag.frequency);
-
     const container = document.getElementsByClassName('suggested_container')[0];
     container.insertAdjacentHTML('beforeend', '<button class="sug-btn" onclick="add_tag(this)" \n' +
         '                    <span class="add-icon">+</span>\n' +

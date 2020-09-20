@@ -7,6 +7,145 @@
 {% endblock stylesheets %}
 
 {% block content %}
+<div id="context-menu" class="context-menu">
+    <ul class="context-menu__items">
+        <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="View" data-toggle="modal" data-target="#insertParentModal">
+                <i class="fa fa-level-up"></i> Add parent
+            </a>
+        </li>
+        <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="View" data-toggle="modal" data-target="#insertChildModal">
+                <i class="fa fa-level-down"></i> Add child
+            </a>
+        </li>
+        <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="Edit" data-toggle="modal" data-target="#editNameModal">
+                <i class="fa fa-edit"></i> Edit tag name
+            </a>
+        </li>
+        <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="Delete" onclick="delete_tag()">
+                <i class="fa fa-eraser" ></i> Delete tag
+            </a>
+        </li>
+        <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="Delete" data-toggle="modal" data-target="#deleteAllModal">
+                <i class="fa fa-trash-o"></i> Delete all
+            </a>
+        </li>
+         <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="change" data-toggle="modal" data-target="#changeParentModal">
+                <i class="fa fa-level-up"></i> Change parent
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!--Insert parent popup-->
+<div class="modal fade" id="insertParentModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add parent</h4>
+            </div>
+            <div class="modal-body">
+                <input class="form-control" id="parent-name" name="parent-name"
+                       placeholder="Parent name" required type="text">
+            </div>
+            <div class="modal-footer ">
+                <button class="btn btn-secondary" value="Add"  onclick="new_parent()">حفظ</button><br>
+                <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="changeParentModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Change parent</h4>
+            </div>
+            <div class="modal-body">
+                <input class="form-control" id="change-parent" name="parent-name"
+                       placeholder="Parent name" required type="text">
+            </div>
+            <div class="modal-footer ">
+                <button class="btn btn-secondary" value="Add"  onclick="change_parent()">حفظ</button><br>
+                <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Insert child popup-->
+<div class="modal fade" id="insertChildModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add child</h4>
+            </div>
+            <div class="modal-body">
+                <input class="form-control" id="child-name" name="parent-name"
+                       placeholder="Child name" required type="text">
+            </div>
+            <div class="modal-footer ">
+                <button class="btn btn-secondary" value="Add"  onclick="new_child()">حفظ</button><br>
+                <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--TODO - switch placeholder to be the current tag name -->
+<!-- Edit tag name popup-->
+<div class="modal fade" id="editNameModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit tag name</h4>
+            </div>
+            <div class="modal-body">
+                <input class="form-control" id="edited-name" name="parent-name"
+                       placeholder="new name" required type="text">
+            </div>
+            <div class="modal-footer ">
+                <button class="btn bk-btn-default" value="Add"  onclick="edit_tag()">حفظ</button><br>
+                <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Confirm delete all modal-->
+<div class="modal fade" id="deleteAllModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Are you sure?</h4>
+            </div>
+            <div class="modal-body">
+                <p> هل أنت متأكد أنك تريد حذف الكل?</p>
+            </div>
+            <div class="modal-footer ">
+                <button class="btn btn-danger" value="Add" onclick="delete_all()" data-dismiss="modal">خذف</button><br>
+                <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid" onload="initialize_index()">
     <br>
     <div class="page-header">
