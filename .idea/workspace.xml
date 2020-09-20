@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags_style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -342,7 +338,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600260212694</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Visual Graph representation">
+      <created>1600593285952</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1600593285952</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -382,14 +385,14 @@
     <MESSAGE value="add parent feature" />
     <MESSAGE value="hierarchy right click features" />
     <MESSAGE value="change parent" />
-    <option name="LAST_COMMIT_MESSAGE" value="change parent" />
+    <MESSAGE value="Visual Graph representation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Visual Graph representation" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2587" y="183" width="869" height="810" key="CommitChangelistDialog2" timestamp="1587302475442">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="-1306" y="115" key="CommitChangelistDialog2" timestamp="1600593285572">
+      <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="667" y="183" width="869" height="810" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587295998297" />
-    <state x="2587" y="183" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1587302475442" />
+    <state x="-1306" y="115" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1600593285572" />
     <state width="1237" height="87" key="GridCell.Tab.0.bottom" timestamp="1594046196512">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
@@ -410,15 +413,11 @@
     </state>
     <state width="618" height="266" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1594044589965" />
     <state width="1237" height="87" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1594046196512" />
-    <state x="266" y="31" key="Vcs.Push.Dialog.v2" timestamp="1594217055782">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="-1521" y="47" key="Vcs.Push.Dialog.v2" timestamp="1600593292680">
+      <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="266" y="31" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1594217055782" />
-    <state x="615" y="320" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587296047407" />
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1587297406859">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587297406859" />
+    <state x="-1521" y="47" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1600593292680" />
     <state x="450" y="258" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594170374336">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -428,9 +427,13 @@
     </state>
     <state x="336" y="87" width="609" height="536" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1594141939472" />
     <state x="336" y="92" width="609" height="536" key="find.popup/0.0.1280.720@0.0.1280.720" timestamp="1594131666226" />
-    <state x="569" y="311" key="git4idea.merge.GitPullDialog" timestamp="1587296008127">
+    <state x="569" y="311" key="git4idea.merge.GitPullDialog" timestamp="1600618669596">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="569" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587296008127" />
+    <state x="569" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1600618669596" />
+    <state x="-1201" y="289" key="search.everywhere.popup" timestamp="1600617278525">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1201" y="289" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1600617278525" />
   </component>
 </project>
