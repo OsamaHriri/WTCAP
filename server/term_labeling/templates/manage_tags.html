@@ -12,12 +12,14 @@
 <div id="context-menu" class="context-menu">
     <ul class="context-menu__items">
         <li class="context-menu__item">
-            <a href="#" class="context-menu__link" data-action="View" data-toggle="modal" data-target="#insertParentModal">
+            <a href="#" class="context-menu__link" data-action="View" data-toggle="modal"
+               data-target="#insertParentModal">
                 <i class="fa fa-level-up"></i> Add parent
             </a>
         </li>
         <li class="context-menu__item">
-            <a href="#" class="context-menu__link" data-action="View" data-toggle="modal" data-target="#insertChildModal">
+            <a href="#" class="context-menu__link" data-action="View" data-toggle="modal"
+               data-target="#insertChildModal">
                 <i class="fa fa-level-down"></i> Add child
             </a>
         </li>
@@ -28,16 +30,18 @@
         </li>
         <li class="context-menu__item">
             <a href="#" class="context-menu__link" data-action="Delete" onclick="delete_tag()">
-                <i class="fa fa-eraser" ></i> Delete tag
+                <i class="fa fa-eraser"></i> Delete tag
             </a>
         </li>
         <li class="context-menu__item">
-            <a href="#" class="context-menu__link" data-action="Delete" data-toggle="modal" data-target="#deleteAllModal">
+            <a href="#" class="context-menu__link" data-action="Delete" data-toggle="modal"
+               data-target="#deleteAllModal">
                 <i class="fa fa-trash-o"></i> Delete all
             </a>
         </li>
-         <li class="context-menu__item">
-            <a href="#" class="context-menu__link" data-action="change" data-toggle="modal" data-target="#changeParentModal">
+        <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="change" data-toggle="modal"
+               data-target="#changeParentModal">
                 <i class="fa fa-level-up"></i> Change parent
             </a>
         </li>
@@ -58,7 +62,8 @@
                        placeholder="Parent name" required type="text">
             </div>
             <div class="modal-footer ">
-                <button class="btn btn-secondary" value="Add"  onclick="new_parent()">حفظ</button><br>
+                <button class="btn btn-secondary" value="Add" onclick="new_parent()">حفظ</button>
+                <br>
                 <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
             </div>
         </div>
@@ -78,7 +83,8 @@
                        placeholder="Parent name" required type="text">
             </div>
             <div class="modal-footer ">
-                <button class="btn btn-secondary" value="Add"  onclick="change_parent()">حفظ</button><br>
+                <button class="btn btn-secondary" value="Add" onclick="change_parent()">حفظ</button>
+                <br>
                 <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
             </div>
         </div>
@@ -99,7 +105,8 @@
                        placeholder="Child name" required type="text">
             </div>
             <div class="modal-footer ">
-                <button class="btn btn-secondary" value="Add"  onclick="new_child()">حفظ</button><br>
+                <button class="btn btn-secondary" value="Add" onclick="new_child()">حفظ</button>
+                <br>
                 <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
             </div>
         </div>
@@ -121,7 +128,8 @@
                        placeholder="new name" required type="text">
             </div>
             <div class="modal-footer ">
-                <button class="btn bk-btn-default" value="Add"  onclick="edit_tag()">حفظ</button><br>
+                <button class="btn bk-btn-default" value="Add" onclick="edit_tag()">حفظ</button>
+                <br>
                 <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
             </div>
         </div>
@@ -141,22 +149,30 @@
                 <p> هل أنت متأكد أنك تريد حذف الكل?</p>
             </div>
             <div class="modal-footer ">
-                <button class="btn btn-danger" value="Add" onclick="delete_all()" data-dismiss="modal">خذف</button><br>
+                <button class="btn btn-danger" value="Add" onclick="delete_all()" data-dismiss="modal">خذف</button>
+                <br>
                 <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container-fluid" onload="initialize_index()">
+<div id="body_container" class="container-fluid" onload="initialize_index()">
     <br>
     <div class="page-header">
         <h1>Manage Tags</h1>
     </div>
     <br>
     <div class="row">
+        <div class="col-sm-9 graph">
+            <body onload="draw()">
+            <div id="viz"></div>
+            </body>
+
+        </div>
         <!-- Tree Section -->
-        <div class="treeview">
+
+        <div class="col-sm-3 treeview">
             <h5> Tags </h5>
             <input type="text" id="mySearchInput" onclick="$('#tagsDropDown').toggle();" onkeyup="filterSearch()"
                    placeholder="إبحث..."
@@ -171,21 +187,16 @@
             <ul class="tree">
 
             </ul>
-            <p> {{'------'}} </p>
-            <div>
-                <button onclick="deleteTag()"> Delete</button>
-                <input type="text" id="newTag" placeholder="addtag.." name="addtag" style="width:150px">
-                <button type="button"><i class="fa fa-check-square" aria-hidden="true" onclick="submit_clicked()"></i>
-                </button>
-            </div>
+<!--            <p> {{'&#45;&#45;&#45;&#45;&#45;&#45;'}} </p>-->
+<!--            <div>-->
+<!--                <button onclick="deleteTag()"> Delete</button>-->
+<!--                <input type="text" id="newTag" placeholder="addtag.." name="addtag" style="width:150px">-->
+<!--                <button type="button"><i class="fa fa-check-square" aria-hidden="true" onclick="submit_clicked()"></i>-->
+<!--                </button>-->
+<!--            </div>-->
 
         </div>
-        <div class ="graph">
-            <body onload="draw()">
-        <div id="viz"></div>
-        </body>
 
-        </div>
     </div>
 </div>
 
