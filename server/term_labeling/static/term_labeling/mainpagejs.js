@@ -202,6 +202,8 @@ function getHeaders() {
     });
 }
 
+
+
 function emptyTree() {
     const ul = document.querySelector('.tree');
     let listLength = ul.children.length;

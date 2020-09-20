@@ -9,7 +9,36 @@ let depth = 0;
 let ul1;
 let ul2;
 let flag;
+var viz;
 
+function draw() {
+            var config = {
+                container_id: "viz",
+                server_url: "bolt://localhost:7687",
+                server_user: "neo4j",
+                server_password: "123123147",
+                labels: {
+                    "Tag": {
+                        "caption": "name",
+                        "size": "level",
+                        "title_properties": [
+                            "name",
+
+                        ]
+                    }
+                },
+                relationships: {
+                    "Parent": {
+                        "caption": false
+                    }
+                },
+				arrows: true,
+                initial_cypher: "MATCH (n:Tag)-[r:Parent]->(m:Tag) RETURN *"
+            };
+
+            viz = new NeoVis.default(config);
+            viz.render();
+        }
 function addNewRoot(text) {
     return $.ajax({
         type: "GET",
