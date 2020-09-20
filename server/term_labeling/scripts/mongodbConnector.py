@@ -25,3 +25,6 @@ class Connector:
 
     def get_poets(self):
         return list(self.poetsCollections.find())
+    def get_all_poems(self):
+        return list(self.poemsCollections.find())
+
