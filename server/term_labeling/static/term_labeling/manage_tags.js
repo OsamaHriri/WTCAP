@@ -285,12 +285,15 @@ function edit_tag(){
                 return }
         document.getElementById("edited-name").value = ""
         emptyTree()
-        if(tagParent === rightclicked)
+        if (tagParent===""){
+            getHeaders()
+        }
+        else if(tagParent === rightclicked)
             item_clicked(text)
         else {
             item_clicked(tagParent)
-            $('#editNameModal').modal('hide')
         }
+        $('#editNameModal').modal('hide')
     });
 
 
