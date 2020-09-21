@@ -29,6 +29,12 @@
             </a>
         </li>
         <li class="context-menu__item">
+            <a href="#" class="context-menu__link" data-action="change" data-toggle="modal"
+               data-target="#changeParentModal">
+                <i class="fa fa-scissors"></i> Change parent
+            </a>
+        </li>
+        <li class="context-menu__item">
             <a href="#" class="context-menu__link" data-action="Delete" onclick="delete_tag()">
                 <i class="fa fa-eraser"></i> Delete tag
             </a>
@@ -37,12 +43,6 @@
             <a href="#" class="context-menu__link" data-action="Delete" data-toggle="modal"
                data-target="#deleteAllModal">
                 <i class="fa fa-trash-o"></i> Delete all
-            </a>
-        </li>
-        <li class="context-menu__item">
-            <a href="#" class="context-menu__link" data-action="change" data-toggle="modal"
-               data-target="#changeParentModal">
-                <i class="fa fa-level-up"></i> Change parent
             </a>
         </li>
     </ul>
@@ -70,6 +70,7 @@
     </div>
 </div>
 
+<!--Change parent popup-->
 <div class="modal fade" id="changeParentModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <!-- Modal content-->
@@ -114,6 +115,7 @@
 </div>
 
 <!--TODO - switch placeholder to be the current tag name -->
+
 <!-- Edit tag name popup-->
 <div class="modal fade" id="editNameModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
@@ -157,7 +159,8 @@
     </div>
 </div>
 
-<div id="body_container" class="container-fluid" onload="initialize_index()">
+
+<div id="body_container" class="container" onload="initialize_index()">
     <br>
     <div class="page-header">
         <h1>Manage Tags</h1>
@@ -187,13 +190,13 @@
             <ul class="tree">
 
             </ul>
-<!--            <p> {{'&#45;&#45;&#45;&#45;&#45;&#45;'}} </p>-->
-<!--            <div>-->
-<!--                <button onclick="deleteTag()"> Delete</button>-->
-<!--                <input type="text" id="newTag" placeholder="addtag.." name="addtag" style="width:150px">-->
-<!--                <button type="button"><i class="fa fa-check-square" aria-hidden="true" onclick="submit_clicked()"></i>-->
-<!--                </button>-->
-<!--            </div>-->
+            <!--            <p> {{'&#45;&#45;&#45;&#45;&#45;&#45;'}} </p>-->
+            <!--            <div>-->
+            <!--                <button onclick="deleteTag()"> Delete</button>-->
+            <!--                <input type="text" id="newTag" placeholder="addtag.." name="addtag" style="width:150px">-->
+            <!--                <button type="button"><i class="fa fa-check-square" aria-hidden="true" onclick="submit_clicked()"></i>-->
+            <!--                </button>-->
+            <!--            </div>-->
 
         </div>
 

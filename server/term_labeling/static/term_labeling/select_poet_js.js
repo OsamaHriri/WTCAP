@@ -1,6 +1,7 @@
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 let poemid = 2066;
+
 function myFunction(id) {
     document.getElementById(id).classList.toggle("show");
     /*
@@ -14,7 +15,7 @@ function resetPoems() {
     $(".poems-link").each(function () {
         this.remove();
     });
-   const js_list = "{{poems}}";
+    const js_list = "{{poems}}";
 }
 
 function filterFunction(dropDownId, inputId) {
@@ -46,10 +47,10 @@ function choosePoet(obj) {
 
 function choosePoem(obj) {
     const id = obj.id;
-    const value =  obj.text ;
+    const value = obj.text;
     let btn = document.getElementById("poembtn");
     btn.innerText = value;
-    poemid =  id
+    poemid = id;
     myFunction("poemDropDown");
 
 }
@@ -79,3 +80,7 @@ function submitPoem() {
     console.log(poemid);
     window.location = '/main_tag_page/?poem_iid=' + poemid;
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    window.setTimeout(document.querySelector('svg').classList.add('animated'), 1000);
+});

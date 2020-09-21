@@ -2,7 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/img/Bibliophile-bro.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/img/Novelist writing-rafiki.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/base_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/base_style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags_style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_js.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_js.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +51,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AdvancedSE" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/server/term_labeling/templates" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -50,14 +61,16 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Nareed\PycharmProjects\semantic-labeling-arabic\server\term_labeling\templates" />
+      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server" />
+      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Nareed\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\term_labeling\img" />
       <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\templates" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server" />
-      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
     </key>
   </component>
   <component name="RunManager" selected="Python.tagGraph">
@@ -157,18 +170,6 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -183,6 +184,8 @@
       <workItem from="1594052577120" duration="4703000" />
       <workItem from="1594115072554" duration="20675000" />
       <workItem from="1594206376136" duration="6027000" />
+      <workItem from="1600613660816" duration="11448000" />
+      <workItem from="1600642372375" duration="8303000" />
     </task>
     <task id="LOCAL-00001" summary="Added basic web scrapper">
       <created>1583940146050</created>
@@ -436,5 +439,8 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="569" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587296008127" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/semantic_labeling_arabic$tagGraph.coverage" NAME="tagGraph Coverage Results" MODIFIED="1594044587836" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/server/term_labeling/scripts" />
   </component>
 </project>
