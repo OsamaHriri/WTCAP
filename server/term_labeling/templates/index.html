@@ -8,8 +8,11 @@
 
 
 {% block content %}
-<div class="container-fluid" onload="initialize_index()">
-    <br>
+<div class="container-fluid text-center" onload="initialize_index()">
+
+    <div class="container-fluid banner">
+            <img src="{% static 'term_labeling/img/Bibliophile-bro.png' %}" alt="Bibliophile" width="300" height="220">
+    </div><br>
     <div class="page-header">
         <h1>Introduction Page</h1>
     </div>
@@ -18,4 +21,6 @@
 
 {% endblock content %}
 
+{% block scripts %}
 
+{% endblock scripts %}
