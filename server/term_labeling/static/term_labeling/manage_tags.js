@@ -3,42 +3,26 @@ this method initializes the manage tag page.
  */
 
 
-window.onload = getHeaders();
+
 let tagParent = "";
 let depth = 0;
 let ul1;
 let ul2;
 let flag;
-var viz;
+let viz;
+
 
 function draw() {
-            var config = {
-                container_id: "viz",
-                server_url: "bolt://localhost:7687",
-                server_user: "neo4j",
-                server_password: "123123147",
-                labels: {
-                    "Tag": {
-                        "caption": "name",
-                        "size": "level",
-                        "title_properties": [
-                            "name",
-
-                        ]
-                    }
-                },
-                relationships: {
-                    "Parent": {
-                        "caption": false
-                    }
-                },
-				arrows: true,
-                initial_cypher: "MATCH (n:Tag)-[r:Parent]->(m:Tag) RETURN *"
-            };
-
             viz = new NeoVis.default(config);
             viz.render();
         }
+
+function draw2(text){
+    statement = 'match (n:Tag{name:"$"}) optional match (n)-[p2:Parent]->(m:Tag) optional match (t:Tag) -[p1:Parent]-> (n)  RETURN *'
+    statement = statement.replace('$' ,text)
+    viz.renderWithCypher(statement)
+}
+
 function addNewRoot(text) {
     return $.ajax({
         type: "GET",
@@ -403,8 +387,12 @@ function item_clicked(text) {
             depth = 0;
             tagParent = "";
             flag = false;
+            viz.reinit(config)
+            viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *")
             return;
         }
+        viz.reinit(config2)
+        draw2(text)
         var current = document.createElement("il");
         if (parent.length > 0) {
             var pNode = document.createElement("il");
@@ -567,3 +555,62 @@ function search2(text) {
     });
 }
 
+window.onload = getHeaders();
+
+
+
+    var config = {
+                container_id: "viz",
+                server_url: "bolt://localhost:7687",
+                server_user: "neo4j",
+                server_password: "123123147",
+                labels: {
+                    "Tag": {
+                        "caption": "name",
+                        //"size" : "match (n:Tag) where id(n) = {id} match (n)-[p:Parent]->(t:Tag) return count(p)",
+                        "sizeCypher" : "match (n:Tag) where id(n) = $id match (n)-[p:Parent]->(t:Tag) return 1+ count(p)",
+                        //"community": "match p= (n:Tag)-[Pr:Parent*]->(t:Tag) return size(Pr) order by size(Pr) DESC limit 1",
+                        "community" : "parent",
+                        "title_properties": [
+                            "name",
+
+                        ]
+                    }
+                },
+                relationships: {
+                    "Parent": {
+                        //"thickness": "weight",
+                        "caption": false
+                    }
+                },
+				arrows: true,
+				hierarchical : false,
+                initial_cypher: "MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *"
+            };
+
+
+               var config2 = {
+                container_id: "viz",
+                server_url: "bolt://localhost:7687",
+                server_user: "neo4j",
+                server_password: "123123147",
+                labels: {
+                    "Tag": {
+                        "caption": "name",
+                        "community":"parent",
+                        "title_properties": [
+                            "name",
+
+                        ]
+                    }
+                },
+                relationships: {
+                    "Parent": {
+                        "thickness": "weight",
+                        "caption": false
+                    }
+                },
+				arrows: true,
+				hierarchical : true,
+				//initial_cypher: "optional MATCH (n:Tag) where n.parent=-1 RETURN *"
+            };

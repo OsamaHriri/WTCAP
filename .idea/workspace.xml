@@ -2,19 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/img/Bibliophile-bro.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/img/Novelist writing-rafiki.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/base_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/base_style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags_style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_js.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_js.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,7 +44,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/server/term_labeling/templates" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AdvancedSE" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -61,17 +54,27 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Nareed\PycharmProjects\semantic-labeling-arabic\server\term_labeling\templates" />
-      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server" />
-      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Nareed\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\term_labeling\img" />
       <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\templates" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server" />
+      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
   </component>
   <component name="RunManager" selected="Python.tagGraph">
     <configuration name="almaany_translator_bot" type="PythonConfigurationType" factoryName="Python">
@@ -184,8 +187,6 @@
       <workItem from="1594052577120" duration="4703000" />
       <workItem from="1594115072554" duration="20675000" />
       <workItem from="1594206376136" duration="6027000" />
-      <workItem from="1600613660816" duration="11448000" />
-      <workItem from="1600642372375" duration="8303000" />
     </task>
     <task id="LOCAL-00001" summary="Added basic web scrapper">
       <created>1583940146050</created>
@@ -348,7 +349,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600263408493</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="fix edit tag">
+      <created>1600609005966</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1600609005966</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -389,7 +397,8 @@
     <MESSAGE value="hierarchy right click features" />
     <MESSAGE value="change parent" />
     <MESSAGE value="delete All" />
-    <option name="LAST_COMMIT_MESSAGE" value="delete All" />
+    <MESSAGE value="fix edit tag" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix edit tag" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2587" y="183" width="869" height="810" key="CommitChangelistDialog2" timestamp="1587302475442">
