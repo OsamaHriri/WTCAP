@@ -12,15 +12,12 @@
     user-select: none;
     border-style: double;
     border-color: #6e6658;
-    border-width: 3px 3px;
+    border-width: 4px 4px;
     padding: 20px;
     margin-bottom: 10px;
-    max-height: 500px;
+    max-height: 600px;
     overflow: auto;
     background-repeat: no-repeat;
-
-  /*background-position: top center, top center, bottom center;*/
-  /*-webkit-animation: drawBorderFromCenter 4s;*/
 }
 
 #viz {

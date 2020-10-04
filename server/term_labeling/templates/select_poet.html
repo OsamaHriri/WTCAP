@@ -23,7 +23,8 @@
                 <a id="{{poet.id}}" class="poet-link" href="#" onclick="choosePoet(this)"> {{ poet.name }} </a>
                 {% endfor %}
             </div>
-        </div><br>
+        </div>
+        <br>
 
         <!-- Choose poem -->
 
@@ -35,9 +36,19 @@
                 <a id="{{poem.id}}" class="poems-link" href="#" onclick="choosePoem(this)"> {{ poem.name }} </a>
                 {% endfor %}
             </div>
-        </div><br><br>
+        </div>
+        <br><br>
+        <!-- Hover #3 -->
+        <div class="btn btn-three" onclick="submitPoem()">
+            <span onclick="submitPoem()">حلل</span>
+        </div>
+        <!--        <button class="btn submit" href="#" onclick="submitPoem()">حلل</button>-->
 
-        <button class="btn" href="#" onclick="submitPoem()">حلل</button><br><br>
+
+
+
+        <br><br>
+
 
         <img src="{% static 'term_labeling/img/Novelist writing-rafiki.png' %}" alt="Novelist writing" width="400"
              height="300">

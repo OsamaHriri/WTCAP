@@ -358,8 +358,8 @@ function build_tag(tag_name) {
         else {
             selected_tags.push(tag_name);
             const container = document.getElementsByClassName('selected_container')[0];
-            container.insertAdjacentHTML('beforeend', '<button class="tag-btn" onclick="remove_tag(this)">\n' +
-                '                    <span class="rmv-icon">x</span>\n' +
+            container.insertAdjacentHTML('beforeend', '<button class="btn btn-sm tag-btn" onclick="remove_tag(this)">\n' +
+                '                    <i class=\'fas fa-minus\'></i>' + '&nbsp;' +
                 '                    <span class="btn-txt">' + tag_name + '</span>\n' +
                 '                </button>')
         }
@@ -434,13 +434,13 @@ function load_suggestions(term) {
 
 function build_suggestion(item, index) {
     const container = document.getElementsByClassName('suggested_container')[0];
-    container.insertAdjacentHTML('beforeend', '<button class="sug-btn" onclick="add_tag(this)" \n' +
-        '                    <span class="add-icon">+</span>\n' +
+    container.insertAdjacentHTML('beforeend', '<button class="btn btn-sm tag-btn" onclick="add_tag(this)"> \n' +
+        '                   <i class=\'fas fa-plus\'></i>' + '&nbsp;' +
         '                    <span class="btn-txt">' + item.Tag.name + '-' + item.Tag.frequency + '</span>\n' +
         '                </button>');
 
     // disable right click and show custom context menu
-    $(".sug-btn").bind('contextmenu', function (e) {
+    $(".tag-btn").bind('contextmenu', function (e) {
         const tag_text = this.innerText.slice(1, this.innerText.lastIndexOf("-"));
         $("#txt_id").val(tag_text);
 
