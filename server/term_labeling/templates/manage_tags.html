@@ -3,7 +3,7 @@
 
 {% block stylesheets %}
 <script src="{% static 'term_labeling/manage_tags.js' %}"></script>
-<script src="https://rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script>
+
 
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/manage_tags_style.css'%}">
 {% endblock stylesheets %}
@@ -167,12 +167,7 @@
     </div>
     <br>
     <div class="row">
-        <div class="col-sm-9 graph">
-            <body onload="draw()">
-            <div id="viz"></div>
-            </body>
 
-        </div>
         <!-- Tree Section -->
 
         <div class="col-sm-3 treeview">
@@ -197,6 +192,14 @@
             <!--                <button type="button"><i class="fa fa-check-square" aria-hidden="true" onclick="submit_clicked()"></i>-->
             <!--                </button>-->
             <!--            </div>-->
+
+        </div>
+
+         <div class="col-sm-9 graph">
+             <button type="button" class="btn btn-default hover"> Show all tags </button>
+            <body onload="draw()">
+            <div id="viz"></div>
+            </body>
 
         </div>
 

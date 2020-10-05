@@ -4,6 +4,8 @@
 {% block stylesheets %}
 <script src="{% static 'term_labeling/mainpagejs.js' %}"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/main_tags_style.css'%}">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 {% endblock stylesheets %}
 
 
@@ -15,7 +17,7 @@
     <input type='hidden' value='' id='txt_id'>
 </div>
 
-<div class="container-fluid" onload="initialize_index()">
+<div class="container" onload="initialize_index()">
     <br>
     <div class="page-header">
         <h1>Poem Selection Example</h1>
@@ -25,28 +27,28 @@
         <!-- Tags Section -->
         <div class="col-sm-4 px-lg-5" id="fixed_cont">
             <!-- Selected Tags Section-->
-            <div class="selected_container box">
+            <div class="double-border selected_container">
                 <h5> Selected Tags </h5>
             </div>
 
             <!-- Suggested Tags Section-->
-            <div class="suggested_container">
+            <div class="double-border suggested_container">
                 <h5> Suggested Tags </h5>
             </div>
 
             <!-- Tree Section -->
-            <div class="treeview">
+            <div class="double-border treeview">
                 <h5> Tags </h5>
 
                 <input type="text" id="mySearchInput" onclick="$('#tagsDropDown').toggle();" onkeyup="filterSearch()"
                        placeholder="إبحث..."
                        title="إبحث...">
                 <div id="tagsDropDown">
-                    <ul id="myUL">
+
                         {% for tag in all_tags %}
-                        <li><a href="#" onclick="searchTag(this)"> {{ tag }} </a></li>
+                        <a href="#" onclick="searchTag(this)"> {{ tag }} </a>
                         {% endfor %}
-                    </ul>
+
                 </div>
                 <ul class="tree">
                 </ul>

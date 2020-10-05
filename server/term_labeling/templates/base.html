@@ -4,22 +4,23 @@
 
 <head>
     {% if title %}
-    <title> Arabic Tagging - {{ title }} </title>
+        <title> Arabic Tagging - {{ title }} </title>
     {% else %}
-    <title> Arabic Tagging </title>
+        <title> Arabic Tagging </title>
     {% endif %}
-    <!--
-    -->
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.neo4jlabs.com/neovis.js/v1.5.0/neovis.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/base_style.css'%}">
     {% block stylesheets %} {% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/base_style.css'%}">
+
 </head>
 
 <body>
@@ -44,11 +45,25 @@
                 <a class="nav-link" href="{% url 'tags' %}">ادارة معلومات</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">أضف مستخدمين</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link disabled" href="#">اعدادات</a>
             </li>
         </ul>
     </div>
 </nav>
+
+{% if messages %}
+<div class="container">
+    {% for message in messages %}
+    <br>
+    <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
 
 {% block content %} {% endblock %}
 

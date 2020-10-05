@@ -1,176 +1,125 @@
 @import "https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css";
 
-
-/* table css */
-
-#rowid {
-    border: 1px black;
+.container {
+    font-size: 1.15em;
 }
 
+/* table css */
 #poem {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 90%;
 }
 
 #poem td {
     padding: 8px;
-    font-size: 1.5em;
+    font-size: 1.3em;
+    word-spacing: 4px;
 }
 
 .tblcheckbox {
     visibility: hidden;
 }
 
+.term {
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in;
+}
+
 .term:hover {
     color: cornflowerblue;
 }
 
-/*#fixed_cont{*/
-/*    position: fixed;*/
-/*}*/
-
-/* Search tags css */
+/*========================
+        Search tags
+==========================*/
+#mySearchInput {
+    display: block;
+}
 
 #tagsDropDown {
     display: none;
     position: absolute;
-    background-color: #f6f6f6;
-    min-width: 100px;
+    background-color: #feffff;
+    width: auto;
     max-height: 300px;
-    overflow: auto;
-    border: 1px solid #ddd;
+    overflow-y: auto;
+    border: 1px solid #6e6658;
     z-index: 1;
     text-align: right;
 }
 
-#myUL {
-    padding: 0;
-    list-style-type: none;
-
-}
-
-#tagsDropDown li {
-    color: black;
-    padding: 7px;
-    display: block;
-    border: 1px solid #ddd;
-}
-
-#tagsDropDown li:hover {
-    background-color: #ddd;
-}
-
 #tagsDropDown a {
     color: black;
+    padding: 4px 14px;
     text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #8c8474;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in;
 }
 
-/*NEW SEARCH THINGY*/
-
-.chosen-value {
-    font-weight: 600;
-    font-size: 1.1rem;
-    padding: 0.2rem;
-    background-color: #fafcfd;
-    border: 3px solid transparent;
-    -webkit-transition: 0.3s ease-in-out;
-    transition: 0.3s ease-in-out;
+#tagsDropDown a:hover {
+    background-color: rgba(140, 132, 116, 0.58);
 }
 
-.chosen-value::-webkit-input-placeholder {
-    color: #333;
+/*==========================
+ Containers and Tag buttons
+============================*/
+
+/* Selected, suggested and tree container*/
+.double-border {
+    border-style: double;
+    border-width: thick;
+    padding: 20px;
+    margin-bottom: 10px;
 }
-
-.chosen-value:hover {
-    background-color: #ff908b;
-    cursor: pointer;
-}
-
-.chosen-value:hover::-webkit-input-placeholder {
-    color: #333;
-}
-
-.chosen-value:focus, .chosen-value.open {
-    box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.2);
-    outline: 0;
-    background-color: #ff908b;
-    color: #000;
-}
-
-.chosen-value:focus::-webkit-input-placeholder, .chosen-value.open::-webkit-input-placeholder {
-    color: #000;
-}
-
-
-/* Selected Tags Section Style */
 
 .selected_container {
-    border-radius: 25px;
-    border: 2px solid #6666BB;
-    padding: 20px;
-    margin-bottom: 10px;
+    border-color: #1d6664;
     max-height: 300px;
-    overflow: auto;
-    position: sticky;
 }
-
-.tag-btn {
-    border: 1.5px solid darkslateblue;
-    background: transparent;
-    border-radius: 10px;
-    position: relative;
-    padding: 5px;
-    margin: 3px;
-    transition: width 0.2s ease-in-out;
-    width: auto;
-}
-
-.tag-btn:hover {
-    border-color: crimson;
-    color: black;
-    transition: all 0.2s ease-in-out;
-}
-
-/* Suggested Tags Section Style */
 
 .suggested_container {
-    border-radius: 25px;
-    border: 2px solid #6666BB;
-    padding: 20px;
-    margin-bottom: 10px;
+    border-color: #2b8987;
 }
 
-.sug-btn {
-    border: 1.5px solid darkslateblue;
-    background: transparent;
-    border-radius: 10px;
-    position: relative;
-    padding: 5px;
-    margin: 3px;
-    transition: width 0.2s ease-in-out;
-    display: block;
-    width: auto;
-}
-
-.sug-btn:hover {
-    border-color: cadetblue;
-    color: darkslateblue;
-    transition: all 0.2s ease-in-out;
-}
-
-/* tree style */
 .treeview {
+    border-color: #2e9c9a;
     -ms-user-select: none;
     user-select: none;
-    border-radius: 25px;
-    border: 2px solid #6666BB;
-    padding: 20px;
-    margin-bottom: 10px;
     max-height: 500px;
     overflow: auto;
 }
 
+/* Tag buttons - selected and suggested*/
+.tag-btn {
+    border: 1px solid black;
+    background: transparent;
+    border-radius: 10px;
+    position: relative;
+    padding: 5px;
+    margin: 3px;
+    transition: 0.2s ease-in-out;
+    width: auto;
+}
+
+.btn-txt {
+    font-size: 1.15em;
+}
+
+.selected_container .tag-btn:hover {
+    border: 1px solid red;
+}
+
+.suggested_container .tag-btn:hover {
+    border: 1px solid dodgerblue;
+}
+
+i {
+    font-size: 12px;
+}
+
+/* tree style */
 ul.tree {
     margin: 0;
     padding: 20px 2px;
@@ -204,8 +153,6 @@ ul.tree li input:checked + ul {
 
 ul.tree li input:checked + ul:before {
     content: "\f068";
-    font-family: Fontawesome, serif;
-    font-size: 15px;
     right: -3px;
     top: 3px;
     position: absolute;
@@ -227,8 +174,6 @@ ul.tree li input + ul {
 
 ul.tree li input + ul:before {
     content: "\f067";
-    font-family: Fontawesome, serif;
-    font-size: 15px;
     right: -3px;
     top: 3px;
     position: absolute;
@@ -260,8 +205,6 @@ ul.tree > li a:before {
     content: "";
     display: block;
     float: right;
-    font-family: Fontawesome, serif;
-    font-size: 15px;
     margin-left: -5px;
 }
 
@@ -269,8 +212,6 @@ ul.tree > li > a:before {
     content: "\f0c9";
     display: block;
     float: right;
-    font-family: Fontawesome, serif;
-    font-size: 15px;
     margin-left: -5px;
 }
 
@@ -283,8 +224,6 @@ ul.tree > li > ul > li > ul > li > a > label:before {
     content: "\f0c9";
     display: block;
     position: absolute;
-    font-family: Fontawesome, serif;
-    font-size: 15px;
     right: -3px;
     top: 3px;
 }
@@ -305,7 +244,7 @@ ul.tree > li > ul > li > ul > li > a > label:before {
     text-decoration: none;
 }
 
-.context-menu a:hover{
+.context-menu a:hover {
     color: #112D32;
 }
 
