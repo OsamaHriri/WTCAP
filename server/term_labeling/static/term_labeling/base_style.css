@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Markazi+Text&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Katibeh&display=swap');
-/** {*/
-/*    direction: rtl;*/
-/*}*/
-
 body {
     font-family: 'Markazi Text', sans-serif;
     min-height: 100vh;
