@@ -196,7 +196,8 @@
         </div>
 
          <div class="col-sm-9 graph">
-             <button type="button" class="btn btn-default hover"> Show all tags </button>
+             <button type="button" id="showviz" class="btn btn-default hover" onclick="draw3()">Show subTree</button>
+             <button type="button" id="render" class="btn btn-default hover" onclick="renderviz()">refresh</button>
             <body onload="draw()">
             <div id="viz"></div>
             </body>

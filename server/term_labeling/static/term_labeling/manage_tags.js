@@ -10,7 +10,7 @@ let ul1;
 let ul2;
 let flag;
 let viz;
-
+let flagviz=false
 
 function draw() {
             viz = new NeoVis.default(config);
@@ -21,6 +21,29 @@ function draw2(text){
     statement = 'match (n:Tag{name:"$"}) optional match (n)-[p2:Parent]->(m:Tag) optional match (t:Tag) -[p1:Parent]-> (n)  RETURN *'
     statement = statement.replace('$' ,text)
     viz.renderWithCypher(statement)
+}
+
+function draw3(){
+    temp = document.querySelector('#showviz').textContent
+    if (temp == "Show subTree"){
+        flagviz = true
+        document.querySelector('#showviz').textContent ="hide subTree"}
+    else {
+        flagviz = false
+        document.querySelector('#showviz').textContent ="Show subTree"}
+    if(tagParent===""){
+        //viz.render()
+        return}
+    if(flagviz==false){
+        viz.reinit(config2)
+        draw2(tagParent)
+        }
+    else {
+        viz.reinit(config3)
+        statement='match p=(n:Tag{name:"$"})-[par:Parent*]->(t:Tag) return p as c UNION match (n:Tag) where n.name="$" return n as c'.replaceAll('$',tagParent)
+        console.log(statement)
+        viz.renderWithCypher(statement)
+    }
 }
 
 function addNewRoot(text) {
@@ -376,6 +399,10 @@ function item_clicked3(obj, event) {
         flag = false;
     item_clicked(text);
 }
+function renderviz(){
+
+         viz.reload()
+}
 
 function item_clicked(text) {
     tagParent = text;
@@ -387,12 +414,21 @@ function item_clicked(text) {
             depth = 0;
             tagParent = "";
             flag = false;
+            viz.clearNetwork()
             viz.reinit(config)
-            viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *")
+            //viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *")
             return;
         }
-        viz.reinit(config2)
-        draw2(text)
+        if(flagviz==false){
+            viz.reinit(config2)
+            draw2(tagParent)
+        }
+        else {
+            viz.reinit(config3)
+            statement='match p=(n:Tag{name:"$"})-[par:Parent*]->(t:Tag) return p as c UNION match (n:Tag) where n.name="$" return n as c'.replaceAll('$',tagParent)
+            console.log(statement)
+            viz.renderWithCypher(statement)
+        }
         var current = document.createElement("il");
         if (parent.length > 0) {
             var pNode = document.createElement("il");
@@ -559,58 +595,86 @@ window.onload = getHeaders();
 
 
 
-    var config = {
-                container_id: "viz",
-                server_url: "bolt://localhost:7687",
-                server_user: "neo4j",
-                server_password: "123123147",
-                labels: {
-                    "Tag": {
-                        "caption": "name",
-                        //"size" : "match (n:Tag) where id(n) = {id} match (n)-[p:Parent]->(t:Tag) return count(p)",
-                        "sizeCypher" : "match (n:Tag) where id(n) = $id match (n)-[p:Parent]->(t:Tag) return 1+ count(p)",
-                        //"community": "match p= (n:Tag)-[Pr:Parent*]->(t:Tag) return size(Pr) order by size(Pr) DESC limit 1",
-                        "community" : "parent",
-                        "title_properties": [
-                            "name",
+var config = {
+    container_id: "viz",
+    server_url: "bolt://localhost:7687",
+    server_user: "neo4j",
+    server_password: "123123147",
+    labels: {
+        "Tag": {
+            "caption": "name",
+            //"size" : "match (n:Tag) where id(n) = {id} match (n)-[p:Parent]->(t:Tag) return count(p)",
+            //"sizeCypher" : "match (n:Tag) where id(n) = $id match (n)-[p:Parent]->(t:Tag) return count(p)",
+            //"community": "match p= (n:Tag)-[Pr:Parent*]->(t:Tag) return size(Pr) order by size(Pr) DESC limit 1",
+            "community" : "parent",
+            "title_properties": [
+            "name",
 
-                        ]
-                    }
-                },
-                relationships: {
-                    "Parent": {
-                        //"thickness": "weight",
-                        "caption": false
-                    }
-                },
-				arrows: true,
-				hierarchical : false,
-                initial_cypher: "MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *"
-            };
+            ]
+            }
+    },
+    relationships: {
+        "Parent": {
+        //"thickness": "weight",
+        "caption": false
+        }
+    },
+    arrows: true,
+    hierarchical : false,
+    initial_cypher: "MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *"
+};
 
 
-               var config2 = {
-                container_id: "viz",
-                server_url: "bolt://localhost:7687",
-                server_user: "neo4j",
-                server_password: "123123147",
-                labels: {
-                    "Tag": {
-                        "caption": "name",
-                        "community":"parent",
-                        "title_properties": [
-                            "name",
+var config2 = {
+    container_id: "viz",
+    server_url: "bolt://localhost:7687",
+    server_user: "neo4j",
+    server_password: "123123147",
+    labels: {
+        "Tag": {
+            "caption": "name",
+            "community":"parent",
+            "title_properties": [
+            "name",
+             ]
+        }
+    },
+    relationships: {
+        "Parent": {
+            "thickness": "weight",
+            "caption": false
+        }
+    },
+    arrows: true,
+    hierarchical : true,
+    //initial_cypher: "optional MATCH (n:Tag) where n.parent=-1 RETURN *"
+};
 
-                        ]
-                    }
-                },
-                relationships: {
-                    "Parent": {
-                        "thickness": "weight",
-                        "caption": false
-                    }
-                },
-				arrows: true,
-				hierarchical : true,
-				//initial_cypher: "optional MATCH (n:Tag) where n.parent=-1 RETURN *"
-            };
+var config3 = {
+    container_id: "viz",
+    server_url: "bolt://localhost:7687",
+    server_user: "neo4j",
+    server_password: "123123147",
+    labels: {
+        "Tag": {
+            "caption": "name",
+            //"size" : "match (n:Tag) where id(n) = {id} match (n)-[p:Parent]->(t:Tag) return count(p)",
+            //"sizeCypher" : "match (n:Tag) where id(n) = $id match (n)-[p:Parent]->(t:Tag) return count(p)",
+            //"community": "match p= (n:Tag)-[Pr:Parent*]->(t:Tag) return size(Pr) order by size(Pr) DESC limit 1",
+            "community" : "parent",
+            "title_properties": [
+            "name",
+
+            ]
+            }
+    },
+    relationships: {
+        "Parent": {
+        //"thickness": "weight",
+        "caption": false
+        }
+    },
+    arrows: true,
+    hierarchical : false,
+    //initial_cypher: "MATCH (n:Tag) where n.parent=-1 RETURN *"
+};
