@@ -24,13 +24,13 @@ function draw2(text){
 }
 
 function draw3(){
-    temp = document.querySelector('#showviz').textContent
+    temp = document.querySelector('#showsub').textContent
     if (temp == "Show subTree"){
         flagviz = true
-        document.querySelector('#showviz').textContent ="hide subTree"}
+        document.querySelector('#showsub').textContent ="Hide subTree"}
     else {
         flagviz = false
-        document.querySelector('#showviz').textContent ="Show subTree"}
+        document.querySelector('#showsub').textContent ="Show subTree"}
     if(tagParent===""){
         //viz.render()
         return}
@@ -41,9 +41,12 @@ function draw3(){
     else {
         viz.reinit(config3)
         statement='match p=(n:Tag{name:"$"})-[par:Parent*]->(t:Tag) return p as c UNION match (n:Tag) where n.name="$" return n as c'.replaceAll('$',tagParent)
-        console.log(statement)
         viz.renderWithCypher(statement)
     }
+}
+
+function renderviz(){
+     viz.reload()
 }
 
 function addNewRoot(text) {
@@ -399,10 +402,8 @@ function item_clicked3(obj, event) {
         flag = false;
     item_clicked(text);
 }
-function renderviz(){
 
-         viz.reload()
-}
+
 
 function item_clicked(text) {
     tagParent = text;
