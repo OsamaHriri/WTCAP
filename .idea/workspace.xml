@@ -2,8 +2,42 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/server/register/templates/logout.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/img/096.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/img/dance.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/img/golden_dance.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/img/horse.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/register/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/register/templates/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/register/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/register/templates/registration/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/server/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/server/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/.jshintrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/.travis.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/dist/treeview.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/dist/treeview.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/dist/treeview.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/dist/treeview.min.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/example/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/src/treeview.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/src/treeview.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/test/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/js-treeview-master/test/test-runner.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/base_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/base_style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/main_tags_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/main_tags_style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,14 +50,15 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
         <option value="CSS File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="IgnoredFileRootStore">
     <option name="generatedRoots">
@@ -53,16 +88,17 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Nareed\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\term_labeling" />
-      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
-      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\templates" />
-      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Nareed\PycharmProjects\semantic-labeling-arabic\server\register\templates" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Nareed\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\term_labeling\img" />
+      <recent name="C:\Users\Nareed\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\term_labeling" />
+      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
+      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\templates" />
+      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic" />
     </key>
   </component>
   <component name="RunManager" selected="Python.tagGraph">
@@ -162,18 +198,6 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -188,7 +212,11 @@
       <workItem from="1594052577120" duration="4703000" />
       <workItem from="1594115072554" duration="20675000" />
       <workItem from="1594206376136" duration="6027000" />
-      <workItem from="1601843916270" duration="4129000" />
+      <workItem from="1601843916270" duration="4774000" />
+      <workItem from="1601890720701" duration="1391000" />
+      <workItem from="1601976342170" duration="29000" />
+      <workItem from="1602613592892" duration="5721000" />
+      <workItem from="1602663073651" duration="6771000" />
     </task>
     <task id="LOCAL-00001" summary="Added basic web scrapper">
       <created>1583940146050</created>
@@ -365,7 +393,21 @@
       <option name="project" value="LOCAL" />
       <updated>1601823169150</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="register works, bug:add to group">
+      <created>1601848077335</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1601848077335</updated>
+    </task>
+    <task id="LOCAL-00027" summary="removed groups added staff">
+      <created>1601892083105</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1601892083105</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -408,18 +450,15 @@
     <MESSAGE value="delete All" />
     <MESSAGE value="fix edit tag" />
     <MESSAGE value="register design and added &quot;users&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="register design and added &quot;users&quot;" />
+    <MESSAGE value="register works, bug:add to group" />
+    <MESSAGE value="removed groups added staff" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed groups added staff" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="591" y="610" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1602421730126">
+    <state x="338" y="118" key="CommitChangelistDialog2" timestamp="1601892082146">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="591" y="610" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1602421730126" />
-    <state x="-1582" y="118" key="CommitChangelistDialog2" timestamp="1602676223247">
-      <screen x="-1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="338" y="118" key="CommitChangelistDialog2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1601823167488" />
-    <state x="-1582" y="118" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1602676223247" />
+    <state x="338" y="118" key="CommitChangelistDialog2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1601892082146" />
     <state width="1237" height="87" key="GridCell.Tab.0.bottom" timestamp="1594046196512">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
@@ -440,22 +479,15 @@
     </state>
     <state width="618" height="266" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1594044589965" />
     <state width="1237" height="87" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1594046196512" />
-    <state x="399" y="47" key="Vcs.Push.Dialog.v2" timestamp="1601823176227">
+    <state x="399" y="47" key="Vcs.Push.Dialog.v2" timestamp="1601892084553">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="399" y="47" key="Vcs.Push.Dialog.v2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1601823176227" />
+    <state x="399" y="47" key="Vcs.Push.Dialog.v2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1601892084553" />
     <state x="266" y="31" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1594217055782" />
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1602055759145">
+    <state x="675" y="395" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1602613635844">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1602055759145" />
-    <state x="-1539" y="256" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1602676216210">
-      <screen x="-1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="-1539" y="256" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1602676216210" />
-    <state x="450" y="258" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594170374336">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
+    <state x="675" y="395" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1602613635844" />
     <state x="450" y="258" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1594170374336" />
     <state x="504" y="133" width="914" height="820" key="find.popup" timestamp="1601847068487">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -463,9 +495,12 @@
     <state x="504" y="133" width="914" height="820" key="find.popup/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1601847068487" />
     <state x="336" y="87" width="609" height="536" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1594141939472" />
     <state x="336" y="92" width="609" height="536" key="find.popup/0.0.1280.720@0.0.1280.720" timestamp="1594131666226" />
-    <state x="-1351" y="311" key="git4idea.merge.GitPullDialog" timestamp="1602676231551">
-      <screen x="-1920" y="0" width="1920" height="1040" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1602673903787">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1351" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1602676231551" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1602673903787" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/semantic_labeling_arabic$tagGraph.coverage" NAME="tagGraph Coverage Results" MODIFIED="1594044587836" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/server/term_labeling/scripts" />
   </component>
 </project>

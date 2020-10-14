@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Markazi+Text&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Katibeh&display=swap');
-/** {*/
-/*    direction: rtl;*/
-/*}*/
 
 body {
     font-family: 'Markazi Text', sans-serif;
@@ -11,7 +8,7 @@ body {
 }
 
 /* nav bar css */
-.navbar{
+.navbar {
     background-color: #112D32;
     font-family: 'Katibeh', cursive;
     font-size: 1.4em;

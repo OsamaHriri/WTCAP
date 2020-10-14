@@ -1,6 +1,8 @@
 from django.contrib import admin
-from django.urls import path, include,re_path
+from django.urls import path, include, re_path
+from django.contrib.auth import views as auth_views
 from . import views
+
 
 urlpatterns = [
 
@@ -16,6 +18,8 @@ urlpatterns = [
     path('newexternal/', views.newexternal, name="script3"),
     path('poet_poems/', views.poet_poems, name="poet_poems"),
     path('external2/', views.external2, name="script2"),
+    path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name="logout"),
+
     re_path('termTree/$', views.termTree, name="termTree"),
     re_path('save_term_tags/$', views.save_term_tags, name='save_term_tags'),
     re_path('suggest_tags/$', views.suggest_tags, name='suggest_tags'),
