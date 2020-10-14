@@ -3,6 +3,7 @@ this method initializes the manage tag page.
  */
 
 
+
 let tagParent = "";
 let depth = 0;
 let ul1;
@@ -10,6 +11,7 @@ let ul2;
 let flag;
 let viz;
 let all_tags = [];
+let flagviz=false
 
 function showTags() {
     $('#tagsDropDown').toggle();
@@ -25,14 +27,40 @@ function update_tags_list(){
 
 
 function draw() {
-    viz = new NeoVis.default(config);
-    viz.render();
+            viz = new NeoVis.default(config);
+            viz.render();
+        }
+
+function draw2(text){
+    statement = 'match (n:Tag{name:"$"}) optional match (n)-[p2:Parent]->(m:Tag) optional match (t:Tag) -[p1:Parent]-> (n)  RETURN *'
+    statement = statement.replace('$' ,text)
+    viz.renderWithCypher(statement)
 }
 
-function draw2(text) {
-    statement = 'match (n:Tag{name:"$"}) optional match (n)-[p2:Parent]->(m:Tag) optional match (t:Tag) -[p1:Parent]-> (n)  RETURN *'
-    statement = statement.replace('$', text)
-    viz.renderWithCypher(statement)
+function draw3(){
+    temp = document.querySelector('#showsub').textContent
+    if (temp == "Show subTree"){
+        flagviz = true
+        document.querySelector('#showsub').textContent ="Hide subTree"}
+    else {
+        flagviz = false
+        document.querySelector('#showsub').textContent ="Show subTree"}
+    if(tagParent===""){
+        //viz.render()
+        return}
+    if(flagviz==false){
+        viz.reinit(config2)
+        draw2(tagParent)
+        }
+    else {
+        viz.reinit(config3)
+        statement='match p=(n:Tag{name:"$"})-[par:Parent*]->(t:Tag) return p as c UNION match (n:Tag) where n.name="$" return n as c'.replaceAll('$',tagParent)
+        viz.renderWithCypher(statement)
+    }
+}
+
+function renderviz(){
+     viz.reload()
 }
 
 function addNewRoot(text) {
@@ -54,7 +82,7 @@ function add_new_tag(text) {
     });
 }
 
-function add_parent(text, parent) {
+function add_parent(text , parent) {
     return $.ajax({
         type: "GET",
         url: "add_parent/",
@@ -63,7 +91,7 @@ function add_parent(text, parent) {
     });
 }
 
-function changeParent(text, parent) {
+function changeParent(text , parent) {
     return $.ajax({
         type: "GET",
         url: "change_parent/",
@@ -72,7 +100,7 @@ function changeParent(text, parent) {
     });
 }
 
-function add_child(text, parent) {
+function add_child(text , parent) {
     return $.ajax({
         type: "GET",
         url: "add_tag/",
@@ -139,11 +167,11 @@ function remove_tag_children(text) {
     });
 }
 
-function editTag(text, edit) {
+function editTag(text , edit) {
     return $.ajax({
         type: "GET",
         url: "edit_tag/",
-        data: {'term': text, 'edit': edit},
+        data: {'term': text , 'edit':edit},
         dataType: "json",
     });
 }
@@ -189,33 +217,33 @@ function deleteTag() {
 
 }
 
-function change_parent() {
-    text = document.getElementById("change-parent").value
-    if (text === "")
-        window.alert("The field is empty ,Please insert a tag before clicking");
-    else {
-        if (text === rightclicked) {
+function change_parent(){
+     text = document.getElementById("change-parent").value
+     if (text === "")
+         window.alert("The field is empty ,Please insert a tag before clicking");
+     else{
+         if (text === rightclicked){
             window.alert("Error , you can`t add the term itself as parent");
             return
         }
-        changeParent(rightclicked, text).done(function (d) {
-            if (d.exist === false) {
-                window.alert("The parent doesnt exist ,Please insert a valid one");
-                return
+         changeParent(rightclicked,text).done(function(d){
+            if(d.exist === false){
+                 window.alert("The parent doesnt exist ,Please insert a valid one");
+                 return
             }
-            if (d.change === false) {
-                window.alert("Error ,you can't add a descendant tag as parent");
-                return
+            if (d.change === false){
+                 window.alert("Error ,you can't add a descendant tag as parent");
+                 return
             }
             document.getElementById("change-parent").value = ""
             search2(rightclicked)
             $('#changeParentModal').modal('hide')
-        });
+         });
 
-    }
+     }
 }
 
-function delete_tag() {
+function delete_tag(){
     getParent(rightclicked).done(function (d) {
         var parent = d.parent;
         remove_tag(rightclicked).done(function (d2) {
@@ -233,7 +261,7 @@ function delete_tag() {
     });
 }
 
-function delete_all() {
+function delete_all(){
     getParent(rightclicked).done(function (d) {
         var parent = d.parent;
         remove_tag_children(rightclicked).done(function (d2) {
@@ -251,41 +279,40 @@ function delete_all() {
     });
 }
 
-function new_parent() {
+function new_parent(){
 
     text = document.getElementById("parent-name").value
     if (text === "")
         window.alert("The field is empty ,Please insert a tag before clicking");
     else {
-        if (text === rightclicked) {
+        if (text === rightclicked){
             window.alert("Error , you can`t add the term itself as parent");
             return
         }
-        add_parent(rightclicked, text).done(function (d) {
-            if (d.add == false) {
+        add_parent(rightclicked,text).done(function (d){
+            if(d.add== false){
                 window.alert("Error , the parent already exist somewhere");
-                return
-            }
+                return }
             document.getElementById("parent-name").value = ""
             search2(rightclicked)
             $('#insertParentModal').modal('hide')
-        });
+       });
     }
 
 }
 
-function edit_tag() {
+function edit_tag(){
     text = document.getElementById("edited-name").value
-    editTag(rightclicked, text).done(function (d) {
-        if (d.edit === false) {
-            window.alert("Error , the edit name already exist");
-            return
-        }
+    editTag(rightclicked ,text).done(function(d){
+        if(d.edit === false){
+           window.alert("Error , the edit name already exist");
+                return }
         document.getElementById("edited-name").value = ""
         emptyTree()
-        if (tagParent === "") {
+        if (tagParent===""){
             getHeaders()
-        } else if (tagParent === rightclicked)
+        }
+        else if(tagParent === rightclicked)
             item_clicked(text)
         else {
             item_clicked(tagParent)
@@ -295,26 +322,24 @@ function edit_tag() {
 
 
 }
-
-function new_child() {
-    text = document.getElementById("child-name").value
-    if (text === "")
-        window.alert("The field is empty ,Please insert a tag before clicking");
-    else {
-        if (text === rightclicked) {
-            window.alert("Error , you can`t add the term itself as child");
-            return
-        }
-        add_child(text, rightclicked).done(function (d) {
-            if (d.Tag === false) {
-                window.alert("The tag already exist");
+function new_child(){
+     text = document.getElementById("child-name").value
+     if (text === "")
+            window.alert("The field is empty ,Please insert a tag before clicking");
+        else {
+            if (text === rightclicked){
+                window.alert("Error , you can`t add the term itself as child");
                 return
             }
-            document.getElementById("child-name").value = ""
-            search2(rightclicked)
-            $('#insertChildModal').modal('hide')
-        });
-    }
+            add_child(text,rightclicked).done(function (d){
+                 if (d.Tag === false){
+                    window.alert("The tag already exist");
+                    return }
+                document.getElementById("child-name").value = ""
+                search2(rightclicked)
+                $('#insertChildModal').modal('hide')
+           });
+        }
 
 
 }
@@ -392,6 +417,8 @@ function item_clicked3(obj, event) {
     item_clicked(text);
 }
 
+
+
 function item_clicked(text) {
     tagParent = text;
     var ul = document.querySelector('.tree');
@@ -402,6 +429,7 @@ function item_clicked(text) {
             depth = 0;
             tagParent = "";
             flag = false;
+            viz.clearNetwork()
             viz.reinit(config)
             viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *")
             return;
@@ -495,7 +523,7 @@ function right_click_tag(obj, e) {
     e.preventDefault();
 
     const text = obj.innerText.split(/\r?\n/)[0];
-    if (e.target != obj)
+    if(e.target!=obj)
         return;
     rightclicked = text
     const top = e.pageY + 5;
@@ -573,6 +601,7 @@ function search2(text) {
 window.onload = getHeaders();
 
 
+
 var config = {
     container_id: "viz",
     server_url: "bolt://localhost:7687",
@@ -582,23 +611,23 @@ var config = {
         "Tag": {
             "caption": "name",
             //"size" : "match (n:Tag) where id(n) = {id} match (n)-[p:Parent]->(t:Tag) return count(p)",
-            "sizeCypher": "match (n:Tag) where id(n) = $id match (n)-[p:Parent]->(t:Tag) return 1+ count(p)",
+            //"sizeCypher" : "match (n:Tag) where id(n) = $id match (n)-[p:Parent]->(t:Tag) return count(p)",
             //"community": "match p= (n:Tag)-[Pr:Parent*]->(t:Tag) return size(Pr) order by size(Pr) DESC limit 1",
-            "community": "parent",
+            "community" : "parent",
             "title_properties": [
-                "name",
+            "name",
 
             ]
-        }
+            }
     },
     relationships: {
         "Parent": {
-            //"thickness": "weight",
-            "caption": false
+        //"thickness": "weight",
+        "caption": false
         }
     },
     arrows: true,
-    hierarchical: false,
+    hierarchical : false,
     initial_cypher: "MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *"
 };
 
@@ -611,11 +640,10 @@ var config2 = {
     labels: {
         "Tag": {
             "caption": "name",
-            "community": "parent",
+            "community":"parent",
             "title_properties": [
-                "name",
-
-            ]
+            "name",
+             ]
         }
     },
     relationships: {
@@ -625,6 +653,35 @@ var config2 = {
         }
     },
     arrows: true,
-    hierarchical: true,
+    hierarchical : true,
     //initial_cypher: "optional MATCH (n:Tag) where n.parent=-1 RETURN *"
+};
+
+var config3 = {
+    container_id: "viz",
+    server_url: "bolt://localhost:7687",
+    server_user: "neo4j",
+    server_password: "123123147",
+    labels: {
+        "Tag": {
+            "caption": "name",
+            //"size" : "match (n:Tag) where id(n) = {id} match (n)-[p:Parent]->(t:Tag) return count(p)",
+            //"sizeCypher" : "match (n:Tag) where id(n) = $id match (n)-[p:Parent]->(t:Tag) return count(p)",
+            //"community": "match p= (n:Tag)-[Pr:Parent*]->(t:Tag) return size(Pr) order by size(Pr) DESC limit 1",
+            "community" : "parent",
+            "title_properties": [
+            "name",
+
+            ]
+            }
+    },
+    relationships: {
+        "Parent": {
+        //"thickness": "weight",
+        "caption": false
+        }
+    },
+    arrows: true,
+    hierarchical : false,
+    //initial_cypher: "MATCH (n:Tag) where n.parent=-1 RETURN *"
 };
