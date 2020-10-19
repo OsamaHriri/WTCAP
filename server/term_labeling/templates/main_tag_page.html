@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block stylesheets %}
-<script src="{% static 'term_labeling/mainpagejs.js' %}"></script>
+
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/main_tags_style.css'%}">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
@@ -88,4 +88,7 @@
 
 {% endblock content %}
 
+{% block scripts %}
+<script src="{% static 'term_labeling/mainpagejs.js' %}"></script>
+{% endblock %}
 
