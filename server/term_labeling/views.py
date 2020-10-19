@@ -378,5 +378,15 @@ def delete_all(request):
         else:
             return HttpResponse("not found")
 
+def get_all_tags(request):
+    if request.method == 'GET':
+        t = Tag()
+        tags = t.getAllTags()
+        if tags is not None:
+            return JsonResponse(tags)
+        else:
+            return HttpResponse("not found")
+
+
 
 mutex = Lock()

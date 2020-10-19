@@ -14,6 +14,7 @@ let selected_obj = "";
 let orange = "rgb(255, 165, 0)";
 let tagParent = "";
 let depth = 0;
+let all_tags = [];
 
 function box_checked(obj) {
     const id = obj.id;
@@ -75,6 +76,23 @@ function hi(id) {
         });
     });
 }
+
+
+function loadTags(){
+    getAllTags().done(function(d){
+        all_tags = d.tags
+        update_tags_list()
+    });
+}
+
+function update_tags_list(){
+    let myUL = document.getElementById('myUL');
+    myUL.innerHTML = "";
+    all_tags.forEach(function (idx, li) {
+        myUL.innerHTML += "<li><a href=\"#\" id="+idx+" onclick=\"searchTag(this)\">" + idx + "</a></li>";
+    });
+}
+
 
 function filterSearch() {
     var input, filter, ul, li, a, i, txtValue;
@@ -159,6 +177,8 @@ function submit_clicked() {
                 if (d.Tag === false)
                     window.alert("The tag already exist");
                 else {
+                    all_tags.push(text)
+                    myUL.innerHTML += "<li><a href=\"#\" id="+text+" onclick=\"searchTag(this)\">" + text + "</a></li>";
                     emptyTree();
                     getHeaders();
                 }
@@ -170,6 +190,8 @@ function submit_clicked() {
                 else if (d.parent === false)
                     window.alert("The parent doesnt exist");
                 else {
+                    all_tags.push(text)
+                    myUL.innerHTML += "<li><a href=\"#\" id="+text+" onclick=\"searchTag(this)\">" + text + "</a></li>";
                     temp = document.getElementById("c").innerText.split(/\r?\n/)[0]
                     emptyTree();
                     item_clicked(temp);
@@ -200,6 +222,15 @@ function getHeaders() {
             roots.forEach(build_il_headers);
         }
     });
+}
+
+function getAllTags(text) {
+    return $.ajax({
+        type: "GET",
+        url: "get_all_tags/",
+        dataType: "json",
+    });
+
 }
 
 
@@ -489,3 +520,5 @@ function searchSuggestion(text) {
 
 //Load initial headers
 window.onload = getHeaders();
+//Load tags for seatch bar
+window.onload = loadTags();

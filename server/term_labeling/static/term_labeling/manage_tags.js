@@ -13,6 +13,13 @@ let viz;
 let all_tags = [];
 let flagviz=false
 
+function loadTags(){
+    getAllTags().done(function(d){
+        all_tags = d.tags
+        update_tags_list()
+    });
+}
+
 function showTags() {
     $('#tagsDropDown').toggle();
 }
@@ -21,7 +28,7 @@ function update_tags_list(){
     let myUL = document.getElementById('myUL');
     myUL.innerHTML = "";
     all_tags.forEach(function (idx, li) {
-        myUL.innerHTML += "<li><a href=\"#\" onclick=\"searchTag(this)\">" + idx + "</a></li>";
+        myUL.innerHTML += "<li><a href=\"#\" id="+idx+" onclick=\"searchTag(this)\">" + idx + "</a></li>";
     });
 }
 
@@ -61,6 +68,15 @@ function draw3(){
 
 function renderviz(){
      viz.reload()
+}
+
+function getAllTags(text) {
+    return $.ajax({
+        type: "GET",
+        url: "get_all_tags/",
+        dataType: "json",
+    });
+
 }
 
 function addNewRoot(text) {
@@ -189,33 +205,6 @@ function searchTag(obj) {
     });
 }
 
-function deleteTag() {
-    if (depth != 0) {
-        temp = document.getElementById("c").innerText.split(/\r?\n/)[0]
-    } else {
-        window.alert("Please click on a tag to delete.");
-        return;
-    }
-    emptyTree();
-    getParent(temp).done(function (d) {
-        var parent = d.parent;
-        remove_tag(temp).done(function (d2) {
-            if (parent.length === 0) {
-                getHeaders();
-                depth = 0;
-                tagParent = "";
-                flag = false;
-            } else {
-                depth = depth - 1;
-                if (depth === 1)
-                    flag = false;
-                item_clicked(parent[0].parent.name)
-            }
-
-        });
-    });
-
-}
 
 function change_parent(){
      text = document.getElementById("change-parent").value
@@ -247,6 +236,8 @@ function delete_tag(){
     getParent(rightclicked).done(function (d) {
         var parent = d.parent;
         remove_tag(rightclicked).done(function (d2) {
+            document.getElementById(rightclicked).remove();
+            all_tags =all_tags .filter(e => e !== rightclicked);
             if (parent.length === 0) {
                 emptyTree();
                 getHeaders();
@@ -265,6 +256,8 @@ function delete_all(){
     getParent(rightclicked).done(function (d) {
         var parent = d.parent;
         remove_tag_children(rightclicked).done(function (d2) {
+            all_tags = []
+            loadTags();
             if (parent.length === 0) {
                 emptyTree();
                 getHeaders();
@@ -293,6 +286,8 @@ function new_parent(){
             if(d.add== false){
                 window.alert("Error , the parent already exist somewhere");
                 return }
+            all_tags.push(text)
+            myUL.innerHTML += "<li><a href=\"#\" id="+text+" onclick=\"searchTag(this)\">" + text + "</a></li>";
             document.getElementById("parent-name").value = ""
             search2(rightclicked)
             $('#insertParentModal').modal('hide')
@@ -307,6 +302,10 @@ function edit_tag(){
         if(d.edit === false){
            window.alert("Error , the edit name already exist");
                 return }
+        document.getElementById(rightclicked).remove();
+        all_tags =all_tags .filter(e => e !== rightclicked);
+        all_tags.push(text)
+        myUL.innerHTML += "<li><a href=\"#\" id="+text+" onclick=\"searchTag(this)\">" + text + "</a></li>";
         document.getElementById("edited-name").value = ""
         emptyTree()
         if (tagParent===""){
@@ -335,47 +334,13 @@ function new_child(){
                  if (d.Tag === false){
                     window.alert("The tag already exist");
                     return }
+                all_tags.push(text)
+                myUL.innerHTML += "<li><a href=\"#\" id="+text+" onclick=\"searchTag(this)\">" + text + "</a></li>";
                 document.getElementById("child-name").value = ""
                 search2(rightclicked)
                 $('#insertChildModal').modal('hide')
            });
         }
-
-
-}
-
-
-function submit_clicked() {
-    text = document.getElementById("newTag").value;
-    if (text === "")
-        window.alert("The field is empty ,Please insert a tag before clicking");
-    else {
-        if (tagParent === "") {
-            addNewRoot(text).done(function (d) {
-                if (d.Tag === false)
-                    window.alert("The tag already exist");
-                else {
-                    emptyTree();
-                    getHeaders();
-                }
-            });
-        } else {
-            add_new_tag(text).done(function (d) {
-                if (d.Tag === false)
-                    window.alert("The tag already exist");
-                else if (d.parent === false)
-                    window.alert("The parent doesnt exist");
-                else {
-                    temp = document.getElementById("c").innerText.split(/\r?\n/)[0]
-                    emptyTree();
-                    item_clicked(temp);
-                }
-
-            });
-        }
-
-    }
-    document.getElementById("newTag").value = "";
 }
 
 
@@ -599,7 +564,7 @@ function search2(text) {
 }
 
 window.onload = getHeaders();
-
+window.onload = loadTags();
 
 
 var config = {
