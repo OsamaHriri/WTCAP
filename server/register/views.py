@@ -9,7 +9,7 @@ def register(response):
         form = RegisterForm(response.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
-            messages.success(response, f'Created user {username}')
+            messages.success(response, f'Successfully created user {username}')
             form.save()
             return redirect("/")
     else:

@@ -1,6 +1,8 @@
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 let poemid = 2066;
+let all_poems = [];
+let all_poets = [];
 
 function myFunction(id) {
     document.getElementById(id).classList.toggle("show");
@@ -10,13 +12,43 @@ function myFunction(id) {
     }*/
 }
 
-function resetPoems() {
-    //remove all poems
-    $(".poems-link").each(function () {
-        this.remove();
+function loadData() {
+    console.log("on load")
+    // let poetDropDown = document.getElementById('poetDropDown');
+    getAllPoets().done(function (d) {
+        // all_poets = d.tags;
+        update_poets_list()
     });
-    const js_list = "{{poems}}";
+    getAllPoems().done(function (d) {
+        // all_poems = d.tags;
+        update_poems_list()
+    });
 }
+
+function update_poets_list(){
+
+}
+
+function update_poems_list(){
+
+}
+
+function getAllPoems() {
+    return $.ajax({
+        type: "GET",
+        url: "get_all_poems/",
+        dataType: "json",
+    });
+}
+
+function getAllPoets() {
+    return $.ajax({
+        type: "GET",
+        url: "get_all_poets/",
+        dataType: "json",
+    });
+}
+
 
 function filterFunction(dropDownId, inputId) {
     let input, filter, ul, li, a, i;
@@ -42,7 +74,6 @@ function choosePoet(obj) {
     myFunction("poetDropDown");
 
     keep_relevant(id);
-
 }
 
 function choosePoem(obj) {
@@ -80,7 +111,3 @@ function submitPoem() {
     console.log(poemid);
     window.location = '/main_tag_page/?poem_iid=' + poemid;
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    window.setTimeout(document.querySelector('svg').classList.add('animated'), 1000);
-});

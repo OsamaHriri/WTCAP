@@ -36,4 +36,6 @@ urlpatterns = [
     re_path('change_parent/$', views.change_parent, name='change_parent'),
     re_path('delete_all/$', views.delete_all, name='delete_all'),
     re_path('get_all_tags/$', views.get_all_tags, name='get_all_tags'),
+    re_path('get_all_poems/$', views.get_all_poems, name='get_all_poems'),
+    re_path('get_all_poets/$', views.get_all_poets, name='get_all_poets'),
 ]

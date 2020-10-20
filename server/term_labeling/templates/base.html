@@ -28,24 +28,28 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-dark">
-    <span class="navbar-brand">Name?</span>
+    <span class="navbar-brand">Website Name</span>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="true" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="{% url 'index' %}">الصفحة الرئيسية <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="{% url 'select_poet_page' %}">حلل اشعار</a>
-            <a class="nav-item nav-link" href="{% url 'tags' %}">ادارة معلومات</a>
+            <a class="nav-item nav-link" href="{% url 'index' %}"> Main Page <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="{% url 'select_poet_page' %}">Poems</a>
+            <a class="nav-item nav-link" href="{% url 'tags' %}">Manage Tags</a>
+            <a class="nav-item nav-link disabled" href="#">Statistics</a>
             {% if user.is_superuser %}
-            <a class="nav-item nav-link" href="{% url 'register' %}">أضف مستخدمين</a>
-            <a class="nav-item nav-link disabled" href="#">اعدادات</a>
+            <a class="nav-item nav-link" href="{% url 'register' %}">Add Users</a>
+            <a class="nav-item nav-link disabled" href="#">Settings</a>
             {% endif %}
         </div>
         <!-- Navbar Right Side -->
-        <div class="navbar-nav mr-auto">
+        <div class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
+            <span class="navbar-text">
+                Logged in as {{ request.user.username }}
+            </span>
             <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
             {% else %}
             <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>

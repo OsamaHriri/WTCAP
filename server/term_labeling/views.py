@@ -11,6 +11,7 @@ from .scripts import connector
 import pyarabic.araby as araby
 from threading import Thread, Lock
 
+
 # Create your views here.
 
 
@@ -21,7 +22,6 @@ def main_tag_page(request):
     c = Connector()
     if request.method == 'GET':
         id = request.GET['poem_iid']
-
     else:
         id = 2066
     poem = (c.get_poem(id))[0]
@@ -53,6 +53,7 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
+
 @login_required()
 def tags(request):
     t = Tag()
@@ -79,6 +80,7 @@ def process_lines(request):
     return render(request, 'process_lines.html', context)
 
 
+@login_required()
 def select_poet_page(request):
     c = connector.Connector()
     poets = c.get_poets()
@@ -320,6 +322,7 @@ def get_depth(request):
         else:
             return HttpResponse("not found")
 
+
 def remove_tag(request):
     if request.method == 'GET':
         data = request.GET
@@ -331,17 +334,19 @@ def remove_tag(request):
         else:
             return HttpResponse("not found")
 
+
 def add_parent(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
         parent = data.get('parent')
         t = Tag()
-        flag = t.newParent(term,parent)
+        flag = t.newParent(term, parent)
         if flag is not None:
             return JsonResponse(flag)
         else:
             return HttpResponse("not found")
+
 
 def edit_tag(request):
     if request.method == 'GET':
@@ -349,11 +354,12 @@ def edit_tag(request):
         term = data.get('term')
         edit = data.get('edit')
         t = Tag()
-        flag = t.editTag(term , edit)
+        flag = t.editTag(term, edit)
         if flag is not None:
             return JsonResponse(flag)
         else:
             return HttpResponse("not found")
+
 
 def change_parent(request):
     if request.method == 'GET':
@@ -361,11 +367,12 @@ def change_parent(request):
         term = data.get('term')
         parent = data.get('parent')
         t = Tag()
-        flag = t.changeParent(term ,parent)
+        flag = t.changeParent(term, parent)
         if flag is not None:
             return JsonResponse(flag)
         else:
             return HttpResponse("not found")
+
 
 def delete_all(request):
     if request.method == 'GET':
@@ -378,6 +385,7 @@ def delete_all(request):
         else:
             return HttpResponse("not found")
 
+
 def get_all_tags(request):
     if request.method == 'GET':
         t = Tag()
@@ -387,6 +395,26 @@ def get_all_tags(request):
         else:
             return HttpResponse("not found")
 
+
+def get_all_poems(request):
+    if request.method == 'GET':
+        c = connector.Connector()
+        poems = c.get_poems()
+        if tags is not None:
+            return JsonResponse(poems)
+        else:
+            return HttpResponse("not found")
+
+
+def get_all_poets(request):
+    if request.method == 'GET':
+        c = connector.Connector()
+        poets = c.get_poets()
+        print(poets)
+        if tags is not None:
+            return JsonResponse(poets)
+        else:
+            return HttpResponse("not found")
 
 
 mutex = Lock()
