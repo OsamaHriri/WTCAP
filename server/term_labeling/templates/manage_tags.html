@@ -212,8 +212,14 @@
             <input type="text" id="mySearchInput" onclick="showTags()" onkeyup="filterSearch()"
                    placeholder="إبحث..."
                    title="إبحث...">
+            <button type="button" class="btn btn-link" onclick="addheader()">+Header</button>
             <div id="tagsDropDown">
-                <ul id="myUL"> </ul>
+                <ul id="myUL">
+             <!--     {% for tag in all_tags %}-->
+<!--                    <li><a href="#" onclick="searchTag(this)"> {{ tag }} </a></li>-->
+<!--                    {% endfor %}-->
+
+                </ul>
             </div>
             <ul class="tree">
             </ul>
@@ -222,6 +228,7 @@
         <div class="col-sm-9 graph">
             <button type="button" id="showsub" class="btn btn-default hover" onclick="draw3()">Show subTree</button>
             <button type="button" id="render" class="btn btn-default hover" onclick="renderviz()">Refresh</button>
+            <button type="button" id="disable" class="btn btn-default hover" onclick="disable()">Disable Network</button>
             <body onload="draw()">
             <div id="viz"></div>
             </body>

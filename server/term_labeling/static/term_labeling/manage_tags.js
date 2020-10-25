@@ -11,6 +11,8 @@ let flag;
 let viz;
 let all_tags = [];
 let flagviz = false;
+let statment = 0
+let flagdisable = false
 
 function loadTags() {
     getAllTags().done(function (d) {
@@ -68,6 +70,23 @@ function draw3() {
 
 function renderviz() {
     viz.reload()
+}
+
+function disable(){
+    temp = document.querySelector('#disable').textContent;
+    if(temp == "Disable Network"){
+         flagdisable = true
+         document.getElementById("showsub").disabled = true;
+         document.getElementById("render").disabled = true;
+         document.querySelector('#disable').textContent = "Enable Network"
+         viz.clearNetwork()}
+    else {
+         flagdisable = false
+         document.querySelector('#disable').textContent = "Disable Network"
+         document.getElementById("showsub").disabled = false;
+         document.getElementById("render").disabled = false;
+         viz.reload()
+    }
 }
 
 function getAllTags(text) {
@@ -345,6 +364,9 @@ function new_child() {
     }
 }
 
+function addheader(){
+
+}
 
 function item_clicked1(obj, event) {
     event.stopPropagation();
@@ -395,13 +417,18 @@ function item_clicked(text) {
             depth = 0;
             tagParent = "";
             flag = false;
-            viz.clearNetwork();
-            viz.reinit(config);
-            viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *");
+            if(flagdisable == false){
+                viz.clearNetwork();
+                viz.reinit(config);
+                viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *");
+            }
+            else statement = 1;
             return;
         }
-        viz.reinit(config2);
-        draw2(text);
+        if(flagdisable == false){
+            viz.reinit(config2);
+            draw2(text);
+        } else statement = 2;
         var current = document.createElement("il");
         if (parent.length > 0) {
             var pNode = document.createElement("il");
@@ -427,8 +454,6 @@ function item_clicked(text) {
                 d = data.brothers;
                 d.forEach(build_il_brothers)
             });
-
-
         }
         ul2 = document.createElement('ul');
         current.appendChild(ul2);
