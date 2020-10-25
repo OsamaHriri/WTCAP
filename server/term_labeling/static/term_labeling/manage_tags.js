@@ -119,7 +119,7 @@ function getAllTags(text) {
     });
 }
 
-function addNewRoot(text) {
+function add_new_root(text) {
     return $.ajax({
         type: "GET",
         url: "add_root/",
@@ -127,15 +127,6 @@ function addNewRoot(text) {
         dataType: "json",
     });
 
-}
-
-function add_new_tag(text) {
-    return $.ajax({
-        type: "GET",
-        url: "add_tag/",
-        data: {'term': text, 'parent': tagParent},
-        dataType: "json",
-    });
 }
 
 function add_parent(text, parent) {
@@ -377,7 +368,23 @@ function new_child() {
     }
 }
 
-function addheader(){
+function new_root(){
+    text = document.getElementById("root-name").value
+    if (text === "")
+        window.alert("The field is empty ,Please insert a tag before clicking");
+    else {
+        add_new_root(text).done(function (d) {
+            if (d.Tag === false) {
+                window.alert("The tag already exist");
+                return
+            }
+            all_tags.push(text);
+            myUL.innerHTML += "<li><a href=\"#\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
+            document.getElementById("root-name").value = "";
+            createNetworkforRoots()
+            $('#insertRootModal').modal('hide')
+        });
+    }
 
 }
 
