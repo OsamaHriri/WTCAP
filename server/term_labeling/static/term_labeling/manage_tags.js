@@ -11,7 +11,7 @@ let flag;
 let viz;
 let all_tags = [];
 let flagviz = false;
-let statment = 0
+let state = 1
 let flagdisable = false
 
 function loadTags() {
@@ -57,15 +57,7 @@ function draw3() {
     if (tagParent === "") {
         //viz.render()
         return
-    }
-    if (flagviz == false) {
-        viz.reinit(config2);
-        draw2(tagParent)
-    } else {
-        viz.reinit(config3);
-        statement = 'match p=(n:Tag{name:"$"})-[par:Parent*]->(t:Tag) return p as c UNION match (n:Tag) where n.name="$" return n as c'.replaceAll('$', tagParent)
-        viz.renderWithCypher(statement)
-    }
+    } else createNetwork()
 }
 
 function renderviz() {
@@ -85,8 +77,38 @@ function disable(){
          document.querySelector('#disable').textContent = "Disable Network"
          document.getElementById("showsub").disabled = false;
          document.getElementById("render").disabled = false;
-         viz.reload()
+         if(state == 1){
+            viz.reinit(config);
+            viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *");
+         }else if(state == 2){
+            createNetwork()
+         }
     }
+}
+function createNetwork(){
+     if(flagviz==false){
+         viz.reinit(config2)
+         draw2(tagParent)
+      }
+      else {
+           viz.reinit(config3)
+           statement='match p=(n:Tag{name:"$"})-[par:Parent*]->(t:Tag) return p as c UNION match (n:Tag) where n.name="$" return n as c'.replaceAll('$',tagParent)
+           viz.renderWithCypher(statement)
+       }
+}
+
+function createNetworkforRoots(){
+      emptyTree();
+      getHeaders();
+      depth = 0;
+      tagParent = "";
+      flag = false;
+      if(flagdisable == false){
+          viz.clearNetwork();
+          viz.reinit(config);
+          viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *");
+       }
+       state = 1;
 }
 
 function getAllTags(text) {
@@ -257,16 +279,11 @@ function delete_tag() {
             document.getElementById(rightclicked).remove();
             all_tags = all_tags.filter(e => e !== rightclicked);
             if (parent.length === 0) {
-                emptyTree();
-                getHeaders();
-                depth = 0;
-                tagParent = "";
-                flag = false;
+                createNetworkforRoots();
             } else {
                 search2(parent[0].parent.name)
             }
         });
-
     });
 }
 
@@ -277,11 +294,7 @@ function delete_all() {
             all_tags = [];
             loadTags();
             if (parent.length === 0) {
-                emptyTree();
-                getHeaders();
-                depth = 0;
-                tagParent = "";
-                flag = false;
+               createNetworkforRoots();
             } else {
                 search2(parent[0].parent.name)
             }
@@ -422,13 +435,12 @@ function item_clicked(text) {
                 viz.reinit(config);
                 viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *");
             }
-            else statement = 1;
+            state = 1;
             return;
         }
-        if(flagdisable == false){
-            viz.reinit(config2);
-            draw2(text);
-        } else statement = 2;
+        if(flagdisable == false)
+              createNetwork();
+        state = 2
         var current = document.createElement("il");
         if (parent.length > 0) {
             var pNode = document.createElement("il");
@@ -589,8 +601,8 @@ function search2(text) {
     });
 }
 
-window.onload = getHeaders();
 window.onload = loadTags();
+window.onload = getHeaders();
 
 
 var config = {
