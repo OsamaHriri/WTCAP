@@ -608,7 +608,7 @@ function search2(text) {
     });
 }
 
-window.onload = loadTags();
+//window.onload = loadTags();
 window.onload = getHeaders();
 
 

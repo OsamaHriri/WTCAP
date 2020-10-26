@@ -521,4 +521,4 @@ function searchSuggestion(text) {
 //Load initial headers
 window.onload = getHeaders();
 //Load tags for seatch bar
-window.onload = loadTags();
+//window.onload = loadTags();
