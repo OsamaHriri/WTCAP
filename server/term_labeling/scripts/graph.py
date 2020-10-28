@@ -3,14 +3,15 @@ import sys
 
 
 class Tag(object):
-    def __init__(self, number,name,parent,level):
+    def __init__(self, number, name, parent, level):
         self.number = number
-        self.name=name
-        self.parent=parent
-        self.level=level
+        self.name = name
+        self.parent = parent
+        self.level = level
 
     def __str__(self):
-       return "id= "+str(self.number)+" Name= "+self.name+ " Parent= "+self.parent+" Level"
+        return "id= " + str(self.number) + " Name= " + self.name + " Parent= " + self.parent + " Level"
+
 
 class Graph(object):
 
@@ -40,13 +41,13 @@ class Graph(object):
         if vertex not in self.__graph_dict:
             self.__graph_dict[vertex] = []
 
-    def add_edge(self, parent ,child):
+    def add_edge(self, parent, child):
         """ assumes that edge is of type set, tuple or list;
             between two vertices can be multiple edges!
         """
 
-        vertex1=parent
-        vertex2=child
+        vertex1 = parent
+        vertex2 = child
         if vertex1 in self.__graph_dict:
             self.__graph_dict[vertex1].append(vertex2)
         else:
@@ -94,18 +95,15 @@ class Graph(object):
                     return extended_path
         return None
 
-
-   #get all children of node , input tag object
-    def getChildrensbyNode(self,vertex):
+    # get all children of node , input tag object
+    def getChildrensbyNode(self, vertex):
         return self.__graph_dict[vertex]
 
+    # get all children of node , input tag name
+    def getChildrensbyName(self, name):
+        return self.__graph_dict[name]
 
-   #get all children of node , input tag name
-    def getChildrensbyName(self,name):
-         return self.__graph_dict[name]
-
-
-    #generate data from csv file and create graph
+    # generate data from csv file and create graph
     def getdata(self):
         tags = []
         line = 0
@@ -129,11 +127,4 @@ class Graph(object):
         return g, tags
 
 
-graph= Graph()
-
-
-
-
-
-
-
+graph = Graph()

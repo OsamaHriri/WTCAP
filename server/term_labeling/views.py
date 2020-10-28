@@ -7,7 +7,6 @@ from .scripts.mongodbConnector import Connector
 from .scripts.wordTagging import Tagging
 from django.contrib.auth.decorators import login_required
 import requests
-from .scripts import connector
 import pyarabic.araby as araby
 from threading import Thread, Lock
 
@@ -65,24 +64,24 @@ def tags(request):
     return render(request, 'manage_tags.html', context)
 
 
-def process_lines(request):
-    selected = []
-    if request.method == 'POST':
-        chosen_lines = list(request.POST.values())
-        for value in poem.__iter__():
-            if value.__getitem__('index') in chosen_lines:
-                print('this index exists')
-                selected.append(value)
-                print(selected)
-    context = {
-        'selected': selected
-    }
-    return render(request, 'process_lines.html', context)
+# def process_lines(request):
+#     selected = []
+#     if request.method == 'POST':
+#         chosen_lines = list(request.POST.values())
+#         for value in poem.__iter__():
+#             if value.__getitem__('index') in chosen_lines:
+#                 print('this index exists')
+#                 selected.append(value)
+#                 print(selected)
+#     context = {
+#         'selected': selected
+#     }
+#     return render(request, 'process_lines.html', context)
 
 
 @login_required()
 def select_poet_page(request):
-    c = connector.Connector()
+    c = Connector()
     poets = c.get_poets()
     poems = c.get_poems()
     context = {
@@ -100,7 +99,7 @@ def poet_poems(request):
     """
     if request.method == 'GET':
         poetId = request.GET['poet_id']
-        c = connector.Connector()
+        c = Connector()
         poems = c.get_poems_by_poet(poetId)
         idlist = ""
         for pp in poems:
@@ -120,7 +119,7 @@ def all_poems(request):
     try using the poem list you already rendered with the page
     """
     if request.method == 'GET':
-        c = connector.Connector()
+        c = Connector()
         poems = c.get_poems()
         idlist = ""
         for pp in poems:
@@ -397,22 +396,37 @@ def get_all_tags(request):
 
 
 def get_all_poems(request):
+    """
+    Given a GET request returns all poems from database.
+
+    :param request:
+    :return: JSON response with all poem ids, poets id and names looks like:
+    {"poems": [{"id": 2, "name": name}, {}....]
+    """
     if request.method == 'GET':
-        c = connector.Connector()
+        c = Connector()
         poems = c.get_poems()
         if tags is not None:
-            return JsonResponse(poems)
+            return JsonResponse({
+                "poems": poems})
         else:
             return HttpResponse("not found")
 
 
 def get_all_poets(request):
+    """
+    Given a GET request returns all poets from database.
+
+    :param request:
+    :return: JSON response with all poet ids and names looks like:
+    {"poet": [{"id": 2, "name": name}, {}....]
+    """
     if request.method == 'GET':
-        c = connector.Connector()
+        c = Connector()
         poets = c.get_poets()
-        print(poets)
         if tags is not None:
-            return JsonResponse(poets)
+            return JsonResponse({
+                'poets': poets})
         else:
             return HttpResponse("not found")
 

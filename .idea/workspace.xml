@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="more of tag viz...">
+    <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="add new features to graph viz">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/connector.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/createGraph.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/createGraph.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/graph.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/mongodbConnector.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/mongodbConnector.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_js.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_js.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/views.py" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,6 +33,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="IgnoredFileRootStore">
     <option name="generatedRoots">
@@ -68,19 +72,7 @@
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Python.tagGraph">
+  <component name="RunManager" selected="Python.mongodbConnector">
     <configuration name="almaany_translator_bot" type="PythonConfigurationType" factoryName="Python">
       <module name="semantic-labeling-arabic" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -125,6 +117,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="mongodbConnector" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="semantic-labeling-arabic" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/term_labeling/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/term_labeling/scripts/mongodbConnector.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="tagGraph" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="semantic-labeling-arabic" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -139,6 +153,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="views" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="semantic-labeling-arabic" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/term_labeling" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/term_labeling/views.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -171,6 +207,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.mongodbConnector" />
+        <item itemvalue="Python.views" />
         <item itemvalue="Python.tagGraph" />
         <item itemvalue="Python.wordTagging" />
         <item itemvalue="Python.createGraph" />
@@ -191,6 +229,17 @@
       <workItem from="1594052577120" duration="4703000" />
       <workItem from="1594115072554" duration="20675000" />
       <workItem from="1594206376136" duration="6027000" />
+      <workItem from="1602688649840" duration="11000" />
+      <workItem from="1603058003001" duration="1044000" />
+      <workItem from="1603116663791" duration="2055000" />
+      <workItem from="1603144773532" duration="9037000" />
+      <workItem from="1603173186696" duration="6024000" />
+      <workItem from="1603277370389" duration="8000" />
+      <workItem from="1603729002425" duration="2799000" />
+      <workItem from="1603801894642" duration="965000" />
+      <workItem from="1603835011749" duration="32000" />
+      <workItem from="1603877546541" duration="764000" />
+      <workItem from="1603888545578" duration="3900000" />
     </task>
     <task id="LOCAL-00001" summary="Added basic web scrapper">
       <created>1583940146050</created>
@@ -374,14 +423,21 @@
       <option name="project" value="LOCAL" />
       <updated>1602010411877</updated>
     </task>
-    <task id="LOCAL-00027" summary="...">
-      <created>1602675524231</created>
+    <task id="LOCAL-00027" summary="#16 fixed tags tree load - tagging page">
+      <created>1603116765164</created>
       <option name="number" value="00027" />
       <option name="presentableId" value="LOCAL-00027" />
       <option name="project" value="LOCAL" />
-      <updated>1602675524231</updated>
+      <updated>1603116765164</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="did basis for #25 + translated header">
+      <created>1603157088412</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1603157088412</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -401,7 +457,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added basic web scrapper" />
     <MESSAGE value="scrapper now retives all the data form the page and saves it in a txt file &#10;bot cant be callled from terminal by :&#10;python almaany_translator_bot.py &lt; wordToBeTranslated &gt;" />
     <MESSAGE value="added intial sever" />
     <MESSAGE value="create neo4j db and create search , add ..etc functions" />
@@ -425,59 +480,84 @@
     <MESSAGE value="fix edit tag" />
     <MESSAGE value="tag visualization" />
     <MESSAGE value="add new features to graph viz" />
-    <MESSAGE value="..." />
-    <option name="LAST_COMMIT_MESSAGE" value="..." />
+    <MESSAGE value="#16 fixed tags tree load - tagging page" />
+    <MESSAGE value="did basis for #25 + translated header" />
+    <option name="LAST_COMMIT_MESSAGE" value="did basis for #25 + translated header" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2587" y="183" width="869" height="810" key="CommitChangelistDialog2" timestamp="1587302475442">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="667" y="183" width="869" height="810" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587295998297" />
-    <state x="2587" y="183" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1587302475442" />
-    <state width="1237" height="87" key="GridCell.Tab.0.bottom" timestamp="1594046196512">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state width="618" height="266" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1594044589965" />
-    <state width="1237" height="87" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1594046196512" />
-    <state width="1237" height="87" key="GridCell.Tab.0.center" timestamp="1594046196512">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state width="618" height="266" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1594044589965" />
-    <state width="1237" height="87" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1594046196512" />
-    <state width="1237" height="87" key="GridCell.Tab.0.left" timestamp="1594046196512">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state width="618" height="266" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1594044589965" />
-    <state width="1237" height="87" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1594046196512" />
-    <state width="1237" height="87" key="GridCell.Tab.0.right" timestamp="1594046196512">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state width="618" height="266" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1594044589965" />
-    <state width="1237" height="87" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1594046196512" />
-    <state x="266" y="31" key="Vcs.Push.Dialog.v2" timestamp="1594217055782">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="266" y="31" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1594217055782" />
-    <state x="615" y="320" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587296047407" />
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1587297406859">
+    <state x="699" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603147034115">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587297406859" />
-    <state x="450" y="258" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594170374336">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="450" y="258" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1594170374336" />
-    <state x="336" y="87" width="609" height="536" key="find.popup" timestamp="1594141939472">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="336" y="87" width="609" height="536" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1594141939472" />
-    <state x="336" y="92" width="609" height="536" key="find.popup/0.0.1280.720@0.0.1280.720" timestamp="1594131666226" />
-    <state x="569" y="311" key="git4idea.merge.GitPullDialog" timestamp="1587296008127">
+    <state x="699" y="323" key="#com.intellij.fileTypes.FileTypeChooser/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1603147034115" />
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1603731644890">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="569" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1587296008127" />
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1603731644890" />
+    <state x="183" y="116" width="1653" height="811" key="CommitChangelistDialog2" timestamp="1603157087566">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="183" y="116" width="1653" height="811" key="CommitChangelistDialog2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1603157087566" />
+    <state x="93" y="93" width="1095" height="495" key="DiffContextDialog" timestamp="1603890480642">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="93" y="93" width="1095" height="495" key="DiffContextDialog/0.0.1280.680@0.0.1280.680" timestamp="1603890480642" />
+    <state width="1237" height="110" key="GridCell.Tab.0.bottom" timestamp="1603890305812">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1877" height="367" key="GridCell.Tab.0.bottom/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1603184855112" />
+    <state width="1237" height="110" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1603890305812" />
+    <state width="1237" height="110" key="GridCell.Tab.0.center" timestamp="1603890305812">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1877" height="367" key="GridCell.Tab.0.center/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1603184855112" />
+    <state width="1237" height="110" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1603890305812" />
+    <state width="1237" height="110" key="GridCell.Tab.0.left" timestamp="1603890305812">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1877" height="367" key="GridCell.Tab.0.left/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1603184855112" />
+    <state width="1237" height="110" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1603890305812" />
+    <state width="1237" height="110" key="GridCell.Tab.0.right" timestamp="1603890305812">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1877" height="367" key="GridCell.Tab.0.right/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1603184855112" />
+    <state width="1237" height="110" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1603890305812" />
+    <state width="1237" height="204" key="GridCell.Tab.1.bottom" timestamp="1603889590197">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="204" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1603889590197" />
+    <state width="1237" height="204" key="GridCell.Tab.1.center" timestamp="1603889590197">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="204" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1603889590197" />
+    <state width="1237" height="204" key="GridCell.Tab.1.left" timestamp="1603889590197">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="204" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1603889590197" />
+    <state width="1237" height="204" key="GridCell.Tab.1.right" timestamp="1603889590197">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="204" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1603889590197" />
+    <state x="672" y="236" key="MultipleFileMergeDialog" timestamp="1603116793490">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="672" y="236" key="MultipleFileMergeDialog/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1603116793490" />
+    <state x="399" y="47" key="Vcs.Push.Dialog.v2" timestamp="1602684715014">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="399" y="47" key="Vcs.Push.Dialog.v2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1602684715014" />
+    <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1603116772024">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1603116772024" />
+    <state x="415" y="147" width="672" height="444" key="search.everywhere.popup" timestamp="1603890473641">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1603176410978" />
+    <state x="415" y="147" width="672" height="444" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1603890473641" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/semantic_labeling_arabic$tagGraph.coverage" NAME="tagGraph Coverage Results" MODIFIED="1594044587836" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/server/term_labeling/scripts" />
+    <SUITE FILE_PATH="coverage/semantic_labeling_arabic$views.coverage" NAME="views Coverage Results" MODIFIED="1603175345248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/server/term_labeling" />
+    <SUITE FILE_PATH="coverage/semantic_labeling_arabic$mongodbConnector.coverage" NAME="mongodbConnector Coverage Results" MODIFIED="1603890184113" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/server/term_labeling/scripts" />
   </component>
 </project>
