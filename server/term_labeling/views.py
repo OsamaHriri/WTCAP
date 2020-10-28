@@ -17,7 +17,7 @@ from threading import Thread, Lock
 def main_tag_page(request):
     t = Tag()
     json_tags = t.getAllTagsbyjson()
-    all_tags = t.getAllTags()
+    all_tags = t.getAllTags()["tags"]
     c = Connector()
     if request.method == 'GET':
         id = request.GET['poem_iid']
@@ -56,7 +56,7 @@ def index(request):
 @login_required()
 def tags(request):
     t = Tag()
-    all_tags = t.getAllTags()
+    all_tags = t.getAllTags()["tags"]
     context = {
         'title': 'Tags',
         'all_tags': all_tags

@@ -11,6 +11,8 @@ let flag;
 let viz;
 let all_tags = [];
 let flagviz = false;
+let state = 1
+let flagdisable = false
 
 function loadTags() {
     getAllTags().done(function (d) {
@@ -55,19 +57,58 @@ function draw3() {
     if (tagParent === "") {
         //viz.render()
         return
-    }
-    if (flagviz == false) {
-        viz.reinit(config2);
-        draw2(tagParent)
-    } else {
-        viz.reinit(config3);
-        statement = 'match p=(n:Tag{name:"$"})-[par:Parent*]->(t:Tag) return p as c UNION match (n:Tag) where n.name="$" return n as c'.replaceAll('$', tagParent)
-        viz.renderWithCypher(statement)
-    }
+    } else createNetwork()
 }
 
 function renderviz() {
     viz.reload()
+}
+
+function disable(){
+    temp = document.querySelector('#disable').textContent;
+    if(temp == "Disable Network"){
+         flagdisable = true
+         document.getElementById("showsub").disabled = true;
+         document.getElementById("render").disabled = true;
+         document.querySelector('#disable').textContent = "Enable Network"
+         viz.clearNetwork()}
+    else {
+         flagdisable = false
+         document.querySelector('#disable').textContent = "Disable Network"
+         document.getElementById("showsub").disabled = false;
+         document.getElementById("render").disabled = false;
+         if(state == 1){
+            viz.reinit(config);
+            viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *");
+         }else if(state == 2){
+            createNetwork()
+         }
+    }
+}
+function createNetwork(){
+     if(flagviz==false){
+         viz.reinit(config2)
+         draw2(tagParent)
+      }
+      else {
+           viz.reinit(config3)
+           statement='match p=(n:Tag{name:"$"})-[par:Parent*]->(t:Tag) return p as c UNION match (n:Tag) where n.name="$" return n as c'.replaceAll('$',tagParent)
+           viz.renderWithCypher(statement)
+       }
+}
+
+function createNetworkforRoots(){
+      emptyTree();
+      getHeaders();
+      depth = 0;
+      tagParent = "";
+      flag = false;
+      if(flagdisable == false){
+          viz.clearNetwork();
+          viz.reinit(config);
+          viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *");
+       }
+       state = 1;
 }
 
 function getAllTags(text) {
@@ -78,7 +119,7 @@ function getAllTags(text) {
     });
 }
 
-function addNewRoot(text) {
+function add_new_root(text) {
     return $.ajax({
         type: "GET",
         url: "add_root/",
@@ -86,15 +127,6 @@ function addNewRoot(text) {
         dataType: "json",
     });
 
-}
-
-function add_new_tag(text) {
-    return $.ajax({
-        type: "GET",
-        url: "add_tag/",
-        data: {'term': text, 'parent': tagParent},
-        dataType: "json",
-    });
 }
 
 function add_parent(text, parent) {
@@ -238,16 +270,11 @@ function delete_tag() {
             document.getElementById(rightclicked).remove();
             all_tags = all_tags.filter(e => e !== rightclicked);
             if (parent.length === 0) {
-                emptyTree();
-                getHeaders();
-                depth = 0;
-                tagParent = "";
-                flag = false;
+                createNetworkforRoots();
             } else {
                 search2(parent[0].parent.name)
             }
         });
-
     });
 }
 
@@ -258,11 +285,7 @@ function delete_all() {
             all_tags = [];
             loadTags();
             if (parent.length === 0) {
-                emptyTree();
-                getHeaders();
-                depth = 0;
-                tagParent = "";
-                flag = false;
+               createNetworkforRoots();
             } else {
                 search2(parent[0].parent.name)
             }
@@ -345,6 +368,25 @@ function new_child() {
     }
 }
 
+function new_root(){
+    text = document.getElementById("root-name").value
+    if (text === "")
+        window.alert("The field is empty ,Please insert a tag before clicking");
+    else {
+        add_new_root(text).done(function (d) {
+            if (d.Tag === false) {
+                window.alert("The tag already exist");
+                return
+            }
+            all_tags.push(text);
+            myUL.innerHTML += "<li><a href=\"#\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
+            document.getElementById("root-name").value = "";
+            createNetworkforRoots()
+            $('#insertRootModal').modal('hide')
+        });
+    }
+
+}
 
 function item_clicked1(obj, event) {
     event.stopPropagation();
@@ -395,13 +437,17 @@ function item_clicked(text) {
             depth = 0;
             tagParent = "";
             flag = false;
-            viz.clearNetwork();
-            viz.reinit(config);
-            viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *");
+            if(flagdisable == false){
+                viz.clearNetwork();
+                viz.reinit(config);
+                viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *");
+            }
+            state = 1;
             return;
         }
-        viz.reinit(config2);
-        draw2(text);
+        if(flagdisable == false)
+              createNetwork();
+        state = 2
         var current = document.createElement("il");
         if (parent.length > 0) {
             var pNode = document.createElement("il");
@@ -427,8 +473,6 @@ function item_clicked(text) {
                 d = data.brothers;
                 d.forEach(build_il_brothers)
             });
-
-
         }
         ul2 = document.createElement('ul');
         current.appendChild(ul2);
@@ -564,8 +608,8 @@ function search2(text) {
     });
 }
 
+//window.onload = loadTags();
 window.onload = getHeaders();
-window.onload = loadTags();
 
 
 var config = {

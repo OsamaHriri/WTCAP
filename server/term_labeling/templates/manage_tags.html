@@ -121,6 +121,29 @@
     </div>
 </div>
 
+<div class="modal fade" id="insertRootModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Root</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input class="form-control" id="root-name" name="parent-name"
+                       placeholder="Root name" required type="text">
+            </div>
+            <div class="modal-footer ">
+                <button class="btn btn-secondary" value="Add" onclick="new_root()">Save</button>
+                <br>
+                <button class="btn darkBackground" data-dismiss="modal" type="button">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--TODO - switch placeholder to be the current tag name -->
 
 <!-- Edit tag name popup-->
@@ -212,8 +235,15 @@
             <input type="text" id="mySearchInput" onclick="showTags()" onkeyup="filterSearch()"
                    placeholder="إبحث..."
                    title="إبحث...">
+            <button type="button" class="btn btn-link" data-action="View" data-toggle="modal"
+               data-target="#insertRootModal">+ Root</button>
             <div id="tagsDropDown">
-                <ul id="myUL"> </ul>
+                <ul id="myUL">
+               {% for tag in all_tags %}
+                <li><a href="#" id="{{ tag }}"onclick="searchTag(this)"> {{ tag }} </a></li>
+              {% endfor %}
+
+                </ul>
             </div>
             <ul class="tree">
             </ul>
@@ -222,6 +252,7 @@
         <div class="col-sm-9 graph">
             <button type="button" id="showsub" class="btn btn-default hover" onclick="draw3()">Show subTree</button>
             <button type="button" id="render" class="btn btn-default hover" onclick="renderviz()">Refresh</button>
+            <button type="button" id="disable" class="btn btn-default hover" onclick="disable()">Disable Network</button>
             <body onload="draw()">
             <div id="viz"></div>
             </body>
