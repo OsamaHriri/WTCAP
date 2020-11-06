@@ -17,7 +17,6 @@ urlpatterns = [
     path('external/', views.external, name="script1"),
     path('newexternal/', views.newexternal, name="script3"),
     path('poet_poems/', views.poet_poems, name="poet_poems"),
-    path('external2/', views.external2, name="script2"),
     path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name="logout"),
 
     re_path('termTree/$', views.termTree, name="termTree"),
