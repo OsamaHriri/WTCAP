@@ -17,8 +17,7 @@ let depth = 0;
 let all_tags = [];
 
 function box_checked(obj) {
-    const id = obj.id;
-    const ok = document.getElementById(id);
+    const id = obj.id; //line number
     const tbl = document.getElementById("poem");
     // check if we added the row already, if yes remove it and add it again ?
     const added = document.getElementById('added');
@@ -31,21 +30,20 @@ function box_checked(obj) {
     const sentence = tbl.rows[id - 1];
     const sadr = sentence.cells[1];
     const ajuz = sentence.cells[2];
-
     //split sadr
-    const sadrtext = sadr.textContent.split(" ");
+    const sadrtext = sadr.textContent.trim().split(" ");
     let newsadr = "<p>";
     for (let i = 0; i < sadrtext.length; i++) {
-        newsadr = newsadr + "<span class='term'> " + sadrtext[i] + " " + "</span>"
+        newsadr = newsadr + "<span class='term' id='" + id + "_0_" + (i+1) + "'> " + sadrtext[i] + " " + "</span>"
     }
-    newsadr = newsadr + "</p>"
+    newsadr = newsadr + "</p>";
     sadr.innerHTML = newsadr;
 
     //split ajuz
-    const ajuztext = ajuz.textContent.split(" ");
+    const ajuztext = ajuz.textContent.trim().split(" ");
     let newsajuz = "<p>";
     for (let i = 0; i < ajuztext.length; i++) {
-        newsajuz = newsajuz + "<span class='term'> " + ajuztext[i] + " " + "</span>"
+        newsajuz = newsajuz + "<span class='term' id='" + id + "_1_" + i+1 + "'> " + ajuztext[i] + " " + "</span>"
     }
     newsajuz = newsajuz + "</p>";
     ajuz.innerHTML = newsajuz;
@@ -80,7 +78,7 @@ function hi(id) {
 
 function loadTags(){
     getAllTags().done(function(d){
-        all_tags = d.tags
+        all_tags = d.tags;
         update_tags_list()
     });
 }
@@ -232,8 +230,6 @@ function getAllTags(text) {
     });
 
 }
-
-
 
 function emptyTree() {
     const ul = document.querySelector('.tree');
@@ -399,11 +395,15 @@ function build_tag(tag_name) {
 
 function save_term_tag() {
     selected_obj.css("color", "green");
+    const term_id = selected_obj.attr('id').split('_');
     for (const tag of selected_tags) {
         $.ajax({
             type: "GET",
             url: "save_term_tags/",
             data: {
+                'row': term_id[0],
+                'place': term_id[1],
+                'position': term_id[2],
                 'term': selected_term,
                 'tag': tag
             },

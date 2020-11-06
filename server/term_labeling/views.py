@@ -1,7 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from .scripts.almaany_translator_bot import ALmaanyBot
-from .scripts.graph import Graph
 from .scripts.tagGraph import Tag
 from .scripts.mongodbConnector import Connector
 from .scripts.wordTagging import Tagging
@@ -14,6 +13,9 @@ from threading import Thread, Lock
 # Create your views here.
 
 
+poem_id = ''
+
+
 def main_tag_page(request):
     t = Tag()
     json_tags = t.getAllTagsbyjson()
@@ -23,6 +25,10 @@ def main_tag_page(request):
         id = request.GET['poem_iid']
     else:
         id = 2066
+
+    global poem_id
+    poem_id = id
+
     poem = (c.get_poem(id))[0]
     context = {
         'poems': poem,
@@ -168,23 +174,6 @@ def external(request):
     return render(request, 'home.html', {'data1': out})
 
 
-def external2(request):
-    inp = request.POST.get('param')
-    p = Graph()
-    g, tags = p.getdata()
-    head = []
-    for t in tags:
-        if t.level == "0":
-            head.append(t)
-    for l in head:
-        p = g.find_path(l.name, inp)
-        if p is not None:
-            break
-    if p is not None:
-        return render(request, 'home.html', {'data1': p})
-    return render(request, 'home.html', {'data1': 'not found'})
-
-
 def termTree(request):
     if request.method == 'GET':
         t = Tag()
@@ -195,6 +184,7 @@ def termTree(request):
         else:
             return HttpResponse("not found")
     else:
+        return HttpResponse("not success")
         return HttpResponse("not success")
 
 
@@ -207,8 +197,9 @@ def save_term_tags(request):
         tag = data.get('tag')
         t = Tagging()
         mutex.acquire()
+        print(poem_id)
         try:
-            suc = t.tagWord(term, tag, 1, 1, 1, 1)
+            suc = t.tagWord(term, tag, poem_id, int(data.get('place')), int(data.get('row')), int(data.get('position')))
         finally:
             mutex.release()
 
