@@ -18,7 +18,6 @@ poem_id = ''
 
 def main_tag_page(request):
     t = Tag()
-    json_tags = t.getAllTagsbyjson()
     all_tags = t.getAllTags()["tags"]
     c = Connector()
     if request.method == 'GET':
@@ -33,7 +32,6 @@ def main_tag_page(request):
     context = {
         'poems': poem,
         'title': 'Home',
-        'tags': {"root": json_tags},
         'all_tags': all_tags
     }
     return render(request, 'main_tag_page.html', context)
@@ -41,7 +39,6 @@ def main_tag_page(request):
 
 def index(request):
     t = Tag()
-    json_tags = t.getAllTagsbyjson()
     all_tags = t.getAllTags()
     c = Connector()
     if request.method == 'POST':
@@ -53,7 +50,6 @@ def index(request):
     context = {
         'poems': poem,
         'title': 'Home',
-        'tags': {"root": json_tags},
         'all_tags': all_tags
     }
     return render(request, 'index.html', context)
