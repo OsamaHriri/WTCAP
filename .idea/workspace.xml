@@ -410,7 +410,14 @@
       <option name="project" value="LOCAL" />
       <updated>1603732985614</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="....">
+      <created>1604754197836</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1604754197836</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -440,7 +447,6 @@
     <MESSAGE value="bugs fix in frontend" />
     <MESSAGE value="Hierarchy Tree traversal + bugs fix" />
     <MESSAGE value="add &quot;add Tag&quot; feature to the hierarchy, color the selected element and bugs fix." />
-    <MESSAGE value="...." />
     <MESSAGE value="manage tags page" />
     <MESSAGE value="add new feature delete and search" />
     <MESSAGE value="add parent feature" />
@@ -455,7 +461,8 @@
     <MESSAGE value="add new feature to graph , disable network." />
     <MESSAGE value="add root is available in hierarchical tree." />
     <MESSAGE value="fix search bar" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix search bar" />
+    <MESSAGE value="...." />
+    <option name="LAST_COMMIT_MESSAGE" value="...." />
   </component>
   <component name="WindowStateProjectService">
     <state x="2587" y="183" width="869" height="810" key="CommitChangelistDialog2" timestamp="1587302475442">
