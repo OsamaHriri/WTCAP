@@ -36,7 +36,7 @@ def main_tag_page(request):
 
 def index(request):
     t = Tag()
-    json_tags = t.getAllTagsbyjson()
+   # json_tags = t.getAllTagsbyjson()
     all_tags = t.getAllTags()
     c = Connector()
     if request.method == 'POST':
@@ -48,7 +48,7 @@ def index(request):
     context = {
         'poems': poem,
         'title': 'Home',
-        'tags': {"root": json_tags},
+   #    'tags': {"root": json_tags},
         'all_tags': all_tags
     }
     return render(request, 'index.html', context)

@@ -3,7 +3,7 @@ from py2neo import Graph, Node
 
 class Tagging(object):
     def __init__(self):
-        self.graph = Graph("bolt://localhost:7687", auth=("neo4j", "123123147"))
+        self.graph = Graph("bolt://localhost:7687", auth=("neo4j2", "123123147"))
         self.getMaxIDQ1 = """ Match (w:Word) return Max(tointeger(w.id)) as max """
         self.getMaxIDQ2 = """ Match (t:Tag) return Max(tointeger(t.id)) as max """
         self.searchQ1 = """ Match (w:Word) where w.name=$name return w.name as name """

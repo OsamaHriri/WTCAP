@@ -24,7 +24,7 @@ SECRET_KEY = 'lryn4s^xcxvriu+#)a$--0aaz&^!td$eaq9w2z_cj4&um^831i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['132.75.251.93']
 
 # Application definition
 
@@ -113,7 +113,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
 STATIC_URL = '/static/'
 
 """ this is where you redirect after a successful login"""
