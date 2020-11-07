@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/server/term_labeling/templates/poemPopup.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +17,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -389,7 +389,28 @@
       <option name="project" value="LOCAL" />
       <updated>1603629659415</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="add new feature to graph , disable network.">
+      <created>1603633985462</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1603633985462</updated>
+    </task>
+    <task id="LOCAL-00031" summary="add root is available in hierarchical tree.">
+      <created>1603636090974</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1603636090974</updated>
+    </task>
+    <task id="LOCAL-00032" summary="fix search bar">
+      <created>1603732985614</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1603732985614</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -409,9 +430,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="scrapper now retives all the data form the page and saves it in a txt file &#10;bot cant be callled from terminal by :&#10;python almaany_translator_bot.py &lt; wordToBeTranslated &gt;" />
-    <MESSAGE value="added intial sever" />
-    <MESSAGE value="create neo4j db and create search , add ..etc functions" />
     <MESSAGE value="word and tags connections" />
     <MESSAGE value="merge db , bugs fix and documentation." />
     <MESSAGE value="get all tag roots function + bugs fix" />
@@ -434,7 +452,10 @@
     <MESSAGE value="add new features to graph viz" />
     <MESSAGE value="#14 Search suggestions update" />
     <MESSAGE value="..." />
-    <option name="LAST_COMMIT_MESSAGE" value="..." />
+    <MESSAGE value="add new feature to graph , disable network." />
+    <MESSAGE value="add root is available in hierarchical tree." />
+    <MESSAGE value="fix search bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix search bar" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2587" y="183" width="869" height="810" key="CommitChangelistDialog2" timestamp="1587302475442">
