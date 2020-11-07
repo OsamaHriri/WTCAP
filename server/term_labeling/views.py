@@ -1,18 +1,19 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from .scripts.almaany_translator_bot import ALmaanyBot
-from .scripts.graph import Graph
 from .scripts.tagGraph import Tag
 from .scripts.mongodbConnector import Connector
 from .scripts.wordTagging import Tagging
 from django.contrib.auth.decorators import login_required
 import requests
-from .scripts import connector
 import pyarabic.araby as araby
 from threading import Thread, Lock
 
 
 # Create your views here.
+
+
+poem_id = ''
 
 
 def main_tag_page(request):
@@ -24,6 +25,10 @@ def main_tag_page(request):
         id = request.GET['poem_iid']
     else:
         id = 2066
+
+    global poem_id
+    poem_id = id
+
     poem = (c.get_poem(id))[0]
     context = {
         'poems': poem,
@@ -65,24 +70,24 @@ def tags(request):
     return render(request, 'manage_tags.html', context)
 
 
-def process_lines(request):
-    selected = []
-    if request.method == 'POST':
-        chosen_lines = list(request.POST.values())
-        for value in poem.__iter__():
-            if value.__getitem__('index') in chosen_lines:
-                print('this index exists')
-                selected.append(value)
-                print(selected)
-    context = {
-        'selected': selected
-    }
-    return render(request, 'process_lines.html', context)
+# def process_lines(request):
+#     selected = []
+#     if request.method == 'POST':
+#         chosen_lines = list(request.POST.values())
+#         for value in poem.__iter__():
+#             if value.__getitem__('index') in chosen_lines:
+#                 print('this index exists')
+#                 selected.append(value)
+#                 print(selected)
+#     context = {
+#         'selected': selected
+#     }
+#     return render(request, 'process_lines.html', context)
 
 
 @login_required()
 def select_poet_page(request):
-    c = connector.Connector()
+    c = Connector()
     poets = c.get_poets()
     poems = c.get_poems()
     context = {
@@ -100,7 +105,7 @@ def poet_poems(request):
     """
     if request.method == 'GET':
         poetId = request.GET['poet_id']
-        c = connector.Connector()
+        c = Connector()
         poems = c.get_poems_by_poet(poetId)
         idlist = ""
         for pp in poems:
@@ -120,7 +125,7 @@ def all_poems(request):
     try using the poem list you already rendered with the page
     """
     if request.method == 'GET':
-        c = connector.Connector()
+        c = Connector()
         poems = c.get_poems()
         idlist = ""
         for pp in poems:
@@ -169,23 +174,6 @@ def external(request):
     return render(request, 'home.html', {'data1': out})
 
 
-def external2(request):
-    inp = request.POST.get('param')
-    p = Graph()
-    g, tags = p.getdata()
-    head = []
-    for t in tags:
-        if t.level == "0":
-            head.append(t)
-    for l in head:
-        p = g.find_path(l.name, inp)
-        if p is not None:
-            break
-    if p is not None:
-        return render(request, 'home.html', {'data1': p})
-    return render(request, 'home.html', {'data1': 'not found'})
-
-
 def termTree(request):
     if request.method == 'GET':
         t = Tag()
@@ -196,6 +184,7 @@ def termTree(request):
         else:
             return HttpResponse("not found")
     else:
+        return HttpResponse("not success")
         return HttpResponse("not success")
 
 
@@ -208,8 +197,9 @@ def save_term_tags(request):
         tag = data.get('tag')
         t = Tagging()
         mutex.acquire()
+        print(poem_id)
         try:
-            suc = t.tagWord(term, tag, 1, 1, 1, 1)
+            suc = t.tagWord(term, tag, poem_id, int(data.get('place')), int(data.get('row')), int(data.get('position')))
         finally:
             mutex.release()
 
@@ -397,22 +387,37 @@ def get_all_tags(request):
 
 
 def get_all_poems(request):
+    """
+    Given a GET request returns all poems from database.
+
+    :param request:
+    :return: JSON response with all poem ids, poets id and names looks like:
+    {"poems": [{"id": 2, "name": name}, {}....]
+    """
     if request.method == 'GET':
-        c = connector.Connector()
+        c = Connector()
         poems = c.get_poems()
         if tags is not None:
-            return JsonResponse(poems)
+            return JsonResponse({
+                "poems": poems})
         else:
             return HttpResponse("not found")
 
 
 def get_all_poets(request):
+    """
+    Given a GET request returns all poets from database.
+
+    :param request:
+    :return: JSON response with all poet ids and names looks like:
+    {"poet": [{"id": 2, "name": name}, {}....]
+    """
     if request.method == 'GET':
-        c = connector.Connector()
+        c = Connector()
         poets = c.get_poets()
-        print(poets)
         if tags is not None:
-            return JsonResponse(poets)
+            return JsonResponse({
+                'poets': poets})
         else:
             return HttpResponse("not found")
 

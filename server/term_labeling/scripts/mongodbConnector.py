@@ -2,12 +2,12 @@ import pandas as pd
 import json
 import os
 import pymongo
+
 """  
    connector class, pre-made to ease the access to the mongodb database, 
    inorder for this claas to work, the database must be up and running
-
-
 """
+
 
 class Connector:
 
@@ -21,10 +21,16 @@ class Connector:
         return list(self.poemsCollections.find({"id": str(poemID)}))
 
     def get_poems_by_poet(self, poet_id):
-        return list(self.poemsCollections.find({"poet_id": poet_id},{"id":1,"name":1}))
+        return list(self.poemsCollections.find({"poet_id": poet_id}, {"id": 1, "name": 1}))
 
     def get_poets(self):
-        return list(self.poetsCollections.find())
-    def get_all_poems(self):
-        return list(self.poemsCollections.find())
+        return list(self.poetsCollections.find({}, {"_id": 0, "info": 0, "place": 0, "whoAdded": 0, "period": 0}))
 
+    def get_poems(self):
+        return list(self.poemsCollections.find({}, {"_id": 0, "context": 0}))
+
+
+if __name__ == "__main__":
+    c = Connector()
+    poems = c.get_poems()
+    print(poems)

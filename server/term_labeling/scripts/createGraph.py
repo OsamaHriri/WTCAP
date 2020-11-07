@@ -1,10 +1,10 @@
 import csv
-
 from py2neo import Graph, Node, Relationship
+'''
+this class is only for one use , transfer all data from csv to neo4j .
+neo4j db must be active.
+'''
 
-
-# this class is only for one use , transfer all data from csv to neo4j .
-# neo4j db must be active.
 class Tag(object):
     """
     simple class that present a tag.
@@ -12,10 +12,11 @@ class Tag(object):
     @name = the name of this tag.
     @parent = the parent id of this tag.
     """
-    def __init__(self, number,name,parent):
+
+    def __init__(self, number, name, parent):
         self.number = number
-        self.name=name
-        self.parent=parent
+        self.name = name
+        self.parent = parent
 
 
 graph = Graph("bolt://localhost:7687", auth=("neo4j", "123123147"))
@@ -26,20 +27,20 @@ with open('dataset.csv', 'r', encoding="utf8") as f:
     reader = csv.reader(f)
     for row in reader:
         if line != 0:
-           nodes.append(Tag(number=row[0], name=row[1] ,parent=row[2]))
+            nodes.append(Tag(number=row[0], name=row[1], parent=row[2]))
             # line=line+1
         else:
             line = line + 1
 # define a relation name between tags.
 p = Relationship.type("Parent")
 
-#connect to neo4j db and insert each tag and their relationships.
+# connect to neo4j db and insert each tag and their relationships.
 for parent in nodes:
     for child in nodes:
-        if parent.number==child.parent and parent.name != child.name :
-            graph.merge(p(Node("Tag",id=parent.number,parent=parent.parent,name=parent.name),
-                          Node("Tag",id=child.number,parent=child.parent,name=child.name)), "Tag","name")
+        if parent.number == child.parent and parent.name != child.name:
+            graph.merge(p(Node("Tag", id=parent.number, parent=parent.parent, name=parent.name),
+                          Node("Tag", id=child.number, parent=child.parent, name=child.name)), "Tag", "name")
 
-#cast level , id and parent to int.
+# cast level , id and parent to int.
 Q = """ Match (n) set n.parent=toInteger(n.parent) , n.id=toInteger(n.id) """
 graph.run(Q).data()
