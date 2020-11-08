@@ -27,7 +27,6 @@ def main_tag_page(request):
 
     global poem_id
     poem_id = id
-
     poem = (c.get_poem(id))[0]
     context = {
         'poems': poem,
@@ -414,6 +413,14 @@ def get_all_poets(request):
         if tags is not None:
             return JsonResponse({
                 'poets': poets})
+        else:
+            return HttpResponse("not found")
+
+def get_poemid(request):
+    if request.method == 'GET':
+        print(poem_id)
+        if poem_id is not None:
+            return JsonResponse({"id":poem_id})
         else:
             return HttpResponse("not found")
 

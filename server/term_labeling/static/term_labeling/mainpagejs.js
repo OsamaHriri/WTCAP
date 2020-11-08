@@ -15,6 +15,8 @@ let orange = "rgb(255, 165, 0)";
 let tagParent = "";
 let depth = 0;
 let all_tags = [];
+let viz
+let poemID
 
 function box_checked(obj) {
     const id = obj.id; //line number
@@ -75,7 +77,6 @@ function hi(id) {
     });
 }
 
-
 function loadTags(){
     getAllTags().done(function(d){
         all_tags = d.tags;
@@ -122,6 +123,15 @@ function add_tag(obj) {
 
 let ul1;
 let ul2;
+
+function getPoemId(){
+    return $.ajax({
+            type: "GET",
+            url: "get_poemid/",
+            dataType: "json",
+        });
+
+}
 
 function addNewRoot(text) {
     return $.ajax({
@@ -522,3 +532,55 @@ function searchSuggestion(text) {
 window.onload = getHeaders();
 //Load tags for seatch bar
 //window.onload = loadTags();
+
+
+
+function draw() {
+  getPoemId().done(function(d){
+    $('#viz').ready(function() {
+    poemID=d.id
+    statement="match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$',poemID)
+    console.log(statement)
+    var config = {
+        container_id: "viz",
+        server_url: "bolt://localhost:7687",
+        server_user: "neo4j",
+        server_password: "123123147",
+        labels: {
+            "Tag": {
+                "caption": "name",
+                //"size": "pagerank",
+                //"community": "community",
+                "title_properties": [
+                    "name"
+                ]
+            },
+            "Word": {
+                "caption": "name",
+                //"size": "pagerank",
+                //"community": "community",
+                "title_properties": [
+                    "name"
+                ]
+            }
+        },
+        relationships: {
+            "tag": {
+            //"thickness": "weight",
+            "caption": false
+            }
+        },
+        arrows: true,
+        initial_cypher: statement
+    };
+
+    viz = new NeoVis.default(config);
+    viz.render();
+    });
+    });
+}
+
+
+function refreshVis(){
+    viz.reload()
+}
