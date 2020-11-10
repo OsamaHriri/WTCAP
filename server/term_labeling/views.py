@@ -8,13 +8,15 @@ from django.contrib.auth.decorators import login_required
 import requests
 import pyarabic.araby as araby
 from threading import Thread, Lock
+from nltk.stem.isri import ISRIStemmer
+from farasa.stemmer import FarasaStemmer
 
 
 # Create your views here.
 
 
 poem_id = ''
-
+stemmer = FarasaStemmer(interactive=True)
 
 def main_tag_page(request):
     t = Tag()
@@ -27,9 +29,13 @@ def main_tag_page(request):
 
     global poem_id
     poem_id = id
+<<<<<<< HEAD
     print(id)
 
     poem = c.get_poem(id)[0]
+=======
+    poem = (c.get_poem(id))[0]
+>>>>>>> 299d235f3cdba592a0a911f14cf1b6f763e93987
     context = {
         'poems': poem,
         'title': 'Home',
@@ -189,8 +195,9 @@ def save_term_tags(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
-        # remove term tashkeel
-        term = araby.strip_tashkeel(term)
+        # remove term tashkeel and white space
+        term = araby.strip_tashkeel(term).strip()
+        term = stemmer.stem(term)
         tag = data.get('tag')
         t = Tagging()
         mutex.acquire()
@@ -212,7 +219,9 @@ def suggest_tags(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
-        term = araby.strip_tashkeel(term)
+        # remove term tashkeel and white space
+        term = araby.strip_tashkeel(term).strip()
+        term = stemmer.stem(term)
         t = Tagging()
         mutex.acquire()
         try:
@@ -415,6 +424,14 @@ def get_all_poets(request):
         if tags is not None:
             return JsonResponse({
                 'poets': poets})
+        else:
+            return HttpResponse("not found")
+
+def get_poemid(request):
+    if request.method == 'GET':
+        print(poem_id)
+        if poem_id is not None:
+            return JsonResponse({"id":poem_id})
         else:
             return HttpResponse("not found")
 
