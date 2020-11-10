@@ -27,8 +27,9 @@ def main_tag_page(request):
 
     global poem_id
     poem_id = id
+    print(id)
 
-    poem = (c.get_poem(id))[0]
+    poem = c.get_poem(id)[0]
     context = {
         'poems': poem,
         'title': 'Home',

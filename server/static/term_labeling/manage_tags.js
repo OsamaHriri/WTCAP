@@ -614,7 +614,7 @@ window.onload = getHeaders();
 
 var config = {
     container_id: "viz",
-    server_url: "bolt://132.75.251.93:7687",
+    server_url: "bolt://localhost:7687",
     server_user: "neo4j",
     server_password: "123123147",
     labels: {
@@ -644,7 +644,7 @@ var config = {
 
 var config2 = {
     container_id: "viz",
-    server_url: "bolt://132.75.251.93:7687",
+    server_url: "bolt://localhost:7687",
     server_user: "neo4j",
     server_password: "123123147",
     labels: {
@@ -669,7 +669,7 @@ var config2 = {
 
 var config3 = {
     container_id: "viz",
-    server_url: "bolt://132.75.251.93:7687",
+    server_url: "bolt://localhost:7687",
     server_user: "neo4j",
     server_password: "123123147",
     labels: {
