@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 import requests
 import pyarabic.araby as araby
 from threading import Thread, Lock
+from nltk.stem.isri import ISRIStemmer
 
 
 # Create your views here.
@@ -187,8 +188,10 @@ def save_term_tags(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
+        st = ISRIStemmer()
         # remove term tashkeel
-        term = araby.strip_tashkeel(term)
+        term = araby.strip_tashkeel(term).strip()
+        term = st.stem(term)
         tag = data.get('tag')
         t = Tagging()
         mutex.acquire()
@@ -210,7 +213,9 @@ def suggest_tags(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
-        term = araby.strip_tashkeel(term)
+        st = ISRIStemmer()
+        term = araby.strip_tashkeel(term).strip()
+        term = st.stem(term)
         t = Tagging()
         mutex.acquire()
         try:
