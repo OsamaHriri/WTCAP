@@ -9,13 +9,14 @@ import requests
 import pyarabic.araby as araby
 from threading import Thread, Lock
 from nltk.stem.isri import ISRIStemmer
+from farasa.stemmer import FarasaStemmer
 
 
 # Create your views here.
 
 
 poem_id = ''
-
+stemmer = FarasaStemmer(interactive=True)
 
 def main_tag_page(request):
     t = Tag()
@@ -188,10 +189,9 @@ def save_term_tags(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
-        st = ISRIStemmer()
-        # remove term tashkeel
+        # remove term tashkeel and white space
         term = araby.strip_tashkeel(term).strip()
-        term = st.stem(term)
+        term = stemmer.stem(term)
         tag = data.get('tag')
         t = Tagging()
         mutex.acquire()
@@ -213,9 +213,9 @@ def suggest_tags(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
-        st = ISRIStemmer()
+        # remove term tashkeel and white space
         term = araby.strip_tashkeel(term).strip()
-        term = st.stem(term)
+        term = stemmer.stem(term)
         t = Tagging()
         mutex.acquire()
         try:
