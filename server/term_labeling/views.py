@@ -11,12 +11,12 @@ from threading import Thread, Lock
 from nltk.stem.isri import ISRIStemmer
 from farasa.stemmer import FarasaStemmer
 
-
 # Create your views here.
 
 
 poem_id = ''
 stemmer = FarasaStemmer(interactive=True)
+
 
 def main_tag_page(request):
     t = Tag()
@@ -80,6 +80,21 @@ def tags(request):
 #         'selected': selected
 #     }
 #     return render(request, 'process_lines.html', context)
+
+
+def settings(request):
+    context = {
+        'title': 'Settings',
+    }
+    return render(request, 'settings.html', context)
+
+
+@login_required()
+def statistics(request):
+    context = {
+        'title': 'Statistics',
+    }
+    return render(request, 'statistics.html', context)
 
 
 @login_required()
@@ -421,11 +436,12 @@ def get_all_poets(request):
         else:
             return HttpResponse("not found")
 
+
 def get_poemid(request):
     if request.method == 'GET':
         print(poem_id)
         if poem_id is not None:
-            return JsonResponse({"id":poem_id})
+            return JsonResponse({"id": poem_id})
         else:
             return HttpResponse("not found")
 

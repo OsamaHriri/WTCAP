@@ -3,15 +3,16 @@ from django.urls import path, include, re_path
 from django.contrib.auth import views as auth_views
 from . import views
 
+# if you change the name here make sure to change it in the navbar in base.html
 
 urlpatterns = [
-
-    # if you change the name here make sure to change it in the navbar in base.html
+    # pages
     path('', views.index, name='index'),
     path('main_tag_page/', views.main_tag_page, name='main_tag_page'),
     path('tags/', views.tags, name='tags'),
-    # path('process_lines/', views.process_lines, name='process_lines'),
     path('select_poet_page/', views.select_poet_page, name='select_poet_page'),
+    path('settings/', views.settings, name='settings'),
+    path('statistics/', views.statistics, name='statistics'),
     path('label/', views.button, name='label'),
     path('output/', views.output, name="script"),
     path('external/', views.external, name="script1"),
