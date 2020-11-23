@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required
 import requests
 import pyarabic.araby as araby
 from threading import Thread, Lock
-from nltk.stem.isri import ISRIStemmer
 from farasa.stemmer import FarasaStemmer
 
 

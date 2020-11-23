@@ -29,6 +29,18 @@ class Connector:
     def get_poems(self):
         return list(self.poemsCollections.find({}, {"_id": 0, "context": 0}))
 
+    def get_poems_by_period(self, p):
+        #myquery = {"period": p}
+        #x = self.poetsCollections.find(myquery, {"_id":0,"id": 1})
+        result = self.poetsCollections.aggregate([
+            { "$match": { "period": p } },
+                {'$unset': [ "_id", "name","info","place","whoAdded","period" ] },
+                    {'$lookup' : {'from': 'poems','let': {'id':"$id"},
+                                  'pipeline':[{"$match":{ "$expr": { "$eq": ["$poet_id", "$$id"] }}},{'$project':{'_id':0,'context':{'sadr':1,'ajuz':1}}}],
+                                            'as': 'results' }}])
+        return list(result)
+
+
 
 if __name__ == "__main__":
     c = Connector()

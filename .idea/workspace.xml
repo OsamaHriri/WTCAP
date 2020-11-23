@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/server/term_labeling/scripts/test2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/mongodbConnector.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/mongodbConnector.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -75,7 +77,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.createGraph">
+  <component name="RunManager" selected="Python.test2">
     <configuration name="almaany_translator_bot" type="PythonConfigurationType" factoryName="Python">
       <module name="semantic-labeling-arabic" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -164,6 +166,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="test2" type="PythonConfigurationType" factoryName="Python">
+      <module name="semantic-labeling-arabic" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/term_labeling/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/term_labeling/scripts/test2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="views" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="semantic-labeling-arabic" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -186,35 +209,12 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="wordTagging" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="semantic-labeling-arabic" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/term_labeling/scripts" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/term_labeling/scripts/wordTagging.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.createGraph" />
         <item itemvalue="Python.mongodbConnector" />
         <item itemvalue="Python.views" />
         <item itemvalue="Python.tagGraph" />
-        <item itemvalue="Python.wordTagging" />
       </list>
     </recent_temporary>
   </component>
@@ -479,7 +479,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605015479530</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="change stemmer library">
+      <created>1605018291622</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1605018291622</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -499,7 +506,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="get all tag roots function + bugs fix" />
     <MESSAGE value="mutex" />
     <MESSAGE value="tag frequency" />
     <MESSAGE value="suggestion tags" />
@@ -524,7 +530,8 @@
     <MESSAGE value="sort view and delete unneeded queries" />
     <MESSAGE value="#30 Fetch all poem terms and their tags" />
     <MESSAGE value="#35 stemmer for arabic words" />
-    <option name="LAST_COMMIT_MESSAGE" value="#35 stemmer for arabic words" />
+    <MESSAGE value="change stemmer library" />
+    <option name="LAST_COMMIT_MESSAGE" value="change stemmer library" />
   </component>
   <component name="WindowStateProjectService">
     <state x="699" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603147034115">
