@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block stylesheets %}
+
+<!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+<!--<script src='https://kit.fontawesome.com/a076d05399.js'></script>-->
+{% endblock stylesheets %}
+
+
+{% block content %}
+<div class="container">
+    <br>
+    <div class="page-header">
+        <h1>Settings</h1>
+    </div>
+    <br>
+
+    <a href="http://127.0.0.1:8000/admin/auth/user/" class="btn btn-outline-secondary btn-lg" role="button"
+       aria-pressed="true">Manage Users</a>
+    <br><br>
+    <button type="button" id="btn-one" class="btn btn-outline-secondary btn-lg">Sync Poems Database</button>
+</div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function () {
+        $('#btn-one').click(function () {
+            $('#btn-one').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+        });
+    });
+</script>
+{% endblock scripts %}
