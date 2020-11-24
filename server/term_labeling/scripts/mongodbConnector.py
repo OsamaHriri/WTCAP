@@ -29,6 +29,9 @@ class Connector:
     def get_poems(self):
         return list(self.poemsCollections.find({}, {"_id": 0, "context": 0}))
 
+    def get_periods(self):
+        return list(self.poetsCollections.distinct("period"))
+
     def get_poems_by_period(self, p):
         #myquery = {"period": p}
         #x = self.poetsCollections.find(myquery, {"_id":0,"id": 1})

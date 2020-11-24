@@ -2,6 +2,9 @@
 {% load static %}
 
 {% block stylesheets %}
+<script src="{% static 'term_labeling/statistics.js' %}"></script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'term_labeling/statistics_style.css'%}">
 
 <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
 <!--<script src='https://kit.fontawesome.com/a076d05399.js'></script>-->
@@ -13,10 +16,17 @@
     <br>
     <div class="page-header">
         <h1>Statistics</h1>
-    </div>
+        </div>
     <br>
-
-
+         <div class="dropdown">
+          <input type="button" class="dropbtn" value="Periods">
+          <div class="dropdown-content">
+             {% for p in periods %}
+                <a href="#" id="{{ p }}" onclick ="createWordCloud(this,event)"> {{ p }} </a>
+              {% endfor %}
+          </div>
+        </div>
+        <div id="cloud"></div>
 </div>
 
 

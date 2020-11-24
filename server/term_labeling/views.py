@@ -4,12 +4,20 @@ from .scripts.almaany_translator_bot import ALmaanyBot
 from .scripts.tagGraph import Tag
 from .scripts.mongodbConnector import Connector
 from .scripts.wordTagging import Tagging
+from .scripts.wCloud import cloud
 from django.contrib.auth.decorators import login_required
 import requests
 import pyarabic.araby as araby
 from threading import Thread, Lock
 from farasa.stemmer import FarasaStemmer
+import matplotlib as plt
+plt.use('Qt5Agg')
 
+
+from django.contrib.staticfiles import finders
+import io
+import urllib, base64
+import json
 # Create your views here.
 
 
@@ -90,8 +98,11 @@ def settings(request):
 
 @login_required()
 def statistics(request):
+    c = Connector()
+    periods=c.get_periods()
     context = {
         'title': 'Statistics',
+        'periods':periods
     }
     return render(request, 'statistics.html', context)
 
@@ -438,11 +449,45 @@ def get_all_poets(request):
 
 def get_poemid(request):
     if request.method == 'GET':
-        print(poem_id)
         if poem_id is not None:
             return JsonResponse({"id": poem_id})
         else:
             return HttpResponse("not found")
+
+
+def gen_cloud(request):
+    if request.method == 'GET':
+        data = request.GET
+        p = data.get('period')
+        c = Connector()
+        result = c.get_poems_by_period(int(p.strip()))
+        all = ""
+        for k in result:
+            for r in k["results"]:
+                s = ""
+                for j in r["context"]:
+                    if 'sader' in j:
+                        s += stemmer.stem(araby.strip_tashkeel(j['sadr']))+" "
+                    if 'ajuz' in j:
+                        s += stemmer.stem(araby.strip_tashkeel(j['ajuz']))+" "
+                all += s;
+        wcloud= cloud()
+        wc = wcloud.createCloud(all)
+        plt.pyplot.figure(figsize=(32, 18))
+        plt.pyplot.imshow(wc, interpolation="bilinear")
+        plt.pyplot.axis("off")
+        fig = plt.pyplot.gcf()
+        buf = io.BytesIO()
+        fig.savefig(buf, format='png')
+        buf.seek(0)
+        string = base64.b64encode(buf.read())
+
+        uri = 'data:image/png;base64,' + urllib.parse.quote(string)
+        html = '<img src = "%s"/>' % uri
+        args = {'image': uri}
+
+        return HttpResponse( json.dumps( args ) )
+
 
 
 mutex = Lock()
