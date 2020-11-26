@@ -12,9 +12,6 @@ from threading import Thread, Lock
 from farasa.stemmer import FarasaStemmer
 import matplotlib as plt
 plt.use('Qt5Agg')
-
-
-from django.contrib.staticfiles import finders
 import io
 import urllib, base64
 import json
@@ -473,7 +470,7 @@ def gen_cloud(request):
                 all += s;
         wcloud= cloud()
         wc = wcloud.createCloud(all)
-        plt.pyplot.figure(figsize=(32, 18))
+        plt.pyplot.figure(figsize=(40, 20))
         plt.pyplot.imshow(wc, interpolation="bilinear")
         plt.pyplot.axis("off")
         fig = plt.pyplot.gcf()

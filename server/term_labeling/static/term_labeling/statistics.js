@@ -22,8 +22,10 @@ function createWordCloud(obj,event){
             src.removeChild(src.childNodes[0]);
         }
         var image = new Image();
-        image.style.height = '500px';
-        image.style.width = '1000px'
+        image.setAttribute("width", "900");
+        image.setAttribute("height", "500");
+        image.style.marginLeft = '100px';
+        image.style.maringTop = '30px';
         image.src = d['image'];
         src.appendChild(image);
      });
