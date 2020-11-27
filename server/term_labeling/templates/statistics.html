@@ -19,16 +19,29 @@
         </div>
     <br>
          <div class="dropdown">
-          <input type="button" class="dropbtn" value="Periods">
+          <label >Choose a </label>
+          <input type="button" class="dropbtn" value="Period">
+             <label > to generate WordCloud </label>
           <div class="dropdown-content">
              {% for p in periods %}
                 <a href="#" id="{{ p }}" onclick ="createWordCloud(this,event)"> {{ p }} </a>
               {% endfor %}
           </div>
         </div>
-        <div id="cloud"></div>
-</div>
+        <div id="cloud"><img src="{% static 'term_labeling/img/World_cloud.PNG'%}"style="margin-left:80px; margin-top:20px" width="900" height="500" left="100px"></div>
 
+</div>
+        <div id ="loader" class="bookshelf_wrapper">
+          <ul class="books_list">
+            <li class="book_item first"></li>
+            <li class="book_item second"></li>
+            <li class="book_item third"></li>
+            <li class="book_item fourth"></li>
+            <li class="book_item fifth"></li>
+            <li class="book_item sixth"></li>
+          </ul>
+          <div class="shelf"></div>
+        </div>
 
 {% endblock content %}
 
