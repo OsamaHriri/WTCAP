@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block stylesheets %}
+<script src="{% static 'term_labeling/settings.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'term_labeling/settings_style.css'%}">
 
 <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
 <!--<script src='https://kit.fontawesome.com/a076d05399.js'></script>-->
@@ -15,7 +17,8 @@
     </div>
 
     <div class="card text-center w-50 d-inline-block mt-4">
-        <h4 class="card-header">Users</h4>
+        <!--        <img class="card-img-top bg-transparent center" src="{% static 'term_labeling/img/Novelist writing-rafiki.png' %}" alt="Card image">-->
+        <h4 class="card-header" id="users_header" onclick="toggle_body(this.id)">Users</h4>
         <div class="card-body">
             <p class="card-text">Add a new user<br>
                 <a href="{% url 'register' %}" class="btn btn-outline-info">Add User</a>
@@ -27,7 +30,7 @@
     </div>
 
     <div class="card text-center w-50 d-inline-block mt-4">
-        <h4 class="card-header">Databases</h4>
+        <h4 class="card-header" id="db_header" onclick="toggle_body(this.id)">Databases</h4>
         <div class="card-body">
             <p class="card-text">Load any new poems added to Fozi's databse<br>
                 <a href="#" class="btn btn-outline-info">Sync Poems Database</a>
@@ -37,8 +40,8 @@
             </p>
         </div>
     </div>
-        <div class="card text-center w-50 d-inline-block mt-4">
-        <h4 class="card-header">Tagging Config</h4>
+    <div class="card text-center w-50 d-inline-block mt-4">
+        <h4 class="card-header" id="config_header" onclick="toggle_body(this.id)">Tagging Config</h4>
         <div class="card-body">
             <p class="card-text">Load any new poems added to Fozi's databse<br>
                 <a href="#" class="btn btn-outline-info">Sync Poems Database</a>
