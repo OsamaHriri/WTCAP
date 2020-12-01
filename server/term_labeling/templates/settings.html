@@ -9,17 +9,47 @@
 
 
 {% block content %}
-<div class="container">
-    <br>
-    <div class="page-header">
+<div class="container text-center">
+    <div class="page-header pt-4">
         <h1>Settings</h1>
     </div>
-    <br>
 
-    <a href="http://127.0.0.1:8000/admin/auth/user/" class="btn btn-outline-secondary btn-lg" role="button"
-       aria-pressed="true">Manage Users</a>
+    <div class="card text-center w-50 d-inline-block mt-4">
+        <h4 class="card-header">Users</h4>
+        <div class="card-body">
+            <p class="card-text">Add a new user<br>
+                <a href="{% url 'register' %}" class="btn btn-outline-info">Add User</a>
+            </p>
+            <p class="card-text">Display, Edit and Delete current users<br>
+                <a href="http://127.0.0.1:8000/admin/auth/user/" class="btn btn-outline-info">Manage Users</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="card text-center w-50 d-inline-block mt-4">
+        <h4 class="card-header">Databases</h4>
+        <div class="card-body">
+            <p class="card-text">Load any new poems added to Fozi's databse<br>
+                <a href="#" class="btn btn-outline-info">Sync Poems Database</a>
+            </p>
+            <p class="card-text">Force tags database backup<br>
+                <a href="#" class="btn btn-outline-info">Backup Tags</a>
+            </p>
+        </div>
+    </div>
+        <div class="card text-center w-50 d-inline-block mt-4">
+        <h4 class="card-header">Tagging Config</h4>
+        <div class="card-body">
+            <p class="card-text">Load any new poems added to Fozi's databse<br>
+                <a href="#" class="btn btn-outline-info">Sync Poems Database</a>
+            </p>
+            <p class="card-text">Force tags database backup<br>
+                <a href="#" class="btn btn-outline-info">Backup Tags</a>
+            </p>
+        </div>
+    </div>
     <br><br>
-    <button type="button" id="btn-one" class="btn btn-outline-secondary btn-lg">Sync Poems Database</button>
+
 </div>
 
 

@@ -41,7 +41,6 @@
                 <a class="nav-item nav-link" href="{% url 'tags' %}">Manage Tags</a>
                 <a class="nav-item nav-link" href="{% url 'statistics' %}">Statistics</a>
                 {% if user.is_superuser %}
-                <a class="nav-item nav-link" href="{% url 'register' %}">Add Users</a>
                 <a class="nav-item nav-link" href="{% url 'settings' %}">Settings</a>
                 {% endif %}
             </div>

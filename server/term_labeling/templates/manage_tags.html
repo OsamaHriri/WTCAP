@@ -219,8 +219,7 @@
     </div>
 </div>
 
-
-<div id="body_container" class="container" onload="initialize_index()">
+<div id="body_container" class="container text-center" onload="initialize_index()">
     <br>
     <div class="page-header">
         <h1>Manage Tags</h1>
@@ -236,12 +235,13 @@
                    placeholder="إبحث..."
                    title="إبحث...">
             <button type="button" class="btn btn-link" data-action="View" data-toggle="modal"
-               data-target="#insertRootModal">+ Root</button>
+                    data-target="#insertRootModal">+ Root
+            </button>
             <div id="tagsDropDown">
                 <ul id="myUL">
-               {% for tag in all_tags %}
-                <li><a href="#" id="{{ tag }}"onclick="searchTag(this)"> {{ tag }} </a></li>
-              {% endfor %}
+                    {% for tag in all_tags %}
+                    <li><a href="#" id="{{ tag }}" onclick="searchTag(this)"> {{ tag }} </a></li>
+                    {% endfor %}
 
                 </ul>
             </div>
@@ -252,7 +252,8 @@
         <div class="col-sm-9 graph">
             <button type="button" id="showsub" class="btn btn-default hover" onclick="draw3()">Show subTree</button>
             <button type="button" id="render" class="btn btn-default hover" onclick="renderviz()">Refresh</button>
-            <button type="button" id="disable" class="btn btn-default hover" onclick="disable()">Disable Network</button>
+            <button type="button" id="disable" class="btn btn-default hover" onclick="disable()">Disable Network
+            </button>
             <body onload="draw()">
             <div id="viz"></div>
             </body>
