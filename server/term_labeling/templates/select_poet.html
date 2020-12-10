@@ -4,6 +4,16 @@
 {% block stylesheets %}
 <script src="{% static 'term_labeling/select_poet_js.js' %}"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/select_poet_style.css'%}">
+<script>
+$(document).ready(function() {
+        obj = document.getElementById("2link");
+        var clickedItem = $( obj );
+        $( ".nav-link" ).each( function() {
+            $( this ).removeClass( "active" );
+        });
+        clickedItem.addClass( "active" );
+});
+</script>
 {% endblock stylesheets %}
 
 {% block content %}

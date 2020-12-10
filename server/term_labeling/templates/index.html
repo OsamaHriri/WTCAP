@@ -4,6 +4,16 @@
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/style.css'%}">
 
+<script>
+$(document).ready(function() {
+        obj = document.getElementById("1link");
+        var clickedItem = $( obj );
+        $( ".nav-link" ).each( function() {
+            $( this ).removeClass( "active" );
+        });
+        clickedItem.addClass( "active" );
+});
+</script>
 <style>
     header {
         height: 100vh;

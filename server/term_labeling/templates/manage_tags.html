@@ -6,6 +6,16 @@
 
 
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/manage_tags_style.css'%}">
+<script>
+$(document).ready(function() {
+        obj = document.getElementById("3link");
+        var clickedItem = $( obj );
+        $( ".nav-link" ).each( function() {
+            $( this ).removeClass( "active" );
+        });
+        clickedItem.addClass( "active" );
+});
+</script>
 {% endblock stylesheets %}
 
 {% block content %}

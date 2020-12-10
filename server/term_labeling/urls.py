@@ -39,5 +39,6 @@ urlpatterns = [
     re_path('get_all_tags/$', views.get_all_tags, name='get_all_tags'),
     re_path('get_all_poems/$', views.get_all_poems, name='get_all_poems'),
     re_path('get_all_poets/$', views.get_all_poets, name='get_all_poets'),
-    re_path('gen_cloud/$', views.gen_cloud, name='gen_cloud'),
+    re_path('get_terms_freq/$', views.get_terms_freq, name='get_terms_freq'),
+    re_path('maxFrequencyinPeriod/$', views.maxFrequencyinPeriod, name='maxFrequencyinPeriod'),
 ]

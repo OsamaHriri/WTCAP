@@ -4,7 +4,6 @@ from .scripts.almaany_translator_bot import ALmaanyBot
 from .scripts.tagGraph import Tag
 from .scripts.mongodbConnector import Connector
 from .scripts.wordTagging import Tagging
-from .scripts.wCloud import cloud
 from django.contrib.auth.decorators import login_required
 import requests
 import pyarabic.araby as araby
@@ -12,9 +11,8 @@ from threading import Thread, Lock
 from farasa.stemmer import FarasaStemmer
 import matplotlib as plt
 plt.use('Qt5Agg')
-import io
-import urllib, base64
 import json
+from django.contrib.staticfiles import finders
 # Create your views here.
 
 
@@ -96,10 +94,23 @@ def settings(request):
 @login_required()
 def statistics(request):
     c = Connector()
-    periods=c.get_periods()
+    periods = c.get_periods()
+    frequency = [10,20,30,50,70,80,100,200,300,400,500,1000]
+    frequency.reverse()
+    range= ['0-50', '50-100', '100-150', '150-200', '200-250', '250-300', '300-350', '350-400', '400-450',
+            '450-500', '500-550', '550-600', '600-650', '650-700', '700-750', '750-800', '800-850', '850-900', '900-950', '950-1000']
+    reslut = finders.find('images/Analysis/generalInfo.json')
+    f = open(reslut)
+    json_string = f.read()
+    f.close()
+    # Convert json string to python object
+    data = json.loads(json_string)
     context = {
         'title': 'Statistics',
-        'periods':periods
+        'frequency':frequency,
+        'info': data,
+        'range': range ,
+        'periods' : periods
     }
     return render(request, 'statistics.html', context)
 
@@ -203,7 +214,6 @@ def termTree(request):
         else:
             return HttpResponse("not found")
     else:
-        return HttpResponse("not success")
         return HttpResponse("not success")
 
 
@@ -452,39 +462,63 @@ def get_poemid(request):
             return HttpResponse("not found")
 
 
-def gen_cloud(request):
+def get_terms_freq(request):
     if request.method == 'GET':
-        data = request.GET
-        p = data.get('period')
-        c = Connector()
-        result = c.get_poems_by_period(int(p.strip()))
-        all = ""
-        for k in result:
-            for r in k["results"]:
-                s = ""
-                for j in r["context"]:
-                    if 'sader' in j:
-                        s += stemmer.stem(araby.strip_tashkeel(j['sadr']))+" "
-                    if 'ajuz' in j:
-                        s += stemmer.stem(araby.strip_tashkeel(j['ajuz']))+" "
-                all += s;
-        wcloud= cloud()
-        wc = wcloud.createCloud(all)
-        plt.pyplot.figure(figsize=(40, 20))
-        plt.pyplot.imshow(wc, interpolation="bilinear")
-        plt.pyplot.axis("off")
-        fig = plt.pyplot.gcf()
-        buf = io.BytesIO()
-        fig.savefig(buf, format='png')
-        buf.seek(0)
-        string = base64.b64encode(buf.read())
+        req = request.GET
+        if req.get('p') == "all periods":
+            reslut = finders.find('images/Analysis/TermFreq.json')
+        else:
+            reslut = finders.find('images/Analysis/TermFreqperPeriod.json')
+        f = open(reslut)
+        json_string = f.read()
+        f.close()
 
-        uri = 'data:image/png;base64,' + urllib.parse.quote(string)
-        html = '<img src = "%s"/>' % uri
-        args = {'image': uri}
+        # Convert json string to python object
+        data = json.loads(json_string)
+        if int(req.get('n'))== 1:
+            x = int(req.get('f'))
+            if req.get('p') == "all periods":
+                d = data[:x]
+                max = x
+            else :
+                period = req.get('p').strip()
+                if len(data[period]) < x:
+                    d = data[period][:len(data[period])]
+                    max = len(data[period])
+                else :
+                    d = data[period][:x]
+                    max = x
+            return JsonResponse({"t":d,"m":max})
+        else :
+            y = req.get('f').strip().split("-")
+            if req.get('p') == "all periods":
+                d = data[int(y[0]):int(y[1])]
+                max = int(y[1])
+            else :
+                period = req.get('p').strip()
+                length = len(data[period])
+                if int(y[1]) > length:
+                    d = data[period][int(y[0]):length]
+                    max = length
+                else :
+                    d = data[period][int(y[0]):int(y[1])]
+                    max = int(y[1])
+            return JsonResponse({"t":d,"m":max})
 
-        return HttpResponse( json.dumps( args ) )
 
+def maxFrequencyinPeriod(request):
+    if request.method == 'GET':
+        req = request.GET
+        period = req.get('p').strip()
+        if period == "all periods":
+            return JsonResponse({"max":1000})
+        else:
+            reslut = finders.find('images/Analysis/TermFreqperPeriod.json')
+            f = open(reslut)
+            json_string = f.read()
+            f.close()
+            data = json.loads(json_string)
+            return JsonResponse({"max":len(data[period])})
 
 
 mutex = Lock()

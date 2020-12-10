@@ -6,6 +6,16 @@
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/main_tags_style.css'%}">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script>
+$(document).ready(function() {
+        obj = document.getElementById("1link");
+        var clickedItem = $( obj );
+        $( ".nav-link" ).each( function() {
+            $( this ).removeClass( "active" );
+        });
+        clickedItem.addClass( "active" );
+});
+</script>
 {% endblock stylesheets %}
 
 

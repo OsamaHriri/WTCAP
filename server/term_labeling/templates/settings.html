@@ -4,6 +4,16 @@
 {% block stylesheets %}
 <script src="{% static 'term_labeling/settings.js' %}"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/settings_style.css'%}">
+<script>
+$(document).ready(function() {
+        obj = document.getElementById("5link");
+        var clickedItem = $( obj );
+        $( ".nav-link" ).each( function() {
+            $( this ).removeClass( "active" );
+        });
+        clickedItem.addClass( "active" );
+});
+</script>
 
 <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
 <!--<script src='https://kit.fontawesome.com/a076d05399.js'></script>-->

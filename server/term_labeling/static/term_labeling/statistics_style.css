@@ -48,7 +48,7 @@
     position: relative;
     top: 40%;
     display: none;
-    transform: scale(0.7)
+    transform: scale(0.5)
 }
 
 .books_list {
@@ -276,4 +276,7 @@
         opacity: 0;
         transform: translateX(0px) rotateZ(-90deg);
     }
+
 }
+
+.
