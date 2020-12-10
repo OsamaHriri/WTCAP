@@ -39,7 +39,7 @@ function update_poems_list(poems_list) {
     let poetDropDown = document.getElementById('poemDropDown');
     let poems_html = "";
     poems_list.forEach(function (p) {
-        poems_html += "<a href=\"#\" id=" + p.id + "class=\"poems-link\" onclick=\"choosePoem(this)\">" + p.name + "</a>";
+        poems_html += "<a href=\"#\" id=" + p.id + " class=\"poems-link\" onclick=\"choosePoem(this)\">" + p.name + "</a>";
     });
     poetDropDown.innerHTML += poems_html;
 }
