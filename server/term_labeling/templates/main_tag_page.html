@@ -14,6 +14,8 @@ $(document).ready(function() {
             $( this ).removeClass( "active" );
         });
         clickedItem.addClass( "active" );
+        var d = document.getElementsByClassName("navbar")[0];
+        d.style.position="inherit"
 });
 </script>
 {% endblock stylesheets %}
@@ -70,7 +72,7 @@ $(document).ready(function() {
 
     <div class="row">
         <!-- Tags Section -->
-        <div class="col-sm-4 px-lg-5" id="fixed_cont">
+        <div class="col-sm-4 px-lg-5" id="fixed_cont" style="position:sticky;top:20px;align-self: flex-start;z-index:1;">
             <!-- Selected Tags Section-->
             <div class="double-border selected_container">
                 <h5> Selected Tags </h5>
