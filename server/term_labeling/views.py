@@ -110,7 +110,7 @@ def statistics(request):
     context = {
         'title': 'Statistics',
         'frequency':frequency,
-        'info': data,
+        'info': data[0],
         'range': range ,
         'periods' : periods
     }
