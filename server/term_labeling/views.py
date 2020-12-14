@@ -32,8 +32,10 @@ def main_tag_page(request):
     global poem_id
     poem_id = id
     poem = (c.get_poem(id))[0]
+    # meta_data = c.get_meta_data(poem.poet_id)
     context = {
         'poems': poem,
+        # 'meta': meta_data,
         'title': 'Home',
         'all_tags': all_tags
     }

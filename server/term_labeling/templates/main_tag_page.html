@@ -7,16 +7,16 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <script>
-$(document).ready(function() {
+    $(document).ready(function () {
         obj = document.getElementById("1link");
-        var clickedItem = $( obj );
-        $( ".nav-link" ).each( function() {
-            $( this ).removeClass( "active" );
+        var clickedItem = $(obj);
+        $(".nav-link").each(function () {
+            $(this).removeClass("active");
         });
-        clickedItem.addClass( "active" );
+        clickedItem.addClass("active");
         var d = document.getElementsByClassName("navbar")[0];
-        d.style.position="inherit"
-});
+        d.style.position = "inherit"
+    });
 </script>
 {% endblock stylesheets %}
 
@@ -32,14 +32,9 @@ $(document).ready(function() {
 <div class="container text-center" id="main_cont" onload="initialize_index()">
     <br>
     <div class="page-header">
-        <h1>Poem Selection Example</h1>
+        <h1>{{ poems.name }}</h1>
     </div>
     <br>
-
-    <!-- Large modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="draw()">Show
-        Current Tags
-    </button>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -71,8 +66,16 @@ $(document).ready(function() {
     </div>
 
     <div class="row">
+
         <!-- Tags Section -->
-        <div class="col-sm-4 px-lg-5" id="fixed_cont" style="position:sticky;top:20px;align-self: flex-start;z-index:1;">
+        <div class="col-sm-4 px-lg-5" id="fixed_cont"
+             style="position:sticky;top:20px;align-self: flex-start;z-index:1;">
+            <!-- Large modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                    onclick="draw()">
+                Show
+                Current Tags
+            </button>
             <!-- Selected Tags Section-->
             <div class="double-border selected_container">
                 <h5> Selected Tags </h5>
