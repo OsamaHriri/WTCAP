@@ -176,7 +176,7 @@ function savePeriod2(obj){
     var src = document.getElementById("period2btn");
     src.value = obj.innerText
     currentPeriod2 = obj.innerText.toLowerCase();
-       if(currentPeriod == "all periods"){
+       if(currentPeriod2 == "all periods"){
             create_dropdown("Frequency2","Range2","createList",frequency.reverse(),range)
        }
     else {
