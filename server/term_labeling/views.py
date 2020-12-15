@@ -9,10 +9,9 @@ import requests
 import pyarabic.araby as araby
 from threading import Thread, Lock
 from farasa.stemmer import FarasaStemmer
-import matplotlib as plt
-plt.use('Qt5Agg')
 import json
 from django.contrib.staticfiles import finders
+import re
 # Create your views here.
 
 stemmer = FarasaStemmer(interactive=True)
@@ -511,6 +510,45 @@ def maxFrequencyinPeriod(request):
             f.close()
             data = json.loads(json_string)
             return JsonResponse({"max":len(data[period])})
+
+def getTaggedWords(request):
+    if request.method == 'GET':
+        req = request.GET
+        id = req.get('id')
+        c = Connector()
+        poem = (c.get_poem(id))[0]
+        l = " "
+        dictenory = {}
+        for j in poem["context"]:
+            s= ""
+            if 'sadr' in j:
+                for word in j['sadr'].split():
+                   temp = stemmer.stem(araby.strip_tashkeel(word))
+                   if temp in dictenory:
+                       if word not in dictenory[temp]:
+                             dictenory[temp].append(word)
+                   else:
+                       dictenory[temp]= [word]
+                   s += temp + " "
+                  #s += stemmer.stem(araby.strip_tashkeel(j['sadr'])) + " "
+            if 'ajuz' in j:
+                for word in j['ajuz'].split():
+                    temp = stemmer.stem(araby.strip_tashkeel(word))
+                    if temp in dictenory:
+                        if word not in dictenory[temp]:
+                             dictenory[temp].append(word)
+                    else:
+                        dictenory[temp] = [word]
+                    s += temp + " "
+            l+=s
+        tokens = re.findall(r"[\w']+", l)
+        w = Tagging()
+        currentTagged = w.get_tagged_words_from_poem(tokens)
+        l = []
+        for key, value in dictenory.items():
+            if key in currentTagged:
+                l += dictenory[key]
+        return JsonResponse({"word": l})
 
 
 mutex = Lock()

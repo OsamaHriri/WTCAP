@@ -12,6 +12,7 @@ class Tagging(object):
         self.createReletionQ = """ Match (w:Word) ,(t:Tag) where w.name=$word and t.name=$tag create (w)-[:tag{position: $position,poemID: $poem,row : $row,sader : $sader}]->(t) """
         self.removeWordQ = """ Match (w:Word) where w.name=$word detach delete w """
         self.getTagOfWordQ = """ Match (w:Word) -[r:tag]-> (t:Tag) with w , t , count(r) as c where w.name=$word  return {name :t.name  , frequency: c } as Tag order by c Desc """
+        self.checkWords = """match (:Tag)<-[]-(w:Word) where w.name in $word return distinct(w.name) """
 
     def ifExists(self, word=None, tag=None, ):
         """
@@ -89,6 +90,13 @@ class Tagging(object):
         for s in search:
             s['Tag']['frequency'] = round(float(s['Tag']['frequency'] / sum) , 2)
         return {'suggestions':search}
+
+    def get_tagged_words_from_poem(self , list):
+      check = self.graph.run(self.checkWords, word=list).data()
+      l = []
+      for d in check:
+          l.append(*d.values())
+      return l
 
 
 #t = Tagging()
