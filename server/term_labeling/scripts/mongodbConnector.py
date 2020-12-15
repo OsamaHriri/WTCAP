@@ -32,7 +32,12 @@ class Connector:
     def get_periods(self):
         return list(self.periodsCollections.find({},{"id": 1, "name": 1}))
 
-
+    def get_periodname_by_id(self,id):
+        preiods = self.get_periods()
+        for per in preiods : 
+            if per['id'] == id :
+                return per['name']
+        return "unknown"
 if __name__ == "__main__":
 
-    print(Connector().get_periods())
+    print(Connector().get_periodname_by_id(18))
