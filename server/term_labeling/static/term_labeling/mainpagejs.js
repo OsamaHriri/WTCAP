@@ -124,15 +124,6 @@ function add_tag(obj) {
 let ul1;
 let ul2;
 
-function getPoemId(){
-    return $.ajax({
-            type: "GET",
-            url: "get_poemid/",
-            dataType: "json",
-        });
-
-}
-
 function addNewRoot(text) {
     return $.ajax({
         type: "GET",
@@ -415,7 +406,8 @@ function save_term_tag() {
                 'place': term_id[1],
                 'position': term_id[2],
                 'term': selected_term,
-                'tag': tag
+                'tag': tag,
+                'id' : poemID
             },
             success: function (data) {
                 console.log(data);
@@ -536,11 +528,8 @@ window.onload = getHeaders();
 
 
 function draw() {
-  getPoemId().done(function(d){
     $('#viz').ready(function() {
-    poemID=d.id
     statement="match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$',poemID)
-    console.log(statement)
     var config = {
         container_id: "viz",
         server_url: "bolt://localhost:7687",
@@ -577,10 +566,13 @@ function draw() {
     viz = new NeoVis.default(config);
     viz.render();
     });
-    });
 }
 
 
 function refreshVis(){
     viz.reload()
+}
+
+window.onload = function(){
+    poemID = document.getElementById("poem_id").innerText
 }

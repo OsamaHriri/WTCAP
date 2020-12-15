@@ -15,8 +15,6 @@ import json
 from django.contrib.staticfiles import finders
 # Create your views here.
 
-
-poem_id = ''
 stemmer = FarasaStemmer(interactive=True)
 
 
@@ -29,15 +27,14 @@ def main_tag_page(request):
     else:
         id = 2066
 
-    global poem_id
-    poem_id = id
     poem = (c.get_poem(id))[0]
     # meta_data = c.get_meta_data(poem.poet_id)
     context = {
         'poems': poem,
         # 'meta': meta_data,
         'title': 'Home',
-        'all_tags': all_tags
+        'all_tags': all_tags,
+        'poem_id': id,
     }
     return render(request, 'main_tag_page.html', context)
 
@@ -227,9 +224,9 @@ def save_term_tags(request):
         term = araby.strip_tashkeel(term).strip()
         term = stemmer.stem(term)
         tag = data.get('tag')
+        poem_id = data.get('id')
         t = Tagging()
         mutex.acquire()
-        print(poem_id)
         try:
             suc = t.tagWord(term, tag, poem_id, int(data.get('place')), int(data.get('row')), int(data.get('position')))
         finally:
@@ -455,13 +452,6 @@ def get_all_poets(request):
         else:
             return HttpResponse("not found")
 
-
-def get_poemid(request):
-    if request.method == 'GET':
-        if poem_id is not None:
-            return JsonResponse({"id": poem_id})
-        else:
-            return HttpResponse("not found")
 
 
 def get_terms_freq(request):
