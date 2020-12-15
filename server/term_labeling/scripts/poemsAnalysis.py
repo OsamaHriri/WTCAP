@@ -28,7 +28,7 @@ class Research(object):
         for r in result:
                 s = ""
                 for j in r["context"]:
-                    if 'sader' in j:
+                    if 'sadr' in j:
                         s += stemmer.stem(araby.strip_tashkeel(j['sadr'])) + " "
                     if 'ajuz' in j:
                         s += stemmer.stem(araby.strip_tashkeel(j['ajuz'])) + " "
@@ -63,7 +63,7 @@ class Research(object):
                 for r in k["results"]:
                     s = ""
                     for j in r["context"]:
-                        if 'sader' in j:
+                        if 'sadr' in j:
                             s += stemmer.stem(araby.strip_tashkeel(j['sadr'])) + " "
                         if 'ajuz' in j:
                             s += stemmer.stem(araby.strip_tashkeel(j['ajuz'])) + " "
