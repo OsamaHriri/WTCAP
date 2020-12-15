@@ -1,6 +1,6 @@
 @import "https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css";
 
-.container {
+#main_cont {
     font-size: 1.15em;
     direction: rtl;
 }

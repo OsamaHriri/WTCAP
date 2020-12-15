@@ -1,4 +1,4 @@
-.container {
+#main_cont {
     font-size: 1.15em;
     direction: rtl;
 }
@@ -112,10 +112,4 @@
     opacity: 1;
     transform: scale(1, 1);
 }
-
-/*
-========================
-      NEW BUTTON
-========================
-*/
 

@@ -1,34 +1,42 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from .scripts.almaany_translator_bot import ALmaanyBot
-from .scripts.graph import Graph
 from .scripts.tagGraph import Tag
 from .scripts.mongodbConnector import Connector
 from .scripts.wordTagging import Tagging
 from django.contrib.auth.decorators import login_required
 import requests
-from .scripts import connector
 import pyarabic.araby as araby
 from threading import Thread, Lock
-
+from farasa.stemmer import FarasaStemmer
+import matplotlib as plt
+plt.use('Qt5Agg')
+import json
+from django.contrib.staticfiles import finders
 # Create your views here.
+
+
+poem_id = ''
+stemmer = FarasaStemmer(interactive=True)
 
 
 def main_tag_page(request):
     t = Tag()
-    json_tags = t.getAllTagsbyjson()
-    all_tags = t.getAllTags()
+    all_tags = t.getAllTags()["tags"]
     c = Connector()
     if request.method == 'GET':
         id = request.GET['poem_iid']
-
     else:
         id = 2066
+
+    global poem_id
+    poem_id = id
     poem = (c.get_poem(id))[0]
+    # meta_data = c.get_meta_data(poem.poet_id)
     context = {
         'poems': poem,
+        # 'meta': meta_data,
         'title': 'Home',
-        'tags': {"root": json_tags},
         'all_tags': all_tags
     }
     return render(request, 'main_tag_page.html', context)
@@ -36,7 +44,6 @@ def main_tag_page(request):
 
 def index(request):
     t = Tag()
-    json_tags = t.getAllTagsbyjson()
     all_tags = t.getAllTags()
     c = Connector()
     if request.method == 'POST':
@@ -48,15 +55,15 @@ def index(request):
     context = {
         'poems': poem,
         'title': 'Home',
-        'tags': {"root": json_tags},
         'all_tags': all_tags
     }
     return render(request, 'index.html', context)
 
+
 @login_required()
 def tags(request):
     t = Tag()
-    all_tags = t.getAllTags()
+    all_tags = t.getAllTags()["tags"]
     context = {
         'title': 'Tags',
         'all_tags': all_tags
@@ -64,23 +71,55 @@ def tags(request):
     return render(request, 'manage_tags.html', context)
 
 
-def process_lines(request):
-    selected = []
-    if request.method == 'POST':
-        chosen_lines = list(request.POST.values())
-        for value in poem.__iter__():
-            if value.__getitem__('index') in chosen_lines:
-                print('this index exists')
-                selected.append(value)
-                print(selected)
+# def process_lines(request):
+#     selected = []
+#     if request.method == 'POST':
+#         chosen_lines = list(request.POST.values())
+#         for value in poem.__iter__():
+#             if value.__getitem__('index') in chosen_lines:
+#                 print('this index exists')
+#                 selected.append(value)
+#                 print(selected)
+#     context = {
+#         'selected': selected
+#     }
+#     return render(request, 'process_lines.html', context)
+
+
+def settings(request):
     context = {
-        'selected': selected
+        'title': 'Settings',
     }
-    return render(request, 'process_lines.html', context)
+    return render(request, 'settings.html', context)
 
 
+@login_required()
+def statistics(request):
+    c = Connector()
+    periods = c.get_periods()
+    frequency = [10,20,30,50,70,80,100,200,300,400,500,1000]
+    frequency.reverse()
+    range= ['0-50', '50-100', '100-150', '150-200', '200-250', '250-300', '300-350', '350-400', '400-450',
+            '450-500', '500-550', '550-600', '600-650', '650-700', '700-750', '750-800', '800-850', '850-900', '900-950', '950-1000']
+    reslut = finders.find('images/Analysis/generalInfo.json')
+    f = open(reslut)
+    json_string = f.read()
+    f.close()
+    # Convert json string to python object
+    data = json.loads(json_string)
+    context = {
+        'title': 'Statistics',
+        'frequency':frequency,
+        'info': data[0],
+        'range': range ,
+        'periods' : periods
+    }
+    return render(request, 'statistics.html', context)
+
+
+@login_required()
 def select_poet_page(request):
-    c = connector.Connector()
+    c = Connector()
     poets = c.get_poets()
     poems = c.get_poems()
     context = {
@@ -98,7 +137,7 @@ def poet_poems(request):
     """
     if request.method == 'GET':
         poetId = request.GET['poet_id']
-        c = connector.Connector()
+        c = Connector()
         poems = c.get_poems_by_poet(poetId)
         idlist = ""
         for pp in poems:
@@ -118,7 +157,7 @@ def all_poems(request):
     try using the poem list you already rendered with the page
     """
     if request.method == 'GET':
-        c = connector.Connector()
+        c = Connector()
         poems = c.get_poems()
         idlist = ""
         for pp in poems:
@@ -167,23 +206,6 @@ def external(request):
     return render(request, 'home.html', {'data1': out})
 
 
-def external2(request):
-    inp = request.POST.get('param')
-    p = Graph()
-    g, tags = p.getdata()
-    head = []
-    for t in tags:
-        if t.level == "0":
-            head.append(t)
-    for l in head:
-        p = g.find_path(l.name, inp)
-        if p is not None:
-            break
-    if p is not None:
-        return render(request, 'home.html', {'data1': p})
-    return render(request, 'home.html', {'data1': 'not found'})
-
-
 def termTree(request):
     if request.method == 'GET':
         t = Tag()
@@ -201,13 +223,15 @@ def save_term_tags(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
-        # remove term tashkeel
-        term = araby.strip_tashkeel(term)
+        # remove term tashkeel and white space
+        term = araby.strip_tashkeel(term).strip()
+        term = stemmer.stem(term)
         tag = data.get('tag')
         t = Tagging()
         mutex.acquire()
+        print(poem_id)
         try:
-            suc = t.tagWord(term, tag, 1, 1, 1, 1)
+            suc = t.tagWord(term, tag, poem_id, int(data.get('place')), int(data.get('row')), int(data.get('position')))
         finally:
             mutex.release()
 
@@ -223,7 +247,9 @@ def suggest_tags(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
-        term = araby.strip_tashkeel(term)
+        # remove term tashkeel and white space
+        term = araby.strip_tashkeel(term).strip()
+        term = stemmer.stem(term)
         t = Tagging()
         mutex.acquire()
         try:
@@ -320,6 +346,7 @@ def get_depth(request):
         else:
             return HttpResponse("not found")
 
+
 def remove_tag(request):
     if request.method == 'GET':
         data = request.GET
@@ -331,17 +358,19 @@ def remove_tag(request):
         else:
             return HttpResponse("not found")
 
+
 def add_parent(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
         parent = data.get('parent')
         t = Tag()
-        flag = t.newParent(term,parent)
+        flag = t.newParent(term, parent)
         if flag is not None:
             return JsonResponse(flag)
         else:
             return HttpResponse("not found")
+
 
 def edit_tag(request):
     if request.method == 'GET':
@@ -349,11 +378,12 @@ def edit_tag(request):
         term = data.get('term')
         edit = data.get('edit')
         t = Tag()
-        flag = t.editTag(term , edit)
+        flag = t.editTag(term, edit)
         if flag is not None:
             return JsonResponse(flag)
         else:
             return HttpResponse("not found")
+
 
 def change_parent(request):
     if request.method == 'GET':
@@ -361,11 +391,12 @@ def change_parent(request):
         term = data.get('term')
         parent = data.get('parent')
         t = Tag()
-        flag = t.changeParent(term ,parent)
+        flag = t.changeParent(term, parent)
         if flag is not None:
             return JsonResponse(flag)
         else:
             return HttpResponse("not found")
+
 
 def delete_all(request):
     if request.method == 'GET':
@@ -377,6 +408,119 @@ def delete_all(request):
             return JsonResponse(flag)
         else:
             return HttpResponse("not found")
+
+
+def get_all_tags(request):
+    if request.method == 'GET':
+        t = Tag()
+        tags = t.getAllTags()
+        if tags is not None:
+            return JsonResponse(tags)
+        else:
+            return HttpResponse("not found")
+
+
+def get_all_poems(request):
+    """
+    Given a GET request returns all poems from database.
+
+    :param request:
+    :return: JSON response with all poem ids, poets id and names looks like:
+    {"poems": [{"id": 2, "name": name}, {}....]
+    """
+    if request.method == 'GET':
+        c = Connector()
+        poems = c.get_poems()
+        if tags is not None:
+            return JsonResponse({
+                "poems": poems})
+        else:
+            return HttpResponse("not found")
+
+
+def get_all_poets(request):
+    """
+    Given a GET request returns all poets from database.
+
+    :param request:
+    :return: JSON response with all poet ids and names looks like:
+    {"poet": [{"id": 2, "name": name}, {}....]
+    """
+    if request.method == 'GET':
+        c = Connector()
+        poets = c.get_poets()
+        if tags is not None:
+            return JsonResponse({
+                'poets': poets})
+        else:
+            return HttpResponse("not found")
+
+
+def get_poemid(request):
+    if request.method == 'GET':
+        if poem_id is not None:
+            return JsonResponse({"id": poem_id})
+        else:
+            return HttpResponse("not found")
+
+
+def get_terms_freq(request):
+    if request.method == 'GET':
+        req = request.GET
+        if req.get('p') == "all periods":
+            reslut = finders.find('images/Analysis/TermFreq.json')
+        else:
+            reslut = finders.find('images/Analysis/TermFreqperPeriod.json')
+        f = open(reslut)
+        json_string = f.read()
+        f.close()
+
+        # Convert json string to python object
+        data = json.loads(json_string)
+        if int(req.get('n'))== 1:
+            x = int(req.get('f'))
+            if req.get('p') == "all periods":
+                d = data[:x]
+                max = x
+            else :
+                period = req.get('p').strip()
+                if len(data[period]) < x:
+                    d = data[period][:len(data[period])]
+                    max = len(data[period])
+                else :
+                    d = data[period][:x]
+                    max = x
+            return JsonResponse({"t":d,"m":max})
+        else :
+            y = req.get('f').strip().split("-")
+            if req.get('p') == "all periods":
+                d = data[int(y[0]):int(y[1])]
+                max = int(y[1])
+            else :
+                period = req.get('p').strip()
+                length = len(data[period])
+                if int(y[1]) > length:
+                    d = data[period][int(y[0]):length]
+                    max = length
+                else :
+                    d = data[period][int(y[0]):int(y[1])]
+                    max = int(y[1])
+            return JsonResponse({"t":d,"m":max})
+
+
+def maxFrequencyinPeriod(request):
+    if request.method == 'GET':
+        req = request.GET
+        period = req.get('p').strip()
+        if period == "all periods":
+            return JsonResponse({"max":1000})
+        else:
+            reslut = finders.find('images/Analysis/TermFreqperPeriod.json')
+            f = open(reslut)
+            json_string = f.read()
+            f.close()
+            data = json.loads(json_string)
+            return JsonResponse({"max":len(data[period])})
 
 
 mutex = Lock()

@@ -2,10 +2,22 @@
 {% load static %}
 
 {% block stylesheets %}
-<script src="{% static 'term_labeling/mainpagejs.js' %}"></script>
+
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/main_tags_style.css'%}">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script>
+    $(document).ready(function () {
+        obj = document.getElementById("1link");
+        var clickedItem = $(obj);
+        $(".nav-link").each(function () {
+            $(this).removeClass("active");
+        });
+        clickedItem.addClass("active");
+        var d = document.getElementsByClassName("navbar")[0];
+        d.style.position = "inherit"
+    });
+</script>
 {% endblock stylesheets %}
 
 
@@ -17,15 +29,53 @@
     <input type='hidden' value='' id='txt_id'>
 </div>
 
-<div class="container" onload="initialize_index()">
+<div class="container text-center" id="main_cont" onload="initialize_index()">
     <br>
     <div class="page-header">
-        <h1>Poem Selection Example</h1>
+        <h1>{{ poems.name }}</h1>
     </div>
     <br>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Current Tags</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <body>
+                    <div id="viz" style="height:400px"></div>
+                    </body>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary" onclick="refreshVis()">Refresh</button>
+                    <svg height="40" width="70">
+                        <circle cx="10" cy="10" r="7" fill="yellow"/>
+                        <text text-anchor="start" x="50" y="13"> Word</text>
+                        <circle cx="10" cy="30" r="7" fill="#5dade2"/>
+                        <text text-anchor="start" x="40" y="33"> Tag</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
+
         <!-- Tags Section -->
-        <div class="col-sm-4 px-lg-5" id="fixed_cont">
+        <div class="col-sm-4 px-lg-5" id="fixed_cont"
+             style="position:sticky;top:20px;align-self: flex-start;z-index:1;">
+            <!-- Large modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                    onclick="draw()">
+                Show
+                Current Tags
+            </button>
             <!-- Selected Tags Section-->
             <div class="double-border selected_container">
                 <h5> Selected Tags </h5>
@@ -44,10 +94,11 @@
                        placeholder="إبحث..."
                        title="إبحث...">
                 <div id="tagsDropDown">
-
+                    <ul id="myUL">
                         {% for tag in all_tags %}
-                        <a href="#" onclick="searchTag(this)"> {{ tag }} </a>
+                        <li><a href="#" id="{{ tag }}" onclick="searchTag(this)"> {{ tag }} </a></li>
                         {% endfor %}
+                    </ul>
 
                 </div>
                 <ul class="tree">
@@ -88,4 +139,7 @@
 
 {% endblock content %}
 
+{% block scripts %}
+<script src="{% static 'term_labeling/mainpagejs.js' %}"></script>
+{% endblock %}
 

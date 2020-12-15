@@ -6,6 +6,16 @@
 
 
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/manage_tags_style.css'%}">
+<script>
+$(document).ready(function() {
+        obj = document.getElementById("3link");
+        var clickedItem = $( obj );
+        $( ".nav-link" ).each( function() {
+            $( this ).removeClass( "active" );
+        });
+        clickedItem.addClass( "active" );
+});
+</script>
 {% endblock stylesheets %}
 
 {% block content %}
@@ -29,13 +39,14 @@
             </a>
         </li>
         <li class="context-menu__item">
-            <a href="#" class="context-menu__link" data-action="change" data-toggle="modal"
+            <a href="#" class="context-menu__link" data-action="Change" data-toggle="modal"
                data-target="#changeParentModal">
                 <i class="fa fa-scissors"></i> Change parent
             </a>
         </li>
         <li class="context-menu__item">
-            <a href="#" class="context-menu__link" data-action="Delete" onclick="delete_tag()">
+            <a href="#" class="context-menu__link" data-action="Delete" data-toggle="modal"
+               data-target="#deleteModal">
                 <i class="fa fa-eraser"></i> Delete tag
             </a>
         </li>
@@ -54,17 +65,19 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Add parent</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <input class="form-control" id="parent-name" name="parent-name"
                        placeholder="Parent name" required type="text">
             </div>
             <div class="modal-footer ">
-                <button class="btn btn-secondary" value="Add" onclick="new_parent()">حفظ</button>
+                <button class="btn btn-secondary" value="Add" onclick="new_parent()">Save</button>
                 <br>
-                <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
+                <button class="btn darkBackground" data-dismiss="modal" type="button">Cancel</button>
             </div>
         </div>
     </div>
@@ -76,17 +89,19 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Change parent</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <input class="form-control" id="change-parent" name="parent-name"
                        placeholder="Parent name" required type="text">
             </div>
             <div class="modal-footer ">
-                <button class="btn btn-secondary" value="Add" onclick="change_parent()">حفظ</button>
+                <button class="btn btn-secondary" value="Add" onclick="change_parent()">Save</button>
                 <br>
-                <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
+                <button class="btn darkBackground" data-dismiss="modal" type="button">Cancel</button>
             </div>
         </div>
     </div>
@@ -98,17 +113,42 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Add child</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <input class="form-control" id="child-name" name="parent-name"
                        placeholder="Child name" required type="text">
             </div>
             <div class="modal-footer ">
-                <button class="btn btn-secondary" value="Add" onclick="new_child()">حفظ</button>
+                <button class="btn btn-secondary" value="Add" onclick="new_child()">Save</button>
                 <br>
-                <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
+                <button class="btn darkBackground" data-dismiss="modal" type="button">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="insertRootModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Root</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input class="form-control" id="root-name" name="parent-name"
+                       placeholder="Root name" required type="text">
+            </div>
+            <div class="modal-footer ">
+                <button class="btn btn-secondary" value="Add" onclick="new_root()">Save</button>
+                <br>
+                <button class="btn darkBackground" data-dismiss="modal" type="button">Cancel</button>
             </div>
         </div>
     </div>
@@ -122,17 +162,44 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Edit tag name</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <input class="form-control" id="edited-name" name="parent-name"
                        placeholder="new name" required type="text">
             </div>
             <div class="modal-footer ">
-                <button class="btn bk-btn-default" value="Add" onclick="edit_tag()">حفظ</button>
+                <button class="btn btn-secondary" value="Add" onclick="edit_tag()">Save</button>
                 <br>
-                <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
+                <button class="btn darkBackground" data-dismiss="modal" type="button">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Confirm delete all -->
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Are you sure?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p> If you continue you will delete this tag and all it's children will get "leveled" up. </p>
+            </div>
+            <div class="modal-footer ">
+                <button class="btn btn-danger" value="Add" onclick="delete_tag()" data-dismiss="modal">Delete
+                </button>
+                <br>
+                <button class="btn darkBackground" data-dismiss="modal" type="button">Cancel</button>
             </div>
         </div>
     </div>
@@ -144,23 +211,25 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Are you sure?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <p> هل أنت متأكد أنك تريد حذف الكل?</p>
+                <p> If you continue you will delete this tag and all it's children. </p>
             </div>
             <div class="modal-footer ">
-                <button class="btn btn-danger" value="Add" onclick="delete_all()" data-dismiss="modal">خذف</button>
+                <button class="btn btn-danger" value="Add" onclick="delete_all()" data-dismiss="modal">Delete All
+                </button>
                 <br>
-                <button class="btn darkBackground" data-dismiss="modal" type="button">إلغاء</button>
+                <button class="btn darkBackground" data-dismiss="modal" type="button">Cancel</button>
             </div>
         </div>
     </div>
 </div>
 
-
-<div id="body_container" class="container" onload="initialize_index()">
+<div id="body_container" class="container text-center" onload="initialize_index()">
     <br>
     <div class="page-header">
         <h1>Manage Tags</h1>
@@ -172,40 +241,48 @@
 
         <div class="col-sm-3 treeview">
             <h5> Tags </h5>
-            <input type="text" id="mySearchInput" onclick="$('#tagsDropDown').toggle();" onkeyup="filterSearch()"
+            <input type="text" id="mySearchInput" onclick="showTags()" onkeyup="filterSearch()"
                    placeholder="إبحث..."
                    title="إبحث...">
+            <button type="button" class="btn btn-link" data-action="View" data-toggle="modal"
+                    data-target="#insertRootModal">+ Root
+            </button>
             <div id="tagsDropDown">
                 <ul id="myUL">
                     {% for tag in all_tags %}
-                    <li><a href="#" onclick="searchTag(this)"> {{ tag }} </a></li>
+                    <li><a href="#" id="{{ tag }}" onclick="searchTag(this)"> {{ tag }} </a></li>
                     {% endfor %}
+
                 </ul>
             </div>
             <ul class="tree">
-
             </ul>
-            <!--            <p> {{'&#45;&#45;&#45;&#45;&#45;&#45;'}} </p>-->
-            <!--            <div>-->
-            <!--                <button onclick="deleteTag()"> Delete</button>-->
-            <!--                <input type="text" id="newTag" placeholder="addtag.." name="addtag" style="width:150px">-->
-            <!--                <button type="button"><i class="fa fa-check-square" aria-hidden="true" onclick="submit_clicked()"></i>-->
-            <!--                </button>-->
-            <!--            </div>-->
-
         </div>
 
-         <div class="col-sm-9 graph">
-             <button type="button" class="btn btn-default hover"> Show all tags </button>
+        <div class="col-sm-9 graph">
+            <button type="button" id="showsub" class="btn btn-default hover" onclick="draw3()">Show subTree</button>
+            <button type="button" id="render" class="btn btn-default hover" onclick="renderviz()">Refresh</button>
+            <button type="button" id="disable" class="btn btn-default hover" onclick="disable()">Disable Network</button>
             <body onload="draw()">
             <div id="viz"></div>
             </body>
-
         </div>
 
+    </div>
+
+
+</div>
+<div class="infinity">
+    <div>
+        <span></span>
+    </div>
+    <div>
+        <span></span>
+    </div>
+    <div>
+        <span></span>
     </div>
 </div>
 
 
 {% endblock content %}
-

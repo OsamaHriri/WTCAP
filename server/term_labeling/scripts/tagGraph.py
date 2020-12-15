@@ -22,7 +22,7 @@ class Tag(object):
         self.createReletionQ = """ Match (t:Tag) ,(n:Tag) where t.name=$parent and n.name=$name create (t)-[:Parent]->(n)  """
         self.removeParentQ = """ Match (t:Tag) -[p:Parent] -> (n:Tag) where n.name=$name delete p """
         self.setToRootQ= """ Match (n:Tag) where n.name=$name set n.parent=-1 """
-        self.getAllTagsQ = """ Match (t:Tag) return t.name as name ,t.parent as parent , t.id as id """
+        self.getAllTagsQ = """ Match (t:Tag) return t.name as name  """
         self.getAllRootsQ = """ Match (t:Tag) where t.parent=-1 return {name : t.name } as root  """
         self.jsonQuery = """ MATCH r=(t:Tag)-[:Parent*]->(rs:Tag)  where t.parent=-1 WITH COLLECT(r) AS rs CALL apoc.convert.toTree(rs, true ,{ nodes: { Tag:['name']} }) yield value   RETURN value as tags """
         self.setParentQ = """ match (t:Tag) ,(n:Tag)  where t.name=$parent and n.name =$ name set n.parent = t.id create (t)-[:Parent]->(n) """
@@ -50,7 +50,7 @@ class Tag(object):
         tags = []
         for p in query:
             tags.append(p["name"])
-        return tags
+        return {"tags": tags}
 
     def getAllheads(self):
         """
