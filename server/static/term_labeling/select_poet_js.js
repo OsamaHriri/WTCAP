@@ -4,6 +4,7 @@ let poemid = 2066;
 let all_poems = [];
 let all_poets = [];
 
+<<<<<<< HEAD
 // A $( document ).ready() block.
 $(document).ready(function () {
     console.log("on load");
@@ -17,6 +18,8 @@ $(document).ready(function () {
     });
 });
 
+=======
+>>>>>>> master
 function myFunction(id) {
     document.getElementById(id).classList.toggle("show");
     /*
@@ -25,6 +28,7 @@ function myFunction(id) {
     }*/
 }
 
+<<<<<<< HEAD
 
 function update_poets_list() {
     let poetDropDown = document.getElementById('poetDropDown');
@@ -42,6 +46,27 @@ function update_poems_list(poems_list) {
         poems_html += "<a href=\"#\" id=" + p.id + "class=\"poems-link\" onclick=\"choosePoem(this)\">" + p.name + "</a>";
     });
     poetDropDown.innerHTML += poems_html;
+=======
+function loadData() {
+    console.log("on load")
+    // let poetDropDown = document.getElementById('poetDropDown');
+    getAllPoets().done(function (d) {
+        // all_poets = d.tags;
+        update_poets_list()
+    });
+    getAllPoems().done(function (d) {
+        // all_poems = d.tags;
+        update_poems_list()
+    });
+}
+
+function update_poets_list(){
+
+}
+
+function update_poems_list(){
+
+>>>>>>> master
 }
 
 function getAllPoems() {
@@ -83,6 +108,10 @@ function choosePoet(obj) {
     let btn = document.getElementById("poetbtn");
     btn.innerText = value;
     myFunction("poetDropDown");
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
     keep_relevant(id);
 }
 

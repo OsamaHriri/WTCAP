@@ -16,7 +16,7 @@ class Connector:
         self.db = self.client["arabic_semantic_labeling"]
         self.poemsCollections = self.db["poems"]
         self.poetsCollections = self.db["poets"]
-
+        self.periodsCollections = self.db["period"]
     def get_poem(self, poemID):
         return list(self.poemsCollections.find({"id": str(poemID)}))
 
@@ -28,9 +28,11 @@ class Connector:
 
     def get_poems(self):
         return list(self.poemsCollections.find({}, {"_id": 0, "context": 0}))
+        
+    def get_periods(self):
+        return list(self.periodsCollections.find({},{"id": 1, "name": 1}))
 
 
 if __name__ == "__main__":
-    c = Connector()
-    poems = c.get_poems()
-    print(poems)
+
+    print(Connector().get_periods())

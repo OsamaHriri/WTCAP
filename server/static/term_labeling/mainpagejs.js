@@ -17,7 +17,12 @@ let depth = 0;
 let all_tags = [];
 
 function box_checked(obj) {
+<<<<<<< HEAD
     const id = obj.id; //line number
+=======
+    const id = obj.id;
+    const ok = document.getElementById(id);
+>>>>>>> master
     const tbl = document.getElementById("poem");
     // check if we added the row already, if yes remove it and add it again ?
     const added = document.getElementById('added');
@@ -30,6 +35,7 @@ function box_checked(obj) {
     const sentence = tbl.rows[id - 1];
     const sadr = sentence.cells[1];
     const ajuz = sentence.cells[2];
+<<<<<<< HEAD
     //split sadr
     const sadrtext = sadr.textContent.trim().split(" ");
     let newsadr = "<p>";
@@ -44,6 +50,23 @@ function box_checked(obj) {
     let newsajuz = "<p>";
     for (let i = 0; i < ajuztext.length; i++) {
         newsajuz = newsajuz + "<span class='term' id='" + id + "_1_" + i+1 + "'> " + ajuztext[i] + " " + "</span>"
+=======
+
+    //split sadr
+    const sadrtext = sadr.textContent.split(" ");
+    let newsadr = "<p>";
+    for (let i = 0; i < sadrtext.length; i++) {
+        newsadr = newsadr + "<span class='term'> " + sadrtext[i] + " " + "</span>"
+    }
+    newsadr = newsadr + "</p>"
+    sadr.innerHTML = newsadr;
+
+    //split ajuz
+    const ajuztext = ajuz.textContent.split(" ");
+    let newsajuz = "<p>";
+    for (let i = 0; i < ajuztext.length; i++) {
+        newsajuz = newsajuz + "<span class='term'> " + ajuztext[i] + " " + "</span>"
+>>>>>>> master
     }
     newsajuz = newsajuz + "</p>";
     ajuz.innerHTML = newsajuz;
@@ -78,7 +101,11 @@ function hi(id) {
 
 function loadTags(){
     getAllTags().done(function(d){
+<<<<<<< HEAD
         all_tags = d.tags;
+=======
+        all_tags = d.tags
+>>>>>>> master
         update_tags_list()
     });
 }
@@ -231,6 +258,11 @@ function getAllTags(text) {
 
 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> master
 function emptyTree() {
     const ul = document.querySelector('.tree');
     let listLength = ul.children.length;
@@ -395,15 +427,21 @@ function build_tag(tag_name) {
 
 function save_term_tag() {
     selected_obj.css("color", "green");
+<<<<<<< HEAD
     const term_id = selected_obj.attr('id').split('_');
+=======
+>>>>>>> master
     for (const tag of selected_tags) {
         $.ajax({
             type: "GET",
             url: "save_term_tags/",
             data: {
+<<<<<<< HEAD
                 'row': term_id[0],
                 'place': term_id[1],
                 'position': term_id[2],
+=======
+>>>>>>> master
                 'term': selected_term,
                 'tag': tag
             },

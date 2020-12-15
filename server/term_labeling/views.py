@@ -40,7 +40,9 @@ def main_tag_page(request):
 
 
 def index(request):
+
     t = Tag()
+
     all_tags = t.getAllTags()
     c = Connector()
     if request.method == 'POST':
@@ -52,6 +54,7 @@ def index(request):
     context = {
         'poems': poem,
         'title': 'Home',
+
         'all_tags': all_tags
     }
     return render(request, 'index.html', context)
