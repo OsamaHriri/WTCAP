@@ -8,15 +8,15 @@ from django.contrib.auth.decorators import login_required
 import requests
 import pyarabic.araby as araby
 from threading import Thread, Lock
-from nltk.stem.isri import ISRIStemmer
 from farasa.stemmer import FarasaStemmer
-
+import json
+from django.contrib.staticfiles import finders
+import re
 
 # Create your views here.
 
-
-poem_id = ''
 stemmer = FarasaStemmer(interactive=True)
+
 
 def main_tag_page(request):
     t = Tag()
@@ -27,14 +27,16 @@ def main_tag_page(request):
     else:
         id = 2066
 
-    global poem_id
-    poem_id = id
-    poem = c.get_poem(id)[0]
+
+    poem = (c.get_poem(id))[0]
+    # meta_data = c.get_meta_data(poem.poet_id)
 
     context = {
         'poems': poem,
+        # 'meta': meta_data,
         'title': 'Home',
-        'all_tags': all_tags
+        'all_tags': all_tags,
+        'poem_id': id,
     }
     return render(request, 'main_tag_page.html', context)
 
@@ -42,6 +44,7 @@ def main_tag_page(request):
 def index(request):
 
     t = Tag()
+   # json_tags = t.getAllTagsbyjson()
 
     all_tags = t.getAllTags()
     c = Connector()
@@ -56,6 +59,10 @@ def index(request):
         'title': 'Home',
 
         'all_tags': all_tags
+
+    context = {
+        'title': 'Main Page',
+
     }
     return render(request, 'index.html', context)
 
@@ -87,6 +94,39 @@ def tags(request):
 
 
 @login_required()
+def settings(request):
+    context = {
+        'title': 'Settings',
+    }
+    return render(request, 'settings.html', context)
+
+
+@login_required()
+def statistics(request):
+    c = Connector()
+    periods = c.get_periods()
+    frequency = [10, 20, 30, 50, 70, 80, 100, 200, 300, 400, 500, 1000]
+    frequency.reverse()
+    range = ['0-50', '50-100', '100-150', '150-200', '200-250', '250-300', '300-350', '350-400', '400-450',
+             '450-500', '500-550', '550-600', '600-650', '650-700', '700-750', '750-800', '800-850', '850-900',
+             '900-950', '950-1000']
+    reslut = finders.find('images/Analysis/generalInfo.json')
+    f = open(reslut)
+    json_string = f.read()
+    f.close()
+    # Convert json string to python object
+    data = json.loads(json_string)
+    context = {
+        'title': 'Statistics',
+        'frequency': frequency,
+        'info': data[0],
+        'range': range,
+        'periods': periods
+    }
+    return render(request, 'statistics.html', context)
+
+
+@login_required()
 def select_poet_page(request):
     c = Connector()
     poets = c.get_poets()
@@ -94,7 +134,7 @@ def select_poet_page(request):
     context = {
         'poets': poets,
         'poems': poems,
-        'title': 'Selection'
+        'title': 'Poem selection'
     }
     return render(request, 'select_poet.html', context)
 
@@ -107,13 +147,14 @@ def poet_poems(request):
     if request.method == 'GET':
         poetId = request.GET['poet_id']
         c = Connector()
-        poems = c.get_poems_by_poet(poetId)
+        poems = c.get_poems_by_poet(int(poetId))
         idlist = ""
         for pp in poems:
             idlist = idlist + pp['id'] + ","
         if idlist is not None:
             print(idlist)
-            return HttpResponse(idlist)
+            return JsonResponse({
+                "poem_ids": idlist})
         else:
             return HttpResponse("not found")
     else:
@@ -122,8 +163,9 @@ def poet_poems(request):
 
 def all_poems(request):
     """
-    not sure if you need this one
-    try using the poem list you already rendered with the page
+
+    :param request: An empty GET request
+    :return: a list of all poems we have in db
     """
     if request.method == 'GET':
         c = Connector()
@@ -186,7 +228,6 @@ def termTree(request):
             return HttpResponse("not found")
     else:
         return HttpResponse("not success")
-        return HttpResponse("not success")
 
 
 def save_term_tags(request):
@@ -197,9 +238,9 @@ def save_term_tags(request):
         term = araby.strip_tashkeel(term).strip()
         term = stemmer.stem(term)
         tag = data.get('tag')
+        poem_id = data.get('id')
         t = Tagging()
         mutex.acquire()
-        print(poem_id)
         try:
             suc = t.tagWord(term, tag, poem_id, int(data.get('place')), int(data.get('row')), int(data.get('position')))
         finally:
@@ -425,13 +466,104 @@ def get_all_poets(request):
         else:
             return HttpResponse("not found")
 
-def get_poemid(request):
+
+def get_terms_freq(request):
     if request.method == 'GET':
-        print(poem_id)
-        if poem_id is not None:
-            return JsonResponse({"id":poem_id})
+        req = request.GET
+        if req.get('p') == "all periods":
+            reslut = finders.find('images/Analysis/TermFreq.json')
         else:
-            return HttpResponse("not found")
+            reslut = finders.find('images/Analysis/TermFreqperPeriod.json')
+        f = open(reslut)
+        json_string = f.read()
+        f.close()
+
+        # Convert json string to python object
+        data = json.loads(json_string)
+        if int(req.get('n')) == 1:
+            x = int(req.get('f'))
+            if req.get('p') == "all periods":
+                d = data[:x]
+                max = x
+            else:
+                period = req.get('p').strip()
+                if len(data[period]) < x:
+                    d = data[period][:len(data[period])]
+                    max = len(data[period])
+                else:
+                    d = data[period][:x]
+                    max = x
+            return JsonResponse({"t": d, "m": max})
+        else:
+            y = req.get('f').strip().split("-")
+            if req.get('p') == "all periods":
+                d = data[int(y[0]):int(y[1])]
+                max = int(y[1])
+            else:
+                period = req.get('p').strip()
+                length = len(data[period])
+                if int(y[1]) > length:
+                    d = data[period][int(y[0]):length]
+                    max = length
+                else:
+                    d = data[period][int(y[0]):int(y[1])]
+                    max = int(y[1])
+            return JsonResponse({"t": d, "m": max})
+
+
+def maxFrequencyinPeriod(request):
+    if request.method == 'GET':
+        req = request.GET
+        period = req.get('p').strip()
+        if period == "all periods":
+            return JsonResponse({"max": 1000})
+        else:
+            reslut = finders.find('images/Analysis/TermFreqperPeriod.json')
+            f = open(reslut)
+            json_string = f.read()
+            f.close()
+            data = json.loads(json_string)
+            return JsonResponse({"max": len(data[period])})
+
+
+def getTaggedWords(request):
+    if request.method == 'GET':
+        req = request.GET
+        id = req.get('id')
+        c = Connector()
+        poem = (c.get_poem(id))[0]
+        l = " "
+        dictenory = {}
+        for j in poem["context"]:
+            s = ""
+            if 'sadr' in j:
+                for word in j['sadr'].split():
+                    temp = stemmer.stem(araby.strip_tashkeel(word))
+                    if temp in dictenory:
+                        if word not in dictenory[temp]:
+                            dictenory[temp].append(word)
+                    else:
+                        dictenory[temp] = [word]
+                    s += temp + " "
+                # s += stemmer.stem(araby.strip_tashkeel(j['sadr'])) + " "
+            if 'ajuz' in j:
+                for word in j['ajuz'].split():
+                    temp = stemmer.stem(araby.strip_tashkeel(word))
+                    if temp in dictenory:
+                        if word not in dictenory[temp]:
+                            dictenory[temp].append(word)
+                    else:
+                        dictenory[temp] = [word]
+                    s += temp + " "
+            l += s
+        tokens = re.findall(r"[\w']+", l)
+        w = Tagging()
+        currentTagged = w.get_tagged_words_from_poem(tokens)
+        l = []
+        for key, value in dictenory.items():
+            if key in currentTagged:
+                l += dictenory[key]
+        return JsonResponse({"word": l})
 
 
 mutex = Lock()

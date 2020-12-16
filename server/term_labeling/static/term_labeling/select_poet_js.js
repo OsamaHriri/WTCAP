@@ -6,7 +6,6 @@ let all_poets = [];
 
 // A $( document ).ready() block.
 $(document).ready(function () {
-    console.log("on load");
     getAllPoets().done(function (d) {
         all_poets = d['poets'];
         update_poets_list()
@@ -17,7 +16,7 @@ $(document).ready(function () {
     });
 });
 
-function myFunction(id) {
+function toggleDropDown(id) {
     document.getElementById(id).classList.toggle("show");
     /*
     if (id === 'poetDropDown') {
@@ -30,7 +29,7 @@ function update_poets_list() {
     let poetDropDown = document.getElementById('poetDropDown');
     let poets_html = "";
     all_poets.forEach(function (p) {
-        poets_html += "<a href=\"#\" id=" + p.id + "class=\"poet-link\" onclick=\"choosePoet(this)\">" + p.name + "</a>";
+        poets_html += "<a href=\"#\" id=" + p.id + " class=\"poet-link\" onclick=\"choosePoet(this)\">" + p.name + "</a>";
     });
     poetDropDown.innerHTML += poets_html
 }
@@ -39,7 +38,7 @@ function update_poems_list(poems_list) {
     let poetDropDown = document.getElementById('poemDropDown');
     let poems_html = "";
     poems_list.forEach(function (p) {
-        poems_html += "<a href=\"#\" id=" + p.id + "class=\"poems-link\" onclick=\"choosePoem(this)\">" + p.name + "</a>";
+        poems_html += "<a href=\"#\" id=" + p.id + " class=\"poems-link\" onclick=\"choosePoem(this)\">" + p.name + "</a>";
     });
     poetDropDown.innerHTML += poems_html;
 }
@@ -48,7 +47,7 @@ function getAllPoems() {
     return $.ajax({
         type: "GET",
         url: "get_all_poems/",
-        dataType: "json",
+        dataType: "json"
     });
 }
 
@@ -56,7 +55,7 @@ function getAllPoets() {
     return $.ajax({
         type: "GET",
         url: "get_all_poets/",
-        dataType: "json",
+        dataType: "json"
     });
 }
 
@@ -82,8 +81,19 @@ function choosePoet(obj) {
     const value = obj.text;
     let btn = document.getElementById("poetbtn");
     btn.innerText = value;
-    myFunction("poetDropDown");
-    keep_relevant(id);
+    toggleDropDown("poetDropDown");
+    get_relevant(id).done(function (d) {
+        const relevant_ids = d['poem_ids'];
+        const splitteddata = relevant_ids.split(",");
+        $(".poems-link").each(function () {
+            const currpoem = this.id;
+            if (($.inArray(currpoem, splitteddata)) === -1) {
+                document.getElementById(currpoem).style.display = 'none'
+            }else {
+                document.getElementById(currpoem).style.display = 'block'
+            }
+        });
+    });
 }
 
 function choosePoem(obj) {
@@ -92,27 +102,17 @@ function choosePoem(obj) {
     let btn = document.getElementById("poembtn");
     btn.innerText = value;
     poemid = id;
-    myFunction("poemDropDown");
-
+    toggleDropDown("poemDropDown");
 }
 
-function keep_relevant(id) {
-    $.ajax({
+function get_relevant(id) {
+    return $.ajax({
         type: "GET",
         url: "../poet_poems/",
         data: {
             'poet_id': id
         },
-        success: function (data) {
-            const splitteddata = data.split(",");
-            $(".poems-link").each(function () {
-                const currpoem = this.id;
-                if (($.inArray(currpoem, splitteddata)) === -1) {
-                    this.remove();
-                }
-            });
-            return data;
-        }
+        dataType: "json"
     });
 
 }

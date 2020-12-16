@@ -36,7 +36,7 @@ function update_tags_list() {
 
 function draw() {
     viz = new NeoVis.default(config);
-    viz.render();
+    viz.render()
 }
 
 function draw2(text) {
@@ -71,12 +71,15 @@ function disable(){
          document.getElementById("showsub").disabled = true;
          document.getElementById("render").disabled = true;
          document.querySelector('#disable').textContent = "Enable Network"
-         viz.clearNetwork()}
+         viz.clearNetwork()
+         document.getElementsByClassName('infinity')[0].style.display = "block";
+         }
     else {
          flagdisable = false
          document.querySelector('#disable').textContent = "Disable Network"
          document.getElementById("showsub").disabled = false;
          document.getElementById("render").disabled = false;
+         document.getElementsByClassName('infinity')[0].style.display = "none";
          if(state == 1){
             viz.reinit(config);
             viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *");
