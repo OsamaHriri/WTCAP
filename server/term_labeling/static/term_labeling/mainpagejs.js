@@ -15,28 +15,24 @@ let orange = "rgb(255, 165, 0)";
 let tagParent = "";
 let depth = 0;
 let all_tags = [];
-let viz
-let poemID
+let viz;
+let poemID;
 
 function box_checked(obj) {
     const id = obj.id; //line number
     const tbl = document.getElementById("poem");
-    // check if we added the row already, if yes remove it and add it again ?
-    const added = document.getElementById('added');
-    if (added) {
-        added.parentNode.removeChild(added);
-    }
-    const row = tbl.insertRow(Number(id));
-    row.setAttribute('id', 'added');
 
     const sentence = tbl.rows[id - 1];
     const sadr = sentence.cells[1];
     const ajuz = sentence.cells[2];
+
+    sentence.cells[3].childNodes[1].style.display = 'block';
+
     //split sadr
     const sadrtext = sadr.textContent.trim().split(" ");
     let newsadr = "<p>";
     for (let i = 0; i < sadrtext.length; i++) {
-        newsadr = newsadr + "<span class='term' id='" + id + "_0_" + (i+1) + "'> " + sadrtext[i] + " " + "</span>"
+        newsadr = newsadr + "<span class='term' id='" + id + "_0_" + (i + 1) + "'> " + sadrtext[i] + " " + "</span>"
     }
     newsadr = newsadr + "</p>";
     sadr.innerHTML = newsadr;
@@ -45,26 +41,56 @@ function box_checked(obj) {
     const ajuztext = ajuz.textContent.trim().split(" ");
     let newsajuz = "<p>";
     for (let i = 0; i < ajuztext.length; i++) {
-        newsajuz = newsajuz + "<span class='term' id='" + id + "_1_" + i+1 + "'> " + ajuztext[i] + " " + "</span>"
+        newsajuz = newsajuz + "<span class='term' id='" + id + "_1_" + i + 1 + "'> " + ajuztext[i] + " " + "</span>"
     }
     newsajuz = newsajuz + "</p>";
     ajuz.innerHTML = newsajuz;
 
     // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-    const cell1 = row.insertCell(0);
-    const cell2 = row.insertCell(1);
-    const cell3 = row.insertCell(2);
-    const cell4 = row.insertCell(3);
+//     const cell1 = row.insertCell(0);
+//     const cell2 = row.insertCell(1);
+//     const cell3 = row.insertCell(2);
+//     const cell4 = row.insertCell(3);
+//
+// // Add some text to the new cells:
+//     cell2.innerHTML = "اختر كلمة";
+//     cell3.innerHTML = "<button type='button' class='btn' onclick='save_term_tag()'> Save </button>";
+//     cell1.innerHTML = "<button type='button' class='btn disabled' > + </button>";
+    // disable right click and show custom context menu
+    $(".term").bind('contextmenu', function (e) {
+        // const tag_text = this.innerText.slice(1, this.innerText.lastIndexOf("-"));
+        // $("#txt_id").val(tag_text);
 
-// Add some text to the new cells:
-    cell2.innerHTML = "اختر كلمة";
-    cell3.innerHTML = "<button type='button' class='btn' onclick='save_term_tag()'> Save </button>";
-    cell1.innerHTML = "<button type='button' class='btn disabled' > + </button>";
-    hi(id);
+        const top = e.pageY + 5;
+        const left = e.pageX;
+        // Show contextmenu
+        $(".term-menu").toggle(100).css({
+            top: top + "px",
+            left: left + "px"
+        });
+        // disable default context menu
+        return false;
+    });
+
+    // Hide context menu
+    $(document).bind('contextmenu click', function () {
+        $(".term-menu").hide();
+    });
+
+    // disable context-menu from custom menu
+    $('.term-menu').bind('contextmenu', function () {
+        return false;
+    });
+
+    // Clicked context-menu item
+    $('.term-menu a').click(function () {
+        $(".term-menu").hide();
+    });
+    process_word(id);
 }
 
 //can remove
-function hi(id) {
+function process_word(id) {
     $(function () {
         $(".term").click(function () {
             if (selected_obj !== "" && selected_obj.css("color") === orange)
@@ -77,18 +103,18 @@ function hi(id) {
     });
 }
 
-function loadTags(){
-    getAllTags().done(function(d){
+function loadTags() {
+    getAllTags().done(function (d) {
         all_tags = d.tags;
         update_tags_list()
     });
 }
 
-function update_tags_list(){
+function update_tags_list() {
     let myUL = document.getElementById('myUL');
     myUL.innerHTML = "";
     all_tags.forEach(function (idx, li) {
-        myUL.innerHTML += "<li><a href=\"#\" id="+idx+" onclick=\"searchTag(this)\">" + idx + "</a></li>";
+        myUL.innerHTML += "<li><a href=\"#\" id=" + idx + " onclick=\"searchTag(this)\">" + idx + "</a></li>";
     });
 }
 
@@ -177,7 +203,7 @@ function submit_clicked() {
                     window.alert("The tag already exist");
                 else {
                     all_tags.push(text)
-                    myUL.innerHTML += "<li><a href=\"#\" id="+text+" onclick=\"searchTag(this)\">" + text + "</a></li>";
+                    myUL.innerHTML += "<li><a href=\"#\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
                     emptyTree();
                     getHeaders();
                 }
@@ -190,7 +216,7 @@ function submit_clicked() {
                     window.alert("The parent doesnt exist");
                 else {
                     all_tags.push(text)
-                    myUL.innerHTML += "<li><a href=\"#\" id="+text+" onclick=\"searchTag(this)\">" + text + "</a></li>";
+                    myUL.innerHTML += "<li><a href=\"#\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
                     temp = document.getElementById("c").innerText.split(/\r?\n/)[0]
                     emptyTree();
                     item_clicked(temp);
@@ -407,7 +433,7 @@ function save_term_tag() {
                 'position': term_id[2],
                 'term': selected_term,
                 'tag': tag,
-                'id' : poemID
+                'id': poemID
             },
             success: function (data) {
                 console.log(data);
@@ -526,53 +552,52 @@ window.onload = getHeaders();
 //window.onload = loadTags();
 
 
-
 function draw() {
-    $('#viz').ready(function() {
-    statement="match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$',poemID)
-    var config = {
-        container_id: "viz",
-        server_url: "bolt://localhost:7687",
-        server_user: "neo4j",
-        server_password: "123123147",
-        labels: {
-            "Tag": {
-                "caption": "name",
-                //"size": "pagerank",
-                //"community": "community",
-                "title_properties": [
-                    "name"
-                ]
+    $('#viz').ready(function () {
+        statement = "match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$', poemID)
+        var config = {
+            container_id: "viz",
+            server_url: "bolt://localhost:7687",
+            server_user: "neo4j",
+            server_password: "123123147",
+            labels: {
+                "Tag": {
+                    "caption": "name",
+                    //"size": "pagerank",
+                    //"community": "community",
+                    "title_properties": [
+                        "name"
+                    ]
+                },
+                "Word": {
+                    "caption": "name",
+                    //"size": "pagerank",
+                    //"community": "community",
+                    "title_properties": [
+                        "name"
+                    ]
+                }
             },
-            "Word": {
-                "caption": "name",
-                //"size": "pagerank",
-                //"community": "community",
-                "title_properties": [
-                    "name"
-                ]
-            }
-        },
-        relationships: {
-            "tag": {
-            //"thickness": "weight",
-            "caption": false
-            }
-        },
-        arrows: true,
-        initial_cypher: statement
-    };
+            relationships: {
+                "tag": {
+                    //"thickness": "weight",
+                    "caption": false
+                }
+            },
+            arrows: true,
+            initial_cypher: statement
+        };
 
-    viz = new NeoVis.default(config);
-    viz.render();
+        viz = new NeoVis.default(config);
+        viz.render();
     });
 }
 
 
-function refreshVis(){
+function refreshVis() {
     viz.reload()
 }
 
-window.onload = function(){
+window.onload = function () {
     poemID = document.getElementById("poem_id").innerText
 }
