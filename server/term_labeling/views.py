@@ -12,6 +12,7 @@ from farasa.stemmer import FarasaStemmer
 import json
 from django.contrib.staticfiles import finders
 import re
+
 # Create your views here.
 
 stemmer = FarasaStemmer(interactive=True)
@@ -39,19 +40,8 @@ def main_tag_page(request):
 
 
 def index(request):
-    t = Tag()
-    all_tags = t.getAllTags()
-    c = Connector()
-    if request.method == 'POST':
-        id = request.POST['poem_iid']
-    else:
-        id = 2066
-    poem = (c.get_poem(id))[0]
-
     context = {
-        'poems': poem,
-        'title': 'Home',
-        'all_tags': all_tags
+        'title': 'Main Page',
     }
     return render(request, 'index.html', context)
 
@@ -82,6 +72,7 @@ def tags(request):
 #     return render(request, 'process_lines.html', context)
 
 
+@login_required()
 def settings(request):
     context = {
         'title': 'Settings',
@@ -93,10 +84,11 @@ def settings(request):
 def statistics(request):
     c = Connector()
     periods = c.get_periods()
-    frequency = [10,20,30,50,70,80,100,200,300,400,500,1000]
+    frequency = [10, 20, 30, 50, 70, 80, 100, 200, 300, 400, 500, 1000]
     frequency.reverse()
-    range= ['0-50', '50-100', '100-150', '150-200', '200-250', '250-300', '300-350', '350-400', '400-450',
-            '450-500', '500-550', '550-600', '600-650', '650-700', '700-750', '750-800', '800-850', '850-900', '900-950', '950-1000']
+    range = ['0-50', '50-100', '100-150', '150-200', '200-250', '250-300', '300-350', '350-400', '400-450',
+             '450-500', '500-550', '550-600', '600-650', '650-700', '700-750', '750-800', '800-850', '850-900',
+             '900-950', '950-1000']
     reslut = finders.find('images/Analysis/generalInfo.json')
     f = open(reslut)
     json_string = f.read()
@@ -105,10 +97,10 @@ def statistics(request):
     data = json.loads(json_string)
     context = {
         'title': 'Statistics',
-        'frequency':frequency,
+        'frequency': frequency,
         'info': data[0],
-        'range': range ,
-        'periods' : periods
+        'range': range,
+        'periods': periods
     }
     return render(request, 'statistics.html', context)
 
@@ -121,7 +113,7 @@ def select_poet_page(request):
     context = {
         'poets': poets,
         'poems': poems,
-        'title': 'Selection'
+        'title': 'Poem selection'
     }
     return render(request, 'select_poet.html', context)
 
@@ -134,13 +126,14 @@ def poet_poems(request):
     if request.method == 'GET':
         poetId = request.GET['poet_id']
         c = Connector()
-        poems = c.get_poems_by_poet(poetId)
+        poems = c.get_poems_by_poet(int(poetId))
         idlist = ""
         for pp in poems:
             idlist = idlist + pp['id'] + ","
         if idlist is not None:
             print(idlist)
-            return HttpResponse(idlist)
+            return JsonResponse({
+                "poem_ids": idlist})
         else:
             return HttpResponse("not found")
     else:
@@ -149,8 +142,9 @@ def poet_poems(request):
 
 def all_poems(request):
     """
-    not sure if you need this one
-    try using the poem list you already rendered with the page
+
+    :param request: An empty GET request
+    :return: a list of all poems we have in db
     """
     if request.method == 'GET':
         c = Connector()
@@ -452,7 +446,6 @@ def get_all_poets(request):
             return HttpResponse("not found")
 
 
-
 def get_terms_freq(request):
     if request.method == 'GET':
         req = request.GET
@@ -466,35 +459,35 @@ def get_terms_freq(request):
 
         # Convert json string to python object
         data = json.loads(json_string)
-        if int(req.get('n'))== 1:
+        if int(req.get('n')) == 1:
             x = int(req.get('f'))
             if req.get('p') == "all periods":
                 d = data[:x]
                 max = x
-            else :
+            else:
                 period = req.get('p').strip()
                 if len(data[period]) < x:
                     d = data[period][:len(data[period])]
                     max = len(data[period])
-                else :
+                else:
                     d = data[period][:x]
                     max = x
-            return JsonResponse({"t":d,"m":max})
-        else :
+            return JsonResponse({"t": d, "m": max})
+        else:
             y = req.get('f').strip().split("-")
             if req.get('p') == "all periods":
                 d = data[int(y[0]):int(y[1])]
                 max = int(y[1])
-            else :
+            else:
                 period = req.get('p').strip()
                 length = len(data[period])
                 if int(y[1]) > length:
                     d = data[period][int(y[0]):length]
                     max = length
-                else :
+                else:
                     d = data[period][int(y[0]):int(y[1])]
                     max = int(y[1])
-            return JsonResponse({"t":d,"m":max})
+            return JsonResponse({"t": d, "m": max})
 
 
 def maxFrequencyinPeriod(request):
@@ -502,14 +495,15 @@ def maxFrequencyinPeriod(request):
         req = request.GET
         period = req.get('p').strip()
         if period == "all periods":
-            return JsonResponse({"max":1000})
+            return JsonResponse({"max": 1000})
         else:
             reslut = finders.find('images/Analysis/TermFreqperPeriod.json')
             f = open(reslut)
             json_string = f.read()
             f.close()
             data = json.loads(json_string)
-            return JsonResponse({"max":len(data[period])})
+            return JsonResponse({"max": len(data[period])})
+
 
 def getTaggedWords(request):
     if request.method == 'GET':
@@ -520,27 +514,27 @@ def getTaggedWords(request):
         l = " "
         dictenory = {}
         for j in poem["context"]:
-            s= ""
+            s = ""
             if 'sadr' in j:
                 for word in j['sadr'].split():
-                   temp = stemmer.stem(araby.strip_tashkeel(word))
-                   if temp in dictenory:
-                       if word not in dictenory[temp]:
-                             dictenory[temp].append(word)
-                   else:
-                       dictenory[temp]= [word]
-                   s += temp + " "
-                  #s += stemmer.stem(araby.strip_tashkeel(j['sadr'])) + " "
+                    temp = stemmer.stem(araby.strip_tashkeel(word))
+                    if temp in dictenory:
+                        if word not in dictenory[temp]:
+                            dictenory[temp].append(word)
+                    else:
+                        dictenory[temp] = [word]
+                    s += temp + " "
+                # s += stemmer.stem(araby.strip_tashkeel(j['sadr'])) + " "
             if 'ajuz' in j:
                 for word in j['ajuz'].split():
                     temp = stemmer.stem(araby.strip_tashkeel(word))
                     if temp in dictenory:
                         if word not in dictenory[temp]:
-                             dictenory[temp].append(word)
+                            dictenory[temp].append(word)
                     else:
                         dictenory[temp] = [word]
                     s += temp + " "
-            l+=s
+            l += s
         tokens = re.findall(r"[\w']+", l)
         w = Tagging()
         currentTagged = w.get_tagged_words_from_poem(tokens)

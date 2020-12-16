@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="fix select poem page bug.">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_js.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_js.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/views.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="semantic-labeling-arabic" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1YzKWE8k9Y6R8x9lUNO984LFuMV" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/server/term_labeling/scripts" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\term_labeling" />
+      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\images\WordCloud" />
+      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\term_labeling\img" />
+      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\images" />
+      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
+      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server" />
+      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.poemsAnalysis">
+    <configuration name="almaany_translator_bot" type="PythonConfigurationType" factoryName="Python">
+      <module name="semantic-labeling-arabic" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/almaany_translator_bot.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="createGraph" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="semantic-labeling-arabic" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/term_labeling/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/term_labeling/scripts/createGraph.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="poemsAnalysis" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="semantic-labeling-arabic" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/term_labeling/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/term_labeling/scripts/poemsAnalysis.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test2" type="PythonConfigurationType" factoryName="Python">
+      <module name="semantic-labeling-arabic" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/term_labeling/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/term_labeling/scripts/test2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test3" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="semantic-labeling-arabic" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/term_labeling/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/term_labeling/scripts/test3.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="views" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="semantic-labeling-arabic" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/term_labeling" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server/term_labeling/views.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="wCloud" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="semantic-labeling-arabic" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/term_labeling/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts\poemsAnalysis.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.poemsAnalysis" />
+        <item itemvalue="Python.test3" />
+        <item itemvalue="Python.wCloud" />
+        <item itemvalue="Python.views" />
+        <item itemvalue="Python.createGraph" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="" />
+      <created>1583940011650</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1583940011650</updated>
+      <workItem from="1594044543993" duration="660000" />
+      <workItem from="1594052577120" duration="4703000" />
+      <workItem from="1594115072554" duration="20675000" />
+      <workItem from="1594206376136" duration="6027000" />
+      <workItem from="1602688649840" duration="11000" />
+      <workItem from="1603058003001" duration="1044000" />
+      <workItem from="1603116663791" duration="2055000" />
+      <workItem from="1603144773532" duration="9037000" />
+      <workItem from="1603173186696" duration="6024000" />
+      <workItem from="1603277370389" duration="8000" />
+      <workItem from="1603729002425" duration="2799000" />
+      <workItem from="1603801894642" duration="965000" />
+      <workItem from="1603835011749" duration="32000" />
+      <workItem from="1603877546541" duration="764000" />
+      <workItem from="1603888545578" duration="3900000" />
+      <workItem from="1603920511841" duration="12000" />
+      <workItem from="1604572704097" duration="1334000" />
+      <workItem from="1604593172244" duration="15000" />
+      <workItem from="1604661622107" duration="4279000" />
+    </task>
+    <task id="LOCAL-00001" summary="Added basic web scrapper">
+      <created>1583940146050</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1583940146050</updated>
+    </task>
+    <task id="LOCAL-00002" summary="scrapper now retives all the data form the page and saves it in a txt file &#10;bot cant be callled from terminal by :&#10;python almaany_translator_bot.py &lt; wordToBeTranslated &gt;">
+      <created>1584012242692</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1584012242693</updated>
+    </task>
+    <task id="LOCAL-00003" summary="added intial sever">
+      <created>1587295998827</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1587295998827</updated>
+    </task>
+    <task id="LOCAL-00004" summary="create neo4j db and create search , add ..etc functions">
+      <created>1588675944608</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1588675944608</updated>
+    </task>
+    <task id="LOCAL-00005" summary="word and tags connections">
+      <created>1590867780057</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1590867780057</updated>
+    </task>
+    <task id="LOCAL-00006" summary="merge db , bugs fix and documentation.">
+      <created>1591696846837</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1591696846837</updated>
+    </task>
+    <task id="LOCAL-00007" summary="get all tag roots function + bugs fix">
+      <created>1591713061632</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1591713061632</updated>
+    </task>
+    <task id="LOCAL-00008" summary="mutex">
+      <created>1594224628475</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1594224628475</updated>
+    </task>
+    <task id="LOCAL-00009" summary="tag frequency">
+      <created>1596389857722</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1596389857722</updated>
+    </task>
+    <task id="LOCAL-00010" summary="suggestion tags">
+      <created>1597139770670</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1597139770671</updated>
+    </task>
+    <task id="LOCAL-00011" summary="bugs fix: color and frequency">
+      <created>1598080478833</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1598080478833</updated>
+    </task>
+    <task id="LOCAL-00012" summary="bugs fix in frontend">
+      <created>1598094592198</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1598094592198</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Hierarchy Tree traversal + bugs fix">
+      <created>1598269630147</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1598269630147</updated>
+    </task>
+    <task id="LOCAL-00014" summary="add &quot;add Tag&quot; feature to the hierarchy, color the selected element and bugs fix.">
+      <created>1598297034859</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1598297034860</updated>
+    </task>
+    <task id="LOCAL-00015" summary="....">
+      <created>1598867416186</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1598867416186</updated>
+    </task>
+    <task id="LOCAL-00016" summary="....">
+      <created>1598872875868</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1598872875868</updated>
+    </task>
+    <task id="LOCAL-00017" summary="manage tags page">
+      <created>1598970173594</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1598970173595</updated>
+    </task>
+    <task id="LOCAL-00018" summary="manage tags page">
+      <created>1599388634969</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1599388634970</updated>
+    </task>
+    <task id="LOCAL-00019" summary="add new feature delete and search">
+      <created>1599404082305</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1599404082305</updated>
+    </task>
+    <task id="LOCAL-00020" summary="add parent feature">
+      <created>1600077838134</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1600077838134</updated>
+    </task>
+    <task id="LOCAL-00021" summary="hierarchy right click features">
+      <created>1600103997667</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1600103997667</updated>
+    </task>
+    <task id="LOCAL-00022" summary="change parent">
+      <created>1600260212693</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1600260212694</updated>
+    </task>
+    <task id="LOCAL-00023" summary="delete All">
+      <created>1600263408493</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1600263408493</updated>
+    </task>
+    <task id="LOCAL-00024" summary="fix edit tag">
+      <created>1600609005966</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1600609005966</updated>
+    </task>
+    <task id="LOCAL-00025" summary="tag visualization">
+      <created>1601737375305</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1601737375305</updated>
+    </task>
+    <task id="LOCAL-00026" summary="add new features to graph viz">
+      <created>1602010411877</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1602010411877</updated>
+    </task>
+    <task id="LOCAL-00027" summary="#16 fixed tags tree load - tagging page">
+      <created>1603116765164</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1603116765164</updated>
+    </task>
+    <task id="LOCAL-00028" summary="did basis for #25 + translated header">
+      <created>1603157088412</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1603157088412</updated>
+    </task>
+    <task id="LOCAL-00029" summary="updated meetings">
+      <created>1603893110568</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1603893110568</updated>
+    </task>
+    <task id="LOCAL-00030" summary="#15 - saves information">
+      <created>1604665347514</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1604665347514</updated>
+    </task>
+    <task id="LOCAL-00031" summary="sort view and delete unneeded queries">
+      <created>1604754621302</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1604754621302</updated>
+    </task>
+    <task id="LOCAL-00032" summary="#30 Fetch all poem terms and their tags">
+      <created>1604850808610</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1604850808611</updated>
+    </task>
+    <task id="LOCAL-00033" summary="#35 stemmer for arabic words">
+      <created>1605015479530</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1605015479530</updated>
+    </task>
+    <task id="LOCAL-00034" summary="change stemmer library">
+      <created>1605018291622</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1605018291622</updated>
+    </task>
+    <task id="LOCAL-00035" summary="poems from specific period">
+      <created>1606137395544</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1606137395544</updated>
+    </task>
+    <task id="LOCAL-00036" summary="word cloud">
+      <created>1606225582091</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1606225582091</updated>
+    </task>
+    <task id="LOCAL-00037" summary="#36 word cloud">
+      <created>1606405871419</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1606405871420</updated>
+    </task>
+    <task id="LOCAL-00038" summary="#37 loader for WordCloud">
+      <created>1606480398864</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1606480398865</updated>
+    </task>
+    <task id="LOCAL-00039" summary="bug fix">
+      <created>1606835948771</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1606835948771</updated>
+    </task>
+    <task id="LOCAL-00040" summary="#38 cloud with hover + table.&#10;fix some bugs and adjust menu bar.&#10;script for analyzing poems db.">
+      <created>1607618102542</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1607618102542</updated>
+    </task>
+    <task id="LOCAL-00041" summary="#33 loader for manage-tags">
+      <created>1607627053866</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1607627053866</updated>
+    </task>
+    <task id="LOCAL-00042" summary="fix select poem page bug.">
+      <created>1607627135027</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1607627135027</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="manage tags page" />
+    <MESSAGE value="add new feature delete and search" />
+    <MESSAGE value="add parent feature" />
+    <MESSAGE value="hierarchy right click features" />
+    <MESSAGE value="change parent" />
+    <MESSAGE value="delete All" />
+    <MESSAGE value="fix edit tag" />
+    <MESSAGE value="tag visualization" />
+    <MESSAGE value="add new features to graph viz" />
+    <MESSAGE value="#16 fixed tags tree load - tagging page" />
+    <MESSAGE value="did basis for #25 + translated header" />
+    <MESSAGE value="updated meetings" />
+    <MESSAGE value="#15 - saves information" />
+    <MESSAGE value="sort view and delete unneeded queries" />
+    <MESSAGE value="#30 Fetch all poem terms and their tags" />
+    <MESSAGE value="#35 stemmer for arabic words" />
+    <MESSAGE value="change stemmer library" />
+    <MESSAGE value="poems from specific period" />
+    <MESSAGE value="word cloud" />
+    <MESSAGE value="#36 word cloud" />
+    <MESSAGE value="#37 loader for WordCloud" />
+    <MESSAGE value="bug fix" />
+    <MESSAGE value="#38 cloud with hover + table.&#10;fix some bugs and adjust menu bar.&#10;script for analyzing poems db." />
+    <MESSAGE value="#33 loader for manage-tags" />
+    <MESSAGE value="fix select poem page bug." />
+    <option name="LAST_COMMIT_MESSAGE" value="fix select poem page bug." />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="699" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603147034115">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="699" y="323" key="#com.intellij.fileTypes.FileTypeChooser/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1603147034115" />
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1604665050900">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1604665050900" />
+    <state x="183" y="116" width="1653" height="811" key="CommitChangelistDialog2" timestamp="1604665344998">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="183" y="116" width="1653" height="811" key="CommitChangelistDialog2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1604665344998" />
+    <state x="122" y="76" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1603893109830" />
+    <state x="93" y="93" width="1095" height="495" key="DiffContextDialog" timestamp="1603890480642">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="93" y="93" width="1095" height="495" key="DiffContextDialog/0.0.1280.680@0.0.1280.680" timestamp="1603890480642" />
+    <state width="1877" height="257" key="GridCell.Tab.0.bottom" timestamp="1604665051095">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="257" key="GridCell.Tab.0.bottom/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1604665051095" />
+    <state width="1237" height="110" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1603910525269" />
+    <state width="1877" height="257" key="GridCell.Tab.0.center" timestamp="1604665051094">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="257" key="GridCell.Tab.0.center/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1604665051094" />
+    <state width="1237" height="110" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1603910525269" />
+    <state width="1877" height="257" key="GridCell.Tab.0.left" timestamp="1604665051093">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="257" key="GridCell.Tab.0.left/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1604665051093" />
+    <state width="1237" height="110" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1603910525269" />
+    <state width="1877" height="257" key="GridCell.Tab.0.right" timestamp="1604665051095">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="257" key="GridCell.Tab.0.right/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1604665051095" />
+    <state width="1237" height="110" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1603910525269" />
+    <state width="1237" height="204" key="GridCell.Tab.1.bottom" timestamp="1603910525259">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="204" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1603910525259" />
+    <state width="1237" height="204" key="GridCell.Tab.1.center" timestamp="1603910525259">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="204" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1603910525259" />
+    <state width="1237" height="204" key="GridCell.Tab.1.left" timestamp="1603910525259">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="204" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1603910525259" />
+    <state width="1237" height="204" key="GridCell.Tab.1.right" timestamp="1603910525259">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="204" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1603910525259" />
+    <state x="672" y="236" key="MultipleFileMergeDialog" timestamp="1608072348722">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="672" y="236" key="MultipleFileMergeDialog/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1608072348722" />
+    <state x="710" y="231" key="RollbackChangesDialog" timestamp="1608072320835">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="710" y="231" key="RollbackChangesDialog/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1608072320835" />
+    <state x="399" y="47" key="Vcs.Push.Dialog.v2" timestamp="1604665371490">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="399" y="47" key="Vcs.Push.Dialog.v2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1604665371490" />
+    <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1608072338108">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1608072338108" />
+    <state x="415" y="147" width="672" height="444" key="search.everywhere.popup" timestamp="1603890473641">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/-1920.0.1280.693/0.0.1920.1040@0.0.1920.1040" timestamp="1603176410978" />
+    <state x="415" y="147" width="672" height="444" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1603890473641" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/semantic_labeling_arabic$tagGraph.coverage" NAME="tagGraph Coverage Results" MODIFIED="1594044587836" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/server/term_labeling/scripts" />
+    <SUITE FILE_PATH="coverage/semantic_labeling_arabic$createGraph.coverage" NAME="createGraph Coverage Results" MODIFIED="1604664870774" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/server/term_labeling/scripts" />
+    <SUITE FILE_PATH="coverage/semantic_labeling_arabic$views.coverage" NAME="views Coverage Results" MODIFIED="1603175345248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/server/term_labeling" />
+    <SUITE FILE_PATH="coverage/semantic_labeling_arabic$mongodbConnector.coverage" NAME="mongodbConnector Coverage Results" MODIFIED="1603890184113" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/server/term_labeling/scripts" />
+  </component>
+</project>
