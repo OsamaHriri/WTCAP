@@ -1,6 +1,10 @@
 @import "https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css";
 
-.container {
+.body{
+    background-color: #e0e0e0;
+}
+
+#main_cont {
     font-size: 1.15em;
     direction: rtl;
 }
@@ -28,6 +32,81 @@
 
 .term:hover {
     color: cornflowerblue;
+}
+
+.paper {
+    background-color: #f8f3e9;
+}
+
+.paper::before {
+    bottom: 100%;
+    background-image: url('img/paper-opening.png');
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: block;
+    height: 15px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.paper::after {
+    top: 100%;
+    content: "";
+    background-image: url('img/paper-closing.png');
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: block;
+    height: 15px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+/* term menu */
+.term-menu {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    padding: 12px 0;
+    width: auto;
+    background-color: #fff;
+    border: solid 1px #dfdfdf;
+    box-shadow: 1px 1px 2px #cfcfcf;
+}
+
+.term-menu--active {
+    display: block;
+}
+
+.term-menu__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.term-menu__item {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.term-menu__item:last-child {
+    margin-bottom: 0;
+}
+
+.term-menu__link {
+    display: -webkit-box;
+    padding: 4px 12px;
+    color: #2B7A78;
+    text-decoration: none;
+}
+
+.term-menu__link:hover {
+    color: #fff;
+    background-color: #2B7A78;
+    text-decoration: none;
 }
 
 /*========================

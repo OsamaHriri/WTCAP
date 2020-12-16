@@ -4,12 +4,18 @@
 body {
     font-family: 'Markazi Text', sans-serif;
     min-height: 100vh;
-    background: white;
+    height: 500px; /* You must set a specified height */
+    /*background-image: url("img/marjanblan-5Ft4NWTmeJE-unsplash.jpg");*/
+    background-color: #eaebe6; /* Used if the image is unavailable */
+    /*background-position: center; !* Center the image *!*/
+    /*background-repeat: no-repeat; !* Do not repeat the image *!*/
+    /*background-size: cover; !* Resize the background image to cover the entire container *!*/
 }
+
+
 
 /* nav bar css */
 .navbar {
-    background-color: #112D32;
     font-family: 'Katibeh', cursive;
     font-size: 1.5em;
 }
