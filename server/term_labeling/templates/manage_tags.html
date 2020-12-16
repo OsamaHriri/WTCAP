@@ -244,7 +244,7 @@ $(document).ready(function() {
             <input type="text" id="mySearchInput" onclick="showTags()" onkeyup="filterSearch()"
                    placeholder="إبحث..."
                    title="إبحث...">
-            <button type="button" class="btn btn-link" data-action="View" data-toggle="modal"
+            <button type="button" id="addRoot" class="btn btn-link" data-action="View" data-toggle="modal"
                     data-target="#insertRootModal">+ Root
             </button>
             <div id="tagsDropDown">
@@ -260,7 +260,7 @@ $(document).ready(function() {
         </div>
 
         <div class="col-sm-9 graph">
-            <button type="button" id="showsub" class="btn btn-default hover" onclick="draw3()">Show subTree</button>
+            <button type="button" id="showsub" class="btn btn-default hover" disabled onclick="draw3()">Show subTree</button>
             <button type="button" id="render" class="btn btn-default hover" onclick="renderviz()">Refresh</button>
             <button type="button" id="disable" class="btn btn-default hover" onclick="disable()">Disable Network</button>
             <body onload="draw()">
