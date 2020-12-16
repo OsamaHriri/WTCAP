@@ -17,18 +17,6 @@ from  pyarabic.araby import strip_harakat
 # In[3]:
 
 
-f = c.get_all_poems()
-
-
-# In[4]:
-
-
-len(f)
-
-
-# In[5]:
-
-
 poems_dir = 'poems/*.txt'
 
 

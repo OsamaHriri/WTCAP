@@ -17,6 +17,7 @@ class Connector:
         self.poemsCollections = self.db["poems"]
         self.poetsCollections = self.db["poets"]
         self.periodsCollections = self.db["period"]
+        
     def get_poem(self, poemID):
         return list(self.poemsCollections.find({"id": str(poemID)}))
 
@@ -40,7 +41,16 @@ class Connector:
                 return per['name']
         return "unknown"
 
+    def get_poet_per(self,poet_id):
+         poet_id = int(poet_id)
+         per_id = self.poetsCollections.find({"id": poet_id},{"period": 1})
+         
+         per_id = list(per_id)[0]['period']
 
+         return self.get_periodname_by_id(per_id)
+   
+   
+   
     def get_poems_context(self):
         return list(self.poemsCollections.find({}, {"_id": 0, "context": 1}))
 
@@ -61,4 +71,4 @@ class Connector:
 
 if __name__ == "__main__":
 
-    print(Connector().get_periodname_by_id(18))
+    print(Connector().get_poet_per(25))

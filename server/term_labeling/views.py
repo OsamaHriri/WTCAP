@@ -29,11 +29,13 @@ def main_tag_page(request):
 
 
     poem = (c.get_poem(id))[0]
-    # meta_data = c.get_meta_data(poem.poet_id)
-
+    poem['keywords']  = ', '.join(poem['keywords'])
+    poem['per'] = c.get_poet_per(int(poem['poet_id']))
+    if poem['per'] == 'unknown':
+        poem['per'] = 'ألفترة غير معروفه'
+    poem['metadata'] = poem['name'] + ', ' + poem['per'] + ', ' + str(poem['poet_id'])
     context = {
         'poems': poem,
-        # 'meta': meta_data,
         'title': 'Home',
         'all_tags': all_tags,
         'poem_id': id,
@@ -59,9 +61,6 @@ def index(request):
         'title': 'Home',
 
         'all_tags': all_tags
-
-    context = {
-        'title': 'Main Page',
 
     }
     return render(request, 'index.html', context)
