@@ -77,13 +77,13 @@ function disable(){
     else {
          flagdisable = false
          document.querySelector('#disable').textContent = "Disable Network"
-         document.getElementById("showsub").disabled = false;
          document.getElementById("render").disabled = false;
          document.getElementsByClassName('infinity')[0].style.display = "none";
          if(state == 1){
             viz.reinit(config);
             viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *");
          }else if(state == 2){
+            document.getElementById("showsub").disabled = false;
             createNetwork()
          }
     }
@@ -274,6 +274,8 @@ function delete_tag() {
             all_tags = all_tags.filter(e => e !== rightclicked);
             if (parent.length === 0) {
                 createNetworkforRoots();
+                document.getElementById("showsub").disabled = true;
+                document.getElementById("addRoot").disabled = false;
             } else {
                 search2(parent[0].parent.name)
             }
@@ -289,6 +291,8 @@ function delete_all() {
             loadTags();
             if (parent.length === 0) {
                createNetworkforRoots();
+                document.getElementById("showsub").disabled = true;
+                document.getElementById("addRoot").disabled = false;
             } else {
                 search2(parent[0].parent.name)
             }
@@ -444,12 +448,17 @@ function item_clicked(text) {
                 viz.clearNetwork();
                 viz.reinit(config);
                 viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *");
+                document.getElementById("showsub").disabled = true;
             }
+            document.getElementById("addRoot").disabled = false;
             state = 1;
             return;
         }
-        if(flagdisable == false)
-              createNetwork();
+        if(flagdisable == false){
+             createNetwork();
+             document.getElementById("showsub").disabled = false;
+         }
+        document.getElementById("addRoot").disabled = true;
         state = 2
         var current = document.createElement("il");
         if (parent.length > 0) {
