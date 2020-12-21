@@ -28,6 +28,13 @@ def main_tag_page(request):
         id = 2066
 
     poem = (c.get_poem(id))[0]
+
+    split_context = []
+    for row in poem['context']:
+        split_context.append({'row_index': row['row_index'],
+                              'sadr': row['sadr'].strip().split(' '),
+                              'ajuz': row['ajuz'].strip().split(' ')})
+    poem['context'] = split_context
     # meta_data = c.get_meta_data(poem.poet_id)
     context = {
         'poems': poem,

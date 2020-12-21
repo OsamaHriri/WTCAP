@@ -146,10 +146,14 @@
                         <label for="{{ forloop.counter }}"> {{ poem.row_index }} </label>
                     </td>
                     <td>
-                        <label for="{{ forloop.counter }}"> {{ poem.sadr }} </label>
+                        {% for term in poem.sadr %}
+                        <span class='term' id="sadr_{{ forloop.counter }}"> {{term}} </span>
+                        {% endfor %}
                     </td>
                     <td>
-                        <label for="{{ forloop.counter }}"> {{ poem.ajuz }} </label>
+                        {% for term in poem.ajuz %}
+                        <span class='term' id="ajuz_{{ forloop.counter }}"> {{term}} </span>
+                        {% endfor %}
                     </td>
                     <td>
                         <button type='button' class='btn btn-light' onclick='save_term_tag()' style="display: none"> Save</button>
