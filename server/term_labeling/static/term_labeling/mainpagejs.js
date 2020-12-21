@@ -150,6 +150,15 @@ function add_tag(obj) {
 let ul1;
 let ul2;
 
+function get_Tagged_Words(text) {
+    return $.ajax({
+        type: "GET",
+        url: " getTaggedWords/",
+        data: {'id': poemID},
+        dataType: "json",
+    });
+}
+
 function addNewRoot(text) {
     return $.ajax({
         type: "GET",
@@ -599,5 +608,18 @@ function refreshVis() {
 }
 
 window.onload = function () {
-    poemID = document.getElementById("poem_id").innerText
+    var obj = document.getElementById("poem_id")
+    poemID = obj.innerText
+    obj.remove()
+    get_Tagged_Words(poemID).done (function(d){
+        data = d.word
+        console.log(data)
+        document.querySelectorAll(".term").forEach(function(d){
+            }
+        });
+    });
+
+
 }
+
+

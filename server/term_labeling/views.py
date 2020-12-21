@@ -516,40 +516,9 @@ def getTaggedWords(request):
     if request.method == 'GET':
         req = request.GET
         id = req.get('id')
-        c = Connector()
-        poem = (c.get_poem(id))[0]
-        l = " "
-        dictenory = {}
-        for j in poem["context"]:
-            s = ""
-            if 'sadr' in j:
-                for word in j['sadr'].split():
-                    temp = stemmer.stem(araby.strip_tashkeel(word))
-                    if temp in dictenory:
-                        if word not in dictenory[temp]:
-                            dictenory[temp].append(word)
-                    else:
-                        dictenory[temp] = [word]
-                    s += temp + " "
-                # s += stemmer.stem(araby.strip_tashkeel(j['sadr'])) + " "
-            if 'ajuz' in j:
-                for word in j['ajuz'].split():
-                    temp = stemmer.stem(araby.strip_tashkeel(word))
-                    if temp in dictenory:
-                        if word not in dictenory[temp]:
-                            dictenory[temp].append(word)
-                    else:
-                        dictenory[temp] = [word]
-                    s += temp + " "
-            l += s
-        tokens = re.findall(r"[\w']+", l)
         w = Tagging()
-        currentTagged = w.get_tagged_words_from_poem(tokens)
-        l = []
-        for key, value in dictenory.items():
-            if key in currentTagged:
-                l += dictenory[key]
-        return JsonResponse({"word": l})
+        currentTagged = w.get_tagged_words_from_poem(id)
+        return JsonResponse({"word": currentTagged})
 
 
 mutex = Lock()

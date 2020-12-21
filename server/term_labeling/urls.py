@@ -40,4 +40,5 @@ urlpatterns = [
     re_path('get_all_poets/$', views.get_all_poets, name='get_all_poets'),
     re_path('get_terms_freq/$', views.get_terms_freq, name='get_terms_freq'),
     re_path('maxFrequencyinPeriod/$', views.maxFrequencyinPeriod, name='maxFrequencyinPeriod'),
+    re_path('getTaggedWords/$', views.getTaggedWords, name='getTaggedWords'),
 ]
