@@ -33,7 +33,7 @@ $(document).ready(function() {
         </div>
 
         <!-- Choose poem -->
-        <div class=".col-md- mt-4">
+        <div class=".col-md- mt-4" id="poetDiv" style="display:none">
             <button id="poembtn" onclick="toggleDropDown('poemDropDown')" class="dropbtn">قصيدة</button>
             <div id="poemDropDown" class="dropdown-content">
                 <input type="text" placeholder="إبحث..." id="poemInput" onkeyup="filterFunction()">
@@ -41,7 +41,7 @@ $(document).ready(function() {
         </div>
 
         <!-- Select button -->
-        <div class="btn btn-three mt-4" onclick="submitPoem()">
+        <div class="btn btn-three mt-4" id="btn-analyze"onclick="submitPoem()" style="display:none">
             <span onclick="submitPoem()">حلل</span>
         </div>
         <div class=".col-md mt-5">

@@ -1,7 +1,5 @@
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
-let poemid = 2066;
-let all_poems = [];
 let all_poets = [];
 
 // A $( document ).ready() block.
@@ -9,10 +7,6 @@ $(document).ready(function () {
     getAllPoets().done(function (d) {
         all_poets = d['poets'];
         update_poets_list()
-    });
-    getAllPoems().done(function (d) {
-        all_poems = d['poems'];
-        update_poems_list(all_poems)
     });
 });
 
@@ -41,14 +35,7 @@ function update_poems_list(poems_list) {
         poems_html += "<a href=\"#\" id=" + p.id + " class=\"poems-link\" onclick=\"choosePoem(this)\">" + p.name + "</a>";
     });
     poetDropDown.innerHTML += poems_html;
-}
-
-function getAllPoems() {
-    return $.ajax({
-        type: "GET",
-        url: "get_all_poems/",
-        dataType: "json"
-    });
+    document.getElementById('poetDiv').style.display = "block"
 }
 
 function getAllPoets() {
@@ -81,18 +68,12 @@ function choosePoet(obj) {
     const value = obj.text;
     let btn = document.getElementById("poetbtn");
     btn.innerText = value;
+    document.getElementById("poembtn").innerText = "قصيدة"
+    document.getElementById('btn-analyze').style.display="none"
     toggleDropDown("poetDropDown");
     get_relevant(id).done(function (d) {
         const relevant_ids = d['poem_ids'];
-        const splitteddata = relevant_ids.split(",");
-        $(".poems-link").each(function () {
-            const currpoem = this.id;
-            if (($.inArray(currpoem, splitteddata)) === -1) {
-                document.getElementById(currpoem).style.display = 'none'
-            }else {
-                document.getElementById(currpoem).style.display = 'block'
-            }
-        });
+        update_poems_list(relevant_ids)
     });
 }
 
@@ -102,6 +83,7 @@ function choosePoem(obj) {
     let btn = document.getElementById("poembtn");
     btn.innerText = value;
     poemid = id;
+    document.getElementById('btn-analyze').style.display = "inline-block"
     toggleDropDown("poemDropDown");
 }
 
@@ -118,6 +100,5 @@ function get_relevant(id) {
 }
 
 function submitPoem() {
-    console.log(poemid);
     window.location = '/main_tag_page/?poem_iid=' + poemid;
 }

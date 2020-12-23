@@ -114,12 +114,7 @@ def statistics(request):
 
 @login_required()
 def select_poet_page(request):
-    c = Connector()
-    poets = c.get_poets()
-    poems = c.get_poems()
     context = {
-        'poets': poets,
-        'poems': poems,
         'title': 'Poem selection'
     }
     return render(request, 'select_poet.html', context)
@@ -134,13 +129,9 @@ def poet_poems(request):
         poetId = request.GET['poet_id']
         c = Connector()
         poems = c.get_poems_by_poet(int(poetId))
-        idlist = ""
-        for pp in poems:
-            idlist = idlist + pp['id'] + ","
-        if idlist is not None:
-            print(idlist)
+        if poems is not None:
             return JsonResponse({
-                "poem_ids": idlist})
+                "poem_ids": poems})
         else:
             return HttpResponse("not found")
     else:
