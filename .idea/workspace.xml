@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/wordTagging.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/wordTagging.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -591,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608551974974</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="#18 2nd phase of preprocessing">
+      <created>1608559847863</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1608559847864</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -611,7 +614,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="hierarchy right click features" />
     <MESSAGE value="change parent" />
     <MESSAGE value="delete All" />
     <MESSAGE value="fix edit tag" />
@@ -636,7 +638,8 @@
     <MESSAGE value="fix some element display in statistic and manage tag pages" />
     <MESSAGE value="optimize poems analysis run time" />
     <MESSAGE value="create word2vec model" />
-    <option name="LAST_COMMIT_MESSAGE" value="create word2vec model" />
+    <MESSAGE value="#18 2nd phase of preprocessing" />
+    <option name="LAST_COMMIT_MESSAGE" value="#18 2nd phase of preprocessing" />
   </component>
   <component name="WindowStateProjectService">
     <state x="699" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603147034115">
