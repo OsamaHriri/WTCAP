@@ -244,17 +244,16 @@ $(document).ready(function() {
             <input type="text" id="mySearchInput" onclick="showTags()" onkeyup="filterSearch()"
                    placeholder="إبحث..."
                    title="إبحث...">
-            <button type="button" id="addRoot" class="btn btn-link" data-action="View" data-toggle="modal"
-                    data-target="#insertRootModal">+ Root
-            </button>
             <div id="tagsDropDown">
                 <ul id="myUL">
                     {% for tag in all_tags %}
-                    <li><a href="#" id="{{ tag }}" onclick="searchTag(this)"> {{ tag }} </a></li>
+                    <li><a href="#" id="{{ tag }}" class="dropdownbox" onclick="searchTag(this)"> {{ tag }} </a></li>
                     {% endfor %}
-
                 </ul>
             </div>
+            <button type="button" id="addRoot" class="btn btn-link" data-action="View" data-toggle="modal"
+                    data-target="#insertRootModal">+ Root
+            </button>
             <ul class="tree">
             </ul>
         </div>

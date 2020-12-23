@@ -29,7 +29,7 @@ function update_tags_list() {
     let myUL = document.getElementById('myUL');
     myUL.innerHTML = "";
     all_tags.forEach(function (idx, li) {
-        myUL.innerHTML += "<li><a href=\"#\" id=" + idx + " onclick=\"searchTag(this)\">" + idx + "</a></li>";
+        myUL.innerHTML += "<li><a href=\"#\" class=\"dropdownbox\" id=" + idx + " onclick=\"searchTag(this)\">" + idx + "</a></li>";
     });
 }
 
@@ -235,7 +235,7 @@ function searchTag(obj) {
         if (depth === 1)
             flag = false;
         item_clicked(text);
-        $('#tagsDropDown').toggle();
+         $('#tagsDropDown').toggle();
     });
 }
 
@@ -317,7 +317,7 @@ function new_parent() {
                 return
             }
             all_tags.push(text);
-            myUL.innerHTML += "<li><a href=\"#\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
+            myUL.innerHTML += "<li><a href=\"#\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
             document.getElementById("parent-name").value = "";
             search2(rightclicked);
             $('#insertParentModal').modal('hide')
@@ -336,7 +336,7 @@ function edit_tag() {
         document.getElementById(rightclicked).remove();
         all_tags = all_tags.filter(e => e !== rightclicked);
         all_tags.push(text);
-        myUL.innerHTML += "<li><a href=\"#\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
+        myUL.innerHTML += "<li><a href=\"#\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
         document.getElementById("edited-name").value = "";
         emptyTree();
         if (tagParent === "") {
@@ -367,7 +367,7 @@ function new_child() {
                 return
             }
             all_tags.push(text);
-            myUL.innerHTML += "<li><a href=\"#\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
+            myUL.innerHTML += "<li><a href=\"#\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
             document.getElementById("child-name").value = "";
             search2(rightclicked);
             $('#insertChildModal').modal('hide')
@@ -386,7 +386,7 @@ function new_root(){
                 return
             }
             all_tags.push(text);
-            myUL.innerHTML += "<li><a href=\"#\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
+            myUL.innerHTML += "<li><a href=\"#\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
             document.getElementById("root-name").value = "";
             createNetworkforRoots()
             $('#insertRootModal').modal('hide')
@@ -622,7 +622,13 @@ function search2(text) {
 
 
 $(document).ready(function () {
-    getHeaders()
+     getHeaders()
+        $(document).click(function (e) {
+           if($('#tagsDropDown').is(':visible') && e.target.id != "mySearchInput" && e.target.className != "dropdownbox")
+            {
+                 $('#tagsDropDown').hide();
+            }
+        });
 });
 
 
