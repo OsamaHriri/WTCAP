@@ -604,7 +604,7 @@ function refreshVis() {
     viz.reload()
 }
 
-window.onload = function () {
+$(document).ready(function () {
     var obj = document.getElementById("poem_id");
     poemID = obj.innerText;
     obj.remove();
@@ -612,10 +612,12 @@ window.onload = function () {
         data = d.word;
         console.log(data);
         document.querySelectorAll(".term").forEach(function (d) {
-            console.log("here")
-
+            const properties = d.id.split('_').map(x=>+x)
+            if(data.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])){
+                    d.style.color = "green"
+              }
         });
     });
-};
+});
 
 
