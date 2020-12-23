@@ -620,8 +620,10 @@ function search2(text) {
     });
 }
 
-//window.onload = loadTags();
-window.onload = getHeaders();
+
+$(document).ready(function () {
+    getHeaders()
+});
 
 
 var config = {

@@ -552,12 +552,6 @@ function searchSuggestion(text) {
     });
 }
 
-//Load initial headers
-window.onload = getHeaders();
-//Load tags for seatch bar
-//window.onload = loadTags();
-
-
 function draw() {
     $('#viz').ready(function () {
         statement = "match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$', poemID)
@@ -605,6 +599,7 @@ function refreshVis() {
 }
 
 $(document).ready(function () {
+    getHeaders();
     var obj = document.getElementById("poem_id");
     poemID = obj.innerText;
     obj.remove();
