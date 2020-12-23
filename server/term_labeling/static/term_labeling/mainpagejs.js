@@ -8,6 +8,7 @@ function initialize_index() {
     }
 }
 
+
 let selected_tags = [];
 let selected_term = "";
 let selected_obj = "";
@@ -46,16 +47,6 @@ function box_checked(obj) {
     newsajuz = newsajuz + "</p>";
     ajuz.innerHTML = newsajuz;
 
-    // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-//     const cell1 = row.insertCell(0);
-//     const cell2 = row.insertCell(1);
-//     const cell3 = row.insertCell(2);
-//     const cell4 = row.insertCell(3);
-//
-// // Add some text to the new cells:
-//     cell2.innerHTML = "اختر كلمة";
-//     cell3.innerHTML = "<button type='button' class='btn' onclick='save_term_tag()'> Save </button>";
-//     cell1.innerHTML = "<button type='button' class='btn disabled' > + </button>";
     // disable right click and show custom context menu
     $(".term").bind('contextmenu', function (e) {
         // const tag_text = this.innerText.slice(1, this.innerText.lastIndexOf("-"));
@@ -115,6 +106,12 @@ function update_tags_list() {
     myUL.innerHTML = "";
     all_tags.forEach(function (idx, li) {
         myUL.innerHTML += "<li><a href=\"#\" id=" + idx + " onclick=\"searchTag(this)\">" + idx + "</a></li>";
+    });
+    $('#trigger').click(function () {
+        $('#tagsDropDown').toggle();
+    });
+    $(document).click(function () {
+        $('#tagsDropDown').hide()
     });
 }
 
@@ -608,18 +605,17 @@ function refreshVis() {
 }
 
 window.onload = function () {
-    var obj = document.getElementById("poem_id")
-    poemID = obj.innerText
-    obj.remove()
-    get_Tagged_Words(poemID).done (function(d){
-        data = d.word
-        console.log(data)
-        document.querySelectorAll(".term").forEach(function(d){
-            }
+    var obj = document.getElementById("poem_id");
+    poemID = obj.innerText;
+    obj.remove();
+    get_Tagged_Words(poemID).done(function (d) {
+        data = d.word;
+        console.log(data);
+        document.querySelectorAll(".term").forEach(function (d) {
+            console.log("here")
+
         });
     });
-
-
-}
+};
 
 
