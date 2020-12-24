@@ -419,7 +419,7 @@ def get_all_poems(request):
     if request.method == 'GET':
         c = Connector()
         poems = c.get_poems()
-        if tags is not None:
+        if poems is not None:
             return JsonResponse({
                 "poems": poems})
         else:

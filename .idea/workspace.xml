@@ -4,6 +4,8 @@
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_js.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_js.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -272,13 +274,6 @@
       <workItem from="1604572704097" duration="1334000" />
       <workItem from="1604593172244" duration="15000" />
       <workItem from="1604661622107" duration="4279000" />
-    </task>
-    <task id="LOCAL-00003" summary="added intial sever">
-      <created>1587295998827</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1587295998827</updated>
     </task>
     <task id="LOCAL-00004" summary="create neo4j db and create search , add ..etc functions">
       <created>1588675944608</created>
@@ -616,7 +611,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608758140571</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="fix dropdown window in select poet page">
+      <created>1608813950843</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1608813950843</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -636,7 +638,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="#16 fixed tags tree load - tagging page" />
     <MESSAGE value="did basis for #25 + translated header" />
     <MESSAGE value="updated meetings" />
     <MESSAGE value="#15 - saves information" />
@@ -661,7 +662,8 @@
     <MESSAGE value="fix hierarchy not loading in some occasions" />
     <MESSAGE value="fix dropdown window in manage tags page" />
     <MESSAGE value="fix select poet page loading problem" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix select poet page loading problem" />
+    <MESSAGE value="fix dropdown window in select poet page" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix dropdown window in select poet page" />
   </component>
   <component name="WindowStateProjectService">
     <state x="699" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603147034115">

@@ -9,11 +9,11 @@ $(document).ready(function () {
         update_poets_list()
     });
      $(document).click(function (e) {
-           if($('#poetDropDown').is(':visible') && e.target.id != "poetbtn" && e.target.className != "poet-link")
+           if($('#poetDropDown').is(':visible') && e.target.id != "poetbtn" && e.target.className != "poet-link" && e.target.id != "poetInput")
             {
                  $('#poetDropDown').toggle();
             }
-              if($('#poemDropDown').is(':visible') && e.target.id != "poembtn" && e.target.className != "poems-link")
+            else if($('#poemDropDown').is(':visible') && e.target.id != "poembtn" && e.target.className != "poems-link" && e.target.id != "poemInput" )
             {
                  $('#poemDropDown').toggle();
             }
@@ -39,11 +39,15 @@ function update_poets_list() {
 }
 
 function update_poems_list(poems_list) {
-    let poetDropDown = document.getElementById('poemDropDown');
-    let poems_html = "";
+    var poetDropDown = document.getElementById('poemDropDown');
+    var poems_html = ""
     poems_list.forEach(function (p) {
         poems_html += "<a href=\"#\" id=" + p.id + " class=\"poems-link\" onclick=\"choosePoem(this)\">" + p.name + "</a>";
     });
+    while (poetDropDown.lastChild.id !== 'poemInput') {
+        poetDropDown.removeChild(poetDropDown.lastChild);
+    }
+    console.log(poetDropDown)
     poetDropDown.innerHTML += poems_html;
     document.getElementById('poetDiv').style.display = "block"
 }
@@ -83,6 +87,7 @@ function choosePoet(obj) {
     toggleDropDown("poetDropDown");
     get_relevant(id).done(function (d) {
         const relevant_ids = d['poem_ids'];
+        console.log(relevant_ids)
         update_poems_list(relevant_ids)
     });
 }
