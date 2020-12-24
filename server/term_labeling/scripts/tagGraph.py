@@ -210,28 +210,3 @@ class Tag(object):
 
 
 
-
-
-#tag = Tag()
-# tag.getTags("عجل")
-# tag.addTag("بحر")
-#tag.addTag("a")
-#tag.addTag("b","a")
-#tag.addTag("d","a")
-#tag.addTag("c","b")
-#tag.change_Parent("a","c")
-#tag.newParent("d","b")
-#tag.removeTag("c")
-#tag.removeTag("a")
-#tag.removeTag("b")
-#tag.removeTag("d")
-
-#for t in tag.getAllTags():
-#    print(t.name,t.id,t.parent)
-
-#print(tag.getChildrens("العالم"))
-#print(tag.getParent("العالم"))
-#print( tag.getAllheads())
-#print(tag.getAllTagsbyjson())
-#print(tag.findDepth("العالم"))
-#print(tag.findDepth("ماء"))
