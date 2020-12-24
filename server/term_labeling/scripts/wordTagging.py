@@ -13,6 +13,7 @@ class Tagging(object):
         self.removeWordQ = """ Match (w:Word) where w.name=$word detach delete w """
         self.getTagOfWordQ = """ Match (w:Word) -[r:tag]-> (t:Tag) with w , t , count(r) as c where w.name=$word  return {name :t.name  , frequency: c } as Tag order by c Desc """
         self.checkWords = """match (:Tag)<-[r:tag]-(w:Word) where  r.poemID=$poem  return distinct r.position as position,r.row as row , r.sader as sader """
+        self.checkpoems = """ match (:Tag)<-[r:tag]-(:Word) where r.poemID in $poems return distinct r.poemID as poemID """
 
     def ifExists(self, word=None, tag=None, ):
         """
@@ -98,9 +99,16 @@ class Tagging(object):
           l.append(d)
       return l
 
+    def get_Tagged_poems(self,poems):
+        l = []
+        for p in poems :
+            l.append(p["id"])
+        return self.graph.run(self.checkpoems, poems = l).data()
 
-#t = Tagging()
-# t.tagWord("الارض", "العالم", 3,1,1, 3)
+
+
+t = Tagging()
+t.tagWord("الارض", "العالم",5660,1,1, 3)
 # t.tagWord("الارض", "العالم", 3,1,1, 4)
 # t.tagWord("الارض", "بحر", 3,1,1, 3)
 # t.tagWord("الارض", "العالم", 3,1,1, 5)

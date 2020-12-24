@@ -38,11 +38,14 @@ function update_poets_list() {
     poetDropDown.innerHTML += poets_html
 }
 
-function update_poems_list(poems_list) {
+function update_poems_list(poems_list , tagged_list) {
     var poetDropDown = document.getElementById('poemDropDown');
     var poems_html = ""
+    console.log(tagged_list)
     poems_list.forEach(function (p) {
-        poems_html += "<a href=\"#\" id=" + p.id + " class=\"poems-link\" onclick=\"choosePoem(this)\">" + p.name + "</a>";
+        if(tagged_list.some(item => item.poemID === p.id))
+            poems_html += "<a href=\"#\" id=" + p.id + " style=\"color:blue\" class=\"poems-link\" onclick=\"choosePoem(this)\">" + p.name + "</a>";
+        else  poems_html += "<a href=\"#\" id=" + p.id + " class=\"poems-link\" onclick=\"choosePoem(this)\">" + p.name + "</a>";
     });
     while (poetDropDown.lastChild.id !== 'poemInput') {
         poetDropDown.removeChild(poetDropDown.lastChild);
@@ -82,13 +85,14 @@ function choosePoet(obj) {
     const value = obj.text;
     let btn = document.getElementById("poetbtn");
     btn.innerText = value;
+    document.getElementById("poetDiv").style.display = "none"
     document.getElementById("poembtn").innerText = "قصيدة"
     document.getElementById('btn-analyze').style.display="none"
     toggleDropDown("poetDropDown");
     get_relevant(id).done(function (d) {
-        const relevant_ids = d['poem_ids'];
-        console.log(relevant_ids)
-        update_poems_list(relevant_ids)
+        const current_poems = d['poem_ids'];
+        const tagged_poems = d["tagged"]
+        update_poems_list(current_poems , tagged_poems)
     });
 }
 

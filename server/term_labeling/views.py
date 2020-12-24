@@ -129,9 +129,11 @@ def poet_poems(request):
         poetId = request.GET['poet_id']
         c = Connector()
         poems = c.get_poems_by_poet(int(poetId))
+        t = Tagging()
+        poems_tagged = t.get_Tagged_poems(poems)
         if poems is not None:
             return JsonResponse({
-                "poem_ids": poems})
+                "poem_ids": poems , "tagged" : poems_tagged})
         else:
             return HttpResponse("not found")
     else:
