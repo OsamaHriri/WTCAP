@@ -8,14 +8,24 @@ $(document).ready(function () {
         all_poets = d['poets'];
         update_poets_list()
     });
+     $(document).click(function (e) {
+           if($('#poetDropDown').is(':visible') && e.target.id != "poetbtn" && e.target.className != "poet-link")
+            {
+                 $('#poetDropDown').toggle();
+            }
+              if($('#poemDropDown').is(':visible') && e.target.id != "poembtn" && e.target.className != "poems-link")
+            {
+                 $('#poemDropDown').toggle();
+            }
+     });
 });
 
 function toggleDropDown(id) {
-    document.getElementById(id).classList.toggle("show");
-    /*
-    if (id === 'poetDropDown') {
-        resetPoems();
-    }*/
+    if (id === 'poetDropDown')
+        $('#poetDropDown').toggle();
+    else {
+        $('#poemDropDown').toggle();
+    }
 }
 
 

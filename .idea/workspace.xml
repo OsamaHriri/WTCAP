@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="fix select poet page loading problem">
+    <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/mongodbConnector.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/mongodbConnector.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_js.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_js.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -275,13 +272,6 @@
       <workItem from="1604572704097" duration="1334000" />
       <workItem from="1604593172244" duration="15000" />
       <workItem from="1604661622107" duration="4279000" />
-    </task>
-    <task id="LOCAL-00002" summary="scrapper now retives all the data form the page and saves it in a txt file &#10;bot cant be callled from terminal by :&#10;python almaany_translator_bot.py &lt; wordToBeTranslated &gt;">
-      <created>1584012242692</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1584012242693</updated>
     </task>
     <task id="LOCAL-00003" summary="added intial sever">
       <created>1587295998827</created>
@@ -619,7 +609,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608754910896</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="fix select poet page loading problem">
+      <created>1608758140571</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1608758140571</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -639,7 +636,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add new features to graph viz" />
     <MESSAGE value="#16 fixed tags tree load - tagging page" />
     <MESSAGE value="did basis for #25 + translated header" />
     <MESSAGE value="updated meetings" />
@@ -664,7 +660,8 @@
     <MESSAGE value="#18 color the words thats being tagged before" />
     <MESSAGE value="fix hierarchy not loading in some occasions" />
     <MESSAGE value="fix dropdown window in manage tags page" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix dropdown window in manage tags page" />
+    <MESSAGE value="fix select poet page loading problem" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix select poet page loading problem" />
   </component>
   <component name="WindowStateProjectService">
     <state x="699" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603147034115">
