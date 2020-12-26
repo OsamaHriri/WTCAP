@@ -247,7 +247,7 @@ $(document).ready(function() {
             <div id="tagsDropDown">
                 <ul id="myUL">
                     {% for tag in all_tags %}
-                    <li><a href="#" id="{{ tag }}" class="dropdownbox" onclick="searchTag(this)"> {{ tag }} </a></li>
+                    <li><a href="javascript:void(0)" id="{{ tag }}" class="dropdownbox" onclick="searchTag(this)"> {{ tag }} </a></li>
                     {% endfor %}
                 </ul>
             </div>
