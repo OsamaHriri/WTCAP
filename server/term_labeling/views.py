@@ -23,7 +23,7 @@ def main_tag_page(request):
     all_tags = t.getAllTags()["tags"]
     c = Connector()
     if request.method == 'GET':
-        id = request.GET['poem_iid']
+        id = request.GET['poem_id']
     else:
         id = 2066
 

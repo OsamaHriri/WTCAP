@@ -8,16 +8,13 @@ $(document).ready(function () {
         all_poets = d['poets'];
         update_poets_list()
     });
-     $(document).click(function (e) {
-           if($('#poetDropDown').is(':visible') && e.target.id != "poetbtn" && e.target.className != "poet-link" && e.target.id != "poetInput")
-            {
-                 $('#poetDropDown').toggle();
-            }
-            else if($('#poemDropDown').is(':visible') && e.target.id != "poembtn" && e.target.className != "poems-link" && e.target.id != "poemInput" )
-            {
-                 $('#poemDropDown').toggle();
-            }
-     });
+    $(document).click(function (e) {
+        if ($('#poetDropDown').is(':visible') && e.target.id !== "poetbtn" && e.target.className !== "poet-link" && e.target.id !== "poetInput") {
+            $('#poetDropDown').toggle();
+        } else if ($('#poemDropDown').is(':visible') && e.target.id !== "poembtn" && e.target.className !== "poems-link" && e.target.id !== "poemInput") {
+            $('#poemDropDown').toggle();
+        }
+    });
 });
 
 function toggleDropDown(id) {
@@ -38,19 +35,19 @@ function update_poets_list() {
     poetDropDown.innerHTML += poets_html
 }
 
-function update_poems_list(poems_list , tagged_list) {
-    var poetDropDown = document.getElementById('poemDropDown');
-    var poems_html = ""
-    console.log(tagged_list)
+function update_poems_list(poems_list, tagged_list) {
+    const poetDropDown = document.getElementById('poemDropDown');
+    let poems_html = "";
+    console.log(tagged_list);
     poems_list.forEach(function (p) {
-        if(tagged_list.some(item => item.poemID === p.id))
+        if (tagged_list.some(item => item.poemID === p.id))
             poems_html += "<a href=\"#\" id=" + p.id + " style=\"color:blue\" class=\"poems-link\" onclick=\"choosePoem(this)\">" + p.name + "</a>";
-        else  poems_html += "<a href=\"#\" id=" + p.id + " class=\"poems-link\" onclick=\"choosePoem(this)\">" + p.name + "</a>";
+        else poems_html += "<a href=\"#\" id=" + p.id + " class=\"poems-link\" onclick=\"choosePoem(this)\">" + p.name + "</a>";
     });
     while (poetDropDown.lastChild.id !== 'poemInput') {
         poetDropDown.removeChild(poetDropDown.lastChild);
     }
-    console.log(poetDropDown)
+    console.log(poetDropDown);
     poetDropDown.innerHTML += poems_html;
     document.getElementById('poetDiv').style.display = "block"
 }
@@ -68,8 +65,8 @@ function filterFunction(dropDownId, inputId) {
     let input, filter, ul, li, a, i;
     input = document.getElementById(inputId);
     filter = input.value.toUpperCase();
-    div = document.getElementById(dropDownId);
-    a = div.getElementsByTagName("a");
+    let divv = document.getElementById(dropDownId);
+    a = divv.getElementsByTagName("a");
     for (i = 0; i < a.length; i++) {
         txtValue = a[i].textContent || a[i].innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -85,14 +82,14 @@ function choosePoet(obj) {
     const value = obj.text;
     let btn = document.getElementById("poetbtn");
     btn.innerText = value;
-    document.getElementById("poetDiv").style.display = "none"
-    document.getElementById("poembtn").innerText = "قصيدة"
-    document.getElementById('btn-analyze').style.display="none"
+    document.getElementById("poetDiv").style.display = "none";
+    document.getElementById("poembtn").innerText = "قصيدة";
+    document.getElementById('btn-analyze').style.display = "none";
     toggleDropDown("poetDropDown");
     get_relevant(id).done(function (d) {
         const current_poems = d['poem_ids'];
-        const tagged_poems = d["tagged"]
-        update_poems_list(current_poems , tagged_poems)
+        const tagged_poems = d["tagged"];
+        update_poems_list(current_poems, tagged_poems)
     });
 }
 
@@ -119,5 +116,5 @@ function get_relevant(id) {
 }
 
 function submitPoem() {
-    window.location = '/main_tag_page/?poem_iid=' + poemid;
+    window.location = '/main_tag_page/?poem_id=' + poemid;
 }
