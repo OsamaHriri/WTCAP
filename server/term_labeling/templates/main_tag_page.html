@@ -5,7 +5,6 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/main_tags_style.css'%}">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <script>
     $(document).ready(function () {
         obj = document.getElementById("1link");
@@ -34,7 +33,7 @@
     <ul class="tag-menu__items">
         <li class="tag-menu__item">
             <a href="#" class="tag-menu__link" onclick="right_click_tag1(this,event)">
-                <i class="fa fa-level-up"></i> Add to tags
+                <i class="fa fa-plus"></i> Add to tags
             </a>
         </li>
         <li class="tag-menu__item">
@@ -197,7 +196,6 @@
     </div>
 </div>
 
-
 <!--Confirm delete all -->
 <div class="modal fade" id="deleteModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
@@ -252,18 +250,18 @@
         <li class="term-menu__item">
             <a href="#" class="term-menu__link" data-action="View" data-toggle="modal"
                data-target="#insertParentModal">
-                <i class="fa fa-level-up"></i> Merge a second term
+                <i class="fa fa-compress"></i> Merge a second term
             </a>
         </li>
         <li class="term-menu__item">
             <a href="#" class="term-menu__link" data-action="View" data-toggle="modal"
                data-target="#insertChildModal">
-                <i class="fa fa-level-down"></i> Get definition
+                <i class="fa fa-book"></i> Get definition
             </a>
         </li>
         <li class="term-menu__item">
             <a href="#" class="term-menu__link" data-action="Edit" data-toggle="modal" data-target="#editNameModal">
-                <i class="fa fa-edit"></i> Get morphology
+                <i class="fa fa-cog"></i> Get morphology
             </a>
         </li>
     </ul>
@@ -356,8 +354,7 @@
                 <tr>
                     <td>
                         <input type="checkbox" name="{{ forloop.counter }}" value="{{ forloop.counter }}"
-                               id="{{ forloop.counter }}" class="tblcheckbox"
-                               onchange="box_checked(this, this.value)"/>
+                               id="{{ forloop.counter }}" class="tblcheckbox">
                         <label for="{{ forloop.counter }}"> {{ poem.row_index }} </label>
                     </td>
                     <td>

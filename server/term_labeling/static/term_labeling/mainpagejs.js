@@ -1,14 +1,3 @@
-function initialize_index() {
-    let checkboxes;
-    checkboxes = document['poem-form'].getElementsByTagName('input');
-    for (let i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].type === 'checkbox') {
-            checkboxes[i].checked = false;
-        }
-    }
-}
-
-
 let selected_tags = [];
 let selected_term = "";
 let selected_obj = "";
@@ -18,35 +7,37 @@ let depth = 0;
 let all_tags = [];
 let viz;
 let poemID;
-let myUL
+let myUL;
 
-function box_checked(obj) {
-    const id = obj.id; //line number
-    const tbl = document.getElementById("poem");
+$(document).ready(function () {
+    getHeaders();
+    var obj = document.getElementById("poem_id");
+    poemID = obj.innerText;
+    obj.remove();
+    myUL = document.getElementById('myUL');
+    $(document).click(function (e) {
+        if ($('#tagsDropDown').is(':visible') && e.target.id != "mySearchInput" && e.target.className != "dropdownbox") {
+            $('#tagsDropDown').hide();
+        }
+    });
+    get_Tagged_Words(poemID).done(function (d) {
+        data = d.word;
+        document.querySelectorAll(".term").forEach(function (d) {
+            const properties = d.id.split('_').map(x => +x)
+            if (data.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
+                d.style.color = "green"
+            }
+        });
+    });
 
-    const sentence = tbl.rows[id - 1];
-    const sadr = sentence.cells[1];
-    const ajuz = sentence.cells[2];
-
-    sentence.cells[3].childNodes[1].style.display = 'block';
-
-    //split sadr
-    const sadrtext = sadr.textContent.trim().split(" ");
-    let newsadr = "<p>";
-    for (let i = 0; i < sadrtext.length; i++) {
-        newsadr = newsadr + "<span class='term' id='" + id + "_0_" + (i + 1) + "'> " + sadrtext[i] + " " + "</span>"
-    }
-    newsadr = newsadr + "</p>";
-    sadr.innerHTML = newsadr;
-
-    //split ajuz
-    const ajuztext = ajuz.textContent.trim().split(" ");
-    let newsajuz = "<p>";
-    for (let i = 0; i < ajuztext.length; i++) {
-        newsajuz = newsajuz + "<span class='term' id='" + id + "_1_" + i + 1 + "'> " + ajuztext[i] + " " + "</span>"
-    }
-    newsajuz = newsajuz + "</p>";
-    ajuz.innerHTML = newsajuz;
+    $(".term").click(function () {
+        if (selected_obj !== "" && selected_obj.css("color") === orange)
+            selected_obj.css("color", "black");
+        $(this).css("color", "orange");
+        selected_obj = $(this);
+        selected_term = this.innerHTML;
+        load_suggestions(selected_term);
+    });
 
     // disable right click and show custom context menu
     $(".term").bind('contextmenu', function (e) {
@@ -64,6 +55,7 @@ function box_checked(obj) {
         return false;
     });
 
+
     // Hide context menu
     $(document).bind('contextmenu click', function () {
         $(".term-menu").hide();
@@ -78,22 +70,8 @@ function box_checked(obj) {
     $('.term-menu a').click(function () {
         $(".term-menu").hide();
     });
-    process_word(id);
-}
+});
 
-//can remove
-function process_word(id) {
-    $(function () {
-        $(".term").click(function () {
-            if (selected_obj !== "" && selected_obj.css("color") === orange)
-                selected_obj.css("color", "black");
-            $(this).css("color", "orange");
-            selected_obj = $(this);
-            selected_term = this.innerHTML;
-            load_suggestions(selected_term);
-        });
-    });
-}
 
 function loadTags() {
     getAllTags().done(function (d) {
@@ -107,12 +85,6 @@ function update_tags_list() {
     all_tags.forEach(function (idx, li) {
         myUL.innerHTML += "<li><a href=\"javascript:void(0)\" id=" + idx + " onclick=\"searchTag(this)\">" + idx + "</a></li>";
     });
-   /* $('#trigger').click(function () {
-        $('#tagsDropDown').toggle();
-    });
-    $(document).click(function () {
-        $('#tagsDropDown').hide()
-    });*/
 }
 
 
@@ -156,6 +128,7 @@ function get_Tagged_Words(text) {
         dataType: "json",
     });
 }
+
 function add_new_root(text) {
     return $.ajax({
         type: "GET",
@@ -307,11 +280,11 @@ function delete_tag() {
             document.getElementById(rightclicked).remove();
             all_tags = all_tags.filter(e => e !== rightclicked);
             if (parent.length === 0) {
-              emptyTree();
-              getHeaders();
-              depth = 0;
-              tagParent = "";
-              flag = false;
+                emptyTree();
+                getHeaders();
+                depth = 0;
+                tagParent = "";
+                flag = false;
             } else {
                 search2(parent[0].parent.name)
             }
@@ -326,11 +299,11 @@ function delete_all() {
             all_tags = [];
             loadTags();
             if (parent.length === 0) {
-              emptyTree();
-              getHeaders();
-              depth = 0;
-              tagParent = "";
-              flag = false;
+                emptyTree();
+                getHeaders();
+                depth = 0;
+                tagParent = "";
+                flag = false;
             } else {
                 search2(parent[0].parent.name)
             }
@@ -411,7 +384,7 @@ function new_child() {
     }
 }
 
-function new_root(){
+function new_root() {
     text = document.getElementById("root-name").value
     if (text === "")
         window.alert("The field is empty ,Please insert a tag before clicking");
@@ -587,7 +560,7 @@ function right_click_tag(obj, e) {
     const top = e.pageY + 5;
     const left = e.pageX;
     // Show contextmenu
-   $(".tag-menu").toggle(100).css({
+    $(".tag-menu").toggle(100).css({
         top: top + "px",
         left: left + "px"
     });
@@ -804,29 +777,6 @@ function draw() {
 function refreshVis() {
     viz.reload()
 }
-
-$(document).ready(function () {
-    getHeaders();
-    var obj = document.getElementById("poem_id");
-    poemID = obj.innerText;
-    obj.remove();
-    myUL = document.getElementById('myUL')
-     $(document).click(function (e) {
-           if($('#tagsDropDown').is(':visible') && e.target.id != "mySearchInput" && e.target.className != "dropdownbox")
-            {
-                 $('#tagsDropDown').hide();
-            }
-        });
-    get_Tagged_Words(poemID).done(function (d) {
-        data = d.word;
-        document.querySelectorAll(".term").forEach(function (d) {
-            const properties = d.id.split('_').map(x=>+x)
-            if(data.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])){
-                    d.style.color = "green"
-              }
-        });
-    });
-});
 
 
 function search2(text) {
