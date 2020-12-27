@@ -31,8 +31,11 @@ $(document).ready(function () {
     });
 
     $(".term").click(function () {
-        if (selected_obj !== "" && selected_obj.css("color") === orange)
+        if (selected_obj !== "" && selected_obj.css("color") === orange){
             selected_obj.css("color", "black");
+            if (selected_tags.length > 0)
+                save_term_tag();
+        }
         $(this).css("color", "orange");
         selected_obj = $(this);
         selected_term = this.innerHTML;
@@ -609,6 +612,7 @@ function build_tag(tag_name) {
 function save_term_tag() {
     selected_obj.css("color", "green");
     const term_id = selected_obj.attr('id').split('_');
+    console.log(term_id);
     for (const tag of selected_tags) {
         $.ajax({
             type: "GET",
