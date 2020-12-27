@@ -11,9 +11,15 @@ class Tagging(object):
         self.searchQ3 = """ Match (w:Word)-[r:tag]->(t:Tag) where t.name=$tag and w.name=$word and r.poemID=$poem and r.sader=$sader and r.position=$position and r.row=$row return r  """
         self.createReletionQ = """ Match (w:Word) ,(t:Tag) where w.name=$word and t.name=$tag create (w)-[:tag{position: $position,poemID: $poem,row : $row,sader : $sader}]->(t) """
         self.removeWordQ = """ Match (w:Word) where w.name=$word detach delete w """
-        self.getTagOfWordQ = """ Match (w:Word) -[r:tag]-> (t:Tag) with w , t , count(r) as c where w.name=$word  return {name :t.name  , frequency: c } as Tag order by c Desc """
+        #self.getTagOfWordQ = """ Match (w:Word) -[r:tag]-> (t:Tag) with w , t , count(r) as c where w.name=$word  return {name :t.name  , frequency: c } as Tag order by c Desc """
+        self.getTagOfWordQ =""" match (w1:Word)-[r1:tag]->(t1:Tag) where w1.name=$word with collect(t1.name) as alltags
+                                optional match (w:Word)-[r:tag]->(t:Tag) where r.poemID=$poem and r.sader=$place and r.position=$position and r.row=$row with alltags ,collect(t.name) as temp 
+                                return [x IN alltags where not x in temp] as list
+                            """
         self.checkWords = """match (:Tag)<-[r:tag]-(w:Word) where  r.poemID=$poem  return distinct r.position as position,r.row as row , r.sader as sader """
         self.checkpoems = """ match (:Tag)<-[r:tag]-(:Word) where r.poemID in $poems return distinct r.poemID as poemID """
+        self.tagsOfword = """ match (t:Tag)<-[r:tag]-(:Word) where r.poemID = $poem and r.sader = $place and r.position = $position and r.row = $row return t.name as tag"""
+        self.removeTagrelationQ = """ match(t:Tag)<-[r:tag]-(:Word) where t.name =$tag and r.poemID = $poem and r.sader = $place and r.position = $position and r.row = $row  delete r"""
 
     def ifExists(self, word=None, tag=None, ):
         """
@@ -76,21 +82,19 @@ class Tagging(object):
         self.graph.run(self.removeWordQ, word=word)
         return True
 
-    def searchTagsOfWord(self, word):
+    def searchTagsOfWord(self, word , poem , place , row , position):
         """
-        get all the tags of given word .
+        get all the tags of given word based on its position in poem .
         :param word:
         :return:
         """
         if not self.ifExists(word=word):
-            return {'suggestions': []}
-        search = self.graph.run(self.getTagOfWordQ, word=word).data()
-        sum = 0
-        for s in search:
-            sum += s['Tag']['frequency']
-        for s in search:
-            s['Tag']['frequency'] = round(float(s['Tag']['frequency'] / sum) , 2)
-        return {'suggestions':search}
+            return []
+        search = self.graph.run(self.getTagOfWordQ, word=word , poem = poem , place = place , row = row , position = position).data()
+        if len(search) == 0:
+            return []
+        else :
+            return search[0]["list"]
 
     def get_tagged_words_from_poem(self, id):
       check = self.graph.run(self.checkWords, poem = id).data()
@@ -104,6 +108,16 @@ class Tagging(object):
         for p in poems :
             l.append(p["id"])
         return self.graph.run(self.checkpoems, poems = l).data()
+
+    def get_term_current_tags(self ,row ,place ,position ,id):
+
+        return self.graph.run(self.tagsOfword, poem = id , row=row , position= position , place = place).data()
+
+    def remove_tag_reletion(self,row ,place ,position ,id ,tag):
+
+        self.graph.run(self.removeTagrelationQ, poem=id, row=row, position=position, place=place , tag = tag)
+        return True
+
 
 
 

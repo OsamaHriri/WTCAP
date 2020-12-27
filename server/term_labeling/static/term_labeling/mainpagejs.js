@@ -1,4 +1,3 @@
-let selected_tags = [];
 let selected_term = "";
 let selected_obj = "";
 let orange = "rgb(255, 165, 0)";
@@ -43,7 +42,7 @@ $(document).ready(function () {
         $(this).css("color", "orange");
         selected_obj = $(this);
         selected_term = this.innerHTML;
-        // TODO get all tags for current term
+        term_current_tags()
         load_suggestions(selected_term);
     });
 
@@ -122,7 +121,15 @@ function add_tag(obj) {
     //const me = $(obj);
     const text = obj.getElementsByClassName("btn-txt");
     const tag_text = text[0].innerText.slice(0, text[0].innerText.lastIndexOf("-"));
-    build_tag(tag_text);
+    save_term_tag(tag_text).done(function(d){
+          if (d == "Success"){
+               build_tag(tag_text);
+               obj.remove()
+          }
+          else{
+              window.alert("something went Wrong, maybe the tag already exists")
+          }
+    });
 }
 
 let ul1;
@@ -179,6 +186,23 @@ function remove_tag(text) {
         type: "GET",
         url: "remove_tag/",
         data: {'term': text},
+        dataType: "json",
+    });
+}
+
+function remove_tag_from_word(text) {
+    const term_id = selected_obj.attr('id').split('_');
+    return $.ajax({
+        type: "GET",
+        url: "remove_tag_from_word/",
+        data: {
+            'row': term_id[0],
+            'place': term_id[1],
+            'position': term_id[2],
+            'term': selected_term,
+            'tag': text,
+            'id': poemID
+        },
         dataType: "json",
     });
 }
@@ -544,14 +568,10 @@ function build_il_headers(item, index) {
 }
 
 function remove_tag_in_selected(obj) {
-    // TODO remove from server
     const elem = $(obj);
     const btn = elem[0].getElementsByClassName("btn-txt");
     const text = btn[0].innerHTML;
-    const index = selected_tags.indexOf(text);
-    if (index > -1) {
-        selected_tags.splice(index, 1);
-    }
+    remove_tag_from_word(text)
     elem.remove();
 }
 
@@ -596,17 +616,22 @@ function add_tag_to_selected(obj, e) {
     //prevent default menu
     e.preventDefault();
     if (selected_term === "") {
+
+
+
         window.alert("first choose a term");
     } else {
-        // TODO check return - return false if tag already exists
-        save_term_tag(rightclicked);
-        build_tag(rightclicked);
-
+        save_term_tag(rightclicked).done(function(d){
+            if (d == "Success")
+                build_tag(rightclicked);
+            else{
+                window.alert("something went Wrong, maybe the tag already exists")
+            }
+        });
     }
 }
 
 function build_tag(tag_name) {
-    selected_tags.push(tag_name);
     const container = document.getElementsByClassName('selected_container')[0];
     container.insertAdjacentHTML('beforeend', '<button class="btn btn-sm tag-btn" onclick="remove_tag_in_selected(this)">\n' +
         '                    <i class=\'fa fa-minus\'></i>' + '&nbsp;' +
@@ -619,7 +644,7 @@ function build_tag(tag_name) {
 function save_term_tag(tag) {
     selected_obj.css("color", "green");
     const term_id = selected_obj.attr('id').split('_');
-    $.ajax({
+    return $.ajax({
         type: "GET",
         url: "save_term_tag/",
         data: {
@@ -630,15 +655,11 @@ function save_term_tag(tag) {
             'tag': tag,
             'id': poemID
         },
-        success: function (data) {
-            console.log(data);
-        }
     });
 }
 
 function reset() {
     selected_term = "";
-    selected_tags = [];
     const container = document.getElementsByClassName('selected_container')[0];
     const buttons = container.getElementsByTagName('button');
     for (let i = buttons.length - 1; i >= 0; --i) {
@@ -655,7 +676,6 @@ function reset() {
 
 
 function reset2() {
-    selected_tags = [];
     const container = document.getElementsByClassName('selected_container')[0];
     const buttons = container.getElementsByTagName('button');
     for (let i = buttons.length - 1; i >= 0; --i) {
@@ -671,15 +691,42 @@ function reset2() {
 }
 
 function load_suggestions(term) {
+     const term_id = selected_obj.attr('id').split('_');
     $.ajax({
         type: "GET",
         url: "suggest_tags/",
-        data: {'term': term},
+        data: {
+            'row': term_id[0],
+            'place': term_id[1],
+            'position': term_id[2],
+            'term': term,
+            'id': poemID
+        },
         dataType: "json",
         success: function (data) {
             const suggestions = data.suggestions;
-            reset2();
+            //reset2();
             suggestions.forEach(build_suggestion)
+        }
+    });
+}
+
+function term_current_tags() {
+    const term_id = selected_obj.attr('id').split('_');
+    $.ajax({
+        type: "GET",
+        url: "term_current_tags/",
+        data: {
+                'row': term_id[0],
+                'place': term_id[1],
+                'position': term_id[2],
+                'id': poemID
+               },
+        dataType: "json",
+        success: function (data) {
+            const tags_term = data.tags.map(a => a.tag);
+            //reset2();
+            tags_term.forEach(build_tag)
         }
     });
 }
@@ -688,7 +735,7 @@ function build_suggestion(item, index) {
     const container = document.getElementsByClassName('suggested_container')[0];
     container.insertAdjacentHTML('beforeend', '<button class="btn btn-sm tag-btn" onclick="add_tag(this)"> \n' +
         '                   <i class=\'fa fa-plus\'></i>' + '&nbsp;' +
-        '                    <span class="btn-txt">' + item.Tag.name + '-' + item.Tag.frequency + '</span>\n' +
+        '                    <span class="btn-txt">' + item[0] + '-' + parseFloat(item[1].toFixed(4)) + '</span>\n' +
         '                </button>');
 
     // disable right click and show custom context menu

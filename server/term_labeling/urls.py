@@ -41,4 +41,6 @@ urlpatterns = [
     re_path('get_terms_freq/$', views.get_terms_freq, name='get_terms_freq'),
     re_path('maxFrequencyinPeriod/$', views.maxFrequencyinPeriod, name='maxFrequencyinPeriod'),
     re_path('getTaggedWords/$', views.getTaggedWords, name='getTaggedWords'),
+    re_path('term_current_tags/$', views.term_current_tags, name='term_current_tags'),
+    re_path('remove_tag_from_word/$', views.remove_tag_from_word, name='remove_tag_from_word'),
 ]

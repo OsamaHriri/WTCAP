@@ -11,7 +11,7 @@ from threading import Thread, Lock
 from farasa.stemmer import FarasaStemmer
 import json
 from django.contrib.staticfiles import finders
-import re
+from collections import Counter
 
 # Create your views here.
 
@@ -228,9 +228,9 @@ def save_term_tag(request):
         if suc:
             return HttpResponse("Success")  # Sending an success response
         else:
-            return HttpResponse("not found")
+            return HttpResponse("not Success")
     else:
-        return HttpResponse("not success")
+        return HttpResponse("not found")
 
 
 def suggest_tags(request):
@@ -243,11 +243,17 @@ def suggest_tags(request):
         t = Tagging()
         mutex.acquire()
         try:
-            suggestions = t.searchTagsOfWord(term)
+            suggestions = t.searchTagsOfWord(term ,data.get('id'),int(data.get('place')), int(data.get('row')), int(data.get('position')))
+            if len(suggestions) > 0 :
+                Count = Counter(suggestions)
+                total = sum(Count.values())
+                freq_percentage = list({k: v / total for k, v in Count.items()}.items())
+            else:
+                freq_percentage = []
         finally:
             mutex.release()
         if suggestions is not None:
-            return JsonResponse(suggestions)
+            return JsonResponse({"suggestions":freq_percentage})
         else:
             return HttpResponse("not found")
 
@@ -512,6 +518,26 @@ def getTaggedWords(request):
         w = Tagging()
         currentTagged = w.get_tagged_words_from_poem(id)
         return JsonResponse({"word": currentTagged})
+
+
+def term_current_tags(request):
+    if request.method == 'GET':
+        req = request.GET
+        w = Tagging()
+        currentTagged = w.get_term_current_tags(int(req.get('row')),int(req.get('place')),int(req.get('position')),req.get('id'))
+        return JsonResponse({"tags": currentTagged})
+
+
+
+def remove_tag_from_word(request):
+    if request.method == 'GET':
+        req = request.GET
+        w = Tagging()
+        suc =w.remove_tag_reletion(int(req.get('row')),int(req.get('place')),int(req.get('position')),req.get('id'),req.get('tag'))
+        if suc :
+            return HttpResponse("Success")
+        else:
+            return HttpResponse("not Success")
 
 
 mutex = Lock()
