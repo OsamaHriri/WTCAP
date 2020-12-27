@@ -112,6 +112,10 @@
 /*========================
         Search tags
 ==========================*/
+#myUL {
+    list-style-type: none;
+}
+
 #mySearchInput {
     display: block;
 }

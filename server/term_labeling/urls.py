@@ -21,7 +21,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name="logout"),
 
     re_path('termTree/$', views.termTree, name="termTree"),
-    re_path('save_term_tags/$', views.save_term_tags, name='save_term_tags'),
+    re_path('save_term_tag/$', views.save_term_tag, name='save_term_tag'),
     re_path('suggest_tags/$', views.suggest_tags, name='suggest_tags'),
     re_path('get_children/$', views.get_children, name='get_children'),
     re_path('get_parent/$', views.get_parent, name='get_parent'),

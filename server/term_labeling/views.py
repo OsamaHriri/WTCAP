@@ -209,7 +209,7 @@ def termTree(request):
         return HttpResponse("not success")
 
 
-def save_term_tags(request):
+def save_term_tag(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
