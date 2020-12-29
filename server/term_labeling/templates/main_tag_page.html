@@ -95,6 +95,25 @@
 </div>
 
 
+<!--showAllModal-->
+<div class="modal fade" id="showAllModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">All Tags</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- TODO add all tags here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!--Insert parent popup-->
 <div class="modal fade" id="insertParentModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
@@ -365,12 +384,15 @@
                     </div>
 
                     <div class="mt-1">
-                        <button type="button" id="addRoot" class="btn btn-outline-info" onclick="back_home()">Reset</button>
+                        <button type="button" id="addRoot" class="btn btn-outline-info" onclick="back_home()">Reset
+                        </button>
                         <button type="button" class="btn btn-outline-info" data-action="View" data-toggle="modal"
                                 data-target="#insertRootModal">Add Root
                         </button>
 
-                        <button type="button" class="btn btn-outline-info">Show All</button>
+                        <button type="button" class="btn btn-outline-info" data-action="View" data-toggle="modal"
+                                data-target="#showAllModal">Show All
+                        </button>
                     </div>
                 </div>
 
