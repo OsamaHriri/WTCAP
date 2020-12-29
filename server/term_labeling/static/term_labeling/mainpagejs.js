@@ -850,4 +850,11 @@ function search2(text) {
     });
 }
 
+function back_home(){
+     emptyTree();
+     getHeaders();
+     depth = 0;
+     tagParent = "";
+     flag = false;
+}
 
