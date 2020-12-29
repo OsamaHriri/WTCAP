@@ -35,7 +35,7 @@ $(document).ready(function () {
             const properties = selected_obj.attr('id').split('_').map(x => +x);
             if (tagged_terms_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
                 selected_obj.css("color", "green");
-            }else
+            } else
                 selected_obj.css("color", "black");
         }
         reset();
@@ -121,14 +121,13 @@ function add_tag(obj) {
     //const me = $(obj);
     const text = obj.getElementsByClassName("btn-txt");
     const tag_text = text[0].innerText.slice(0, text[0].innerText.lastIndexOf("-"));
-    save_term_tag(tag_text).done(function(d){
-          if (d == "Success"){
-               build_tag(tag_text);
-               obj.remove()
-          }
-          else{
-              window.alert("something went Wrong, maybe the tag already exists")
-          }
+    save_term_tag(tag_text).done(function (d) {
+        if (d === "Success") {
+            build_tag(tag_text);
+            obj.remove()
+        } else {
+            window.alert("something went Wrong, maybe the tag already exists")
+        }
     });
 }
 
@@ -616,16 +615,42 @@ function add_tag_to_selected(obj, e) {
     //prevent default menu
     e.preventDefault();
     if (selected_term === "") {
+        const toast_container = document.getElementById("toast_container");
+        const toast = "    <div class=\"toast show danger_toast\" id=\"myToast\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-delay=\"2\">\n" +
+            "        <div class=\"toast-header\">\n" +
+            "            <strong class=\"mr-auto\">Error</strong>\n" +
+            "            <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"myToast\" aria-label=\"Close\">\n" +
+            "                <span aria-hidden=\"true\">&times;</span>\n" +
+            "            </button>\n" +
+            "        </div>\n" +
+            "        <div class=\"toast-body\">\n" +
+            "            First you need to choose a term\n" +
+            "        </div>\n" +
+            "    </div>";
+        toast_container.innerHTML += toast;
 
+        // $("#myToast").toast('show');
 
-
-        window.alert("first choose a term");
+        // window.alert("first choose a term");
     } else {
-        save_term_tag(rightclicked).done(function(d){
+        save_term_tag(rightclicked).done(function (d) {
             if (d == "Success")
                 build_tag(rightclicked);
-            else{
-                window.alert("something went Wrong, maybe the tag already exists")
+            else {
+                const toast_container = document.getElementById("toast_container");
+                const toast = "    <div class=\"toast show danger_toast\" id=\"myToast\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-delay=\"2\">\n" +
+                    "        <div class=\"toast-header\">\n" +
+                    "            <strong class=\"mr-auto\">Error</strong>\n" +
+                    "            <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"myToast\" aria-label=\"Close\">\n" +
+                    "                <span aria-hidden=\"true\">&times;</span>\n" +
+                    "            </button>\n" +
+                    "        </div>\n" +
+                    "        <div class=\"toast-body\">\n" +
+                    "            Something went wrong, maybe the tag already exists\n" +
+                    "        </div>\n" +
+                    "    </div>";
+                toast_container.innerHTML += toast;
+                // window.alert("something went Wrong, maybe the tag already exists")
             }
         });
     }
@@ -691,7 +716,7 @@ function reset2() {
 }
 
 function load_suggestions(term) {
-     const term_id = selected_obj.attr('id').split('_');
+    const term_id = selected_obj.attr('id').split('_');
     $.ajax({
         type: "GET",
         url: "suggest_tags/",
@@ -717,11 +742,11 @@ function term_current_tags() {
         type: "GET",
         url: "term_current_tags/",
         data: {
-                'row': term_id[0],
-                'place': term_id[1],
-                'position': term_id[2],
-                'id': poemID
-               },
+            'row': term_id[0],
+            'place': term_id[1],
+            'position': term_id[2],
+            'id': poemID
+        },
         dataType: "json",
         success: function (data) {
             const tags_term = data.tags.map(a => a.tag);

@@ -14,6 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.neo4jlabs.com/neovis.js/v1.5.0/neovis.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -27,7 +29,8 @@
 <!--Navbar -->
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow" style="position:sticky;top:0px;display:flex;z-index:2;align-self: flex-start;">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow"
+     style="position:sticky;top:0px;display:flex;z-index:2;align-self: flex-start;">
     <div class="container">
         <a class="navbar-brand" href="{% url 'index' %}">WTAP</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -37,11 +40,11 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <div class="navbar-nav">
                 <a class="nav-item nav-link" id="1link" href="{% url 'index' %}"> Main Page <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" id="2link"  href="{% url 'select_poet_page' %}">Poems</a>
+                <a class="nav-item nav-link" id="2link" href="{% url 'select_poet_page' %}">Poems</a>
                 <a class="nav-item nav-link" id="3link" href="{% url 'tags' %}">Manage Tags</a>
                 <a class="nav-item nav-link" id="4link" href="{% url 'statistics' %}">Statistics</a>
                 {% if user.is_superuser %}
-                <a class="nav-item nav-link" id="5link"  href="{% url 'settings' %}">Settings</a>
+                <a class="nav-item nav-link" id="5link" href="{% url 'settings' %}">Settings</a>
                 {% endif %}
             </div>
             <!-- Navbar Right Side -->

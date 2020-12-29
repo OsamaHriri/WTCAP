@@ -5,6 +5,9 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/main_tags_style.css'%}">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
 <script>
     $(document).ready(function () {
         obj = document.getElementById("1link");
@@ -22,6 +25,23 @@
 
 {% block content %}
 <h3 id="poem_id" style="display:none">{{poem_id}}</h3>
+
+<!-- Position it -->
+<div id="toast_container">
+    <div class="toast" id="myToast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="20000">
+        <div class="toast-header">
+            <strong class="mr-auto">Error</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            First you need to choose a term
+        </div>
+    </div>
+</div>
+
+
 <div id="context-menu" class="context-menu">
     <a href="#" onClick="suggestionRightClick(this)">
         <img src="{% static 'term_labeling/img/search.png' %}" alt="Search icon"/> Find in hierarchy
@@ -42,7 +62,7 @@
                 <i class="fa fa-level-up"></i> Add parent
             </a>
         </li>
-         <li class="tag-menu__item">
+        <li class="tag-menu__item">
             <a href="#" class="tag-menu__link" data-action="View" data-toggle="modal"
                data-target="#insertChildModal">
                 <i class="fa fa-level-down"></i> Add child
@@ -333,12 +353,13 @@
                 <div id="tagsDropDown">
                     <ul id="myUL">
                         {% for tag in all_tags %}
-                        <li><a href="javascript:void(0)" id="{{ tag }}" class="dropdownbox" onclick="searchTag(this)"> {{ tag }} </a></li>
+                        <li><a href="javascript:void(0)" id="{{ tag }}" class="dropdownbox" onclick="searchTag(this)">
+                            {{ tag }} </a></li>
                         {% endfor %}
                     </ul>
                 </div>
                 <button type="button" id="addRoot" class="btn btn-link" data-action="View" data-toggle="modal"
-                    data-target="#insertRootModal">+ Root
+                        data-target="#insertRootModal">+ Root
                 </button>
                 <ul class="tree">
                 </ul>
@@ -359,16 +380,20 @@
                     </td>
                     <td>
                         {% for term in poem.sadr %}
-                        <span class='term' id="{{ forloop.parentloop.counter}}_0_{{ forloop.counter }}"> {{term}} </span>
+                        <span class='term'
+                              id="{{ forloop.parentloop.counter}}_0_{{ forloop.counter }}"> {{term}} </span>
                         {% endfor %}
                     </td>
                     <td>
                         {% for term in poem.ajuz %}
-                        <span class='term' id="{{ forloop.parentloop.counter}}_1_{{ forloop.counter }}"> {{term}} </span>
+                        <span class='term'
+                              id="{{ forloop.parentloop.counter}}_1_{{ forloop.counter }}"> {{term}} </span>
                         {% endfor %}
                     </td>
                     <td>
-                        <button type='button' class='btn btn-light' onclick='save_term_tag()' style="display: none"> Save</button>
+                        <button type='button' class='btn btn-light' onclick='save_term_tag()' style="display: none">
+                            Save
+                        </button>
                     </td>
                 </tr>
                 {% endfor %}
