@@ -615,45 +615,27 @@ function add_tag_to_selected(obj, e) {
     //prevent default menu
     e.preventDefault();
     if (selected_term === "") {
-        const toast_container = document.getElementById("toast_container");
-        const toast = "    <div class=\"toast show danger_toast\" id=\"myToast\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-delay=\"2\">\n" +
-            "        <div class=\"toast-header\">\n" +
-            "            <strong class=\"mr-auto\">Error</strong>\n" +
-            "            <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"myToast\" aria-label=\"Close\">\n" +
-            "                <span aria-hidden=\"true\">&times;</span>\n" +
-            "            </button>\n" +
-            "        </div>\n" +
-            "        <div class=\"toast-body\">\n" +
-            "            First you need to choose a term\n" +
-            "        </div>\n" +
-            "    </div>";
-        toast_container.innerHTML += toast;
+        $("#myToast").attr("class", "toast show danger_toast").fadeIn();
+        document.getElementById("toast-body").innerHTML = "First you need to choose a term";
+        timeout();
 
-        // $("#myToast").toast('show');
-
-        // window.alert("first choose a term");
     } else {
         save_term_tag(rightclicked).done(function (d) {
             if (d == "Success")
                 build_tag(rightclicked);
             else {
-                const toast_container = document.getElementById("toast_container");
-                const toast = "    <div class=\"toast show danger_toast\" id=\"myToast\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-delay=\"2\">\n" +
-                    "        <div class=\"toast-header\">\n" +
-                    "            <strong class=\"mr-auto\">Error</strong>\n" +
-                    "            <button type=\"button\" class=\"ml-2 mb-1 close\" data-dismiss=\"myToast\" aria-label=\"Close\">\n" +
-                    "                <span aria-hidden=\"true\">&times;</span>\n" +
-                    "            </button>\n" +
-                    "        </div>\n" +
-                    "        <div class=\"toast-body\">\n" +
-                    "            Something went wrong, maybe the tag already exists\n" +
-                    "        </div>\n" +
-                    "    </div>";
-                toast_container.innerHTML += toast;
-                // window.alert("something went Wrong, maybe the tag already exists")
+                $("#myToast").attr("class", "toast show danger_toast").fadeIn();
+                document.getElementById("toast-body").innerHTML = "Something went wrong, maybe the tag exists";
+                timeout();
             }
         });
     }
+}
+
+function timeout() {
+    setTimeout(function () {
+        $("#myToast").fadeOut().attr('class', 'toast danger_toast');
+    }, 2500);
 }
 
 function build_tag(tag_name) {
