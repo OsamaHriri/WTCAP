@@ -129,19 +129,17 @@ function createList(obj,event,num){
     while (src.lastChild.id !== 'Fchild') {
         src.removeChild(src.lastChild);
     }
-     document.getElementById("loader").style.display = "block";
-    var t0 = performance.now()
+    src.innerHTML +="<tbody></tbody>"
+    document.getElementById("loader").style.display = "block";
     get_terms_freq(obj.innerText,num,currentPeriod2).done(function(d){
-        var t1 = performance.now()
-        console.log("table first took " + (t1 - t0) + " milliseconds.")
         data = d.t
+        var temp = ""
         data.forEach(function(l , i){
             //src.innerHTML += "<li class=\"list-group-item\">"+l.x+"<span class=\"badge badge-primary badge-pill\">"+l.value+"</span></li>";
-              src.innerHTML += "<tbody><tr><th scope=\"row\">"+(i+1)+"</th><td>"+l.x+"</td><td>"+l.value+"</td><td>"+l.freq+"</td></tr></tbody>"
+              temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+l.x+"</td><td>"+l.value+"</td><td>"+l.freq+"</td></tr>"
         });
+        $("#listTable > tbody").append(temp);
         document.getElementById("loader").style.display = "none";
-        var t2 = performance.now()
-        console.log("second took " + (t2 - t1) + " milliseconds.")
     });
 }
 

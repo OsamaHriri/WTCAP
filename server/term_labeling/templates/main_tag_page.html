@@ -107,7 +107,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <!-- TODO add all tags here -->
+                <table class="table" id="listTable" style="font-family:initial">
+                    <thead class="thead-dark" id="Fchild">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Tag</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
@@ -348,8 +355,7 @@
         <div class="col-sm-4 px-lg-5" id="fixed_cont"
              style="position:sticky;top:20px;align-self: flex-start;z-index:1;">
             <!-- Large modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                    onclick="draw()">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                 Show
                 Current Tags
             </button>

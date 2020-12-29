@@ -810,9 +810,49 @@ function searchSuggestion(text) {
     });
 }
 
-function draw() {
-    $('#viz').ready(function () {
-        statement = "match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$', poemID)
+function refreshVis() {
+    viz.reload()
+}
+
+function search2(text) {
+    getDepth(text).done(function (d) {
+        depth = d.depth + 1;
+        emptyTree();
+        if (depth === 1)
+            flag = false;
+        item_clicked(text);
+    });
+}
+
+function back_home() {
+    emptyTree();
+    getHeaders();
+    depth = 0;
+    tagParent = "";
+    flag = false;
+}
+
+$('#showAllModal').on('shown.bs.modal', function (e) {
+    const src = document.getElementById("listTable");
+    while (src.lastChild.id !== 'Fchild') {
+        src.removeChild(src.lastChild);
+    }
+    src.innerHTML +="<tbody></tbody>"
+    var arr = []
+    document.querySelectorAll(".dropdownbox").forEach(function (d , i) {
+         //temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+d.innerText.trim()+"</td></tr>"
+         arr.push(d.innerText.trim())
+    });
+     var temp = ""
+    arr.sort().forEach(function (d , i) {
+        temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+d+"</td></tr>"
+    });
+    $("#listTable > tbody").append(temp);
+})
+
+
+$('#exampleModal').on('shown.bs.modal', function (e) {
+    statement = "match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$', poemID)
         var config = {
             container_id: "viz",
             server_url: "bolt://localhost:7687",
@@ -848,30 +888,5 @@ function draw() {
 
         viz = new NeoVis.default(config);
         viz.render();
-    });
-}
-
-
-function refreshVis() {
-    viz.reload()
-}
-
-
-function search2(text) {
-    getDepth(text).done(function (d) {
-        depth = d.depth + 1;
-        emptyTree();
-        if (depth === 1)
-            flag = false;
-        item_clicked(text);
-    });
-}
-
-function back_home() {
-    emptyTree();
-    getHeaders();
-    depth = 0;
-    tagParent = "";
-    flag = false;
-}
+})
 

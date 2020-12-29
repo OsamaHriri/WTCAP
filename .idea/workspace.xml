@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/statistics.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/statistics.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/statistics.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/statistics.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -272,13 +276,6 @@
       <workItem from="1604572704097" duration="1334000" />
       <workItem from="1604593172244" duration="15000" />
       <workItem from="1604661622107" duration="4279000" />
-    </task>
-    <task id="LOCAL-00009" summary="tag frequency">
-      <created>1596389857722</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1596389857722</updated>
     </task>
     <task id="LOCAL-00010" summary="suggestion tags">
       <created>1597139770670</created>
@@ -616,7 +613,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609102209962</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="back home function">
+      <created>1609243903432</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1609243903432</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -636,7 +640,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="#35 stemmer for arabic words" />
     <MESSAGE value="change stemmer library" />
     <MESSAGE value="poems from specific period" />
     <MESSAGE value="word cloud" />
@@ -661,7 +664,8 @@
     <MESSAGE value="add tags features to hierarchy tree&#10;fixed a bug when clicking on tag dropdown window" />
     <MESSAGE value="add tags features to hierarchy tree&#10;fixed some bugs on tags drop down window" />
     <MESSAGE value="fix selected tags , suggestions and remove tag from word" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix selected tags , suggestions and remove tag from word" />
+    <MESSAGE value="back home function" />
+    <option name="LAST_COMMIT_MESSAGE" value="back home function" />
   </component>
   <component name="WindowStateProjectService">
     <state x="699" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603147034115">
