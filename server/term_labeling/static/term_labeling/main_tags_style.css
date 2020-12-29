@@ -68,7 +68,7 @@
 
 #toast_container {
     position: fixed;
-    z-index: 5;
+    z-index: 9999;
     top: 100px;
     right: 20px;
     width: 150px;
@@ -126,6 +126,18 @@
 }
 
 /*========================
+        Fixed div for search and buttons
+==========================*/
+
+#fixed_functions{
+    background: #eaebe6;
+    position: sticky;
+    top: -7px;
+    z-index: 1;
+}
+
+
+/*========================
         Search tags
 ==========================*/
 #myUL {
@@ -144,7 +156,7 @@
     max-height: 300px;
     overflow-y: auto;
     border: 1px solid #6e6658;
-    z-index: 1;
+    z-index: 2;
     text-align: right;
 }
 
@@ -170,7 +182,7 @@
 .double-border {
     border-style: double;
     border-width: thick;
-    padding: 20px;
+    padding: 0px 20px 20px 20px;
     margin-bottom: 10px;
 }
 

@@ -279,10 +279,13 @@ function getAllTags(text) {
 
 
 function change_parent() {
-    text = document.getElementById("change-parent").value
-    if (text === "")
-        window.alert("The field is empty ,Please insert a tag before clicking");
-    else {
+    text = document.getElementById("change-parent").value;
+    if (text === "") {
+        // window.alert("The field is empty ,Please insert a tag before clicking");
+        $("#myToast").attr("class", "toast show danger_toast").fadeIn();
+        document.getElementById("toast-body").innerHTML = "The field is empty ,Please insert a tag before clicking";
+        timeout();
+    } else {
         if (text === rightclicked) {
             window.alert("Error , you can`t add the term itself as parent");
             return
@@ -344,9 +347,13 @@ function delete_all() {
 
 function new_parent() {
 
-    text = document.getElementById("parent-name").value
-    if (text === "")
-        window.alert("The field is empty ,Please insert a tag before clicking");
+    text = document.getElementById("parent-name").value;
+    if (text === "") {
+        $("#myToast").attr("class", "toast show danger_toast").fadeIn();
+        document.getElementById("toast-body").innerHTML = "The field is empty ,Please insert a tag before clicking";
+        timeout();
+    }
+    // window.alert("The field is empty ,Please insert a tag before clicking");
     else {
         if (text === rightclicked) {
             window.alert("Error , you can`t add the term itself as parent");
@@ -361,7 +368,7 @@ function new_parent() {
             myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
             document.getElementById("parent-name").value = "";
             search2(rightclicked);
-            $('#insertParentModal').modal('hide')
+            close_modal('#insertParentModal');
         });
     }
 }
@@ -386,7 +393,7 @@ function edit_tag() {
         else {
             item_clicked(tagParent)
         }
-        $('#editNameModal').modal('hide')
+        close_modal('#editNameModal');
     });
 
 
@@ -410,15 +417,19 @@ function new_child() {
             myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
             document.getElementById("child-name").value = "";
             search2(rightclicked);
-            $('#insertChildModal').modal('hide')
+            close_modal('#insertChildModal');
         });
     }
 }
 
 function new_root() {
-    text = document.getElementById("root-name").value
-    if (text === "")
-        window.alert("The field is empty ,Please insert a tag before clicking");
+    const text = document.getElementById("root-name").value;
+    if (text === "") {
+        $("#myToast").attr("class", "toast show danger_toast").fadeIn();
+        document.getElementById("toast-body").innerHTML = "The field is empty ,Please insert a tag before clicking";
+        timeout();
+    }
+    // window.alert("The field is empty ,Please insert a tag before clicking");
     else {
         add_new_root(text).done(function (d) {
             if (d.Tag === false) {
@@ -433,10 +444,16 @@ function new_root() {
             depth = 0;
             tagParent = "";
             flag = false;
-            $('#insertRootModal').modal('hide')
+            close_modal('#insertRootModal')
         });
     }
 
+}
+
+function close_modal(id) {
+    $(id).modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
 }
 
 function emptyTree() {
@@ -850,11 +867,11 @@ function search2(text) {
     });
 }
 
-function back_home(){
-     emptyTree();
-     getHeaders();
-     depth = 0;
-     tagParent = "";
-     flag = false;
+function back_home() {
+    emptyTree();
+    getHeaders();
+    depth = 0;
+    tagParent = "";
+    flag = false;
 }
 
