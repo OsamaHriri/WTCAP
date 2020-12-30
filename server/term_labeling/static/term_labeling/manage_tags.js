@@ -260,7 +260,7 @@ function change_parent() {
             }
             document.getElementById("change-parent").value = ""
             search2(rightclicked)
-            $('#changeParentModal').modal('hide')
+            close_modal('#changeParentModal')
         });
 
     }
@@ -320,7 +320,7 @@ function new_parent() {
             myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
             document.getElementById("parent-name").value = "";
             search2(rightclicked);
-            $('#insertParentModal').modal('hide')
+            close_modal('#insertParentModal')
         });
     }
 
@@ -346,7 +346,7 @@ function edit_tag() {
         else {
             item_clicked(tagParent)
         }
-        $('#editNameModal').modal('hide')
+        close_modal('#editNameModal')
     });
 
 
@@ -370,7 +370,7 @@ function new_child() {
             myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
             document.getElementById("child-name").value = "";
             search2(rightclicked);
-            $('#insertChildModal').modal('hide')
+            close_modal('#insertChildModal')
         });
     }
 }
@@ -389,11 +389,18 @@ function new_root(){
             myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
             document.getElementById("root-name").value = "";
             createNetworkforRoots()
-            $('#insertRootModal').modal('hide')
+            close_modal('#insertRootModal')
         });
     }
 
 }
+
+function close_modal(id) {
+    $(id).modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+}
+
 
 function item_clicked1(obj, event) {
     event.stopPropagation();
