@@ -38,7 +38,6 @@ function update_poets_list() {
 function update_poems_list(poems_list, tagged_list) {
     const poetDropDown = document.getElementById('poemDropDown');
     let poems_html = "";
-    console.log(tagged_list);
     poems_list.forEach(function (p) {
         if (tagged_list.some(item => item.poemID === p.id))
             poems_html += "<a href=\"#\" id=" + p.id + " style=\"color:blue\" class=\"poems-link\" onclick=\"choosePoem(this)\">" + p.name + "</a>";
@@ -47,7 +46,6 @@ function update_poems_list(poems_list, tagged_list) {
     while (poetDropDown.lastChild.id !== 'poemInput') {
         poetDropDown.removeChild(poetDropDown.lastChild);
     }
-    console.log(poetDropDown);
     poetDropDown.innerHTML += poems_html;
     document.getElementById('poetDiv').style.display = "block"
 }

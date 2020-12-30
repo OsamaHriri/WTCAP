@@ -1,4 +1,4 @@
-
+let table
 var currentPeriod="all periods"
 var currentPeriod2="all periods"
 // connect to server and get the created word cloud based on period parameter.
@@ -6,6 +6,19 @@ var frequency = [10,20,30,50,70,80,100,200,300,400,500,1000]
 var range= ['0-50', '50-100', '100-150', '150-200', '200-250', '250-300', '300-350', '350-400', '400-450',
             '450-500', '500-550', '550-600', '600-650', '650-700', '700-750', '750-800', '800-850', '850-900', '900-950', '950-1000']
 
+
+$(document).ready(function() {
+    table = $('#listTable').DataTable( {
+        responsive: true,
+        "pageLength": 100,
+         columns: [
+            { title: "#" },
+            { title: "Term" },
+            { title: "Frequency" },
+            { title: "Proportion" },
+        ]
+    } );
+} );
 
 function Create_frequency_array(number){
     array = frequency.slice()
@@ -69,20 +82,19 @@ function create_dropdown(freqencyId , rangeId , clickfunction , array1 , array2)
           src.innerHTML = '';
        }
        array1.forEach(function(l){
-              src.innerHTML += "<a href=\"#\" onclick="+clickfunction+"(this,event,1)>"+l+"</a>"
+              src.innerHTML += "<a href=\"javascript:void(0)\" onclick="+clickfunction+"(this,event,1)>"+l+"</a>"
         });
        src = document.getElementById(rangeId);
        if (src.hasChildNodes()) {
           src.innerHTML = '';
        }
        array2.forEach(function(l){
-              src.innerHTML += "<a href=\"#\" onclick="+clickfunction+"(this,event,2)>"+l+"</a>"
+              src.innerHTML += "<a href=\"javascript:void(0)\" onclick="+clickfunction+"(this,event,2)>"+l+"</a>"
        });
 }
 
 // this function responsible for creating image of word cloud based on top k after receiving it from server.
 function createWordCloud(obj,event,num){
-console.log(currentPeriod)
     var el = obj.parentNode;
     el.style.display = "none"
     setTimeout(function() {
@@ -125,20 +137,17 @@ function createList(obj,event,num){
     setTimeout(function() {
             el.style.removeProperty("display");
      }, 30);
-    var src = document.getElementById("listTable");
-    while (src.lastChild.id !== 'Fchild') {
-        src.removeChild(src.lastChild);
-    }
-    src.innerHTML +="<tbody></tbody>"
+     table.clear().draw()
     document.getElementById("loader").style.display = "block";
     get_terms_freq(obj.innerText,num,currentPeriod2).done(function(d){
         data = d.t
         var temp = ""
         data.forEach(function(l , i){
             //src.innerHTML += "<li class=\"list-group-item\">"+l.x+"<span class=\"badge badge-primary badge-pill\">"+l.value+"</span></li>";
-              temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+l.x+"</td><td>"+l.value+"</td><td>"+l.freq+"</td></tr>"
-        });
-        $("#listTable > tbody").append(temp);
+             //temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+l.x+"</td><td>"+l.value+"</td><td>"+l.freq+"</td></tr>"
+             table.row.add( [i+1,l.x,l.value,l.freq]).draw()
+         });
+        //$("#listTable > tbody").append(temp);
         document.getElementById("loader").style.display = "none";
     });
 }
@@ -184,4 +193,4 @@ function savePeriod2(obj){
            create_dropdown("Frequency2","Range2","createList",array1,array2)
        });
     }
-    }
+}

@@ -69,9 +69,9 @@ $(document).ready(function() {
             <div class="dropdown">
                 <input type="button" id="periodbtn" class="dropbtn" value="All Periods">
                 <div class="dropdown-content">
-                    <a href="#"  onclick="savePeriod(this)">All Periods</a>
+                    <a href="javascript:void(0)"  onclick="savePeriod(this)">All Periods</a>
                     {% for p in periods %}
-                        <a href="#"  onclick="savePeriod(this)"> {{p}} </a>
+                        <a href="javascript:void(0)"  onclick="savePeriod(this)"> {{p}} </a>
                     {% endfor %}
                 </div>
             </div>
@@ -80,7 +80,7 @@ $(document).ready(function() {
                 <input type="button" class="dropbtn" value="Term">
                 <div id ="Frequency1" class="dropdown-content">
                     {% for f in frequency %}
-                    <a href="#"  onclick="createWordCloud(this,event,1)"> {{f}} </a>
+                    <a href="javascript:void(0)"  onclick="createWordCloud(this,event,1)"> {{f}} </a>
                     {% endfor %}
                 </div>
             </div>
@@ -90,22 +90,22 @@ $(document).ready(function() {
                 <label> number to generate a Word Cloud </label>
                 <div id ="Range1"class="dropdown-content">
                     {% for r in range %}
-                        <a href="#" id="{{r}}" onclick="createWordCloud(this,event,2)"> {{r}} </a>
+                        <a href="javascript:void(0)" id="{{r}}" onclick="createWordCloud(this,event,2)"> {{r}} </a>
                     {% endfor %}
                 </div>
             </div>
             <br><br>
-            <div id="cloud"><img src="{% static 'term_labeling/img/World_cloud.PNG'%}" style="margin-left:80px; margin-top:20px"
-                         width="900" height="500" left="50px"></div>
+            <div id="cloud" style="height:700px"><img src="{% static 'term_labeling/img/World_cloud.PNG'%}"
+                         ></div>
         </div>
         <div class="tab-pane fade show" id="list" role="tabpanel" aria-labelledby="list-tab">
             <h3>Table</h3>
             <div class="dropdown">
                 <input type="button" id="period2btn" class="dropbtn" value="All Periods">
                 <div class="dropdown-content">
-                    <a href="#"  onclick="savePeriod2(this)">All Periods</a>
+                    <a href="javascript:void(0)"  onclick="savePeriod2(this)">All Periods</a>
                     {% for p in periods %}
-                        <a href="#"  onclick="savePeriod2(this)"> {{p}} </a>
+                        <a href="javascript:void(0)"  onclick="savePeriod2(this)"> {{p}} </a>
                     {% endfor %}
                 </div>
             </div>
@@ -114,7 +114,7 @@ $(document).ready(function() {
                 <input type="button" class="dropbtn" value="Term">
                 <div id ="Frequency2" class="dropdown-content">
                     {% for f in frequency %}
-                        <a href="#"  onclick="createList(this,event,1)"> {{f}} </a>
+                        <a href="javascript:void(0)"  onclick="createList(this,event,1)"> {{f}} </a>
                     {% endfor %}
                 </div>
             </div>
@@ -124,21 +124,17 @@ $(document).ready(function() {
                 <label> number to generate a Frequencies List </label>
                 <div id ="Range2" class="dropdown-content">
                     {% for r in range %}
-                        <a href="#"  onclick="createList(this,event,2)"> {{r}} </a>
+                        <a href="javascript:void(0)" onclick="createList(this,event,2)"> {{r}} </a>
                     {% endfor %}
                 </div>
             </div>
             <br><br>
-            <table class="table" id="listTable" style="font-family:initial">
-                <thead class="thead-dark" id="Fchild">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Term</th>
-                        <th scope="col">Frequency</th>
-                        <th scope="col">Proportion</th>
-                    </tr>
-                </thead>
-            </table>
+            <div style="height:500px">
+                <table class="table" id="listTable" style="font-family:initial">
+                     <thead class="thead-dark">
+                    </thead>
+                </table>
+            </div>
         </div>
     </div>
 </div>
