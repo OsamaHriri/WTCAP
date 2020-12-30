@@ -1,5 +1,6 @@
 let selected_term = "";
 let selected_obj = "";
+let right_clicked = "";
 let orange = "rgb(255, 165, 0)";
 let tagParent = "";
 let depth = 0;
@@ -48,14 +49,11 @@ $(document).ready(function () {
         $(this).css("color", "orange");
         selected_obj = $(this);
         selected_term = this.innerHTML;
-        term_current_tags()
+        term_current_tags();
         load_suggestions(selected_term);
-    });
-
-    // disable right click and show custom context menu
-    $(".term").bind('contextmenu', function (e) {
-        // const tag_text = this.innerText.slice(1, this.innerText.lastIndexOf("-"));
-        // $("#txt_id").val(tag_text);
+    }).hover(function () {
+        right_clicked = this.innerHTML;
+    }).bind('contextmenu', function (e) {// disable right click and show custom context menu
 
         const top = e.pageY + 5;
         const left = e.pageX;
@@ -855,15 +853,15 @@ $('#showAllModal').on('shown.bs.modal', function (e) {
     while (src.lastChild.id !== 'Fchild') {
         src.removeChild(src.lastChild);
     }
-    src.innerHTML +="<tbody></tbody>"
+    src.innerHTML += "<tbody></tbody>"
     var arr = []
-    document.querySelectorAll(".dropdownbox").forEach(function (d , i) {
-         //temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+d.innerText.trim()+"</td></tr>"
-         arr.push(d.innerText.trim())
+    document.querySelectorAll(".dropdownbox").forEach(function (d, i) {
+        //temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+d.innerText.trim()+"</td></tr>"
+        arr.push(d.innerText.trim())
     });
-     var temp = ""
-    arr.sort().forEach(function (d , i) {
-        temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+d+"</td></tr>"
+    var temp = ""
+    arr.sort().forEach(function (d, i) {
+        temp += "<tr><th scope=\"row\">" + (i + 1) + "</th><td>" + d + "</td></tr>"
     });
     $("#listTable > tbody").append(temp);
 })
@@ -871,40 +869,48 @@ $('#showAllModal').on('shown.bs.modal', function (e) {
 
 $('#exampleModal').on('shown.bs.modal', function (e) {
     statement = "match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$', poemID)
-        var config = {
-            container_id: "viz",
-            server_url: "bolt://localhost:7687",
-            server_user: "neo4j",
-            server_password: "123123147",
-            labels: {
-                "Tag": {
-                    "caption": "name",
-                    //"size": "pagerank",
-                    //"community": "community",
-                    "title_properties": [
-                        "name"
-                    ]
-                },
-                "Word": {
-                    "caption": "name",
-                    //"size": "pagerank",
-                    //"community": "community",
-                    "title_properties": [
-                        "name"
-                    ]
-                }
+    var config = {
+        container_id: "viz",
+        server_url: "bolt://localhost:7687",
+        server_user: "neo4j",
+        server_password: "123123147",
+        labels: {
+            "Tag": {
+                "caption": "name",
+                //"size": "pagerank",
+                //"community": "community",
+                "title_properties": [
+                    "name"
+                ]
             },
-            relationships: {
-                "tag": {
-                    //"thickness": "weight",
-                    "caption": false
-                }
-            },
-            arrows: true,
-            initial_cypher: statement
-        };
+            "Word": {
+                "caption": "name",
+                //"size": "pagerank",
+                //"community": "community",
+                "title_properties": [
+                    "name"
+                ]
+            }
+        },
+        relationships: {
+            "tag": {
+                //"thickness": "weight",
+                "caption": false
+            }
+        },
+        arrows: true,
+        initial_cypher: statement
+    };
 
-        viz = new NeoVis.default(config);
-        viz.render();
-})
+    viz = new NeoVis.default(config);
+    viz.render();
+});
+
+function getDefinition() {
+    //The term we want the definition of is in var right_clicked
+    let modal_body = document.getElementById('definitionModal').querySelector('.modal-body')
+
+    modal_body.innerHTML = "testing"
+}
+
 

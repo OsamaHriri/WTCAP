@@ -12,7 +12,7 @@
 /* table css */
 #poem {
     border-collapse: collapse;
-    width: 90%;
+    text-align: center;
 }
 
 #poem td {
@@ -38,7 +38,7 @@
     background-color: #f8f3e9;
 }
 
-.paper::before {
+.paper::before, .paper-modal::before {
     bottom: 100%;
     background-image: url('img/paper-opening.png');
     content: "";
@@ -51,7 +51,7 @@
     background-size: cover;
 }
 
-.paper::after {
+.paper::after, .paper-modal::after {
     top: 100%;
     content: "";
     background-image: url('img/paper-closing.png');
@@ -75,7 +75,7 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.danger_toast .toast-header{
+.danger_toast .toast-header {
     color: white;
     background: indianred;
 }
@@ -86,7 +86,7 @@
     display: none;
     position: absolute;
     z-index: 10;
-    padding: 12px 0;
+    padding: 5px 0;
     width: auto;
     background-color: #fff;
     border: solid 1px #dfdfdf;
@@ -129,7 +129,7 @@
         Fixed div for search and buttons
 ==========================*/
 
-#fixed_functions{
+#fixed_functions {
     background: #eaebe6;
     position: sticky;
     top: -7px;
@@ -408,3 +408,35 @@ ul.tree > li > ul > li > ul > li > a > label:before {
     background-color: #2B7A78;
     text-decoration: none;
 }
+
+/* Show all modal */
+#showAllModal .modal-body{
+    max-height: 800px;
+    overflow: auto;
+}
+
+#showAllModal table {
+    direction: rtl;
+}
+
+
+.paper-modal {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #f8f3e9;
+    background-clip: padding-box;
+    outline: 0;
+}
+
+.paper-modal .modal-body{
+    text-align: right;
+    min-height: 250px;
+    max-height: 500px;
+    overflow: auto;
+}
+
