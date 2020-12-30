@@ -26,7 +26,7 @@
 {% block content %}
 <h3 id="poem_id" style="display:none">{{poem_id}}</h3>
 
-<!-- Position it -->
+<!-- Toast -->
 <div id="toast_container">
     <div class="toast" id="myToast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="20000">
         <div class="toast-header">
@@ -41,7 +41,7 @@
     </div>
 </div>
 
-
+<!-- Suggested tag right click -->
 <div id="context-menu" class="context-menu">
     <a href="#" onClick="suggestionRightClick(this)">
         <img src="{% static 'term_labeling/img/search.png' %}" alt="Search icon"/> Find in hierarchy
@@ -107,12 +107,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table" id="listTable" style="font-family:initial">
+                <table class="table is-rtl center" id="listTable" style="font-family:initial">
                     <thead class="thead-dark" id="Fchild">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Tag</th>
-                        </tr>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tag</th>
+                    </tr>
                     </thead>
                 </table>
             </div>
@@ -120,8 +120,47 @@
     </div>
 </div>
 
+<!-- Definition modal -->
+<!-- CONSIDER CHANGING TO BIGGER MODAL-->
+<div class="modal fade" id="definitionModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="paper-modal">
+            <div class="modal-header">
+                <h4 class="modal-title">Definition</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
 
-<!--Insert parent popup-->
+            </div>
+            <div class="modal-footer justify-content-between">
+                <a href="#">Source</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Morphology modal -->
+<div class="modal fade" id="morphologyModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="paper-modal">
+            <div class="modal-header">
+                <h4 class="modal-title">Morphology</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Insert parent modal -->
 <div class="modal fade" id="insertParentModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <!-- Modal content-->
@@ -145,7 +184,7 @@
     </div>
 </div>
 
-<!--Change parent popup-->
+<!--Change parent modal -->
 <div class="modal fade" id="changeParentModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <!-- Modal content-->
@@ -169,7 +208,7 @@
     </div>
 </div>
 
-<!--Insert child popup-->
+<!--Insert child modal-->
 <div class="modal fade" id="insertChildModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <!-- Modal content-->
@@ -193,6 +232,7 @@
     </div>
 </div>
 
+<!-- Insert root modal -->
 <div class="modal fade" id="insertRootModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <!-- Modal content-->
@@ -217,7 +257,6 @@
 </div>
 
 <!--TODO - switch placeholder to be the current tag name -->
-
 <!-- Edit tag name popup-->
 <div class="modal fade" id="editNameModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
@@ -242,7 +281,7 @@
     </div>
 </div>
 
-<!--Confirm delete all -->
+<!--Confirm delete modal -->
 <div class="modal fade" id="deleteModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <!-- Modal content-->
@@ -294,20 +333,23 @@
 <div id="term-menu" class="term-menu">
     <ul class="term-menu__items">
         <li class="term-menu__item">
-            <a href="#" class="term-menu__link" data-action="View" data-toggle="modal"
-               data-target="#insertParentModal">
+            <a href="#" class="term-menu__link">
                 <i class="fa fa-compress"></i> Merge a second term
             </a>
         </li>
         <li class="term-menu__item">
-            <a href="#" class="term-menu__link" data-action="View" data-toggle="modal"
-               data-target="#insertChildModal">
+            <a href="#" class="term-menu__link" data-action="View" data-toggle="modal" data-target="#definitionModal">
                 <i class="fa fa-book"></i> Get definition
             </a>
         </li>
         <li class="term-menu__item">
-            <a href="#" class="term-menu__link" data-action="Edit" data-toggle="modal" data-target="#editNameModal">
+            <a href="#" class="term-menu__link" data-action="Edit" data-toggle="modal" data-target="#morphologyModal">
                 <i class="fa fa-cog"></i> Get morphology
+            </a>
+        </li>
+        <li class="term-menu__item">
+            <a href="#" class="term-menu__link" data-action="Edit" data-toggle="modal" data-target="#editNameModal">
+                <i class="fa fa-edit"></i> Edit
             </a>
         </li>
     </ul>
@@ -352,7 +394,7 @@
     <div class="row">
 
         <!-- Tags Section -->
-        <div class="col-sm-4 px-lg-5" id="fixed_cont"
+        <div class="col-sm-4 px-lg-4" id="fixed_cont"
              style="position:sticky;top:20px;align-self: flex-start;z-index:1;">
             <!-- Large modal -->
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
@@ -395,7 +437,6 @@
                         <button type="button" class="btn btn-outline-info" data-action="View" data-toggle="modal"
                                 data-target="#insertRootModal">Add Root
                         </button>
-
                         <button type="button" class="btn btn-outline-info" data-action="View" data-toggle="modal"
                                 data-target="#showAllModal">Show All
                         </button>
@@ -413,9 +454,9 @@
                 {% for poem in poems.context %}
                 <tr>
                     <td>
-                        <input type="checkbox" name="{{ forloop.counter }}" value="{{ forloop.counter }}"
-                               id="{{ forloop.counter }}" class="tblcheckbox">
-                        <label for="{{ forloop.counter }}"> {{ poem.row_index }} </label>
+<!--                        <input type="checkbox" name="{{ forloop.counter }}" value="{{ forloop.counter }}"-->
+<!--                               id="{{ forloop.counter }}" class="tblcheckbox">-->
+                        <label> {{ poem.row_index }} </label>
                     </td>
                     <td>
                         {% for term in poem.sadr %}
@@ -428,11 +469,6 @@
                         <span class='term'
                               id="{{ forloop.parentloop.counter}}_1_{{ forloop.counter }}"> {{term}} </span>
                         {% endfor %}
-                    </td>
-                    <td>
-                        <button type='button' class='btn btn-light' onclick='save_term_tag()' style="display: none">
-                            Save
-                        </button>
                     </td>
                 </tr>
                 {% endfor %}
