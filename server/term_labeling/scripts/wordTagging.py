@@ -20,6 +20,7 @@ class Tagging(object):
         self.checkpoems = """ match (:Tag)<-[r:tag]-(:Word) where r.poemID in $poems return distinct r.poemID as poemID """
         self.tagsOfword = """ match (t:Tag)<-[r:tag]-(:Word) where r.poemID = $poem and r.sader = $place and r.position = $position and r.row = $row return t.name as tag"""
         self.removeTagrelationQ = """ match(t:Tag)<-[r:tag]-(:Word) where t.name =$tag and r.poemID = $poem and r.sader = $place and r.position = $position and r.row = $row  delete r"""
+        self.suggestionQ = """ match(:Tag)<-[r:tag]-(w:Word) where w.name in $words return distinct w.name as word"""
 
     def ifExists(self, word=None, tag=None, ):
         """
@@ -117,6 +118,9 @@ class Tagging(object):
 
         self.graph.run(self.removeTagrelationQ, poem=id, row=row, position=position, place=place , tag = tag)
         return True
+
+    def get_suggestions(self, array):
+        return self.graph.run(self.suggestionQ,words = array).data()
 
 
 

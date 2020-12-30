@@ -12,7 +12,7 @@ from farasa.stemmer import FarasaStemmer
 import json
 from django.contrib.staticfiles import finders
 from collections import Counter
-
+import re
 # Create your views here.
 
 stemmer = FarasaStemmer(interactive=True)
@@ -517,7 +517,36 @@ def getTaggedWords(request):
         id = req.get('id')
         w = Tagging()
         currentTagged = w.get_tagged_words_from_poem(id)
-        return JsonResponse({"word": currentTagged})
+        c = Connector()
+        poem = (c.get_poem(id))[0]
+        l = " "
+        dictenory = {}
+        for row , j in enumerate(poem["context"]):
+            s = ""
+            if 'sadr' in j:
+                for pos , word in enumerate(j['sadr'].split()):
+                    temp = stemmer.stem(araby.strip_tashkeel(word))
+                    if temp in dictenory:
+                        dictenory[temp].append(dict(row = (row+1) ,sader = 0 ,position = (pos+1)))
+                    else:
+                        dictenory[temp] = [dict(row = (row+1) ,sader = 0 ,position = (pos+1))]
+                    s += temp + " "
+                # s += stemmer.stem(araby.strip_tashkeel(j['sadr'])) + " "
+            if 'ajuz' in j:
+                for pos , word in enumerate(j['ajuz'].split()):
+                    temp = stemmer.stem(araby.strip_tashkeel(word))
+                    if temp in dictenory:
+                        dictenory[temp].append(dict(row=(row+1),sader = 1,position= (pos+1)))
+                    else:
+                        dictenory[temp] = [dict(row=(row+1),sader = 1,position= (pos+1))]
+                    s += temp + " "
+            l += s
+        tokens = re.findall(r"[\w']+", l)
+        suggestion = []
+        for s in w.get_suggestions(tokens):
+          suggestion += dictenory.get(s["word"])
+        ##suggestion.append(dictenory[s])
+        return JsonResponse({"tagged": currentTagged, "suggested":suggestion})
 
 
 def term_current_tags(request):
