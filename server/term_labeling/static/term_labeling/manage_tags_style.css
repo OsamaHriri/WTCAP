@@ -238,7 +238,7 @@ ul.tree > li > ul > li > ul > li > a > label:before {
 }
 .infinity div {
   top: 60%;
-  left: 60%;
+  left: 40%;
   width: 60px;
   height: 60px;
   animation: rotate 6.9s linear infinite;

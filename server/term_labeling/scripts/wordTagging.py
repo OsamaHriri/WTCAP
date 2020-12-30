@@ -19,8 +19,10 @@ class Tagging(object):
         self.checkWords = """match (:Tag)<-[r:tag]-(w:Word) where  r.poemID=$poem  return distinct r.position as position,r.row as row , r.sader as sader """
         self.checkpoems = """ match (:Tag)<-[r:tag]-(:Word) where r.poemID in $poems return distinct r.poemID as poemID """
         self.tagsOfword = """ match (t:Tag)<-[r:tag]-(:Word) where r.poemID = $poem and r.sader = $place and r.position = $position and r.row = $row return t.name as tag"""
-        self.removeTagrelationQ = """ match(t:Tag)<-[r:tag]-(:Word) where t.name =$tag and r.poemID = $poem and r.sader = $place and r.position = $position and r.row = $row  delete r"""
+        self.removeTagrelationQ = """ match(t:Tag)<-[r:tag]-(w:Word) where t.name =$tag and r.poemID = $poem and r.sader = $place and r.position = $position and r.row = $row  delete r return w.name as name"""
         self.suggestionQ = """ match(:Tag)<-[r:tag]-(w:Word) where w.name in $words return distinct w.name as word"""
+        self.checkremainingRelations = """ match(:Tag)<-[r:tag]-(:Word) where r.poemID = $poem and r.sader = $place and r.position = $position and r.row=$row return count(r) as count"""
+        self.removeWordwithoutr = """match (w:Word) where w.name=$word and not (w)--() delete (w)"""
 
     def ifExists(self, word=None, tag=None, ):
         """
@@ -116,8 +118,12 @@ class Tagging(object):
 
     def remove_tag_reletion(self,row ,place ,position ,id ,tag):
 
-        self.graph.run(self.removeTagrelationQ, poem=id, row=row, position=position, place=place , tag = tag)
-        return True
+        word = self.graph.run(self.removeTagrelationQ, poem=id, row=row, position=position, place=place , tag = tag).data()[0]
+        self.graph.run(self.removeWordwithoutr , word = word["name"])
+        c = self.graph.run(self.checkremainingRelations, poem=id, row=row, position=position, place=place , tag = tag).data()[0]
+        if c['count'] == 0:
+            return True
+        return False
 
     def get_suggestions(self, array):
         return self.graph.run(self.suggestionQ,words = array).data()

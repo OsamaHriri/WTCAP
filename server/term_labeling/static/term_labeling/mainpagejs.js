@@ -594,13 +594,18 @@ function remove_tag_in_selected(obj) {
     const elem = $(obj);
     const btn = elem[0].getElementsByClassName("btn-txt");
     const text = btn[0].innerHTML;
-    const term_id = selected_obj.attr('id').split('_');
+    var term_id = selected_obj.attr('id').split('_');
     remove_tag_from_word(text,term_id).done(function(d){
-        if(d == "zero"){
-            //TODO :if its the last tag remove it from json
+        if(d.last == true){
+            term_id = term_id.map(x=>+x)
+            tagged_terms_list = tagged_terms_list.filter(function(value, index, arr){
+                if (value.position == term_id[2] && value.row == term_id[0] && value.sader == term_id[1])
+                        return false;
+                 else return true;
+            });
         }
         elem.remove();
-    })
+    });
 }
 
 let rightclicked = "";

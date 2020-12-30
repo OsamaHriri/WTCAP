@@ -563,10 +563,8 @@ def remove_tag_from_word(request):
         req = request.GET
         w = Tagging()
         suc =w.remove_tag_reletion(int(req.get('row')),int(req.get('place')),int(req.get('position')),req.get('id'),req.get('tag'))
-        if suc :
-            return HttpResponse("Success")
-        else:
-            return HttpResponse("not Success")
+        return JsonResponse({"last":suc})
+
 
 
 mutex = Lock()
