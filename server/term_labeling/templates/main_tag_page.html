@@ -396,26 +396,22 @@
         <div class="col-sm-4 px-lg-4" id="fixed_cont"
              style="position:sticky;top:20px;align-self: flex-start;z-index:1;">
             <!-- Large modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                Show
-                Current Tags
-            </button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Show Current Tags</button>
             <!-- Selected Tags Section-->
-            <div class="double-border selected_container">
+            <div class="selected_container">
                 <h5> Selected Tags </h5>
             </div>
 
             <!-- Suggested Tags Section-->
-            <div class="double-border suggested_container">
+            <div class="suggested_container">
                 <h5> Suggested Tags </h5>
             </div>
 
             <!-- Tree Section -->
-            <div class="double-border treeview">
+            <div class="treeview">
                 <h5> Tags </h5>
 
                 <div id="fixed_functions">
-
                     <input type="text" id="mySearchInput" class="form-control" aria-label="Small"
                            aria-describedby="inputGroup-sizing-sm" onclick="$('#tagsDropDown').toggle();"
                            onkeyup="filterSearch()"
