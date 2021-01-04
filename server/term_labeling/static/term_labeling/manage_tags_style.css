@@ -3,6 +3,11 @@
 #body_container{
     direction: rtl;
 }
+.graph{
+    width:900px;
+    height:600px;
+    margin-bottom:100px;
+}
 
 /* tree style */
 .treeview {
@@ -29,7 +34,7 @@
 
 #viz {
     width: 900px;
-    height: 700px;
+    height: 600px;
     font: 22pt arial;
     resize: both;
 }
@@ -239,15 +244,16 @@ ul.tree > li > ul > li > ul > li > a > label:before {
 .infinity {
   width: 120px;
   height: 60px;
-  position: inherit;
+  position: initial;
+  direction : ltr;
 }
 .infinity div,
 .infinity span {
   position: absolute;
 }
 .infinity div {
-  top: 60%;
-  left: 40%;
+  top: 50%;
+  left: 50%;
   width: 60px;
   height: 60px;
   animation: rotate 6.9s linear infinite;
