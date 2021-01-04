@@ -94,9 +94,9 @@ function create_dropdown(freqencyId , rangeId , clickfunction , array1 , array2)
 }
 
 // this function responsible for creating image of word cloud based on top k after receiving it from server.
-function createWordCloud(obj,event,num){
+function createWordCloud(obj, event,num){
     var el = obj.parentNode;
-    el.style.display = "none"
+    el.style.display = "none";
     setTimeout(function() {
             el.style.removeProperty("display");
      }, 30);
@@ -106,19 +106,19 @@ function createWordCloud(obj,event,num){
       }
       document.getElementById("loader").style.display = "block";
       get_terms_freq(obj.innerText,num,currentPeriod).done(function(d){
-      var delayInMilliseconds = 500
+      var delayInMilliseconds = 500;
       setTimeout(function() {
   //your code to be executed after 1 second
         var chart = anychart.tagCloud(d.t);
         if (num == 1)
-            chart.title('$ most frequent words'.replace('$',d.m))
+            chart.title('$ most frequent words'.replace('$',d.m));
         else {
-            temp = obj.innerText.split("-")[0]
-            temp = temp +'-'+d.m
+            temp = obj.innerText.split("-")[0];
+            temp = temp +'-'+d.m;
             chart.title('$ most frequent words'.replace('$',temp))
         }
       // set an array of angles at which the words will be laid out
-        chart.angles([0])
+        chart.angles([0]);
           // enable a color range
         chart.colorRange(true);
           // set the color range length

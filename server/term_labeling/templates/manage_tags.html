@@ -6,12 +6,12 @@
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/manage_tags_style.css'%}">
 <script>
     $(document).ready(function () {
-        obj = document.getElementById("3link");
-        var clickedItem = $(obj);
+        const obj = document.getElementById("3link");
+        const clickedItem = $(obj);
         $(".nav-link").each(function () {
-            $(this).removeClass("active");
+            $(this).removeClass("text-dark");
         });
-        clickedItem.addClass("active");
+        clickedItem.addClass("text-info");
     });
 </script>
 {% endblock stylesheets %}
@@ -267,12 +267,8 @@
 
         <div class="col-sm-9 graph">
             <div class="mt-1">
-                <button type="button" id="showsub" class="btn btn-info hover" disabled onclick="draw3()">
-                    Show subTree
-                </button>
-                <button type="button" id="render" class="btn btn-info hover" onclick="renderviz()">
-                    Refresh
-                </button>
+                <button type="button" id="showsub" class="btn btn-info hover" disabled onclick="draw3()">Show subTree</button>
+                <button type="button" id="render" class="btn btn-info hover" onclick="renderviz()">Refresh</button>
                 <button type="button" id="disable" class="btn btn-info hover" onclick="disable()">Disable Network</button>
             </div>
             <body onload="draw()">

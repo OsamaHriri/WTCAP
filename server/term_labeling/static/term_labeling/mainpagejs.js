@@ -29,8 +29,8 @@ $(document).ready(function () {
             const id = d.row + "_" + d.sader + "_" + d.position
             document.getElementById(id).style.color = "green"
         });
-        suggested_term_list.forEach(function(d){
-            if(!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)){
+        suggested_term_list.forEach(function (d) {
+            if (!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)) {
                 const id = d.row + "_" + d.sader + "_" + d.position
                 document.getElementById(id).style.color = "blue"
             }
@@ -127,9 +127,9 @@ function add_tag(obj) {
     const tag_text = text[0].innerText.slice(0, text[0].innerText.lastIndexOf("-"));
     save_term_tag(tag_text).done(function (d) {
         if (d === "Success") {
-            const term_id = selected_obj.attr('id').split('_').map(x=>+x)
-            if(!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)){
-                tagged_terms_list.push({position:term_id[2],row:term_id[0],sader:term_id[1]});
+            const term_id = selected_obj.attr('id').split('_').map(x => +x)
+            if (!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)) {
+                tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
             }
             build_tag(tag_text);
             obj.remove()
@@ -197,7 +197,7 @@ function remove_tag(text) {
     });
 }
 
-function remove_tag_from_word(text ,term_id) {
+function remove_tag_from_word(text, term_id) {
     return $.ajax({
         type: "GET",
         url: "remove_tag_from_word/",
@@ -595,13 +595,13 @@ function remove_tag_in_selected(obj) {
     const btn = elem[0].getElementsByClassName("btn-txt");
     const text = btn[0].innerHTML;
     var term_id = selected_obj.attr('id').split('_');
-    remove_tag_from_word(text,term_id).done(function(d){
-        if(d.last == true){
-            term_id = term_id.map(x=>+x)
-            tagged_terms_list = tagged_terms_list.filter(function(value, index, arr){
+    remove_tag_from_word(text, term_id).done(function (d) {
+        if (d.last == true) {
+            term_id = term_id.map(x => +x)
+            tagged_terms_list = tagged_terms_list.filter(function (value, index, arr) {
                 if (value.position == term_id[2] && value.row == term_id[0] && value.sader == term_id[1])
-                        return false;
-                 else return true;
+                    return false;
+                else return true;
             });
         }
         elem.remove();
@@ -655,14 +655,13 @@ function add_tag_to_selected(obj, e) {
 
     } else {
         save_term_tag(rightclicked).done(function (d) {
-            if (d == "Success"){
-                    const term_id = selected_obj.attr('id').split('_').map(x=>+x)
-                    if(!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)){
-                        tagged_terms_list.push({position:term_id[2],row:term_id[0],sader:term_id[1]});
-                     }
-                    build_tag(rightclicked);
+            if (d == "Success") {
+                const term_id = selected_obj.attr('id').split('_').map(x => +x)
+                if (!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)) {
+                    tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
                 }
-            else {
+                build_tag(rightclicked);
+            } else {
                 $("#myToast").attr("class", "toast show danger_toast").fadeIn();
                 document.getElementById("toast-body").innerHTML = "Something went wrong, maybe the tag exists";
                 timeout();
@@ -913,9 +912,22 @@ $('#exampleModal').on('shown.bs.modal', function (e) {
 
 function getDefinition() {
     //The term we want the definition of is in var right_clicked
-    let modal_body = document.getElementById('definitionModal').querySelector('.modal-body')
-
-    modal_body.innerHTML = "testing"
+    document.getElementById('book_loader').style.display = 'block';
+    let modal_body = document.getElementById('definitionModal').querySelector('.modal-body');
+    setTimeout(function () {
+        get_definition(right_clicked).done(function (d) {
+            document.getElementById('book_loader').style.display = 'none';
+            modal_body.innerHTML = d
+        });
+    }, 3000);
 }
 
+function get_definition(text) {
+    // return $.ajax({
+    //     type: "GET",
+    // url: " getTaggedWords/",
+    // data: {'id': poemID},
+    // dataType: "json",
+    // });
 
+};

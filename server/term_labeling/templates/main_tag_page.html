@@ -10,14 +10,8 @@
 
 <script>
     $(document).ready(function () {
-        obj = document.getElementById("1link");
-        var clickedItem = $(obj);
-        $(".nav-link").each(function () {
-            $(this).removeClass("active");
-        });
-        clickedItem.addClass("active");
-        var d = document.getElementsByClassName("navbar")[0];
-        d.style.position = "inherit"
+        const d = document.getElementsByClassName("navbar")[0];
+        d.style.position = "inherit";
     });
 </script>
 {% endblock stylesheets %}
@@ -133,6 +127,11 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="book" id="book_loader">
+                    <div class="book__page"></div>
+                    <div class="book__page"></div>
+                    <div class="book__page"></div>
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
                 <a href="#">Source</a>
@@ -337,7 +336,8 @@
             </a>
         </li>
         <li class="term-menu__item">
-            <a href="#" class="term-menu__link" data-action="View" data-toggle="modal" data-target="#definitionModal" onclick="getDefinition()">
+            <a href="#" class="term-menu__link" data-action="View" data-toggle="modal" data-target="#definitionModal"
+               onclick="getDefinition()">
                 <i class="fa fa-book"></i> Get definition
             </a>
         </li>
@@ -449,6 +449,7 @@
 
         <!-- Poem Section -->
         <div class="col-sm-8 paper">
+
             <table class="table table-hover" id="poem">
                 {% for poem in poems.context %}
                 <tr>

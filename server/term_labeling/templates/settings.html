@@ -5,14 +5,14 @@
 <script src="{% static 'term_labeling/settings.js' %}"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/settings_style.css'%}">
 <script>
-$(document).ready(function() {
-        obj = document.getElementById("5link");
-        var clickedItem = $( obj );
-        $( ".nav-link" ).each( function() {
-            $( this ).removeClass( "active" );
+    $(document).ready(function () {
+        const obj = document.getElementById("5link");
+        const clickedItem = $(obj);
+        $(".nav-link").each(function () {
+            $(this).removeClass("text-dark");
         });
-        clickedItem.addClass( "active" );
-});
+        clickedItem.addClass("text-info");
+    });
 </script>
 
 <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->

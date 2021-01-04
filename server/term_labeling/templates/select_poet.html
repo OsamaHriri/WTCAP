@@ -9,9 +9,9 @@
         const obj = document.getElementById("2link");
         const clickedItem = $(obj);
         $(".nav-link").each(function () {
-            $(this).removeClass("active");
+            $(this).removeClass("text-dark");
         });
-        clickedItem.addClass("active");
+        clickedItem.addClass("text-info");
     });
 </script>
 {% endblock stylesheets %}
