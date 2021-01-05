@@ -36,6 +36,7 @@ $(document).ready(function () {
             }
         });
     });
+    $(".collapse").collapse('show');
 
     $(".term").click(function () {
         if (selected_obj !== "" && selected_obj.css("color") === orange) {
