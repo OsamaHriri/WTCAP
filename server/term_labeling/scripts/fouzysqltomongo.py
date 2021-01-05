@@ -4,7 +4,7 @@ import json
 import os
 import pymongo
 import mysql.connector
-
+import mongodbConnector as mdbc
 
 class ArabicRhetoricSyncer():
 
@@ -56,11 +56,15 @@ class ArabicRhetoricSyncer():
             poet['period'] = myresult[5]
             poets.append(poet)
 
-
-        self.poetsCollections.insert_many(poets)
+        if poets :
+            self.poetsCollections.insert_many(poets)
+            print(str(len(poets)) + " added")
+        else:
+            print("0 new poets")
         
 
     def sync_periods(self):
+        cur_per = self.poetsCollections.distinct("period")
         mycursor = self.mydb.cursor()
         sql2 = "SELECT id,name  FROM period"
         mycursor.execute(sql2)
@@ -70,10 +74,12 @@ class ArabicRhetoricSyncer():
             _dict = {}
             _dict['id'] = p[0]
             _dict['name'] = p[1]
-            col.append(_dict)
-        print(col)
-        self.periodCollections.insert_many(col)    
-    
+            if p[0] not in cur_per :
+                col.append(_dict)
+        if col :
+            self.periodCollections.insert_many(col)    
+        else:
+            print("periods already synced")
         
         
     def sync_poems(self):
@@ -118,7 +124,7 @@ class ArabicRhetoricSyncer():
                         elif df.iloc[j + 1, 5] != df.iloc[j, 5]:
                             string += '|'
                 nstring = {}
-                list = []
+                _list = []
                 row = 1
 
                 for srt in string.split("\n"):
@@ -133,7 +139,7 @@ class ArabicRhetoricSyncer():
                     #                '"sadr":' + srt.split("|")[0] + ',' +
                     #                '"ajuz":' + srt.split("|")[1])
                     row += 1
-                    list.append(nstring.copy())
+                    _list.append(nstring.copy())
                 poem = {}
                 poem["id"] = str(poem_id)
                 try:
@@ -157,7 +163,7 @@ class ArabicRhetoricSyncer():
                     print(i)
 
 
-                poem["context"] = list
+                poem["context"] = _list
                 self.mycol.insert_one(poem)
                 k+=1
 
@@ -168,4 +174,9 @@ class ArabicRhetoricSyncer():
                     
                     
 if __name__ =="__main__":
-    ArabicRhetoricSyncer().sync_periods()
+    ars = ArabicRhetoricSyncer()
+
+    ars.sync_poets()
+    print("periods synced")
+    ars.sync_poems()
+    print("periods synced")

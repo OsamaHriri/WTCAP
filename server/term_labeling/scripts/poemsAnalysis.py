@@ -46,7 +46,7 @@ class Research(object):
             d.append(dict(x=key, value=value,freq=(value/termsNum)))
         d2=[dict(poetsNum=poetsNum,tokensNum=tokensNum,poemsNum=poemsNum,termswithoutStop=termswithoutStop,stopWordsNum=stopWordsNum,termsNum=termsNum)]
         cur_path = os.path.dirname(__file__)
-        new_path = os.path.relpath('..\\static\\images\\Analysis', cur_path)
+        new_path = os.path.relpath('../static/images/Analysis', cur_path)
         with open(os.path.join(new_path, "TermFreq.json"), "w") as outfile:
             json.dump(d, outfile)
         with open(os.path.join(new_path, "generalInfo.json"), "w") as outfile:
@@ -78,7 +78,7 @@ class Research(object):
             d[str(p)] = d1
 
         cur_path = os.path.dirname(__file__)
-        new_path = os.path.relpath('..\\static\\images\\Analysis', cur_path)
+        new_path = os.path.relpath('../static/images/Analysis', cur_path)
         #filename = "$.json".replace("$", '11')
         with open(os.path.join(new_path, "TermFreqperPeriod.json"), "w") as outfile:
             json.dump(d, outfile)

@@ -20,6 +20,15 @@ class ALmaanyBot():
         word = urllib.parse.quote(word)
         query = 'https://www.almaany.com/ar/dict/ar-ar/' + word
         self.driver.get(query)
+    
+    def serch_doha(self,word):
+
+
+        url = 'https://dohadictionary.org/dictionary/' + word
+        self.driver.get(url)
+        sleep(3)
+        search = self.driver.find_element_by_class_name('tab-main-content')
+        print(search.get_attribute('innerHTML'))
 
 
 def main(argv):
