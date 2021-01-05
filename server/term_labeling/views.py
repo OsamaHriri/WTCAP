@@ -11,8 +11,8 @@ from threading import Thread, Lock
 from farasa.stemmer import FarasaStemmer
 import json
 from django.contrib.staticfiles import finders
+from collections import Counter
 import re
-
 # Create your views here.
 
 stemmer = FarasaStemmer(interactive=True)
@@ -23,11 +23,18 @@ def main_tag_page(request):
     all_tags = t.getAllTags()["tags"]
     c = Connector()
     if request.method == 'GET':
-        id = request.GET['poem_iid']
+        id = request.GET['poem_id']
     else:
         id = 2066
 
     poem = (c.get_poem(id))[0]
+
+    split_context = []
+    for row in poem['context']:
+        split_context.append({'row_index': row['row_index'],
+                              'sadr': row['sadr'].strip().split(' '),
+                              'ajuz': row['ajuz'].strip().split(' ')})
+    poem['context'] = split_context
     # meta_data = c.get_meta_data(poem.poet_id)
     context = {
         'poems': poem,
@@ -125,12 +132,7 @@ def statistics(request):
 
 @login_required()
 def select_poet_page(request):
-    c = Connector()
-    poets = c.get_poets()
-    poems = c.get_poems()
     context = {
-        'poets': poets,
-        'poems': poems,
         'title': 'Poem selection'
     }
     return render(request, 'select_poet.html', context)
@@ -145,13 +147,11 @@ def poet_poems(request):
         poetId = request.GET['poet_id']
         c = Connector()
         poems = c.get_poems_by_poet(int(poetId))
-        idlist = ""
-        for pp in poems:
-            idlist = idlist + pp['id'] + ","
-        if idlist is not None:
-            print(idlist)
+        t = Tagging()
+        poems_tagged = t.get_Tagged_poems(poems)
+        if poems is not None:
             return JsonResponse({
-                "poem_ids": idlist})
+                "poem_ids": poems , "tagged" : poems_tagged})
         else:
             return HttpResponse("not found")
     else:
@@ -227,7 +227,7 @@ def termTree(request):
         return HttpResponse("not success")
 
 
-def save_term_tags(request):
+def save_term_tag(request):
     if request.method == 'GET':
         data = request.GET
         term = data.get('term')
@@ -246,9 +246,9 @@ def save_term_tags(request):
         if suc:
             return HttpResponse("Success")  # Sending an success response
         else:
-            return HttpResponse("not found")
+            return HttpResponse("not Success")
     else:
-        return HttpResponse("not success")
+        return HttpResponse("not found")
 
 
 def suggest_tags(request):
@@ -261,11 +261,17 @@ def suggest_tags(request):
         t = Tagging()
         mutex.acquire()
         try:
-            suggestions = t.searchTagsOfWord(term)
+            suggestions = t.searchTagsOfWord(term ,data.get('id'),int(data.get('place')), int(data.get('row')), int(data.get('position')))
+            if len(suggestions) > 0 :
+                Count = Counter(suggestions)
+                total = sum(Count.values())
+                freq_percentage = list({k: v / total for k, v in Count.items()}.items())
+            else:
+                freq_percentage = []
         finally:
             mutex.release()
         if suggestions is not None:
-            return JsonResponse(suggestions)
+            return JsonResponse({"suggestions":freq_percentage})
         else:
             return HttpResponse("not found")
 
@@ -439,7 +445,7 @@ def get_all_poems(request):
     if request.method == 'GET':
         c = Connector()
         poems = c.get_poems()
-        if tags is not None:
+        if poems is not None:
             return JsonResponse({
                 "poems": poems})
         else:
@@ -527,40 +533,56 @@ def getTaggedWords(request):
     if request.method == 'GET':
         req = request.GET
         id = req.get('id')
+        w = Tagging()
+        currentTagged = w.get_tagged_words_from_poem(id)
         c = Connector()
         poem = (c.get_poem(id))[0]
         l = " "
         dictenory = {}
-        for j in poem["context"]:
+        for row , j in enumerate(poem["context"]):
             s = ""
             if 'sadr' in j:
-                for word in j['sadr'].split():
+                for pos , word in enumerate(j['sadr'].split()):
                     temp = stemmer.stem(araby.strip_tashkeel(word))
                     if temp in dictenory:
-                        if word not in dictenory[temp]:
-                            dictenory[temp].append(word)
+                        dictenory[temp].append(dict(row = (row+1) ,sader = 0 ,position = (pos+1)))
                     else:
-                        dictenory[temp] = [word]
+                        dictenory[temp] = [dict(row = (row+1) ,sader = 0 ,position = (pos+1))]
                     s += temp + " "
                 # s += stemmer.stem(araby.strip_tashkeel(j['sadr'])) + " "
             if 'ajuz' in j:
-                for word in j['ajuz'].split():
+                for pos , word in enumerate(j['ajuz'].split()):
                     temp = stemmer.stem(araby.strip_tashkeel(word))
                     if temp in dictenory:
-                        if word not in dictenory[temp]:
-                            dictenory[temp].append(word)
+                        dictenory[temp].append(dict(row=(row+1),sader = 1,position= (pos+1)))
                     else:
-                        dictenory[temp] = [word]
+                        dictenory[temp] = [dict(row=(row+1),sader = 1,position= (pos+1))]
                     s += temp + " "
             l += s
         tokens = re.findall(r"[\w']+", l)
+        suggestion = []
+        for s in w.get_suggestions(tokens):
+          suggestion += dictenory.get(s["word"])
+        ##suggestion.append(dictenory[s])
+        return JsonResponse({"tagged": currentTagged, "suggested":suggestion})
+
+
+def term_current_tags(request):
+    if request.method == 'GET':
+        req = request.GET
         w = Tagging()
-        currentTagged = w.get_tagged_words_from_poem(tokens)
-        l = []
-        for key, value in dictenory.items():
-            if key in currentTagged:
-                l += dictenory[key]
-        return JsonResponse({"word": l})
+        currentTagged = w.get_term_current_tags(int(req.get('row')),int(req.get('place')),int(req.get('position')),req.get('id'))
+        return JsonResponse({"tags": currentTagged})
+
+
+
+def remove_tag_from_word(request):
+    if request.method == 'GET':
+        req = request.GET
+        w = Tagging()
+        suc =w.remove_tag_reletion(int(req.get('row')),int(req.get('place')),int(req.get('position')),req.get('id'),req.get('tag'))
+        return JsonResponse({"last":suc})
+
 
 
 mutex = Lock()

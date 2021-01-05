@@ -29,7 +29,7 @@ function update_tags_list() {
     let myUL = document.getElementById('myUL');
     myUL.innerHTML = "";
     all_tags.forEach(function (idx, li) {
-        myUL.innerHTML += "<li><a href=\"#\" id=" + idx + " onclick=\"searchTag(this)\">" + idx + "</a></li>";
+        myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + idx + " onclick=\"searchTag(this)\">" + idx + "</a></li>";
     });
 }
 
@@ -77,13 +77,13 @@ function disable(){
     else {
          flagdisable = false
          document.querySelector('#disable').textContent = "Disable Network"
-         document.getElementById("showsub").disabled = false;
          document.getElementById("render").disabled = false;
          document.getElementsByClassName('infinity')[0].style.display = "none";
          if(state == 1){
             viz.reinit(config);
             viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *");
          }else if(state == 2){
+            document.getElementById("showsub").disabled = false;
             createNetwork()
          }
     }
@@ -235,7 +235,7 @@ function searchTag(obj) {
         if (depth === 1)
             flag = false;
         item_clicked(text);
-        $('#tagsDropDown').toggle();
+         $('#tagsDropDown').toggle();
     });
 }
 
@@ -260,7 +260,7 @@ function change_parent() {
             }
             document.getElementById("change-parent").value = ""
             search2(rightclicked)
-            $('#changeParentModal').modal('hide')
+            close_modal('#changeParentModal')
         });
 
     }
@@ -274,6 +274,8 @@ function delete_tag() {
             all_tags = all_tags.filter(e => e !== rightclicked);
             if (parent.length === 0) {
                 createNetworkforRoots();
+                document.getElementById("showsub").disabled = true;
+                document.getElementById("addRoot").disabled = false;
             } else {
                 search2(parent[0].parent.name)
             }
@@ -289,6 +291,8 @@ function delete_all() {
             loadTags();
             if (parent.length === 0) {
                createNetworkforRoots();
+                document.getElementById("showsub").disabled = true;
+                document.getElementById("addRoot").disabled = false;
             } else {
                 search2(parent[0].parent.name)
             }
@@ -313,10 +317,10 @@ function new_parent() {
                 return
             }
             all_tags.push(text);
-            myUL.innerHTML += "<li><a href=\"#\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
+            myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
             document.getElementById("parent-name").value = "";
             search2(rightclicked);
-            $('#insertParentModal').modal('hide')
+            close_modal('#insertParentModal')
         });
     }
 
@@ -332,7 +336,7 @@ function edit_tag() {
         document.getElementById(rightclicked).remove();
         all_tags = all_tags.filter(e => e !== rightclicked);
         all_tags.push(text);
-        myUL.innerHTML += "<li><a href=\"#\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
+        myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
         document.getElementById("edited-name").value = "";
         emptyTree();
         if (tagParent === "") {
@@ -342,7 +346,7 @@ function edit_tag() {
         else {
             item_clicked(tagParent)
         }
-        $('#editNameModal').modal('hide')
+        close_modal('#editNameModal')
     });
 
 
@@ -363,10 +367,10 @@ function new_child() {
                 return
             }
             all_tags.push(text);
-            myUL.innerHTML += "<li><a href=\"#\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
+            myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
             document.getElementById("child-name").value = "";
             search2(rightclicked);
-            $('#insertChildModal').modal('hide')
+            close_modal('#insertChildModal')
         });
     }
 }
@@ -382,14 +386,21 @@ function new_root(){
                 return
             }
             all_tags.push(text);
-            myUL.innerHTML += "<li><a href=\"#\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
+            myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
             document.getElementById("root-name").value = "";
             createNetworkforRoots()
-            $('#insertRootModal').modal('hide')
+            close_modal('#insertRootModal')
         });
     }
 
 }
+
+function close_modal(id) {
+    $(id).modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+}
+
 
 function item_clicked1(obj, event) {
     event.stopPropagation();
@@ -444,12 +455,17 @@ function item_clicked(text) {
                 viz.clearNetwork();
                 viz.reinit(config);
                 viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *");
+                document.getElementById("showsub").disabled = true;
             }
+            document.getElementById("addRoot").disabled = false;
             state = 1;
             return;
         }
-        if(flagdisable == false)
-              createNetwork();
+        if(flagdisable == false){
+             createNetwork();
+             document.getElementById("showsub").disabled = false;
+         }
+        document.getElementById("addRoot").disabled = true;
         state = 2
         var current = document.createElement("il");
         if (parent.length > 0) {
@@ -611,8 +627,16 @@ function search2(text) {
     });
 }
 
-//window.onload = loadTags();
-window.onload = getHeaders();
+
+$(document).ready(function () {
+     getHeaders()
+        $(document).click(function (e) {
+           if($('#tagsDropDown').is(':visible') && e.target.id != "mySearchInput" && e.target.className != "dropdownbox")
+            {
+                 $('#tagsDropDown').hide();
+            }
+        });
+});
 
 
 var config = {

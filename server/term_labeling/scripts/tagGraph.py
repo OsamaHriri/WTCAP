@@ -210,6 +210,7 @@ class Tag(object):
 
 
 
+<<<<<<< HEAD
 
 
 #tag = Tag()
@@ -235,3 +236,5 @@ class Tag(object):
 #print(tag.getAllTagsbyjson())
 #print(tag.findDepth("العالم"))
 #print(tag.findDepth("ماء"))
+=======
+>>>>>>> 7219cf375c478c331a2dc2f319ffabcef917cf74

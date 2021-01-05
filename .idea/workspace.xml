@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="fix select poem page bug.">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_js.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_js.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/select_poet.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/views.py" afterDir="false" />
+    <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags_style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,18 +54,30 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\term_labeling" />
-      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\images\WordCloud" />
-      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\term_labeling\img" />
-      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\images" />
-      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server" />
       <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\term_labeling\img" />
+      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\term_labeling" />
+      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\images\WordCloud" />
+      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\images" />
+      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
   </component>
   <component name="RunManager" selected="Python.poemsAnalysis">
     <configuration name="almaany_translator_bot" type="PythonConfigurationType" factoryName="Python">
@@ -262,97 +273,6 @@
       <workItem from="1604572704097" duration="1334000" />
       <workItem from="1604593172244" duration="15000" />
       <workItem from="1604661622107" duration="4279000" />
-    </task>
-    <task id="LOCAL-00001" summary="Added basic web scrapper">
-      <created>1583940146050</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1583940146050</updated>
-    </task>
-    <task id="LOCAL-00002" summary="scrapper now retives all the data form the page and saves it in a txt file &#10;bot cant be callled from terminal by :&#10;python almaany_translator_bot.py &lt; wordToBeTranslated &gt;">
-      <created>1584012242692</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1584012242693</updated>
-    </task>
-    <task id="LOCAL-00003" summary="added intial sever">
-      <created>1587295998827</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1587295998827</updated>
-    </task>
-    <task id="LOCAL-00004" summary="create neo4j db and create search , add ..etc functions">
-      <created>1588675944608</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1588675944608</updated>
-    </task>
-    <task id="LOCAL-00005" summary="word and tags connections">
-      <created>1590867780057</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1590867780057</updated>
-    </task>
-    <task id="LOCAL-00006" summary="merge db , bugs fix and documentation.">
-      <created>1591696846837</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1591696846837</updated>
-    </task>
-    <task id="LOCAL-00007" summary="get all tag roots function + bugs fix">
-      <created>1591713061632</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1591713061632</updated>
-    </task>
-    <task id="LOCAL-00008" summary="mutex">
-      <created>1594224628475</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1594224628475</updated>
-    </task>
-    <task id="LOCAL-00009" summary="tag frequency">
-      <created>1596389857722</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1596389857722</updated>
-    </task>
-    <task id="LOCAL-00010" summary="suggestion tags">
-      <created>1597139770670</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1597139770671</updated>
-    </task>
-    <task id="LOCAL-00011" summary="bugs fix: color and frequency">
-      <created>1598080478833</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1598080478833</updated>
-    </task>
-    <task id="LOCAL-00012" summary="bugs fix in frontend">
-      <created>1598094592198</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1598094592198</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Hierarchy Tree traversal + bugs fix">
-      <created>1598269630147</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1598269630147</updated>
     </task>
     <task id="LOCAL-00014" summary="add &quot;add Tag&quot; feature to the hierarchy, color the selected element and bugs fix.">
       <created>1598297034859</created>
@@ -557,7 +477,147 @@
       <option name="project" value="LOCAL" />
       <updated>1607627135027</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="fix some element display in statistic and manage tag pages">
+      <created>1608138419925</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1608138419925</updated>
+    </task>
+    <task id="LOCAL-00044" summary="optimize poems analysis run time">
+      <created>1608142363845</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1608142363845</updated>
+    </task>
+    <task id="LOCAL-00045" summary="create word2vec model">
+      <created>1608551974974</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1608551974974</updated>
+    </task>
+    <task id="LOCAL-00046" summary="#18 2nd phase of preprocessing">
+      <created>1608559847863</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1608559847864</updated>
+    </task>
+    <task id="LOCAL-00047" summary="...">
+      <created>1608742913358</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1608742913358</updated>
+    </task>
+    <task id="LOCAL-00048" summary="#18 color the words thats being tagged before">
+      <created>1608744753263</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1608744753263</updated>
+    </task>
+    <task id="LOCAL-00049" summary="fix hierarchy not loading in some occasions">
+      <created>1608745387653</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1608745387653</updated>
+    </task>
+    <task id="LOCAL-00050" summary="fix dropdown window in manage tags page">
+      <created>1608754910894</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1608754910896</updated>
+    </task>
+    <task id="LOCAL-00051" summary="fix select poet page loading problem">
+      <created>1608758140571</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1608758140571</updated>
+    </task>
+    <task id="LOCAL-00052" summary="fix dropdown window in select poet page">
+      <created>1608813950843</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1608813950843</updated>
+    </task>
+    <task id="LOCAL-00053" summary="fix dropdown window in select poet page">
+      <created>1608815961965</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1608815961965</updated>
+    </task>
+    <task id="LOCAL-00054" summary="#39 color poems thats been tagged when choosing poets">
+      <created>1608819458976</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1608819458976</updated>
+    </task>
+    <task id="LOCAL-00055" summary="remove some uncommit messages">
+      <created>1608819688712</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1608819688712</updated>
+    </task>
+    <task id="LOCAL-00056" summary="add tags features to hierarchy tree&#10;fixed some bugs on tags drop down window">
+      <created>1609013699282</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1609013699282</updated>
+    </task>
+    <task id="LOCAL-00057" summary="fix selected tags , suggestions and remove tag from word">
+      <created>1609102209961</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1609102209962</updated>
+    </task>
+    <task id="LOCAL-00058" summary="back home function">
+      <created>1609243903432</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1609243903432</updated>
+    </task>
+    <task id="LOCAL-00059" summary="create modal for all tags by alphabet">
+      <created>1609274084194</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1609274084194</updated>
+    </task>
+    <task id="LOCAL-00060" summary="#18 color words thats have suggestions">
+      <created>1609334656266</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1609334656266</updated>
+    </task>
+    <task id="LOCAL-00061" summary="#18 fix colors in mainpage and loader in manage tags">
+      <created>1609339825047</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1609339825048</updated>
+    </task>
+    <task id="LOCAL-00062" summary="fix modal not hiding in manage tags page">
+      <created>1609340360243</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1609340360243</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -577,32 +637,32 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="manage tags page" />
-    <MESSAGE value="add new feature delete and search" />
-    <MESSAGE value="add parent feature" />
-    <MESSAGE value="hierarchy right click features" />
-    <MESSAGE value="change parent" />
-    <MESSAGE value="delete All" />
-    <MESSAGE value="fix edit tag" />
-    <MESSAGE value="tag visualization" />
-    <MESSAGE value="add new features to graph viz" />
-    <MESSAGE value="#16 fixed tags tree load - tagging page" />
-    <MESSAGE value="did basis for #25 + translated header" />
-    <MESSAGE value="updated meetings" />
-    <MESSAGE value="#15 - saves information" />
-    <MESSAGE value="sort view and delete unneeded queries" />
-    <MESSAGE value="#30 Fetch all poem terms and their tags" />
-    <MESSAGE value="#35 stemmer for arabic words" />
-    <MESSAGE value="change stemmer library" />
-    <MESSAGE value="poems from specific period" />
-    <MESSAGE value="word cloud" />
-    <MESSAGE value="#36 word cloud" />
     <MESSAGE value="#37 loader for WordCloud" />
     <MESSAGE value="bug fix" />
     <MESSAGE value="#38 cloud with hover + table.&#10;fix some bugs and adjust menu bar.&#10;script for analyzing poems db." />
     <MESSAGE value="#33 loader for manage-tags" />
     <MESSAGE value="fix select poem page bug." />
-    <option name="LAST_COMMIT_MESSAGE" value="fix select poem page bug." />
+    <MESSAGE value="fix some element display in statistic and manage tag pages" />
+    <MESSAGE value="optimize poems analysis run time" />
+    <MESSAGE value="create word2vec model" />
+    <MESSAGE value="#18 2nd phase of preprocessing" />
+    <MESSAGE value="..." />
+    <MESSAGE value="#18 color the words thats being tagged before" />
+    <MESSAGE value="fix hierarchy not loading in some occasions" />
+    <MESSAGE value="fix dropdown window in manage tags page" />
+    <MESSAGE value="fix select poet page loading problem" />
+    <MESSAGE value="fix dropdown window in select poet page" />
+    <MESSAGE value="#39 color poems thats been tagged when choosing poets" />
+    <MESSAGE value="remove some uncommit messages" />
+    <MESSAGE value="add tags features to hierarchy tree&#10;fixed a bug when clicking on tag dropdown window" />
+    <MESSAGE value="add tags features to hierarchy tree&#10;fixed some bugs on tags drop down window" />
+    <MESSAGE value="fix selected tags , suggestions and remove tag from word" />
+    <MESSAGE value="back home function" />
+    <MESSAGE value="create modal for all tags by alphabet" />
+    <MESSAGE value="#18 color words thats have suggestions" />
+    <MESSAGE value="#18 fix colors in mainpage and loader in manage tags" />
+    <MESSAGE value="fix modal not hiding in manage tags page" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix modal not hiding in manage tags page" />
   </component>
   <component name="WindowStateProjectService">
     <state x="699" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603147034115">

@@ -3,22 +3,21 @@
 
 {% block stylesheets %}
 <script src="{% static 'term_labeling/manage_tags.js' %}"></script>
-
-
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/manage_tags_style.css'%}">
 <script>
-$(document).ready(function() {
-        obj = document.getElementById("3link");
-        var clickedItem = $( obj );
-        $( ".nav-link" ).each( function() {
-            $( this ).removeClass( "active" );
+    $(document).ready(function () {
+        const obj = document.getElementById("3link");
+        const clickedItem = $(obj);
+        $(".nav-link").each(function () {
+            $(this).removeClass("text-dark");
         });
-        clickedItem.addClass( "active" );
-});
+        clickedItem.addClass("text-info");
+    });
 </script>
 {% endblock stylesheets %}
 
 {% block content %}
+<!-- Menu for tag right click -->
 <div id="context-menu" class="context-menu">
     <ul class="context-menu__items">
         <li class="context-menu__item">
@@ -59,7 +58,7 @@ $(document).ready(function() {
     </ul>
 </div>
 
-<!--Insert parent popup-->
+<!--Insert parent modal-->
 <div class="modal fade" id="insertParentModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <!-- Modal content-->
@@ -83,7 +82,7 @@ $(document).ready(function() {
     </div>
 </div>
 
-<!--Change parent popup-->
+<!--Change parent modal-->
 <div class="modal fade" id="changeParentModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <!-- Modal content-->
@@ -107,7 +106,7 @@ $(document).ready(function() {
     </div>
 </div>
 
-<!--Insert child popup-->
+<!--Insert child modal-->
 <div class="modal fade" id="insertChildModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <!-- Modal content-->
@@ -131,6 +130,7 @@ $(document).ready(function() {
     </div>
 </div>
 
+<!-- Insert root modal -->
 <div class="modal fade" id="insertRootModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <!-- Modal content-->
@@ -155,8 +155,7 @@ $(document).ready(function() {
 </div>
 
 <!--TODO - switch placeholder to be the current tag name -->
-
-<!-- Edit tag name popup-->
+<!-- Edit tag name modal-->
 <div class="modal fade" id="editNameModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <!-- Modal content-->
@@ -180,8 +179,7 @@ $(document).ready(function() {
     </div>
 </div>
 
-
-<!--Confirm delete all -->
+<!-- Confirm delete modal -->
 <div class="modal fade" id="deleteModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <!-- Modal content-->
@@ -205,7 +203,7 @@ $(document).ready(function() {
     </div>
 </div>
 
-<!--Confirm delete all modal-->
+<!-- Confirm delete all modal -->
 <div class="modal fade" id="deleteAllModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <!-- Modal content-->
@@ -241,28 +239,37 @@ $(document).ready(function() {
 
         <div class="col-sm-3 treeview">
             <h5> Tags </h5>
-            <input type="text" id="mySearchInput" onclick="showTags()" onkeyup="filterSearch()"
-                   placeholder="إبحث..."
-                   title="إبحث...">
-            <button type="button" class="btn btn-link" data-action="View" data-toggle="modal"
-                    data-target="#insertRootModal">+ Root
-            </button>
+            <input type="text" id="mySearchInput" class="form-control" aria-label="Small"
+                   aria-describedby="inputGroup-sizing-sm" onclick="showTags()"
+                   onkeyup="filterSearch()"
+                   placeholder="إبحث..." title="إبحث...">
             <div id="tagsDropDown">
                 <ul id="myUL">
                     {% for tag in all_tags %}
-                    <li><a href="#" id="{{ tag }}" onclick="searchTag(this)"> {{ tag }} </a></li>
+                    <li><a href="javascript:void(0)" id="{{ tag }}" class="dropdownbox" onclick="searchTag(this)"> {{ tag }} </a></li>
                     {% endfor %}
-
                 </ul>
+            </div>
+            <div class="mt-1">
+                <button type="button" class="btn btn-outline-info disabled" onclick="back_home()">Reset
+                </button>
+                <button type="button" id="addRoot" class="btn btn-outline-info" data-action="View" data-toggle="modal"
+                        data-target="#insertRootModal">Add Root
+                </button>
+                <button type="button" class="btn btn-outline-info disabled" data-action="View" data-toggle="modal"
+                        data-target="#showAllModal">Show All
+                </button>
             </div>
             <ul class="tree">
             </ul>
         </div>
 
         <div class="col-sm-9 graph">
-            <button type="button" id="showsub" class="btn btn-default hover" onclick="draw3()">Show subTree</button>
-            <button type="button" id="render" class="btn btn-default hover" onclick="renderviz()">Refresh</button>
-            <button type="button" id="disable" class="btn btn-default hover" onclick="disable()">Disable Network</button>
+            <div class="mt-1">
+                <button type="button" id="showsub" class="btn btn-info hover" disabled onclick="draw3()">Show subTree</button>
+                <button type="button" id="render" class="btn btn-info hover" onclick="renderviz()">Refresh</button>
+                <button type="button" id="disable" class="btn btn-info hover" onclick="disable()">Disable Network</button>
+            </div>
             <body onload="draw()">
             <div id="viz"></div>
             </body>

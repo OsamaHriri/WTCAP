@@ -1,0 +1,17 @@
+server/db.sqlite3
+
+server/server/__pycache__
+
+server/term_labeling/__pycache__/
+
+server/term_labeling/__pycache__/u
+
+
+server/term_labeling/scripts/dict_ex.txt
+
+server/term_labeling/scripts/list.txt
+
+server/term_labeling/scripts/poems.zip
+
+server/term_labeling/scripts/poems/
+
