@@ -56,11 +56,17 @@ $(document).ready(function () {
         right_clicked = this.innerHTML;
     }).bind('contextmenu', function (e) {// disable right click and show custom context menu
 
-        const top = e.pageY + 5;
+        const windowHeight = $(window).height()+$(window).scrollTop();
+        const top = e.pageY +5;
         const left = e.pageX;
+        const menuHeight = $(".term-menu").outerHeight();
+        var y = top;
+        if(windowHeight < menuHeight + top ){
+            y = windowHeight - menuHeight
+        }
         // Show contextmenu
         $(".term-menu").toggle(100).css({
-            top: top + "px",
+            top: y + "px",
             left: left + "px"
         });
         // disable default context menu
@@ -620,12 +626,25 @@ function right_click_tag(obj, e) {
     if (e.target != obj)
         return;
     rightclicked = text;
-    const top = e.pageY + 5;
+    const windowHeight = $(window).height()+$(window).scrollTop();
+    const windowWidth = $(window).width()+$(window).scrollLeft();
+    const top = e.pageY +5;
     const left = e.pageX;
+    const menuHeight = $(".tag-menu").outerHeight();
+    const menuwidth = $(".tag-menu").outerWidth();
     // Show contextmenu
+    var x = left;
+    var y = top;
+    if(windowHeight < top + menuHeight) {
+            y = windowHeight - menuHeight - 5
+    }
+    if(windowWidth < left + menuwidth ){
+            x = left  - menuwidth -5
+    }
+
     $(".tag-menu").toggle(100).css({
-        top: top + "px",
-        left: left + "px"
+            top: y + "px",
+            left: x + "px"
     });
 
     // Hide context menu
