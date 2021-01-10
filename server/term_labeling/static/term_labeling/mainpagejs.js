@@ -66,10 +66,9 @@ $(document).ready(function () {
         })*/
         term_current_tags();
         load_suggestions(selected_term);
-    }).mouseover(function (e) {
-        right_clicked = this.innerHTML;
     }).bind('contextmenu', function (e) {// disable right click and show custom context menu
-        console.log("hey")
+        right_clicked = this.innerHTML
+        close_open_windows()
         const windowHeight = $(window).height()+$(window).scrollTop();
         const top = e.pageY +5;
         const left = e.pageX;
@@ -104,6 +103,15 @@ $(document).ready(function () {
     });
 });
 
+
+function close_open_windows(){
+    if ($('#tag-menu').is(':visible')) {
+         $('#tag-menu').hide();
+    }
+    if ($('#term-menu').is(':visible')) {
+            $('#term-menu').hide();
+    }
+}
 
 function loadTags() {
     getAllTags().done(function (d) {
@@ -516,6 +524,7 @@ function emptyTree() {
 function item_clicked1(obj, event) {
     //clicking on parent
     event.stopPropagation();
+    close_open_windows()
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
     if (event.target !== obj)
@@ -530,6 +539,7 @@ function item_clicked1(obj, event) {
 function item_clicked2(obj, event) {
     //clicking on child depth 1
     event.stopPropagation();
+    close_open_windows()
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
     if (event.target !== obj)
@@ -543,6 +553,7 @@ function item_clicked2(obj, event) {
 function item_clicked3(obj, event) {
     //clicking on child depth 2
     event.stopPropagation();
+    close_open_windows()
     const elem = $(obj);
     const text = elem[0].textContent.split(/\r?\n/)[0];
     depth = depth + 1;
@@ -649,6 +660,7 @@ function right_click_tag(obj, e) {
     if (e.target != obj)
         return;
     rightclicked = text;
+    close_open_windows()
     const windowHeight = $(window).height()+$(window).scrollTop();
     const windowWidth = $(window).width()+$(window).scrollLeft();
     const top = e.pageY +5;
