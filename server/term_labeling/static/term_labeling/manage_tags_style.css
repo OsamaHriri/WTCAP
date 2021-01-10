@@ -159,6 +159,15 @@ ul.tree > li > ul > li > ul > li > a > label:before {
 
 
 /* Search tags css */
+
+#fixed_functions {
+    background: white;
+    position: sticky;
+    top: 1px;
+    z-index: 1;
+    padding-top: 5px;
+}
+
 #mySearchInput {
     display: block;
 }

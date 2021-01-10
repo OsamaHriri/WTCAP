@@ -132,8 +132,9 @@
 #fixed_functions {
     background: white;
     position: sticky;
-    top: 5px;
+    top: 1px;
     z-index: 1;
+    padding-top: 5px;
 }
 
 
@@ -540,3 +541,4 @@ ul.tree > li > ul > li > ul > li > a > label:before {
         background: #2B7A78;
     }
 }
+
