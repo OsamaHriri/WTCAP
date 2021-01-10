@@ -511,7 +511,7 @@ def maxFrequencyinPeriod(request):
             return JsonResponse({"max": len(data[period])})
 
 
-def getTaggedWords(request):
+def get_words_analayzation(request):
     if request.method == 'GET':
         req = request.GET
         id = req.get('id')
@@ -521,11 +521,13 @@ def getTaggedWords(request):
         poem = (c.get_poem(id))[0]
         l = " "
         dictenory = {}
+        Rootofwords = {}
         for row , j in enumerate(poem["context"]):
             s = ""
             if 'sadr' in j:
                 for pos , word in enumerate(j['sadr'].split()):
                     temp = stemmer.stem(araby.strip_tashkeel(word))
+                    Rootofwords[word] = temp
                     if temp in dictenory:
                         dictenory[temp].append(dict(row = (row+1) ,sader = 0 ,position = (pos+1)))
                     else:
@@ -535,6 +537,7 @@ def getTaggedWords(request):
             if 'ajuz' in j:
                 for pos , word in enumerate(j['ajuz'].split()):
                     temp = stemmer.stem(araby.strip_tashkeel(word))
+                    Rootofwords[word] = temp
                     if temp in dictenory:
                         dictenory[temp].append(dict(row=(row+1),sader = 1,position= (pos+1)))
                     else:
@@ -546,7 +549,7 @@ def getTaggedWords(request):
         for s in w.get_suggestions(tokens):
           suggestion += dictenory.get(s["word"])
         ##suggestion.append(dictenory[s])
-        return JsonResponse({"tagged": currentTagged, "suggested":suggestion})
+        return JsonResponse({"tagged": currentTagged, "suggested":suggestion ,"roots":Rootofwords})
 
 
 def term_current_tags(request):
@@ -566,5 +569,11 @@ def remove_tag_from_word(request):
         return JsonResponse({"last":suc})
 
 
+def get_Root_of_Word(request):
+    if request.method == 'GET':
+        req = request.GET
+        term = araby.strip_tashkeel(req.get('word')).strip()
+        r = stemmer.stem(term)
+        return JsonResponse({"root":r})
 
 mutex = Lock()

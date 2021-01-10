@@ -472,13 +472,13 @@
                     <td>
                         {% for term in poem.sadr %}
                         <span class='term'
-                              id="{{ forloop.parentloop.counter}}_0_{{ forloop.counter }}"> {{term}} </span>
+                              id="{{ forloop.parentloop.counter}}_0_{{ forloop.counter }}" data-toggle="tooltip" data-placement="top"> {{term}} </span>
                         {% endfor %}
                     </td>
                     <td>
                         {% for term in poem.ajuz %}
                         <span class='term'
-                              id="{{ forloop.parentloop.counter}}_1_{{ forloop.counter }}"> {{term}} </span>
+                              id="{{ forloop.parentloop.counter}}_1_{{ forloop.counter }}" data-toggle="tooltip" data-placement="top" > {{term}} </span>
                         {% endfor %}
                     </td>
                 </tr>

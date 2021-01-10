@@ -31,7 +31,7 @@
 }
 
 .term:hover {
-    color: cornflowerblue;
+    color: cornflowerblue !important;
 }
 
 .paper {

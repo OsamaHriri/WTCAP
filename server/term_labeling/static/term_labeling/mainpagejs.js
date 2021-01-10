@@ -10,6 +10,7 @@ let poemID;
 let myUL;
 let tagged_terms_list;
 let suggested_term_list;
+let allroots;
 
 $(document).ready(function () {
     getHeaders();
@@ -22,7 +23,7 @@ $(document).ready(function () {
             $('#tagsDropDown').hide();
         }
     });
-    get_Tagged_Words(poemID).done(function (d) {
+    get_words_analayzation(poemID).done(function (d) {
         tagged_terms_list = d.tagged;
         suggested_term_list = d.suggested
         tagged_terms_list.forEach(function (d) {
@@ -35,27 +36,40 @@ $(document).ready(function () {
                 document.getElementById(id).style.color = "blue"
             }
         });
-    });
+        allroots = d.roots
+        tooltips = $('[data-toggle="tooltip"]').tooltip()
+        console.log(allroots)
+        tooltips.each(function(ndx, elem) {
+            $(elem).attr('title', allroots[elem.innerHTML.trim()])
+              .tooltip('_fixTitle')
+        })
+     });
     $(".collapse").collapse('show');
 
     $(".term").click(function () {
         if (selected_obj !== "" && selected_obj.css("color") === orange) {
             const properties = selected_obj.attr('id').split('_').map(x => +x);
             if (tagged_terms_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
-                selected_obj.css("color", "green");
-            } else
-                selected_obj.css("color", "black");
+                console.log(selected_obj)
+                selected_obj[0].style.color = "green"
+            } else{
+                    selected_obj[0].style.color = "black"
+                  }
         }
         reset();
         $(this).css("color", "orange");
         selected_obj = $(this);
         selected_term = this.innerHTML;
+        /*getRootofWord(selected_term).done(function(d){
+            console.log(d.root)
+            selected_obj.tooltip('dispose').tooltip({title: d.root,trigger:"click"}).tooltip('show')
+        })*/
         term_current_tags();
         load_suggestions(selected_term);
-    }).hover(function () {
+    }).mouseover(function (e) {
         right_clicked = this.innerHTML;
     }).bind('contextmenu', function (e) {// disable right click and show custom context menu
-
+        console.log("hey")
         const windowHeight = $(window).height()+$(window).scrollTop();
         const top = e.pageY +5;
         const left = e.pageX;
@@ -149,11 +163,20 @@ function add_tag(obj) {
 let ul1;
 let ul2;
 
-function get_Tagged_Words(text) {
+function get_words_analayzation(text) {
     return $.ajax({
         type: "GET",
-        url: " getTaggedWords/",
+        url: " get_words_analayzation/",
         data: {'id': poemID},
+        dataType: "json",
+    });
+}
+
+function getRootofWord(text){
+   return $.ajax({
+        type: "GET",
+        url: " get_Root_of_Word/",
+        data: {'word': text},
         dataType: "json",
     });
 }

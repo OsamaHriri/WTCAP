@@ -40,7 +40,8 @@ urlpatterns = [
     re_path('get_all_poets/$', views.get_all_poets, name='get_all_poets'),
     re_path('get_terms_freq/$', views.get_terms_freq, name='get_terms_freq'),
     re_path('maxFrequencyinPeriod/$', views.maxFrequencyinPeriod, name='maxFrequencyinPeriod'),
-    re_path('getTaggedWords/$', views.getTaggedWords, name='getTaggedWords'),
+    re_path('get_words_analayzation/$', views.get_words_analayzation, name='get_words_analayzation'),
     re_path('term_current_tags/$', views.term_current_tags, name='term_current_tags'),
     re_path('remove_tag_from_word/$', views.remove_tag_from_word, name='remove_tag_from_word'),
+    re_path('get_Root_of_Word/$', views.get_Root_of_Word, name='get_Root_of_Word'),
 ]
