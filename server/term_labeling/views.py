@@ -63,22 +63,6 @@ def tags(request):
     }
     return render(request, 'manage_tags.html', context)
 
-
-# def process_lines(request):
-#     selected = []
-#     if request.method == 'POST':
-#         chosen_lines = list(request.POST.values())
-#         for value in poem.__iter__():
-#             if value.__getitem__('index') in chosen_lines:
-#                 print('this index exists')
-#                 selected.append(value)
-#                 print(selected)
-#     context = {
-#         'selected': selected
-#     }
-#     return render(request, 'process_lines.html', context)
-
-
 @login_required()
 def settings(request):
     context = {
@@ -134,75 +118,6 @@ def poet_poems(request):
         if poems is not None:
             return JsonResponse({
                 "poem_ids": poems , "tagged" : poems_tagged})
-        else:
-            return HttpResponse("not found")
-    else:
-        return HttpResponse("not success")
-
-
-def all_poems(request):
-    """
-
-    :param request: An empty GET request
-    :return: a list of all poems we have in db
-    """
-    if request.method == 'GET':
-        c = Connector()
-        poems = c.get_poems()
-        idlist = ""
-        for pp in poems:
-            idlist = idlist + pp['id'] + ","
-        if idlist is not None:
-            print(idlist)
-            return HttpResponse(idlist)
-        else:
-            return HttpResponse("not found")
-    else:
-        return HttpResponse("not success")
-
-
-def button(request):
-    return render(request, 'home.html')
-
-
-def output(request):
-    data = requests.get("https://www.google.com/")
-    print(data.text)
-    data = data.text
-    return render(request, 'home.html', {'data': data})
-
-
-def newexternal(request):
-    """
-    this one returns the json representation of the tags
-    """
-    if request.method == 'POST':
-        print("getting here")
-        t = Tag()
-        json_tags = t.getAllTagsbyjson()
-        if json_tags is not None:
-            print("sending")
-            return HttpResponse(json_tags)  # Sending an success response
-        else:
-            return HttpResponse("not found")
-    else:
-        return HttpResponse("not success")
-
-
-def external(request):
-    inp = request.POST.get('param')
-    bot = ALmaanyBot()
-    out = bot.search(inp)
-    return render(request, 'home.html', {'data1': out})
-
-
-def termTree(request):
-    if request.method == 'GET':
-        t = Tag()
-        json_tags = t.getAllTagsbyjson()
-        json_tags = {'tree': json_tags}
-        if json_tags is not None:
-            return JsonResponse(json_tags)  # Sending an success response
         else:
             return HttpResponse("not found")
     else:
@@ -511,7 +426,7 @@ def maxFrequencyinPeriod(request):
             return JsonResponse({"max": len(data[period])})
 
 
-def get_words_analayzation(request):
+def get_words_analyzation(request):
     if request.method == 'GET':
         req = request.GET
         id = req.get('id')

@@ -23,7 +23,7 @@ $(document).ready(function () {
             $('#tagsDropDown').hide();
         }
     });
-    get_words_analayzation(poemID).done(function (d) {
+    get_words_analyzation(poemID).done(function (d) {
         tagged_terms_list = d.tagged;
         suggested_term_list = d.suggested
         tagged_terms_list.forEach(function (d) {
@@ -38,7 +38,6 @@ $(document).ready(function () {
         });
         allroots = d.roots
         tooltips = $('[data-toggle="tooltip"]').tooltip()
-        console.log(allroots)
         tooltips.each(function(ndx, elem) {
             $(elem).attr('title', allroots[elem.innerHTML.trim()])
               .tooltip('_fixTitle')
@@ -50,7 +49,6 @@ $(document).ready(function () {
         if (selected_obj !== "" && selected_obj.css("color") === orange) {
             const properties = selected_obj.attr('id').split('_').map(x => +x);
             if (tagged_terms_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
-                console.log(selected_obj)
                 selected_obj[0].style.color = "green"
             } else{
                     selected_obj[0].style.color = "black"
@@ -171,10 +169,10 @@ function add_tag(obj) {
 let ul1;
 let ul2;
 
-function get_words_analayzation(text) {
+function get_words_analyzation(text) {
     return $.ajax({
         type: "GET",
-        url: " get_words_analayzation/",
+        url: " get_words_analyzation/",
         data: {'id': poemID},
         dataType: "json",
     });
