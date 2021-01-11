@@ -481,7 +481,7 @@ def remove_tag_from_word(request):
         req = request.GET
         w = Tagging()
         suc =w.remove_tag_reletion(int(req.get('row')),int(req.get('place')),int(req.get('position')),req.get('id'),req.get('tag'))
-        return JsonResponse({"last":suc})
+        return JsonResponse(suc)
 
 
 def get_Root_of_Word(request):

@@ -159,11 +159,14 @@ class Tagging(object):
         :return:
         """
         if not self.ifExists(tag=tag):
-            return False
+            return {"exist":False}
         word = self.graph.run(self.removeTagrelationQ, poem=id, row=row, position=position, place=place , tag = tag).data()[0]
         self.graph.run(self.removeWordwithoutr , word = word["name"])
         c = self.graph.run(self.checkremainingRelations, poem=id, row=row, position=position, place=place , tag = tag).data()[0]
-        return True
+        if c['count'] == 0:
+            return {"exist":True ,"last":True}
+        return {"exist":True ,"last":False}
+
 
     def get_suggestions(self, array):
         """

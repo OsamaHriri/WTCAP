@@ -43,8 +43,8 @@ $(document).ready(function () {
               .tooltip('_fixTitle')
         })
      });
-    $(".collapse").collapse('show');
-
+    $("#collapseOne").collapse('hide');
+    $("#collapseThree").collapse('show');
     $(".term").click(function () {
         if (selected_obj !== "" && selected_obj.css("color") === orange) {
             const properties = selected_obj.attr('id').split('_').map(x => +x);
@@ -159,9 +159,13 @@ function add_tag(obj) {
                 tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
             }
             build_tag(tag_text);
+            $("#collapseOne").collapse("show")
             obj.remove()
+            if($('.suggested_container').children().length == 0){
+                $("#collapseTwo").collapse("hide")
+            }
         } else {
-            window.alert("something went Wrong, maybe the tag already exists")
+            window.alert("something went Wrong, reClick on the term")
         }
     });
 }
@@ -635,13 +639,14 @@ function remove_tag_in_selected(obj) {
     const text = btn[0].innerHTML;
     var term_id = selected_obj.attr('id').split('_');
     remove_tag_from_word(text, term_id).done(function (d) {
-        if (d.last == true) {
+        if (d.exist == true && d.last == true) {
             term_id = term_id.map(x => +x)
             tagged_terms_list = tagged_terms_list.filter(function (value, index, arr) {
                 if (value.position == term_id[2] && value.row == term_id[0] && value.sader == term_id[1])
                     return false;
                 else return true;
             });
+            $("#collapseOne").collapse("hide")
         }
         elem.remove();
     });
@@ -714,6 +719,7 @@ function add_tag_to_selected(obj, e) {
                     tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
                 }
                 build_tag(rightclicked);
+                 $("#collapseOne").collapse("show")
             } else {
                 $("#myToast").attr("class", "toast show danger_toast").fadeIn();
                 document.getElementById("toast-body").innerHTML = "Something went wrong, maybe the tag exists";
@@ -802,9 +808,13 @@ function load_suggestions(term) {
         dataType: "json",
         success: function (data) {
             const suggestions = data.suggestions;
-            //reset2();
-            suggestions.forEach(build_suggestion)
-        }
+            if (suggestions === undefined || suggestions.length == 0) {
+                $("#collapseTwo").collapse("hide")
+             }
+             else{
+                suggestions.forEach(build_suggestion)
+                $("#collapseTwo").collapse("show")
+        }}
     });
 }
 
@@ -821,10 +831,14 @@ function term_current_tags() {
         },
         dataType: "json",
         success: function (data) {
+        if (data.tags === undefined || data.tags.length == 0) {
+            $("#collapseOne").collapse("hide")
+
+        } else {
             const tags_term = data.tags.map(a => a.tag);
-            //reset2();
             tags_term.forEach(build_tag)
-        }
+            $("#collapseOne").collapse("show")
+        }}
     });
 }
 
