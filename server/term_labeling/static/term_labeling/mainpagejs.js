@@ -165,7 +165,7 @@ function add_tag(obj) {
                 $("#collapseTwo").collapse("hide")
             }
         } else {
-            window.alert("something went Wrong, reClick on the term")
+            window.alert("something went Wrong, reClick again on the term")
         }
     });
 }
