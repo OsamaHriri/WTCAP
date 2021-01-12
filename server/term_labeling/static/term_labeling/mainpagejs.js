@@ -10,6 +10,7 @@ let poemID;
 let myUL;
 let tagged_terms_list;
 let suggested_term_list;
+let allroots;
 
 $(document).ready(function () {
     getHeaders();
@@ -22,7 +23,7 @@ $(document).ready(function () {
             $('#tagsDropDown').hide();
         }
     });
-    get_Tagged_Words(poemID).done(function (d) {
+    get_words_analyzation(poemID).done(function (d) {
         tagged_terms_list = d.tagged;
         suggested_term_list = d.suggested
         tagged_terms_list.forEach(function (d) {
@@ -35,31 +36,51 @@ $(document).ready(function () {
                 document.getElementById(id).style.color = "blue"
             }
         });
-    });
-
+        allroots = d.roots
+        tooltips = $('[data-toggle="tooltip"]').tooltip()
+        tooltips.each(function(ndx, elem) {
+            $(elem).attr('title', allroots[elem.innerHTML.trim()])
+              .tooltip('_fixTitle')
+        })
+     });
+    $("#collapseOne").collapse('hide');
+    $("#collapseThree").collapse('show');
     $(".term").click(function () {
-        if (selected_obj !== "" && selected_obj.css("color") === orange) {
-            const properties = selected_obj.attr('id').split('_').map(x => +x);
-            if (tagged_terms_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
-                selected_obj.css("color", "green");
-            } else
-                selected_obj.css("color", "black");
-        }
-        reset();
-        $(this).css("color", "orange");
-        selected_obj = $(this);
-        selected_term = this.innerHTML;
-        term_current_tags();
-        load_suggestions(selected_term);
-    }).hover(function () {
-        right_clicked = this.innerHTML;
+            if (selected_obj !== "" && selected_obj.css("color") === orange) {
+                const properties = selected_obj.attr('id').split('_').map(x => +x);
+                if (tagged_terms_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
+                    selected_obj[0].style.color = "green"
+                } else{
+                        selected_obj[0].style.color = "black"
+                      }
+            }
+            if(second_term != "")
+                second_term[0].style.color = "black"
+            second_term = ""
+            full_term = ""
+            merging = false
+            reset();
+            $(this).css("color", "orange");
+            selected_obj = $(this);
+            selected_term = this.innerHTML;
+            term_current_tags();
+            load_suggestions(selected_term);
     }).bind('contextmenu', function (e) {// disable right click and show custom context menu
-
-        const top = e.pageY + 5;
+        right_clicked = this.innerHTML
+        if(merging == false)
+            second_term = $(this)
+        close_open_windows()
+        const windowHeight = $(window).height()+$(window).scrollTop();
+        const top = e.pageY +5;
         const left = e.pageX;
+        const menuHeight = $(".term-menu").outerHeight();
+        var y = top;
+        if(windowHeight < menuHeight + top ){
+            y = windowHeight - menuHeight
+        }
         // Show contextmenu
         $(".term-menu").toggle(100).css({
-            top: top + "px",
+            top: y + "px",
             left: left + "px"
         });
         // disable default context menu
@@ -83,6 +104,15 @@ $(document).ready(function () {
     });
 });
 
+
+function close_open_windows(){
+    if ($('#tag-menu').is(':visible')) {
+         $('#tag-menu').hide();
+    }
+    if ($('#term-menu').is(':visible')) {
+            $('#term-menu').hide();
+    }
+}
 
 function loadTags() {
     getAllTags().done(function (d) {
@@ -132,9 +162,13 @@ function add_tag(obj) {
                 tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
             }
             build_tag(tag_text);
+            $("#collapseOne").collapse("show")
             obj.remove()
+            if($('.suggested_container').children().length == 0){
+                $("#collapseTwo").collapse("hide")
+            }
         } else {
-            window.alert("something went Wrong, maybe the tag already exists")
+            window.alert("something went Wrong, reClick again on the term")
         }
     });
 }
@@ -142,11 +176,20 @@ function add_tag(obj) {
 let ul1;
 let ul2;
 
-function get_Tagged_Words(text) {
+function get_words_analyzation(text) {
     return $.ajax({
         type: "GET",
-        url: " getTaggedWords/",
+        url: " get_words_analyzation/",
         data: {'id': poemID},
+        dataType: "json",
+    });
+}
+
+function getRootofWord(text){
+   return $.ajax({
+        type: "GET",
+        url: " get_Root_of_Word/",
+        data: {'word': text},
         dataType: "json",
     });
 }
@@ -198,6 +241,9 @@ function remove_tag(text) {
 }
 
 function remove_tag_from_word(text, term_id) {
+     var t = selected_term
+     if(merging == true)
+        t = full_term
     return $.ajax({
         type: "GET",
         url: "remove_tag_from_word/",
@@ -205,7 +251,7 @@ function remove_tag_from_word(text, term_id) {
             'row': term_id[0],
             'place': term_id[1],
             'position': term_id[2],
-            'term': selected_term,
+            'term': t,
             'tag': text,
             'id': poemID
         },
@@ -486,6 +532,7 @@ function emptyTree() {
 function item_clicked1(obj, event) {
     //clicking on parent
     event.stopPropagation();
+    close_open_windows()
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
     if (event.target !== obj)
@@ -500,6 +547,7 @@ function item_clicked1(obj, event) {
 function item_clicked2(obj, event) {
     //clicking on child depth 1
     event.stopPropagation();
+    close_open_windows()
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
     if (event.target !== obj)
@@ -513,6 +561,7 @@ function item_clicked2(obj, event) {
 function item_clicked3(obj, event) {
     //clicking on child depth 2
     event.stopPropagation();
+    close_open_windows()
     const elem = $(obj);
     const text = elem[0].textContent.split(/\r?\n/)[0];
     depth = depth + 1;
@@ -596,13 +645,14 @@ function remove_tag_in_selected(obj) {
     const text = btn[0].innerHTML;
     var term_id = selected_obj.attr('id').split('_');
     remove_tag_from_word(text, term_id).done(function (d) {
-        if (d.last == true) {
+        if (d.exist == true && d.last == true) {
             term_id = term_id.map(x => +x)
             tagged_terms_list = tagged_terms_list.filter(function (value, index, arr) {
                 if (value.position == term_id[2] && value.row == term_id[0] && value.sader == term_id[1])
                     return false;
                 else return true;
             });
+            $("#collapseOne").collapse("hide")
         }
         elem.remove();
     });
@@ -619,12 +669,26 @@ function right_click_tag(obj, e) {
     if (e.target != obj)
         return;
     rightclicked = text;
-    const top = e.pageY + 5;
+    close_open_windows()
+    const windowHeight = $(window).height()+$(window).scrollTop();
+    const windowWidth = $(window).width()+$(window).scrollLeft();
+    const top = e.pageY +5;
     const left = e.pageX;
+    const menuHeight = $(".tag-menu").outerHeight();
+    const menuwidth = $(".tag-menu").outerWidth();
     // Show contextmenu
+    var x = left;
+    var y = top;
+    if(windowHeight < top + menuHeight) {
+            y = windowHeight - menuHeight - 5
+    }
+    if(windowWidth < left + menuwidth ){
+            x = left  - menuwidth -5
+    }
+
     $(".tag-menu").toggle(100).css({
-        top: top + "px",
-        left: left + "px"
+            top: y + "px",
+            left: x + "px"
     });
 
     // Hide context menu
@@ -648,7 +712,7 @@ function add_tag_to_selected(obj, e) {
     event.stopPropagation();
     //prevent default menu
     e.preventDefault();
-    if (selected_term === "") {
+    if (merging == false && selected_term === "") {
         $("#myToast").attr("class", "toast show danger_toast").fadeIn();
         document.getElementById("toast-body").innerHTML = "First you need to choose a term";
         timeout();
@@ -661,6 +725,7 @@ function add_tag_to_selected(obj, e) {
                     tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
                 }
                 build_tag(rightclicked);
+                 $("#collapseOne").collapse("show")
             } else {
                 $("#myToast").attr("class", "toast show danger_toast").fadeIn();
                 document.getElementById("toast-body").innerHTML = "Something went wrong, maybe the tag exists";
@@ -688,6 +753,10 @@ function build_tag(tag_name) {
 
 function save_term_tag(tag) {
     const term_id = selected_obj.attr('id').split('_');
+    var t = selected_term
+    if(merging == true)
+        t = full_term
+
     return $.ajax({
         type: "GET",
         url: "save_term_tag/",
@@ -695,7 +764,7 @@ function save_term_tag(tag) {
             'row': term_id[0],
             'place': term_id[1],
             'position': term_id[2],
-            'term': selected_term,
+            'term': t,
             'tag': tag,
             'id': poemID
         },
@@ -719,20 +788,6 @@ function reset() {
 }
 
 
-function reset2() {
-    const container = document.getElementsByClassName('selected_container')[0];
-    const buttons = container.getElementsByTagName('button');
-    for (let i = buttons.length - 1; i >= 0; --i) {
-        buttons[i].remove();
-    }
-
-    const container2 = document.getElementsByClassName('suggested_container')[0];
-    const buttons2 = container2.getElementsByTagName('button');
-    for (let i = buttons2.length - 1; i >= 0; --i) {
-        buttons2[i].remove();
-    }
-    //add thingy that closes the row in table
-}
 
 function load_suggestions(term) {
     const term_id = selected_obj.attr('id').split('_');
@@ -749,9 +804,13 @@ function load_suggestions(term) {
         dataType: "json",
         success: function (data) {
             const suggestions = data.suggestions;
-            //reset2();
-            suggestions.forEach(build_suggestion)
-        }
+            if (suggestions === undefined || suggestions.length == 0) {
+                $("#collapseTwo").collapse("hide")
+             }
+             else{
+                suggestions.forEach(build_suggestion)
+                $("#collapseTwo").collapse("show")
+        }}
     });
 }
 
@@ -768,10 +827,14 @@ function term_current_tags() {
         },
         dataType: "json",
         success: function (data) {
+        if (data.tags === undefined || data.tags.length == 0) {
+            $("#collapseOne").collapse("hide")
+
+        } else {
             const tags_term = data.tags.map(a => a.tag);
-            //reset2();
             tags_term.forEach(build_tag)
-        }
+            $("#collapseOne").collapse("show")
+        }}
     });
 }
 
@@ -931,3 +994,33 @@ function get_definition(text) {
     // });
 
 };
+
+let second_term = ""
+let merging = false
+let full_term = ""
+
+function merge_term(obj, event){
+     event.preventDefault()
+     if(selected_obj == ""){
+         window.alert("To merge ,First you need to select a term")
+         second_term = ""
+         return
+     }
+     if(merging == true){
+        window.alert("you already merged two terms , reclick on the first term or any other to reset")
+        return
+     }
+     const first_term_properties = selected_obj.attr('id').split('_').map(x => +x)
+     const second_term_properties = second_term.attr('id').split('_').map(x => +x)
+     if(first_term_properties[0] != second_term_properties[0] || second_term_properties[2]!=1 || second_term_properties[1] === first_term_properties[1] ||
+             selected_obj[0].parentNode.getElementsByTagName("span").length != first_term_properties[2]){
+                window.alert("you cant merge this two terms")
+                return;
+      }
+     merging = true
+     reset();
+     second_term[0].style.color = "orange"
+     full_term = selected_obj[0].innerHTML.trim()+second_term[0].innerHTML.trim()
+     term_current_tags();
+     load_suggestions(full_term);
+}

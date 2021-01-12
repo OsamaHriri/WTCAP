@@ -63,11 +63,11 @@
 
 /*HOVE BUTTON THINGY*/
 .btn {
-	line-height: 50px;
-	height: 50px;
-	text-align: center;
-	width: 200px;
-	cursor: pointer;
+    line-height: 50px;
+    height: 50px;
+    text-align: center;
+    width: 200px;
+    cursor: pointer;
 }
 
 .btn-three {
@@ -75,6 +75,7 @@
     font-size: 1.1em;
     transition: all 0.5s;
     position: relative;
+    border: 1px solid grey;
 }
 
 .btn-three::before {

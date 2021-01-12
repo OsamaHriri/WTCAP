@@ -134,29 +134,13 @@
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
-                <a href="#">Source</a>
+                <a href="#" target="_blank">Source</a>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Morphology modal -->
-<div class="modal fade" id="morphologyModal" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-        <!-- Modal content-->
-        <div class="paper-modal">
-            <div class="modal-header">
-                <h4 class="modal-title">Morphology</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
 
-            </div>
-        </div>
-    </div>
-</div>
 
 <!--Insert parent modal -->
 <div class="modal fade" id="insertParentModal" role="dialog">
@@ -331,7 +315,7 @@
 <div id="term-menu" class="term-menu">
     <ul class="term-menu__items">
         <li class="term-menu__item">
-            <a href="#" class="term-menu__link">
+            <a id="mergeMe" href="javascript:void(0)" class="term-menu__link" onclick="merge_term(this, event)">
                 <i class="fa fa-compress"></i> Merge a second term
             </a>
         </li>
@@ -339,11 +323,6 @@
             <a href="#" class="term-menu__link" data-action="View" data-toggle="modal" data-target="#definitionModal"
                onclick="getDefinition()">
                 <i class="fa fa-book"></i> Get definition
-            </a>
-        </li>
-        <li class="term-menu__item">
-            <a href="#" class="term-menu__link" data-action="Edit" data-toggle="modal" data-target="#morphologyModal">
-                <i class="fa fa-cog"></i> Get morphology
             </a>
         </li>
         <li class="term-menu__item">
@@ -396,54 +375,65 @@
         <div class="col-sm-4 px-lg-4" id="fixed_cont"
              style="position:sticky;top:20px;align-self: flex-start;z-index:1;">
             <!-- Large modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                Show
-                Current Tags
-            </button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Show Current Tags</button>
             <!-- Selected Tags Section-->
-            <div class="double-border selected_container">
-                <h5> Selected Tags </h5>
-            </div>
+            <div id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="Mycard">
+                    <h5 class="Mycardheader" role="tab" id="headingOne">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="d-block">
+                            <i class="fa fa-chevron-down pull-right"></i> Selected Tags</a>
+                    </h5>
 
-            <!-- Suggested Tags Section-->
-            <div class="double-border suggested_container">
-                <h5> Suggested Tags </h5>
-            </div>
-
-            <!-- Tree Section -->
-            <div class="double-border treeview">
-                <h5> Tags </h5>
-
-                <div id="fixed_functions">
-
-                    <input type="text" id="mySearchInput" class="form-control" aria-label="Small"
-                           aria-describedby="inputGroup-sizing-sm" onclick="$('#tagsDropDown').toggle();"
-                           onkeyup="filterSearch()"
-                           placeholder="إبحث..." title="إبحث...">
-                    <div id="tagsDropDown">
-                        <ul id="myUL">
-                            {% for tag in all_tags %}
-                            <li><a href="javascript:void(0)" id="{{ tag }}" class="dropdownbox"
-                                   onclick="searchTag(this)">
-                                {{ tag }} </a></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-
-                    <div class="mt-1">
-                        <button type="button" id="addRoot" class="btn btn-outline-info" onclick="back_home()">Reset
-                        </button>
-                        <button type="button" class="btn btn-outline-info" data-action="View" data-toggle="modal"
-                                data-target="#insertRootModal">Add Root
-                        </button>
-                        <button type="button" class="btn btn-outline-info" data-action="View" data-toggle="modal"
-                                data-target="#showAllModal">Show All
-                        </button>
+                    <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="selected_container"></div>
                     </div>
                 </div>
+                <div class="Mycard">
+                    <h5 class="Mycardheader" role="tab" id="headingTwo">
+                        <a class="collapsed d-block" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            <i class="fa fa-chevron-down pull-right"></i> Suggestions</a>
+                    </h5>
+                    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="suggested_container"></div>
+                    </div>
+                </div>
+                <div class="Mycard">
+                    <h5 class="Mycardheader" role="tab" id="headingThree">
+                        <a class="collapsed d-block" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                            <i class="fa fa-chevron-down pull-right"></i> Tags</a>
+                    </h5>
+                    <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="card-body">
+                            <div class="treeview">
+                                <div id="fixed_functions">
+                                    <input type="text" id="mySearchInput" class="form-control" aria-label="Small"
+                                           aria-describedby="inputGroup-sizing-sm" onclick="$('#tagsDropDown').toggle();"
+                                           onkeyup="filterSearch()"
+                                           placeholder="إبحث..." title="إبحث...">
+                                    <div id="tagsDropDown">
+                                        <ul id="myUL">
+                                            {% for tag in all_tags %}
+                                            <li><a href="javascript:void(0)" id="{{ tag }}" class="dropdownbox"
+                                                   onclick="searchTag(this)">{{ tag }} </a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
 
-                <ul class="tree">
-                </ul>
+                                    <div class="mt-1">
+                                        <button type="button" id="addRoot" class="btn btn-outline-info" onclick="back_home()">Reset</button>
+                                        <button type="button" class="btn btn-outline-info" data-action="View" data-toggle="modal"
+                                                data-target="#insertRootModal">Add Root</button>
+                                        <button type="button" class="btn btn-outline-info" data-action="View" data-toggle="modal"
+                                                data-target="#showAllModal">Show All</button>
+                                    </div>
+                                </div>
+
+                                <ul class="tree">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -461,13 +451,13 @@
                     <td>
                         {% for term in poem.sadr %}
                         <span class='term'
-                              id="{{ forloop.parentloop.counter}}_0_{{ forloop.counter }}"> {{term}} </span>
+                              id="{{ forloop.parentloop.counter}}_0_{{ forloop.counter }}" data-toggle="tooltip" data-placement="top"> {{term}} </span>
                         {% endfor %}
                     </td>
                     <td>
                         {% for term in poem.ajuz %}
                         <span class='term'
-                              id="{{ forloop.parentloop.counter}}_1_{{ forloop.counter }}"> {{term}} </span>
+                              id="{{ forloop.parentloop.counter}}_1_{{ forloop.counter }}" data-toggle="tooltip" data-placement="top" > {{term}} </span>
                         {% endfor %}
                     </td>
                 </tr>
@@ -475,6 +465,53 @@
             </table>
         </div>
 
+    </div>
+</div>
+
+<!--            about section            -->
+
+<div class="about">
+   <a class="bg_links social info" data-toggle="modal" data-target="#myinfo">
+      <span class="icon"></span>
+   </a>
+   <a class="bg_links social above" href="#mynavbar">
+      <span class="icon"></span>
+   </a>
+   <a class="bg_links social history" data-toggle="modal" data-target="#myhistory">
+      <span class="icon"></span>
+   </a>
+   <a class="bg_links logo"></a>
+</div>
+
+<div class="modal fade" id="myinfo" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="paper-modal">
+            <div class="modal-header">
+                <h4 class="modal-title">Info</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myhistory" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="paper-modal">
+            <div class="modal-header">
+                <h4 class="modal-title">History</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
     </div>
 </div>
 

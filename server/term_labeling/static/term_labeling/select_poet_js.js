@@ -47,6 +47,10 @@ function update_poems_list(poems_list, tagged_list) {
         poetDropDown.removeChild(poetDropDown.lastChild);
     }
     poetDropDown.innerHTML += poems_html;
+
+    //Change header
+    document.getElementsByClassName("header")[0].innerHTML = "Choose a poem to analyze";
+
     document.getElementById('poetDiv').style.display = "block"
 }
 

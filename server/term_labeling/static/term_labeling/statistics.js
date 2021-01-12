@@ -101,9 +101,9 @@ function createWordCloud(obj, event,num){
             el.style.removeProperty("display");
      }, 30);
     var src = document.getElementById("cloud");
-    if (src.hasChildNodes()) {
-          src.removeChild(src.childNodes[0]);
-      }
+    while (src.lastChild.id !== 'loader') {
+        src.removeChild(src.lastChild);
+    }
       document.getElementById("loader").style.display = "block";
       get_terms_freq(obj.innerText,num,currentPeriod).done(function(d){
       var delayInMilliseconds = 500;
@@ -138,7 +138,7 @@ function createList(obj,event,num){
             el.style.removeProperty("display");
      }, 30);
      table.clear().draw()
-    document.getElementById("loader").style.display = "block";
+    document.getElementById("loader2").style.display = "block";
     get_terms_freq(obj.innerText,num,currentPeriod2).done(function(d){
         data = d.t
         var temp = ""
@@ -148,7 +148,7 @@ function createList(obj,event,num){
              table.row.add( [i+1,l.x,l.value,l.freq]).draw()
          });
         //$("#listTable > tbody").append(temp);
-        document.getElementById("loader").style.display = "none";
+        document.getElementById("loader2").style.display = "none";
     });
 }
 
