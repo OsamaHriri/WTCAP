@@ -1,65 +1,59 @@
-function initialize_index() {
-    let checkboxes;
-    checkboxes = document['poem-form'].getElementsByTagName('input');
-    for (let i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].type === 'checkbox') {
-            checkboxes[i].checked = false;
-        }
-    }
-}
-
-let selected_tags = [];
 let selected_term = "";
 let selected_obj = "";
+let right_clicked = "";
 let orange = "rgb(255, 165, 0)";
 let tagParent = "";
 let depth = 0;
 let all_tags = [];
 let viz;
 let poemID;
+let myUL;
+let tagged_terms_list;
+let suggested_term_list;
 
-function box_checked(obj) {
-    const id = obj.id; //line number
-    const tbl = document.getElementById("poem");
+$(document).ready(function () {
+    getHeaders();
+    var obj = document.getElementById("poem_id");
+    poemID = obj.innerText;
+    obj.remove();
+    myUL = document.getElementById('myUL');
+    $(document).click(function (e) {
+        if ($('#tagsDropDown').is(':visible') && e.target.id != "mySearchInput" && e.target.className != "dropdownbox") {
+            $('#tagsDropDown').hide();
+        }
+    });
+    get_Tagged_Words(poemID).done(function (d) {
+        tagged_terms_list = d.tagged;
+        suggested_term_list = d.suggested
+        tagged_terms_list.forEach(function (d) {
+            const id = d.row + "_" + d.sader + "_" + d.position
+            document.getElementById(id).style.color = "green"
+        });
+        suggested_term_list.forEach(function (d) {
+            if (!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)) {
+                const id = d.row + "_" + d.sader + "_" + d.position
+                document.getElementById(id).style.color = "blue"
+            }
+        });
+    });
 
-    const sentence = tbl.rows[id - 1];
-    const sadr = sentence.cells[1];
-    const ajuz = sentence.cells[2];
-
-    sentence.cells[3].childNodes[1].style.display = 'block';
-
-    //split sadr
-    const sadrtext = sadr.textContent.trim().split(" ");
-    let newsadr = "<p>";
-    for (let i = 0; i < sadrtext.length; i++) {
-        newsadr = newsadr + "<span class='term' id='" + id + "_0_" + (i + 1) + "'> " + sadrtext[i] + " " + "</span>"
-    }
-    newsadr = newsadr + "</p>";
-    sadr.innerHTML = newsadr;
-
-    //split ajuz
-    const ajuztext = ajuz.textContent.trim().split(" ");
-    let newsajuz = "<p>";
-    for (let i = 0; i < ajuztext.length; i++) {
-        newsajuz = newsajuz + "<span class='term' id='" + id + "_1_" + i + 1 + "'> " + ajuztext[i] + " " + "</span>"
-    }
-    newsajuz = newsajuz + "</p>";
-    ajuz.innerHTML = newsajuz;
-
-    // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-//     const cell1 = row.insertCell(0);
-//     const cell2 = row.insertCell(1);
-//     const cell3 = row.insertCell(2);
-//     const cell4 = row.insertCell(3);
-//
-// // Add some text to the new cells:
-//     cell2.innerHTML = "اختر كلمة";
-//     cell3.innerHTML = "<button type='button' class='btn' onclick='save_term_tag()'> Save </button>";
-//     cell1.innerHTML = "<button type='button' class='btn disabled' > + </button>";
-    // disable right click and show custom context menu
-    $(".term").bind('contextmenu', function (e) {
-        // const tag_text = this.innerText.slice(1, this.innerText.lastIndexOf("-"));
-        // $("#txt_id").val(tag_text);
+    $(".term").click(function () {
+        if (selected_obj !== "" && selected_obj.css("color") === orange) {
+            const properties = selected_obj.attr('id').split('_').map(x => +x);
+            if (tagged_terms_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
+                selected_obj.css("color", "green");
+            } else
+                selected_obj.css("color", "black");
+        }
+        reset();
+        $(this).css("color", "orange");
+        selected_obj = $(this);
+        selected_term = this.innerHTML;
+        term_current_tags();
+        load_suggestions(selected_term);
+    }).hover(function () {
+        right_clicked = this.innerHTML;
+    }).bind('contextmenu', function (e) {// disable right click and show custom context menu
 
         const top = e.pageY + 5;
         const left = e.pageX;
@@ -71,6 +65,7 @@ function box_checked(obj) {
         // disable default context menu
         return false;
     });
+
 
     // Hide context menu
     $(document).bind('contextmenu click', function () {
@@ -86,22 +81,8 @@ function box_checked(obj) {
     $('.term-menu a').click(function () {
         $(".term-menu").hide();
     });
-    process_word(id);
-}
+});
 
-//can remove
-function process_word(id) {
-    $(function () {
-        $(".term").click(function () {
-            if (selected_obj !== "" && selected_obj.css("color") === orange)
-                selected_obj.css("color", "black");
-            $(this).css("color", "orange");
-            selected_obj = $(this);
-            selected_term = this.innerHTML;
-            load_suggestions(selected_term);
-        });
-    });
-}
 
 function loadTags() {
     getAllTags().done(function (d) {
@@ -111,15 +92,15 @@ function loadTags() {
 }
 
 function update_tags_list() {
-    let myUL = document.getElementById('myUL');
     myUL.innerHTML = "";
     all_tags.forEach(function (idx, li) {
-        myUL.innerHTML += "<li><a href=\"#\" id=" + idx + " onclick=\"searchTag(this)\">" + idx + "</a></li>";
+        myUL.innerHTML += "<li><a href=\"javascript:void(0)\" id=" + idx + " onclick=\"searchTag(this)\">" + idx + "</a></li>";
     });
 }
 
 
 function filterSearch() {
+    $('#tagsDropDown').show();
     var input, filter, ul, li, a, i, txtValue;
     input = document.getElementById("mySearchInput");
     filter = input.value.toUpperCase();
@@ -144,13 +125,33 @@ function add_tag(obj) {
     //const me = $(obj);
     const text = obj.getElementsByClassName("btn-txt");
     const tag_text = text[0].innerText.slice(0, text[0].innerText.lastIndexOf("-"));
-    build_tag(tag_text);
+    save_term_tag(tag_text).done(function (d) {
+        if (d === "Success") {
+            const term_id = selected_obj.attr('id').split('_').map(x => +x)
+            if (!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)) {
+                tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
+            }
+            build_tag(tag_text);
+            obj.remove()
+        } else {
+            window.alert("something went Wrong, maybe the tag already exists")
+        }
+    });
 }
 
 let ul1;
 let ul2;
 
-function addNewRoot(text) {
+function get_Tagged_Words(text) {
+    return $.ajax({
+        type: "GET",
+        url: " getTaggedWords/",
+        data: {'id': poemID},
+        dataType: "json",
+    });
+}
+
+function add_new_root(text) {
     return $.ajax({
         type: "GET",
         url: "add_root/",
@@ -160,11 +161,72 @@ function addNewRoot(text) {
 
 }
 
-function add_new_tag(text) {
+function add_parent(text, parent) {
+    return $.ajax({
+        type: "GET",
+        url: "add_parent/",
+        data: {'term': text, 'parent': parent},
+        dataType: "json",
+    });
+}
+
+function changeParent(text, parent) {
+    return $.ajax({
+        type: "GET",
+        url: "change_parent/",
+        data: {'term': text, 'parent': parent},
+        dataType: "json",
+    });
+}
+
+function add_child(text, parent) {
     return $.ajax({
         type: "GET",
         url: "add_tag/",
-        data: {'term': text, 'parent': tagParent},
+        data: {'term': text, 'parent': parent},
+        dataType: "json",
+    });
+}
+
+function remove_tag(text) {
+    return $.ajax({
+        type: "GET",
+        url: "remove_tag/",
+        data: {'term': text},
+        dataType: "json",
+    });
+}
+
+function remove_tag_from_word(text, term_id) {
+    return $.ajax({
+        type: "GET",
+        url: "remove_tag_from_word/",
+        data: {
+            'row': term_id[0],
+            'place': term_id[1],
+            'position': term_id[2],
+            'term': selected_term,
+            'tag': text,
+            'id': poemID
+        },
+        dataType: "json",
+    });
+}
+
+function remove_tag_children(text) {
+    return $.ajax({
+        type: "GET",
+        url: "delete_all/",
+        data: {'term': text},
+        dataType: "json",
+    });
+}
+
+function editTag(text, edit) {
+    return $.ajax({
+        type: "GET",
+        url: "edit_tag/",
+        data: {'term': text, 'edit': edit},
         dataType: "json",
     });
 }
@@ -191,42 +253,6 @@ function searchTag(obj) {
     });
 
 }
-
-function submit_clicked() {
-    text = document.getElementById("newTag").value;
-    if (text === "")
-        window.alert("The field is empty ,Please insert a tag before clicking");
-    else {
-        if (tagParent === "") {
-            addNewRoot(text).done(function (d) {
-                if (d.Tag === false)
-                    window.alert("The tag already exist");
-                else {
-                    all_tags.push(text)
-                    myUL.innerHTML += "<li><a href=\"#\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
-                    emptyTree();
-                    getHeaders();
-                }
-            });
-        } else {
-            add_new_tag(text).done(function (d) {
-                if (d.Tag === false)
-                    window.alert("The tag already exist");
-                else if (d.parent === false)
-                    window.alert("The parent doesnt exist");
-                else {
-                    all_tags.push(text)
-                    myUL.innerHTML += "<li><a href=\"#\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
-                    temp = document.getElementById("c").innerText.split(/\r?\n/)[0]
-                    emptyTree();
-                    item_clicked(temp);
-                }
-            });
-        }
-    }
-    document.getElementById("newTag").value = "";
-}
-
 
 function getParent(text) {
     return $.ajax({
@@ -256,6 +282,185 @@ function getAllTags(text) {
         dataType: "json",
     });
 
+}
+
+
+function change_parent() {
+    text = document.getElementById("change-parent").value;
+    if (text === "") {
+        // window.alert("The field is empty ,Please insert a tag before clicking");
+        $("#myToast").attr("class", "toast show danger_toast").fadeIn();
+        document.getElementById("toast-body").innerHTML = "The field is empty ,Please insert a tag before clicking";
+        timeout();
+    } else {
+        if (text === rightclicked) {
+            window.alert("Error , you can`t add the term itself as parent");
+            return
+        }
+        changeParent(rightclicked, text).done(function (d) {
+            if (d.exist === false) {
+                window.alert("The parent doesnt exist ,Please insert a valid one");
+                return
+            }
+            if (d.change === false) {
+                window.alert("Error ,you can't add a descendant tag as parent");
+                return
+            }
+            document.getElementById("change-parent").value = ""
+            search2(rightclicked)
+            $('#changeParentModal').modal('hide')
+        });
+
+    }
+}
+
+function delete_tag() {
+    getParent(rightclicked).done(function (d) {
+        var parent = d.parent;
+        remove_tag(rightclicked).done(function (d2) {
+            document.getElementById(rightclicked).remove();
+            all_tags = all_tags.filter(e => e !== rightclicked);
+            if (parent.length === 0) {
+                emptyTree();
+                getHeaders();
+                depth = 0;
+                tagParent = "";
+                flag = false;
+            } else {
+                search2(parent[0].parent.name)
+            }
+        });
+    });
+}
+
+function delete_all() {
+    getParent(rightclicked).done(function (d) {
+        var parent = d.parent;
+        remove_tag_children(rightclicked).done(function (d2) {
+            all_tags = [];
+            loadTags();
+            if (parent.length === 0) {
+                emptyTree();
+                getHeaders();
+                depth = 0;
+                tagParent = "";
+                flag = false;
+            } else {
+                search2(parent[0].parent.name)
+            }
+        });
+    });
+}
+
+function new_parent() {
+
+    text = document.getElementById("parent-name").value;
+    if (text === "") {
+        $("#myToast").attr("class", "toast show danger_toast").fadeIn();
+        document.getElementById("toast-body").innerHTML = "The field is empty ,Please insert a tag before clicking";
+        timeout();
+    }
+    // window.alert("The field is empty ,Please insert a tag before clicking");
+    else {
+        if (text === rightclicked) {
+            window.alert("Error , you can`t add the term itself as parent");
+            return
+        }
+        add_parent(rightclicked, text).done(function (d) {
+            if (d.add == false) {
+                window.alert("Error , the parent already exist somewhere");
+                return
+            }
+            all_tags.push(text);
+            myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
+            document.getElementById("parent-name").value = "";
+            search2(rightclicked);
+            close_modal('#insertParentModal');
+        });
+    }
+}
+
+function edit_tag() {
+    text = document.getElementById("edited-name").value;
+    editTag(rightclicked, text).done(function (d) {
+        if (d.edit === false) {
+            window.alert("Error , the edit name already exist");
+            return
+        }
+        document.getElementById(rightclicked).remove();
+        all_tags = all_tags.filter(e => e !== rightclicked);
+        all_tags.push(text);
+        myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
+        document.getElementById("edited-name").value = "";
+        emptyTree();
+        if (tagParent === "") {
+            getHeaders()
+        } else if (tagParent === rightclicked)
+            item_clicked(text);
+        else {
+            item_clicked(tagParent)
+        }
+        close_modal('#editNameModal');
+    });
+
+
+}
+
+function new_child() {
+    text = document.getElementById("child-name").value
+    if (text === "")
+        window.alert("The field is empty ,Please insert a tag before clicking");
+    else {
+        if (text === rightclicked) {
+            window.alert("Error , you can`t add the term itself as child");
+            return
+        }
+        add_child(text, rightclicked).done(function (d) {
+            if (d.Tag === false) {
+                window.alert("The tag already exist");
+                return
+            }
+            all_tags.push(text);
+            myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
+            document.getElementById("child-name").value = "";
+            search2(rightclicked);
+            close_modal('#insertChildModal');
+        });
+    }
+}
+
+function new_root() {
+    const text = document.getElementById("root-name").value;
+    if (text === "") {
+        $("#myToast").attr("class", "toast show danger_toast").fadeIn();
+        document.getElementById("toast-body").innerHTML = "The field is empty ,Please insert a tag before clicking";
+        timeout();
+    }
+    // window.alert("The field is empty ,Please insert a tag before clicking");
+    else {
+        add_new_root(text).done(function (d) {
+            if (d.Tag === false) {
+                window.alert("The tag already exist");
+                return
+            }
+            all_tags.push(text);
+            myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
+            document.getElementById("root-name").value = "";
+            emptyTree();
+            getHeaders();
+            depth = 0;
+            tagParent = "";
+            flag = false;
+            close_modal('#insertRootModal')
+        });
+    }
+
+}
+
+function close_modal(id) {
+    $(id).modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
 }
 
 function emptyTree() {
@@ -385,67 +590,120 @@ function build_il_headers(item, index) {
     ul.appendChild(li);
 }
 
-function remove_tag(obj) {
+function remove_tag_in_selected(obj) {
     const elem = $(obj);
     const btn = elem[0].getElementsByClassName("btn-txt");
     const text = btn[0].innerHTML;
-    const index = selected_tags.indexOf(text);
-    if (index > -1) {
-        selected_tags.splice(index, 1);
-    }
-    elem.remove();
+    var term_id = selected_obj.attr('id').split('_');
+    remove_tag_from_word(text, term_id).done(function (d) {
+        if (d.last == true) {
+            term_id = term_id.map(x => +x)
+            tagged_terms_list = tagged_terms_list.filter(function (value, index, arr) {
+                if (value.position == term_id[2] && value.row == term_id[0] && value.sader == term_id[1])
+                    return false;
+                else return true;
+            });
+        }
+        elem.remove();
+    });
 }
 
+let rightclicked = "";
+
 function right_click_tag(obj, e) {
+    e.stopPropagation();
+    //prevent default menu
+    e.preventDefault();
+
+    const text = obj.innerText.split(/\r?\n/)[0];
+    if (e.target != obj)
+        return;
+    rightclicked = text;
+    const top = e.pageY + 5;
+    const left = e.pageX;
+    // Show contextmenu
+    $(".tag-menu").toggle(100).css({
+        top: top + "px",
+        left: left + "px"
+    });
+
+    // Hide context menu
+    $(document).bind('contextmenu click', function () {
+        $(".tag-menu").hide();
+    });
+
+    // disable context-menu from custom menu
+    $('.tag-menu').bind('contextmenu', function () {
+        return false;
+    });
+
+    // Clicked context-menu item
+    $('.tag-menu a').click(function () {
+        $(".tag-menu").hide();
+    });
+}
+
+
+function add_tag_to_selected(obj, e) {
     event.stopPropagation();
     //prevent default menu
     e.preventDefault();
-    build_tag(obj.innerText.split(/\r?\n/)[0])
-}
-
-function build_tag(tag_name) {
     if (selected_term === "") {
-        window.alert("first choose a term");
-    } else {
-        if (selected_tags.indexOf(tag_name) > -1)
-            window.alert("term already exist");
-        else {
-            selected_tags.push(tag_name);
-            const container = document.getElementsByClassName('selected_container')[0];
-            container.insertAdjacentHTML('beforeend', '<button class="btn btn-sm tag-btn" onclick="remove_tag(this)">\n' +
-                '                    <i class=\'fas fa-minus\'></i>' + '&nbsp;' +
-                '                    <span class="btn-txt">' + tag_name + '</span>\n' +
-                '                </button>')
-        }
-    }
-}
+        $("#myToast").attr("class", "toast show danger_toast").fadeIn();
+        document.getElementById("toast-body").innerHTML = "First you need to choose a term";
+        timeout();
 
-function save_term_tag() {
-    selected_obj.css("color", "green");
-    const term_id = selected_obj.attr('id').split('_');
-    for (const tag of selected_tags) {
-        $.ajax({
-            type: "GET",
-            url: "save_term_tags/",
-            data: {
-                'row': term_id[0],
-                'place': term_id[1],
-                'position': term_id[2],
-                'term': selected_term,
-                'tag': tag,
-                'id': poemID
-            },
-            success: function (data) {
-                console.log(data);
+    } else {
+        save_term_tag(rightclicked).done(function (d) {
+            if (d == "Success") {
+                const term_id = selected_obj.attr('id').split('_').map(x => +x)
+                if (!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)) {
+                    tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
+                }
+                build_tag(rightclicked);
+            } else {
+                $("#myToast").attr("class", "toast show danger_toast").fadeIn();
+                document.getElementById("toast-body").innerHTML = "Something went wrong, maybe the tag exists";
+                timeout();
             }
         });
     }
-    reset();
+}
+
+function timeout() {
+    setTimeout(function () {
+        $("#myToast").fadeOut().attr('class', 'toast danger_toast');
+    }, 2500);
+}
+
+function build_tag(tag_name) {
+    const container = document.getElementsByClassName('selected_container')[0];
+    container.insertAdjacentHTML('beforeend', '<button class="btn btn-sm tag-btn" onclick="remove_tag_in_selected(this)">\n' +
+        '                    <i class=\'fa fa-minus\'></i>' + '&nbsp;' +
+        '                    <span class="btn-txt">' + tag_name + '</span>\n' +
+        '                </button>')
+
+}
+
+
+function save_term_tag(tag) {
+    const term_id = selected_obj.attr('id').split('_');
+    return $.ajax({
+        type: "GET",
+        url: "save_term_tag/",
+        data: {
+            'row': term_id[0],
+            'place': term_id[1],
+            'position': term_id[2],
+            'term': selected_term,
+            'tag': tag,
+            'id': poemID
+        },
+    });
 }
 
 function reset() {
     selected_term = "";
-    selected_tags = [];
     const container = document.getElementsByClassName('selected_container')[0];
     const buttons = container.getElementsByTagName('button');
     for (let i = buttons.length - 1; i >= 0; --i) {
@@ -462,7 +720,6 @@ function reset() {
 
 
 function reset2() {
-    selected_tags = [];
     const container = document.getElementsByClassName('selected_container')[0];
     const buttons = container.getElementsByTagName('button');
     for (let i = buttons.length - 1; i >= 0; --i) {
@@ -478,15 +735,42 @@ function reset2() {
 }
 
 function load_suggestions(term) {
+    const term_id = selected_obj.attr('id').split('_');
     $.ajax({
         type: "GET",
         url: "suggest_tags/",
-        data: {'term': term},
+        data: {
+            'row': term_id[0],
+            'place': term_id[1],
+            'position': term_id[2],
+            'term': term,
+            'id': poemID
+        },
         dataType: "json",
         success: function (data) {
             const suggestions = data.suggestions;
-            reset2();
+            //reset2();
             suggestions.forEach(build_suggestion)
+        }
+    });
+}
+
+function term_current_tags() {
+    const term_id = selected_obj.attr('id').split('_');
+    $.ajax({
+        type: "GET",
+        url: "term_current_tags/",
+        data: {
+            'row': term_id[0],
+            'place': term_id[1],
+            'position': term_id[2],
+            'id': poemID
+        },
+        dataType: "json",
+        success: function (data) {
+            const tags_term = data.tags.map(a => a.tag);
+            //reset2();
+            tags_term.forEach(build_tag)
         }
     });
 }
@@ -494,8 +778,8 @@ function load_suggestions(term) {
 function build_suggestion(item, index) {
     const container = document.getElementsByClassName('suggested_container')[0];
     container.insertAdjacentHTML('beforeend', '<button class="btn btn-sm tag-btn" onclick="add_tag(this)"> \n' +
-        '                   <i class=\'fas fa-plus\'></i>' + '&nbsp;' +
-        '                    <span class="btn-txt">' + item.Tag.name + '-' + item.Tag.frequency + '</span>\n' +
+        '                   <i class=\'fa fa-plus\'></i>' + '&nbsp;' +
+        '                    <span class="btn-txt">' + item[0] + '-' + parseFloat(item[1].toFixed(4)) + '</span>\n' +
         '                </button>');
 
     // disable right click and show custom context menu
@@ -546,60 +830,114 @@ function searchSuggestion(text) {
     });
 }
 
-//Load initial headers
-window.onload = getHeaders();
-//Load tags for seatch bar
-//window.onload = loadTags();
-
-
-function draw() {
-
-    $('#viz').ready(function () {
-        statement = "match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$', poemID)
-        var config = {
-            container_id: "viz",
-            server_url: "bolt://localhost:7687",
-            server_user: "neo4j",
-            server_password: "123123147",
-            labels: {
-                "Tag": {
-                    "caption": "name",
-                    //"size": "pagerank",
-                    //"community": "community",
-                    "title_properties": [
-                        "name"
-                    ]
-                },
-                "Word": {
-                    "caption": "name",
-                    //"size": "pagerank",
-                    //"community": "community",
-                    "title_properties": [
-                        "name"
-                    ]
-                }
-
-            },
-            relationships: {
-                "tag": {
-                    //"thickness": "weight",
-                    "caption": false
-                }
-            },
-            arrows: true,
-            initial_cypher: statement
-        };
-
-        viz = new NeoVis.default(config);
-        viz.render();
-    });
-}
-
 
 function refreshVis() {
     viz.reload()
 }
 
-window.onload = function () {
-    poemID = document.getElementById("poem_id").innerText
+
+function search2(text) {
+    getDepth(text).done(function (d) {
+        depth = d.depth + 1;
+        emptyTree();
+        if (depth === 1)
+            flag = false;
+        item_clicked(text);
+    });
 }
+
+function back_home() {
+    emptyTree();
+    getHeaders();
+    depth = 0;
+    tagParent = "";
+    flag = false;
+}
+
+$('#showAllModal').on('shown.bs.modal', function (e) {
+    const src = document.getElementById("listTable");
+    while (src.lastChild.id !== 'Fchild') {
+        src.removeChild(src.lastChild);
+    }
+    src.innerHTML += "<tbody></tbody>"
+    var arr = []
+    document.querySelectorAll(".dropdownbox").forEach(function (d, i) {
+        //temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+d.innerText.trim()+"</td></tr>"
+        arr.push(d.innerText.trim())
+    });
+    var temp = ""
+    arr.sort().forEach(function (d, i) {
+        temp += "<tr><th scope=\"row\">" + (i + 1) + "</th><td>" + d + "</td></tr>"
+    });
+    $("#listTable > tbody").append(temp);
+})
+
+
+$('#exampleModal').on('shown.bs.modal', function (e) {
+    statement = "match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$', poemID)
+    var config = {
+        container_id: "viz",
+        server_url: "bolt://localhost:7687",
+        server_user: "neo4j",
+        server_password: "123123147",
+        labels: {
+            "Tag": {
+                "caption": "name",
+                //"size": "pagerank",
+                //"community": "community",
+                "title_properties": [
+                    "name"
+                ]
+            },
+            "Word": {
+                "caption": "name",
+                //"size": "pagerank",
+                //"community": "community",
+                "title_properties": [
+                    "name"
+                ]
+            }
+        },
+        relationships: {
+            "tag": {
+                //"thickness": "weight",
+                "caption": false
+            }
+        },
+        arrows: true,
+        initial_cypher: statement
+    };
+
+    viz = new NeoVis.default(config);
+    viz.render();
+});
+
+function getDefinition() {
+	
+	document.getElementById('dadiv').innerHTML = '';
+    //The term we want the definition of is in var right_clicked
+    document.getElementById('book_loader').style.display = 'block';
+	
+	
+    let modal_body = document.getElementById('definitionModal').querySelector('.modal-body');
+	
+	
+	get_definition(right_clicked).done(function (d) {
+		document.getElementById('book_loader').style.display = 'none';
+		document.getElementById('dadiv').innerHTML = d.response;
+		$("#dasrc").attr("href", d.url );
+		console.log(d.url)
+
+	});
+
+}
+
+function get_definition(text) {
+    return $.ajax({
+        type: "GET",
+	    url: " getDefWord/",
+		data: {'word': text},
+		dataType: "json",
+		});
+
+};

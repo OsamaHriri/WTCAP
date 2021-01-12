@@ -42,8 +42,8 @@
     overflow-y: auto;
     border: 1px solid #6e6658;
     z-index: 3;
-    /* #TODO try not to use 'right' attrib */
-    right: 44%;
+    right: 50%;
+    transform: translate(50%, 0);
 }
 
 .dropdown-content a {

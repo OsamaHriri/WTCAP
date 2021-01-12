@@ -5,14 +5,14 @@
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/style.css'%}">
 
 <script>
-$(document).ready(function() {
-        obj = document.getElementById("1link");
-        var clickedItem = $( obj );
-        $( ".nav-link" ).each( function() {
-            $( this ).removeClass( "active" );
+    $(document).ready(function () {
+        const obj = document.getElementById("1link");
+        const clickedItem = $(obj);
+        $(".nav-link").each(function () {
+            $(this).removeClass("text-dark");
         });
-        clickedItem.addClass( "active" );
-});
+        clickedItem.addClass("text-info");
+    });
 </script>
 <style>
     header {
@@ -34,7 +34,7 @@ $(document).ready(function() {
     <div class="container h-100">
         <div class="row h-100 align-items-center">
             <div class="col-12 text-center">
-                <h1 class="font-weight-light">Word Tagging for Arabic Poetry</h1>
+                <h1 class="font-weight-light">Word Tagging for Classical Arabic Poetry</h1>
                 <p class="lead">A great starter layout for a landing page</p>
             </div>
         </div>

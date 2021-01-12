@@ -1,22 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Markazi+Text&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Katibeh&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,400&display=swap');
 
 body {
     font-family: 'Markazi Text', sans-serif;
     min-height: 100vh;
     height: 500px; /* You must set a specified height */
     /*background-image: url("img/marjanblan-5Ft4NWTmeJE-unsplash.jpg");*/
-    background-color: #eaebe6; /* Used if the image is unavailable */
+    /*background-color: #eaebe6; !* Used if the image is unavailable *!*/
     /*background-position: center; !* Center the image *!*/
     /*background-repeat: no-repeat; !* Do not repeat the image *!*/
     /*background-size: cover; !* Resize the background image to cover the entire container *!*/
 }
 
 
-
 /* nav bar css */
 .navbar {
-    font-family: 'Katibeh', cursive;
-    font-size: 1.5em;
+    font-family: 'Montserrat', cursive;
+    position: sticky;
+    top: 0;
+    display: flex;
+    z-index: 2;
+    align-self: flex-start;
 }
 
+
+.NavBold {
+    font-weight: 700;
+}

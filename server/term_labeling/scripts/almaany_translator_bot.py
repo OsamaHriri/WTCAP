@@ -20,15 +20,21 @@ class ALmaanyBot():
         word = urllib.parse.quote(word)
         query = 'https://www.almaany.com/ar/dict/ar-ar/' + word
         self.driver.get(query)
+        self.driver.find_element_by_class_name('morelink').click()
+        html_list  = self.driver.find_element_by_class_name('allcontent')
+        return html_list.get_attribute('innerHTML') , query
+         
+        
     
-    def serch_doha(self,word):
+    
+    def search_doha(self,word):
 
 
         url = 'https://dohadictionary.org/dictionary/' + word
         self.driver.get(url)
-        sleep(3)
+        sleep(4)
         search = self.driver.find_element_by_class_name('tab-main-content')
-        print(search.get_attribute('innerHTML'))
+        return search.get_attribute('innerHTML') , url 
 
 
 def main(argv):
@@ -37,18 +43,10 @@ def main(argv):
     tack = time()
     print(tack-tick)
     tick = time()
-    bot.search(argv[0])
-    more_button = html_list  = bot.driver.find_element_by_class_name('morelink')
-    more_button.click()
-
-    html_list  = bot.driver.find_element_by_class_name('allcontent')
-
-    text = html_list.get_attribute('innerHTML')
-    print(text)
-        # print('-'*50)
-    tack = time()
-
-    print(tack-tick)
+    
+    print(bot.search('اسد'))
+    
+    print( bot.serch_doha('اسد'))
 
 
 if __name__ == "__main__":
