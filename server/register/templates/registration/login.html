@@ -17,19 +17,19 @@
                 <div class="card text-black" style="border:none;">
                   <div class="card-body">
                     <form method="post" class="uni">
-                                {% csrf_token %}
-                                <fieldset class="form-group">
-                                    <legend class="border-bottom mb-4">Log In</legend>
-                                      <div class="input-group mb-3">
-                                          <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
-                                          <input type="text" class="form-control" placeholder="Username" name="username" aria-describedby="basic-addon1">
-                                        </div>
-                                      <div class="input-group mb-3">
-                                            <span class="input-group-text" id="basic-addon2"><i class="fa fa-lock"></i></span>
-                                            <input type="password" class="form-control" placeholder="Password" name="password" aria-describedby="basic-addon2">
-                                       </div>
-                                </fieldset>
-                                <button type="submit" class="btn btn-success">Login</button>
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            <legend class="border-bottom mb-4">Log In</legend>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                                <input type="text" class="form-control" placeholder="Username" name="username" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon2"><i class="fa fa-lock"></i></span>
+                                <input type="password" class="form-control" placeholder="Password" name="password" aria-describedby="basic-addon2">
+                            </div>
+                        </fieldset>
+                        <button type="submit" class="btn btn-success">Login</button>
                     </form>
                   </div>
                 </div>

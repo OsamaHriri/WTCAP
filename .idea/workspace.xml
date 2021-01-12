@@ -2,14 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/img/_logo.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/login_style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/img/info.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/img/pin.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/img/scroll.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/img/settings.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/img/up.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/register/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/register/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/register/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/register/templates/registration/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/main_tags_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/main_tags_style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
