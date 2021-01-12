@@ -100,9 +100,21 @@
                 </div>
             </div>
             <br><br>
-            <div id="cloud"><img src="{% static 'term_labeling/img/World_cloud.png'%}" style="margin-left:80px; margin-top:20px"
-                         width="900" height="500" left="50px"></div>
 
+            <div id="cloud" style="height:700px">
+                <div id="loader" class="bookshelf_wrapper">
+                    <ul class="books_list">
+                        <li class="book_item first"></li>
+                        <li class="book_item second"></li>
+                        <li class="book_item third"></li>
+                        <li class="book_item fourth"></li>
+                        <li class="book_item fifth"></li>
+                        <li class="book_item sixth"></li>
+                    </ul>
+                    <div class="shelf"></div>
+                </div>
+                <img src="{% static 'term_labeling/img/World_cloud.PNG'%}">
+            </div>
         </div>
         <div class="tab-pane fade show" id="list" role="tabpanel" aria-labelledby="list-tab">
             <h3>Table</h3>
@@ -135,7 +147,18 @@
                 </div>
             </div>
             <br><br>
-            <div style="height:500px">
+            <div style="height:700px">
+                <div id="loader2" class="bookshelf_wrapper">
+                    <ul class="books_list">
+                        <li class="book_item first"></li>
+                        <li class="book_item second"></li>
+                        <li class="book_item third"></li>
+                        <li class="book_item fourth"></li>
+                        <li class="book_item fifth"></li>
+                        <li class="book_item sixth"></li>
+                    </ul>
+                    <div class="shelf"></div>
+                </div>
                 <table class="table" id="listTable" style="font-family:initial">
                     <thead class="thead-dark">
                     </thead>
@@ -145,17 +168,6 @@
     </div>
 </div>
 
-<div id="loader" class="bookshelf_wrapper">
-    <ul class="books_list">
-        <li class="book_item first"></li>
-        <li class="book_item second"></li>
-        <li class="book_item third"></li>
-        <li class="book_item fourth"></li>
-        <li class="book_item fifth"></li>
-        <li class="book_item sixth"></li>
-    </ul>
-    <div class="shelf"></div>
-</div>
 
 {% endblock content %}
 

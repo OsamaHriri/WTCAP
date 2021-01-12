@@ -89,22 +89,6 @@ def tags(request):
     }
     return render(request, 'manage_tags.html', context)
 
-
-# def process_lines(request):
-#     selected = []
-#     if request.method == 'POST':
-#         chosen_lines = list(request.POST.values())
-#         for value in poem.__iter__():
-#             if value.__getitem__('index') in chosen_lines:
-#                 print('this index exists')
-#                 selected.append(value)
-#                 print(selected)
-#     context = {
-#         'selected': selected
-#     }
-#     return render(request, 'process_lines.html', context)
-
-
 @login_required()
 def settings(request):
     context = {
@@ -160,75 +144,6 @@ def poet_poems(request):
         if poems is not None:
             return JsonResponse({
                 "poem_ids": poems , "tagged" : poems_tagged})
-        else:
-            return HttpResponse("not found")
-    else:
-        return HttpResponse("not success")
-
-
-def all_poems(request):
-    """
-
-    :param request: An empty GET request
-    :return: a list of all poems we have in db
-    """
-    if request.method == 'GET':
-        c = Connector()
-        poems = c.get_poems()
-        idlist = ""
-        for pp in poems:
-            idlist = idlist + pp['id'] + ","
-        if idlist is not None:
-            print(idlist)
-            return HttpResponse(idlist)
-        else:
-            return HttpResponse("not found")
-    else:
-        return HttpResponse("not success")
-
-
-def button(request):
-    return render(request, 'home.html')
-
-
-def output(request):
-    data = requests.get("https://www.google.com/")
-    print(data.text)
-    data = data.text
-    return render(request, 'home.html', {'data': data})
-
-
-def newexternal(request):
-    """
-    this one returns the json representation of the tags
-    """
-    if request.method == 'POST':
-        print("getting here")
-        t = Tag()
-        json_tags = t.getAllTagsbyjson()
-        if json_tags is not None:
-            print("sending")
-            return HttpResponse(json_tags)  # Sending an success response
-        else:
-            return HttpResponse("not found")
-    else:
-        return HttpResponse("not success")
-
-
-def external(request):
-    inp = request.POST.get('param')
-    bot = ALmaanyBot()
-    out = bot.search(inp)
-    return render(request, 'home.html', {'data1': out})
-
-
-def termTree(request):
-    if request.method == 'GET':
-        t = Tag()
-        json_tags = t.getAllTagsbyjson()
-        json_tags = {'tree': json_tags}
-        if json_tags is not None:
-            return JsonResponse(json_tags)  # Sending an success response
         else:
             return HttpResponse("not found")
     else:
@@ -537,7 +452,7 @@ def maxFrequencyinPeriod(request):
             return JsonResponse({"max": len(data[period])})
 
 
-def getTaggedWords(request):
+def get_words_analyzation(request):
     if request.method == 'GET':
         req = request.GET
         id = req.get('id')
@@ -547,11 +462,13 @@ def getTaggedWords(request):
         poem = (c.get_poem(id))[0]
         l = " "
         dictenory = {}
+        Rootofwords = {}
         for row , j in enumerate(poem["context"]):
             s = ""
             if 'sadr' in j:
                 for pos , word in enumerate(j['sadr'].split()):
                     temp = stemmer.stem(araby.strip_tashkeel(word))
+                    Rootofwords[word] = temp
                     if temp in dictenory:
                         dictenory[temp].append(dict(row = (row+1) ,sader = 0 ,position = (pos+1)))
                     else:
@@ -561,6 +478,7 @@ def getTaggedWords(request):
             if 'ajuz' in j:
                 for pos , word in enumerate(j['ajuz'].split()):
                     temp = stemmer.stem(araby.strip_tashkeel(word))
+                    Rootofwords[word] = temp
                     if temp in dictenory:
                         dictenory[temp].append(dict(row=(row+1),sader = 1,position= (pos+1)))
                     else:
@@ -572,7 +490,7 @@ def getTaggedWords(request):
         for s in w.get_suggestions(tokens):
           suggestion += dictenory.get(s["word"])
         ##suggestion.append(dictenory[s])
-        return JsonResponse({"tagged": currentTagged, "suggested":suggestion})
+        return JsonResponse({"tagged": currentTagged, "suggested":suggestion ,"roots":Rootofwords})
 
 def getDefWord(request):
     if request.method == 'GET':
@@ -601,8 +519,14 @@ def remove_tag_from_word(request):
         req = request.GET
         w = Tagging()
         suc =w.remove_tag_reletion(int(req.get('row')),int(req.get('place')),int(req.get('position')),req.get('id'),req.get('tag'))
-        return JsonResponse({"last":suc})
+        return JsonResponse(suc)
 
 
+def get_Root_of_Word(request):
+    if request.method == 'GET':
+        req = request.GET
+        term = araby.strip_tashkeel(req.get('word')).strip()
+        r = stemmer.stem(term)
+        return JsonResponse({"root":r})
 
 mutex = Lock()

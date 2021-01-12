@@ -3,25 +3,37 @@
 #body_container{
     direction: rtl;
 }
+.graph{
+    width:900px;
+    height:600px;
+    margin-bottom:100px;
+}
 
 /* tree style */
 .treeview {
     -ms-user-select: none;
     user-select: none;
-    border-style: double;
-    border-color: #6e6658;
-    border-width: 4px 4px;
-    padding: 20px;
+    border: 3px solid #4d4d4d;
     margin-bottom: 10px;
     margin-top: 40px;
     max-height: 600px;
     overflow: auto;
     background-repeat: no-repeat;
+    border-radius: 2% 6% 5% 4% / 1% 1% 2% 4%;
+    box-shadow: 20px 20px rgba(0,0,0,.15);
+    letter-spacing: 0.15ch;
+    transition: all .4s ease;
 }
+
+.treeview:hover {
+  border-radius: 0% 0% 50% 50% / 0% 0% 5% 5% ;
+  box-shadow: 10px 10px rgba(0,0,0,.25);
+}
+
 
 #viz {
     width: 900px;
-    height: 700px;
+    height: 600px;
     font: 22pt arial;
     resize: both;
 }
@@ -146,8 +158,18 @@ ul.tree > li > ul > li > ul > li > a > label:before {
 
 
 /* Search tags css */
+
+#fixed_functions {
+    background: white;
+    position: sticky;
+    top: 1px;
+    z-index: 1;
+    padding-top: 5px;
+}
+
 #mySearchInput {
     display: block;
+    width: 95%;
 }
 
 #tagsDropDown {
@@ -231,15 +253,16 @@ ul.tree > li > ul > li > ul > li > a > label:before {
 .infinity {
   width: 120px;
   height: 60px;
-  position: inherit;
+  position: initial;
+  direction : ltr;
 }
 .infinity div,
 .infinity span {
   position: absolute;
 }
 .infinity div {
-  top: 60%;
-  left: 40%;
+  top: 50%;
+  left: 50%;
   width: 60px;
   height: 60px;
   animation: rotate 6.9s linear infinite;

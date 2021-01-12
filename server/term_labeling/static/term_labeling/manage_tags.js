@@ -401,8 +401,34 @@ function close_modal(id) {
     $('.modal-backdrop').remove();
 }
 
+function close_open_window(){
+    if($('#context-menu').is(':visible')){
+        $('#context-menu').hide();
+    }
+}
+
+function back_home(){
+     emptyTree()
+     getHeaders();
+     depth = 0;
+     tagParent = "";
+     flag = false;
+     if(flagdisable == false){
+     viz.clearNetwork();
+     viz.reinit(config);
+     viz.renderWithCypher("MATCH (n:Tag)-[p:Parent]-(t:Tag) where n.parent=-1 RETURN *");
+     document.getElementById("showsub").disabled = true;
+     }
+     document.getElementById("backhome").disabled = true;
+     document.getElementById("addRoot").disabled = false;
+     state = 1;
+     return;
+
+}
+
 
 function item_clicked1(obj, event) {
+    close_open_window()
     event.stopPropagation();
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
@@ -416,6 +442,7 @@ function item_clicked1(obj, event) {
 }
 
 function item_clicked2(obj, event) {
+    close_open_window()
     event.stopPropagation();
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
@@ -428,6 +455,7 @@ function item_clicked2(obj, event) {
 }
 
 function item_clicked3(obj, event) {
+    close_open_window()
     event.stopPropagation();
     const elem = $(obj);
     const text = elem[0].innerText;
@@ -458,6 +486,7 @@ function item_clicked(text) {
                 document.getElementById("showsub").disabled = true;
             }
             document.getElementById("addRoot").disabled = false;
+            document.getElementById("backhome").disabled = true;
             state = 1;
             return;
         }
@@ -466,6 +495,7 @@ function item_clicked(text) {
              document.getElementById("showsub").disabled = false;
          }
         document.getElementById("addRoot").disabled = true;
+        document.getElementById("backhome").disabled = false;
         state = 2
         var current = document.createElement("il");
         if (parent.length > 0) {
@@ -555,6 +585,7 @@ function right_click_tag(obj, e) {
     if (e.target != obj)
         return;
     rightclicked = text;
+    close_open_window()
     const top = e.pageY + 5;
     const left = e.pageX;
     // Show contextmenu

@@ -106,9 +106,9 @@
 }
 
 .bookshelf_wrapper {
-    position: absolute;
-    top: 100%;
-    left : 40%;
+    position: relative;
+    top: 50%;
+    left : 0%;
     display: none;
     transform: scale(0.5)
 }
