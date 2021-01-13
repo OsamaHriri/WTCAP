@@ -38,44 +38,44 @@ $(document).ready(function () {
         });
         allroots = d.roots
         tooltips = $('[data-toggle="tooltip"]').tooltip()
-        tooltips.each(function(ndx, elem) {
+        tooltips.each(function (ndx, elem) {
             $(elem).attr('title', allroots[elem.innerHTML.trim()])
-              .tooltip('_fixTitle')
+                .tooltip('_fixTitle')
         })
-     });
+    });
     $("#collapseOne").collapse('hide');
     $("#collapseThree").collapse('show');
     $(".term").click(function () {
-            if (selected_obj !== "" && selected_obj.css("color") === orange) {
-                const properties = selected_obj.attr('id').split('_').map(x => +x);
-                if (tagged_terms_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
-                    selected_obj[0].style.color = "green"
-                } else{
-                        selected_obj[0].style.color = "black"
-                      }
+        if (selected_obj !== "" && selected_obj.css("color") === orange) {
+            const properties = selected_obj.attr('id').split('_').map(x => +x);
+            if (tagged_terms_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
+                selected_obj[0].style.color = "green"
+            } else {
+                selected_obj[0].style.color = "black"
             }
-            if(second_term != "")
-                second_term[0].style.color = "black"
-            second_term = ""
-            full_term = ""
-            merging = false
-            reset();
-            $(this).css("color", "orange");
-            selected_obj = $(this);
-            selected_term = this.innerHTML;
-            term_current_tags();
-            load_suggestions(selected_term);
+        }
+        if (second_term != "")
+            second_term[0].style.color = "black"
+        second_term = ""
+        full_term = ""
+        merging = false
+        reset();
+        $(this).css("color", "orange");
+        selected_obj = $(this);
+        selected_term = this.innerHTML;
+        term_current_tags();
+        load_suggestions(selected_term);
     }).bind('contextmenu', function (e) {// disable right click and show custom context menu
         right_clicked = this.innerHTML
-        if(merging == false)
+        if (merging == false)
             second_term = $(this)
         close_open_windows()
-        const windowHeight = $(window).height()+$(window).scrollTop();
-        const top = e.pageY +5;
+        const windowHeight = $(window).height() + $(window).scrollTop();
+        const top = e.pageY + 5;
         const left = e.pageX;
         const menuHeight = $(".term-menu").outerHeight();
         var y = top;
-        if(windowHeight < menuHeight + top ){
+        if (windowHeight < menuHeight + top) {
             y = windowHeight - menuHeight
         }
         // Show contextmenu
@@ -105,12 +105,12 @@ $(document).ready(function () {
 });
 
 
-function close_open_windows(){
+function close_open_windows() {
     if ($('#tag-menu').is(':visible')) {
-         $('#tag-menu').hide();
+        $('#tag-menu').hide();
     }
     if ($('#term-menu').is(':visible')) {
-            $('#term-menu').hide();
+        $('#term-menu').hide();
     }
 }
 
@@ -164,7 +164,7 @@ function add_tag(obj) {
             build_tag(tag_text);
             $("#collapseOne").collapse("show")
             obj.remove()
-            if($('.suggested_container').children().length == 0){
+            if ($('.suggested_container').children().length == 0) {
                 $("#collapseTwo").collapse("hide")
             }
         } else {
@@ -185,8 +185,8 @@ function get_words_analyzation(text) {
     });
 }
 
-function getRootofWord(text){
-   return $.ajax({
+function getRootofWord(text) {
+    return $.ajax({
         type: "GET",
         url: " get_Root_of_Word/",
         data: {'word': text},
@@ -241,8 +241,8 @@ function remove_tag(text) {
 }
 
 function remove_tag_from_word(text, term_id) {
-     var t = selected_term
-     if(merging == true)
+    var t = selected_term
+    if (merging == true)
         t = full_term
     return $.ajax({
         type: "GET",
@@ -670,25 +670,25 @@ function right_click_tag(obj, e) {
         return;
     rightclicked = text;
     close_open_windows()
-    const windowHeight = $(window).height()+$(window).scrollTop();
-    const windowWidth = $(window).width()+$(window).scrollLeft();
-    const top = e.pageY +5;
+    const windowHeight = $(window).height() + $(window).scrollTop();
+    const windowWidth = $(window).width() + $(window).scrollLeft();
+    const top = e.pageY + 5;
     const left = e.pageX;
     const menuHeight = $(".tag-menu").outerHeight();
     const menuwidth = $(".tag-menu").outerWidth();
     // Show contextmenu
     var x = left;
     var y = top;
-    if(windowHeight < top + menuHeight) {
-            y = windowHeight - menuHeight - 5
+    if (windowHeight < top + menuHeight) {
+        y = windowHeight - menuHeight - 5
     }
-    if(windowWidth < left + menuwidth ){
-            x = left  - menuwidth -5
+    if (windowWidth < left + menuwidth) {
+        x = left - menuwidth - 5
     }
 
     $(".tag-menu").toggle(100).css({
-            top: y + "px",
-            left: x + "px"
+        top: y + "px",
+        left: x + "px"
     });
 
     // Hide context menu
@@ -725,7 +725,7 @@ function add_tag_to_selected(obj, e) {
                     tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
                 }
                 build_tag(rightclicked);
-                 $("#collapseOne").collapse("show")
+                $("#collapseOne").collapse("show")
             } else {
                 $("#myToast").attr("class", "toast show danger_toast").fadeIn();
                 document.getElementById("toast-body").innerHTML = "Something went wrong, maybe the tag exists";
@@ -754,7 +754,7 @@ function build_tag(tag_name) {
 function save_term_tag(tag) {
     const term_id = selected_obj.attr('id').split('_');
     var t = selected_term
-    if(merging == true)
+    if (merging == true)
         t = full_term
 
     return $.ajax({
@@ -788,7 +788,6 @@ function reset() {
 }
 
 
-
 function load_suggestions(term) {
     const term_id = selected_obj.attr('id').split('_');
     $.ajax({
@@ -806,11 +805,11 @@ function load_suggestions(term) {
             const suggestions = data.suggestions;
             if (suggestions === undefined || suggestions.length == 0) {
                 $("#collapseTwo").collapse("hide")
-             }
-             else{
+            } else {
                 suggestions.forEach(build_suggestion)
                 $("#collapseTwo").collapse("show")
-        }}
+            }
+        }
     });
 }
 
@@ -827,14 +826,15 @@ function term_current_tags() {
         },
         dataType: "json",
         success: function (data) {
-        if (data.tags === undefined || data.tags.length == 0) {
-            $("#collapseOne").collapse("hide")
+            if (data.tags === undefined || data.tags.length == 0) {
+                $("#collapseOne").collapse("hide")
 
-        } else {
-            const tags_term = data.tags.map(a => a.tag);
-            tags_term.forEach(build_tag)
-            $("#collapseOne").collapse("show")
-        }}
+            } else {
+                const tags_term = data.tags.map(a => a.tag);
+                tags_term.forEach(build_tag)
+                $("#collapseOne").collapse("show")
+            }
+        }
     });
 }
 
@@ -995,32 +995,41 @@ function get_definition(text) {
 
 };
 
-let second_term = ""
-let merging = false
-let full_term = ""
+let second_term = "";
+let merging = false;
+let full_term = "";
 
-function merge_term(obj, event){
-     event.preventDefault()
-     if(selected_obj == ""){
-         window.alert("To merge ,First you need to select a term")
-         second_term = ""
-         return
-     }
-     if(merging == true){
-        window.alert("you already merged two terms , reclick on the first term or any other to reset")
+function merge_term(obj, event) {
+    event.preventDefault();
+
+    if (selected_obj === "") {
+        $("#myToast").attr("class", "toast show danger_toast").fadeIn();
+        document.getElementById("toast-body").innerHTML = "To merge ,First you need to select a term";
+        timeout();
+        // window.alert("")
+        second_term = "";
         return
-     }
-     const first_term_properties = selected_obj.attr('id').split('_').map(x => +x)
-     const second_term_properties = second_term.attr('id').split('_').map(x => +x)
-     if(first_term_properties[0] != second_term_properties[0] || second_term_properties[2]!=1 || second_term_properties[1] === first_term_properties[1] ||
-             selected_obj[0].parentNode.getElementsByTagName("span").length != first_term_properties[2]){
-                window.alert("you cant merge this two terms")
-                return;
-      }
-     merging = true
-     reset();
-     second_term[0].style.color = "orange"
-     full_term = selected_obj[0].innerHTML.trim()+second_term[0].innerHTML.trim()
-     term_current_tags();
-     load_suggestions(full_term);
+    }
+    if (merging === true) {
+        $("#myToast").attr("class", "toast show danger_toast").fadeIn();
+        document.getElementById("toast-body").innerHTML = "you already merged two terms , reclick on the first term or any other to reset";
+        timeout();
+        // window.alert("")
+        return
+    }
+    const first_term_properties = selected_obj.attr('id').split('_').map(x => +x);
+    const second_term_properties = second_term.attr('id').split('_').map(x => +x);
+    if (first_term_properties[0] != second_term_properties[0] || second_term_properties[2] != 1 || second_term_properties[1] === first_term_properties[1] ||
+        selected_obj[0].parentNode.getElementsByTagName("span").length != first_term_properties[2]) {
+        $("#myToast").attr("class", "toast show danger_toast").fadeIn();
+        document.getElementById("toast-body").innerHTML = "you cant merge this two terms";
+        timeout();
+        return;
+    }
+    merging = true;
+    reset();
+    second_term[0].style.color = "orange"
+    full_term = selected_obj[0].innerHTML.trim() + second_term[0].innerHTML.trim();
+    term_current_tags();
+    load_suggestions(full_term);
 }

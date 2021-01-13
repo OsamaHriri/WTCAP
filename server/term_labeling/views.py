@@ -47,26 +47,8 @@ def main_tag_page(request):
 
 
 def index(request):
-<<<<<<< HEAD
-    t = Tag()
-   # json_tags = t.getAllTagsbyjson()
-    all_tags = t.getAllTags()
-    c = Connector()
-    if request.method == 'POST':
-        id = request.POST['poem_iid']
-    else:
-        id = 2066
-    poem = (c.get_poem(id))[0]
-
-    context = {
-        'poems': poem,
-        'title': 'Home',
-   #    'tags': {"root": json_tags},
-        'all_tags': all_tags
-=======
     context = {
         'title': 'Main Page',
->>>>>>> 6754b9043e39824c6313b3fcf3acdcb3d0a2c56e
     }
     return render(request, 'index.html', context)
 
