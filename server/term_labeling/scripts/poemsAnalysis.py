@@ -1,6 +1,6 @@
 from collections import Counter
 import gensim
-from mongodbConnector import Connector
+from .mongodbConnector import Connector
 import pyarabic.araby as araby
 from farasa.stemmer import FarasaStemmer
 import json
@@ -8,8 +8,8 @@ import nltk
 import re
 import os
 nltk.download('stopwords')
-stemmer = FarasaStemmer(interactive=True)
 
+save_dir = '../static/images/Analysis'
 
 
 class Research(object):
@@ -19,7 +19,7 @@ class Research(object):
         self.arabic_alpha = ['ا', 'ب', 'پ', 'ت', 'ث', 'ج', 'چ', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'ژ', 'ص', 'ض', 'ط', 'ظ', 'ع',
                         'غ', 'ف', 'ق', 'ک', 'گ', 'ل', 'م', 'ن', 'و', 'ه', 'ی'];
         self.arb_stopwords = nltk.corpus.stopwords.words("arabic")
-
+        self.stemmer = FarasaStemmer(interactive=True)
     def extractInfo(self , all):
         c = Connector()
         poetsNum = len(c.get_poets())
@@ -33,14 +33,16 @@ class Research(object):
         Count = Counter(filtered_sentence)
         termsNum = len(Count)
         d = []
+        
         for key, value in dict(Count.most_common()).items():
             d.append(dict(x=key, value=value,freq=(value/termsNum)))
         d2=[dict(poetsNum=poetsNum,tokensNum=tokensNum,poemsNum=poemsNum,termswithoutStop=termswithoutStop,stopWordsNum=stopWordsNum,termsNum=termsNum)]
-        cur_path = os.path.dirname(__file__)
-        new_path = os.path.relpath('../static/images/Analysis', cur_path)
-        with open(os.path.join(new_path, "TermFreq.json"), "w") as outfile:
+        
+        
+        
+        with open( os.path.join(save_dir, "TermFreq.json"), "w") as outfile:
             json.dump(d, outfile)
-        with open(os.path.join(new_path, "generalInfo.json"), "w") as outfile:
+        with open(os.path.join(save_dir, "generalInfo.json"), "w") as outfile:
             json.dump(d2, outfile)
 
 
@@ -58,9 +60,9 @@ class Research(object):
                     s = ""
                     for j in r["context"]:
                         if 'sadr' in j:
-                            s += stemmer.stem(araby.strip_tashkeel(j['sadr'])) + " "
+                            s += self.stemmer.stem(araby.strip_tashkeel(j['sadr'])) + " "
                         if 'ajuz' in j:
-                            s += stemmer.stem(araby.strip_tashkeel(j['ajuz'])) + " "
+                            s += self.stemmer.stem(araby.strip_tashkeel(j['ajuz'])) + " "
                     temp = re.findall(r"[\w']+", s)
                     word2vec.append( [w for w in temp if not w in all_stops])
                     all_in_period += s;
@@ -73,29 +75,28 @@ class Research(object):
                 d1.append(dict(x=key, value=value , freq=(value/len(Count))))
             d[str(p)] = d1
 
-        cur_path = os.path.dirname(__file__)
-        new_path = os.path.relpath('../static/images/Analysis', cur_path)
+
         #filename = "$.json".replace("$", '11')
-        with open(os.path.join(new_path, "TermFreqperPeriod.json"), "w") as outfile:
+        with open(os.path.join(save_dir, "TermFreqperPeriod.json"), "w") as outfile:
             json.dump(d, outfile)
         return all , word2vec
 
     def train_word2vic(self , text):
+    
         model = gensim.models.Word2Vec(text, min_count=1,
                                         size=100, window=5, sg=1)
-        cur_path = os.path.dirname(__file__)
-        new_path = os.path.relpath('..\\static\\images\\Analysis\\word2vec.model', cur_path)
-        model.save(new_path)
+
+        model.save(os.path.join(save_dir+'/word2vec.model'))
 
 
 
 if __name__ == "__main__":
+
     research = Research()
-<<<<<<< HEAD
-    research.extractInfo()
-    research.extractInfobyPeriod()
-=======
+
     all_tokens , word2vec = research.LMforPeriod()
     research.extractInfo(all_tokens)
+    
     research.train_word2vic(word2vec)
->>>>>>> master
+
+

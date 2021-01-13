@@ -4,6 +4,8 @@ from .scripts.almaany_translator_bot import ALmaanyBot
 from .scripts.tagGraph import Tag
 from .scripts.mongodbConnector import Connector
 from .scripts.wordTagging import Tagging
+from .scripts.fouzysqltomongo import ArabicRhetoricSyncer
+from .scripts.poemsAnalysis import  Research
 from django.contrib.auth.decorators import login_required
 import requests
 import pyarabic.araby as araby
@@ -17,7 +19,7 @@ import re
 
 stemmer = FarasaStemmer(interactive=True)
 
-bot = ALmaanyBot()
+bot = ALmaanyBot() 
 
 
 def main_tag_page(request):
@@ -530,3 +532,30 @@ def get_Root_of_Word(request):
         return JsonResponse({"root":r})
 
 mutex = Lock()
+
+def sync_databases(request):
+
+
+    print("syncing poets")
+    
+    
+    ars = ArabicRhetoricSyncer()
+
+    ars.sync_poets()
+
+
+    ars.sync_periods()
+    
+    ars.sync_poems()
+    
+    research = Research()
+
+    all_tokens , word2vec = research.LMforPeriod()
+    
+    research.extractInfo(all_tokens)
+    
+    research.train_word2vic(word2vec)
+    
+    
+    
+    

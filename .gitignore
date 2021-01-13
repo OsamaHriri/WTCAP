@@ -1,15 +1,15 @@
-<<<<<<< HEAD
+
 server/term_labeling/scripts/dict_ex.txt
 server/term_labeling/scripts/list.txt
 server/term_labeling/scripts/poems.zip
-=======
+
 server/db.sqlite3
 
-server/server/__pycache__
+!/__pycache__/*
 
-server/term_labeling/__pycache__/
+server/term_labeling/__pycache__/*
 
-server/term_labeling/__pycache__/u
+server/term_labeling/__pycache__/*
 
 
 server/term_labeling/scripts/dict_ex.txt
@@ -18,6 +18,13 @@ server/term_labeling/scripts/list.txt
 
 server/term_labeling/scripts/poems.zip
 
->>>>>>> master
-server/term_labeling/scripts/poems/
+server/term_labeling/scripts/poems/*
+
+
+server/term_labeling/static/images/Analysis/*
+
+server/static/images/Analysis/*
+
+
+
 

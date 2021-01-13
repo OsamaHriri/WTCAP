@@ -940,7 +940,7 @@ $('#exampleModal').on('shown.bs.modal', function (e) {
     statement = "match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$', poemID)
     var config = {
         container_id: "viz",
-        server_url: "bolt://localhost:7687",
+        server_url: "bolt://132.75.251.93:7687",
         server_user: "neo4j",
         server_password: "123123147",
         labels: {

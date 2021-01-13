@@ -4,7 +4,7 @@ import json
 import os
 import pymongo
 import mysql.connector
-import mongodbConnector as mdbc
+from . import  mongodbConnector as mdbc
 
 class ArabicRhetoricSyncer():
 
