@@ -1,6 +1,7 @@
 let selected_term = "";
 let selected_obj = "";
-let right_clicked = "";
+let right_clicked = ""; //The term we right clicked and open a menu for - the term we need the definition of
+let right_clicked_line = 0; //The line of the right clicked term
 let orange = "rgb(255, 165, 0)";
 let tagParent = "";
 let depth = 0;
@@ -19,25 +20,25 @@ $(document).ready(function () {
     obj.remove();
     myUL = document.getElementById('myUL');
     $(document).click(function (e) {
-        if ($('#tagsDropDown').is(':visible') && e.target.id != "mySearchInput" && e.target.className != "dropdownbox") {
+        if ($('#tagsDropDown').is(':visible') && e.target.id !== "mySearchInput" && e.target.className !== "dropdownbox") {
             $('#tagsDropDown').hide();
         }
     });
     get_words_analyzation(poemID).done(function (d) {
         tagged_terms_list = d.tagged;
-        suggested_term_list = d.suggested
+        suggested_term_list = d.suggested;
         tagged_terms_list.forEach(function (d) {
-            const id = d.row + "_" + d.sader + "_" + d.position
+            const id = d.row + "_" + d.sader + "_" + d.position;
             document.getElementById(id).style.color = "green"
         });
         suggested_term_list.forEach(function (d) {
             if (!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)) {
-                const id = d.row + "_" + d.sader + "_" + d.position
+                const id = d.row + "_" + d.sader + "_" + d.position;
                 document.getElementById(id).style.color = "blue"
             }
         });
-        allroots = d.roots
-        tooltips = $('[data-toggle="tooltip"]').tooltip()
+        allroots = d.roots;
+        tooltips = $('[data-toggle="tooltip"]').tooltip();
         tooltips.each(function (ndx, elem) {
             $(elem).attr('title', allroots[elem.innerHTML.trim()])
                 .tooltip('_fixTitle')
@@ -54,11 +55,11 @@ $(document).ready(function () {
                 selected_obj[0].style.color = "black"
             }
         }
-        if (second_term != "")
-            second_term[0].style.color = "black"
-        second_term = ""
-        full_term = ""
-        merging = false
+        if (second_term !== "")
+            second_term[0].style.color = "black";
+        second_term = "";
+        full_term = "";
+        merging = false;
         reset();
         $(this).css("color", "orange");
         selected_obj = $(this);
@@ -66,10 +67,11 @@ $(document).ready(function () {
         term_current_tags();
         load_suggestions(selected_term);
     }).bind('contextmenu', function (e) {// disable right click and show custom context menu
-        right_clicked = this.innerHTML
-        if (merging == false)
-            second_term = $(this)
-        close_open_windows()
+        right_clicked = this.innerHTML;
+        right_clicked_line = this.id.split("_")[0];
+        if (merging === false)
+            second_term = $(this);
+        close_open_windows();
         const windowHeight = $(window).height() + $(window).scrollTop();
         const top = e.pageY + 5;
         const left = e.pageX;
@@ -993,7 +995,43 @@ function get_definition(text) {
     // dataType: "json",
     // });
 
-};
+}
+
+function buildLine() {
+    const tbl = document.getElementById('poem');
+    const row = tbl.rows[right_clicked_line - 1];
+    document.getElementById('edited-sadr').value = row_to_string(row.cells[1]);
+    document.getElementById('edited-ajuz').value = row_to_string(row.cells[2]);
+}
+
+function row_to_string(cell) {
+    let line = "";
+    const children = cell.children;
+    for (let i = 0; i < children.length; i++) {
+        line += children[i].innerHTML;
+    }
+    return line
+}
+
+function save_edited_line() {
+    const sadr = document.getElementById('edited-sadr').value;
+    const ajuz = document.getElementById('edited-ajuz').value;
+    //TODO finish the actual saving part
+    $.ajax({
+        type: "GET",
+        // url: "suggest_tags/",
+        data: {
+            'sadr': sadr,
+            'ajuz': ajuz,
+            'line': right_clicked_line,
+            'id': poemID
+        },
+        dataType: "json",
+        success: function (data) {
+            //close modal and toast success message
+        }
+    });
+}
 
 let second_term = "";
 let merging = false;

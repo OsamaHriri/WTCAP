@@ -115,7 +115,6 @@
 </div>
 
 <!-- Definition modal -->
-<!-- CONSIDER CHANGING TO BIGGER MODAL-->
 <div class="modal fade" id="definitionModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <!-- Modal content-->
@@ -140,7 +139,31 @@
     </div>
 </div>
 
-
+<!-- Edit poem modal -->
+<div class="modal fade" id="editPoemModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Modal content-->
+        <div class="paper-modal edit">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit poem line</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group-lg">
+                    <input id="edited-sadr" dir="rtl" aria-label="Large" class="form-control" type="text">
+                    <input id="edited-ajuz" dir="rtl" aria-label="Large" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button class="btn btn-secondary" value="Add" onclick="save_edited_line()">Save</button>
+                <br>
+                <button class="btn darkBackground" data-dismiss="modal" type="button">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--Insert parent modal -->
 <div class="modal fade" id="insertParentModal" role="dialog">
@@ -326,7 +349,8 @@
             </a>
         </li>
         <li class="term-menu__item">
-            <a href="#" class="term-menu__link" data-action="Edit" data-toggle="modal" data-target="#editNameModal">
+            <a href="#" class="term-menu__link" data-action="Edit" data-toggle="modal" data-target="#editPoemModal"
+               onclick="buildLine(this.id)">
                 <i class="fa fa-edit"></i> Edit
             </a>
         </li>
@@ -375,31 +399,36 @@
         <div class="col-sm-4 px-lg-4" id="fixed_cont"
              style="position:sticky;top:20px;align-self: flex-start;z-index:1;">
             <!-- Large modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Show Current Tags</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Show Current
+                Tags
+            </button>
             <!-- Selected Tags Section-->
             <div id="accordion" role="tablist" aria-multiselectable="true">
                 <div class="Mycard">
                     <h5 class="Mycardheader" role="tab" id="headingOne">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="d-block">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                           aria-controls="collapseOne" class="d-block">
                             <i class="fa fa-chevron-down pull-right"></i> Selected Tags</a>
                     </h5>
 
                     <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-                            <div class="selected_container"></div>
+                        <div class="selected_container"></div>
                     </div>
                 </div>
                 <div class="Mycard">
                     <h5 class="Mycardheader" role="tab" id="headingTwo">
-                        <a class="collapsed d-block" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        <a class="collapsed d-block" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
+                           aria-expanded="true" aria-controls="collapseTwo">
                             <i class="fa fa-chevron-down pull-right"></i> Suggestions</a>
                     </h5>
                     <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-                            <div class="suggested_container"></div>
+                        <div class="suggested_container"></div>
                     </div>
                 </div>
                 <div class="Mycard">
                     <h5 class="Mycardheader" role="tab" id="headingThree">
-                        <a class="collapsed d-block" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                        <a class="collapsed d-block" data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                             <i class="fa fa-chevron-down pull-right"></i> Tags</a>
                     </h5>
                     <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
@@ -407,7 +436,8 @@
                             <div class="treeview">
                                 <div id="fixed_functions">
                                     <input type="text" id="mySearchInput" class="form-control" aria-label="Small"
-                                           aria-describedby="inputGroup-sizing-sm" onclick="$('#tagsDropDown').toggle();"
+                                           aria-describedby="inputGroup-sizing-sm"
+                                           onclick="$('#tagsDropDown').toggle();"
                                            onkeyup="filterSearch()"
                                            placeholder="إبحث..." title="إبحث...">
                                     <div id="tagsDropDown">
@@ -420,11 +450,17 @@
                                     </div>
 
                                     <div class="mt-1">
-                                        <button type="button" id="addRoot" class="btn btn-outline-info" onclick="back_home()">Reset</button>
-                                        <button type="button" class="btn btn-outline-info" data-action="View" data-toggle="modal"
-                                                data-target="#insertRootModal">Add Root</button>
-                                        <button type="button" class="btn btn-outline-info" data-action="View" data-toggle="modal"
-                                                data-target="#showAllModal">Show All</button>
+                                        <button type="button" id="addRoot" class="btn btn-outline-info"
+                                                onclick="back_home()">Reset
+                                        </button>
+                                        <button type="button" class="btn btn-outline-info" data-action="View"
+                                                data-toggle="modal"
+                                                data-target="#insertRootModal">Add Root
+                                        </button>
+                                        <button type="button" class="btn btn-outline-info" data-action="View"
+                                                data-toggle="modal"
+                                                data-target="#showAllModal">Show All
+                                        </button>
                                     </div>
                                 </div>
 
@@ -444,20 +480,20 @@
                 {% for poem in poems.context %}
                 <tr>
                     <td>
-                        <!--                        <input type="checkbox" name="{{ forloop.counter }}" value="{{ forloop.counter }}"-->
-                        <!--                               id="{{ forloop.counter }}" class="tblcheckbox">-->
                         <label> {{ poem.row_index }} </label>
                     </td>
                     <td>
                         {% for term in poem.sadr %}
                         <span class='term'
-                              id="{{ forloop.parentloop.counter}}_0_{{ forloop.counter }}" data-toggle="tooltip" data-placement="top"> {{term}} </span>
+                              id="{{forloop.parentloop.counter}}_0_{{forloop.counter}}" data-toggle="tooltip"
+                              data-placement="top">{{term}} </span>
                         {% endfor %}
                     </td>
                     <td>
                         {% for term in poem.ajuz %}
                         <span class='term'
-                              id="{{ forloop.parentloop.counter}}_1_{{ forloop.counter }}" data-toggle="tooltip" data-placement="top" > {{term}} </span>
+                              id="{{forloop.parentloop.counter}}_1_{{forloop.counter}}" data-toggle="tooltip"
+                              data-placement="top">{{term}} </span>
                         {% endfor %}
                     </td>
                 </tr>
@@ -471,16 +507,16 @@
 <!--            about section            -->
 
 <div class="about">
-   <a class="bg_links social info" data-toggle="modal" data-target="#myinfo">
-      <span class="icon"></span>
-   </a>
-   <a class="bg_links social above" href="#mynavbar">
-      <span class="icon"></span>
-   </a>
-   <a class="bg_links social history" data-toggle="modal" data-target="#myhistory">
-      <span class="icon"></span>
-   </a>
-   <a class="bg_links logo"></a>
+    <a class="bg_links social info" data-toggle="modal" data-target="#myinfo">
+        <span class="icon"></span>
+    </a>
+    <a class="bg_links social above" href="#mynavbar">
+        <span class="icon"></span>
+    </a>
+    <a class="bg_links social history" data-toggle="modal" data-target="#myhistory">
+        <span class="icon"></span>
+    </a>
+    <a class="bg_links logo"></a>
 </div>
 
 <div class="modal fade" id="myinfo" role="dialog">
