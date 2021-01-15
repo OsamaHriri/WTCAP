@@ -1019,16 +1019,17 @@ function save_edited_line() {
     //TODO finish the actual saving part
     $.ajax({
         type: "GET",
-        // url: "suggest_tags/",
+        url: "edit_poem_line/",
         data: {
             'sadr': sadr,
             'ajuz': ajuz,
-            'line': right_clicked_line,
+            'line': right_clicked_line - 1,
             'id': poemID
         },
         dataType: "json",
         success: function (data) {
             //close modal and toast success message
+            // maybe reload the page with the updated line ?
         }
     });
 }

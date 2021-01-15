@@ -15,6 +15,7 @@ urlpatterns = [
     path('statistics/', views.statistics, name='statistics'),
     path('poet_poems/', views.poet_poems, name="poet_poems"),
     path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name="logout"),
+    re_path('edit_poem_line/$', views.edit_poem_line, name='edit_poem_line'),
     re_path('save_term_tag/$', views.save_term_tag, name='save_term_tag'),
     re_path('suggest_tags/$', views.suggest_tags, name='suggest_tags'),
     re_path('get_children/$', views.get_children, name='get_children'),
