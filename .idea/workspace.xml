@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags_style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -275,13 +273,6 @@
       <workItem from="1604572704097" duration="1334000" />
       <workItem from="1604593172244" duration="15000" />
       <workItem from="1604661622107" duration="4279000" />
-    </task>
-    <task id="LOCAL-00029" summary="updated meetings">
-      <created>1603893110568</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1603893110568</updated>
     </task>
     <task id="LOCAL-00030" summary="#15 - saves information">
       <created>1604665347514</created>
@@ -619,7 +610,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610454251365</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="merge two terms">
+      <created>1610465074904</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1610465074904</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -639,7 +637,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="#39 color poems thats been tagged when choosing poets" />
     <MESSAGE value="remove some uncommit messages" />
     <MESSAGE value="add tags features to hierarchy tree&#10;fixed a bug when clicking on tag dropdown window" />
     <MESSAGE value="add tags features to hierarchy tree&#10;fixed some bugs on tags drop down window" />
@@ -664,7 +661,8 @@
     <MESSAGE value="fix manage tags drop down window not closing in some occasions.&#10;create reset button function and apply it." />
     <MESSAGE value="show/hide collapse windows if its empty or not" />
     <MESSAGE value="new feature in main tag page that's show info,history..etc" />
-    <option name="LAST_COMMIT_MESSAGE" value="new feature in main tag page that's show info,history..etc" />
+    <MESSAGE value="merge two terms" />
+    <option name="LAST_COMMIT_MESSAGE" value="merge two terms" />
   </component>
   <component name="WindowStateProjectService">
     <state x="699" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603147034115">

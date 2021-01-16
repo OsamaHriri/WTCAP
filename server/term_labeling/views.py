@@ -443,20 +443,24 @@ def get_words_analyzation(request):
                 for pos , word in enumerate(j['sadr'].split()):
                     temp = stemmer.stem(araby.strip_tashkeel(word))
                     Rootofwords[word] = temp
+                    position = pos + 1
+                    dict_row = row + 1
                     if temp in dictenory:
-                        dictenory[temp].append(dict(row = (row+1) ,sader = 0 ,position = (pos+1)))
+                        dictenory[temp].append(dict(row = dict_row ,sader = 0 ,position =position))
                     else:
-                        dictenory[temp] = [dict(row = (row+1) ,sader = 0 ,position = (pos+1))]
+                        dictenory[temp] = [dict(row = dict_row ,sader = 0 ,position = position)]
                     s += temp + " "
                 # s += stemmer.stem(araby.strip_tashkeel(j['sadr'])) + " "
             if 'ajuz' in j:
                 for pos , word in enumerate(j['ajuz'].split()):
                     temp = stemmer.stem(araby.strip_tashkeel(word))
                     Rootofwords[word] = temp
+                    position = pos + 1
+                    dict_row = row + 1
                     if temp in dictenory:
-                        dictenory[temp].append(dict(row=(row+1),sader = 1,position= (pos+1)))
+                        dictenory[temp].append(dict(row=dict_row,sader = 1,position=position ))
                     else:
-                        dictenory[temp] = [dict(row=(row+1),sader = 1,position= (pos+1))]
+                        dictenory[temp] = [dict(row=dict_row,sader = 1,position= position)]
                     s += temp + " "
             l += s
         tokens = re.findall(r"[\w']+", l)
