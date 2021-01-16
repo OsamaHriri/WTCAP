@@ -661,6 +661,7 @@ function search2(text) {
 
 $(document).ready(function () {
      getHeaders()
+     $('[data-toggle="tooltip"]').tooltip();
         $(document).click(function (e) {
            if($('#tagsDropDown').is(':visible') && e.target.id != "mySearchInput" && e.target.className != "dropdownbox")
             {

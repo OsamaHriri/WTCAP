@@ -252,11 +252,10 @@
                     </ul>
                 </div>
                 <div class="mt-1">
-                    <button type="button" id="backhome" class="btn btn-outline-info" disabled onclick="back_home()">Reset
-                    </button>
+                    <button type="button" id="backhome" class="btn btn-outline-info" disabled onclick="back_home()" data-toggle="tooltip"
+                              data-placement="top" title="Return to Main Display(all roots) in the Hierarchy">Reset</button>
                     <button type="button" id="addRoot" class="btn btn-outline-info" data-action="View" data-toggle="modal"
-                            data-target="#insertRootModal">Add Root
-                    </button>
+                            data-target="#insertRootModal">Add Root</button>
                 </div>
             </div>
             <ul class="tree">
@@ -265,9 +264,12 @@
 
         <div class="col-sm-9 graph">
             <div class="mt-1">
-                <button type="button" id="showsub" class="btn btn-info hover" disabled onclick="draw3()">Show subTree</button>
-                <button type="button" id="render" class="btn btn-info hover" onclick="renderviz()">Refresh</button>
-                <button type="button" id="disable" class="btn btn-info hover" onclick="disable()">Disable Network</button>
+                <button type="button" id="showsub" class="btn btn-info hover" disabled onclick="draw3()" data-toggle="tooltip"
+                              data-placement="top" title="Show a SubTree in the Graph where the Selected Tag in the Hierarchy is the Root">Show subTree</button>
+                <button type="button" id="render" class="btn btn-info hover" onclick="renderviz()" data-toggle="tooltip"
+                              data-placement="top" title="Refresh the Graph in case the graph isn't displaying correctly">Refresh</button>
+                <button type="button" id="disable" class="btn btn-info hover" onclick="disable()" data-toggle="tooltip"
+                              data-placement="top" title="Hide the Graph in the Page (in cases such as lag or delay in graph rendering)">Disable Network</button>
             </div>
             <div class="infinity">
                 <div>
