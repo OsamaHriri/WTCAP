@@ -152,7 +152,6 @@ function createList(obj,event,num){
     document.getElementById("loader2").style.display = "block";
     get_terms_freq(obj.innerText,num,currentPeriod2).done(function(d){
         data = d.t
-        var temp = ""
         data.forEach(function(l , i){
              var percent = (l.freq*100).toFixed(2)+"%"
              table.row.add( [i+1,l.x,l.value,parseFloat(l.freq.toFixed(5)),percent]).draw()

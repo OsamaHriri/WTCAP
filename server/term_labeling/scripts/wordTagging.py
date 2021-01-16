@@ -27,6 +27,8 @@ class Tagging(object):
         self.suggestionQ = """ match(:Tag)<-[r:tag]-(w:Word) where w.name in $words return distinct w.name as word"""
         self.checkremainingRelations = """ match(:Tag)<-[r:tag]-(:Word) where r.poemID = $poem and r.sader = $place and r.position = $position and r.row=$row return count(r) as count"""
         self.removeWordwithoutr = """match (w:Word) where w.name=$word and not (w)--() delete (w)"""
+        self.getAllTaggedWords =""" Match (w:Word) -[r:tag]-> (t:Tag) where r.poemID= $poem with  t , count(r) as c 
+                                        return {name :t.name  , frequency: c } as Tag order by c Desc """
 
     def ifExists(self, word=None, tag=None, ):
         """
@@ -177,6 +179,14 @@ class Tagging(object):
         """
         return self.graph.run(self.suggestionQ,words = array).data()
 
+    def get_all_tagged_words_in_Poem(self,poemID):
+
+        result = self.graph.run(self.getAllTaggedWords, poem=poemID).data()
+        total = 0
+        if len(result) > 0:
+            for t in result:
+                total+= t['Tag']['frequency']
+        return result , total
 
 
 

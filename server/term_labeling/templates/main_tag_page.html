@@ -366,28 +366,50 @@
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
+         aria-hidden="true" style="direction:ltr">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Current Tags</h5>
+                <div class="modal-header text-center">
+                    <h3 class="modal-title w-100" id="exampleModalLabel">Current Tags</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <body>
-                    <div id="viz" style="height:400px"></div>
-                    </body>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link" id="graph-tab" data-toggle="tab" href="#graph" role="tab" aria-controls="graph" aria-selected="true">Graph</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">list</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                      <div class="tab-pane fade show active" id="graph" role="tabpanel" aria-labelledby="graph-tab">
+                            <body>
+                                <div id="viz" style="height:400px;width=200px"></div>
+                            </body>
+                            <div id="graphFooter" style="text-align:left">
+                                <svg height="40" width="70">
+                                    <circle cx="10" cy="10" r="7" fill="yellow"/>
+                                    <text text-anchor="start" x="20" y="14">Word</text>
+                                    <circle cx="10" cy="30" r="7" fill="#5dade2"/>
+                                    <text text-anchor="start" x="20" y="34">Tag</text>
+                                </svg>
+                                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="left"
+                                        title="Refresh the Graph in case the graph isn't displaying correctly"
+                                        style="float:right" onclick="refreshVis()">Refresh</button>
+                            </div>
+                      </div>
+                      <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="list-tab">
+                            <table class="table" id="TaglistTable" style="font-family:initial">
+                                <thead class="thead-dark">
+                                </thead>
+                            </table>
+                      </div>
+                    </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-secondary" onclick="refreshVis()">Refresh</button>
-                    <svg height="40" width="70">
-                        <circle cx="10" cy="10" r="7" fill="yellow"/>
-                        <text text-anchor="start" x="50" y="13"> Word</text>
-                        <circle cx="10" cy="30" r="7" fill="#5dade2"/>
-                        <text text-anchor="start" x="40" y="33"> Tag</text>
-                    </svg>
                 </div>
             </div>
         </div>
@@ -450,7 +472,7 @@
                                     </div>
 
                                     <div class="mt-1">
-                                        <button type="button" id="addRoot" class="btn btn-outline-info"
+                                        <button type="button" class="btn btn-outline-info"
                                                 onclick="back_home()">Reset
                                         </button>
                                         <button type="button" class="btn btn-outline-info" data-action="View"

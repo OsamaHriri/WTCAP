@@ -12,7 +12,7 @@ let myUL;
 let tagged_terms_list;
 let suggested_term_list;
 let allroots;
-
+let table
 $(document).ready(function () {
     getHeaders();
     const obj = document.getElementById("poem_id");
@@ -38,7 +38,7 @@ $(document).ready(function () {
             }
         });
         allroots = d.roots;
-        tooltips = $('[data-toggle="tooltip"]').tooltip();
+        tooltips = $('.term').tooltip();
         tooltips.each(function (ndx, elem) {
             $(elem).attr('title', allroots[elem.innerHTML.trim()])
                 .tooltip('_fixTitle')
@@ -46,6 +46,18 @@ $(document).ready(function () {
     });
     $("#collapseOne").collapse('hide');
     $("#collapseThree").collapse('show');
+    table = $('#TaglistTable').DataTable( {
+        responsive: true,
+         columns: [
+            { title: "#" },
+            { title: "Tag" },
+            { title: "Frequency" },
+            { title: "Percent of Total" },
+        ]
+    } );
+       $('.btn').tooltip({
+            trigger:'hover'
+        });
     $(".term").click(function () {
         if (selected_obj !== "" && selected_obj.css("color") === orange) {
             const properties = selected_obj.attr('id').split('_').map(x => +x);
@@ -103,7 +115,38 @@ $(document).ready(function () {
     $('.term-menu a').click(function () {
         $(".term-menu").hide();
     });
-
+     $('#exampleModal').on('shown.bs.modal', function (e) {
+        $('a[href=\\#graph]').tab('show')
+        load_graph()
+     });
+    $('#showAllModal').on('shown.bs.modal', function (e) {
+        const src = document.getElementById("listTable");
+        while (src.lastChild.id !== 'Fchild') {
+            src.removeChild(src.lastChild);
+        }
+        src.innerHTML += "<tbody></tbody>";
+        const arr = [];
+        document.querySelectorAll(".dropdownbox").forEach(function (d, i) {
+            //temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+d.innerText.trim()+"</td></tr>"
+            arr.push(d.innerText.trim())
+        });
+        let temp = "";
+        arr.sort().forEach(function (d, i) {
+            let tt = "close_modal('#showAllModal');searchSuggestion(this.innerHTML);";
+            temp += "<tr><th scope=\"row\">" + (i + 1) + "</th><td class='show_all_tag' onclick=" + tt + ">" + d + "</td></tr>"
+        });
+        $("#listTable > tbody").append(temp);
+    });
+    $('a[href=\\#list]').on('shown.bs.tab', function (e) {
+        table.clear().draw()
+        load_tags_freq().done(function(d){
+            data = d.tags
+            data.forEach(function(l , i){
+                 var percent = (l.Tag.frequency/d.total*100).toFixed(2)+"%"
+                 table.row.add( [i+1,l.Tag.name,l.Tag.frequency,percent]).draw()
+             });
+        });
+    });
 
 });
 
@@ -178,6 +221,15 @@ function add_tag(obj) {
 
 let ul1;
 let ul2;
+
+function load_tags_freq() {
+    return $.ajax({
+        type: "GET",
+        url: " get_Tags_frequency_in_poem/",
+        data: {'id': poemID},
+        dataType: "json",
+    });
+}
 
 function get_words_analyzation(text) {
     return $.ajax({
@@ -907,58 +959,40 @@ function back_home() {
     flag = false;
 }
 
-$('#showAllModal').on('shown.bs.modal', function (e) {
-    const src = document.getElementById("listTable");
-    while (src.lastChild.id !== 'Fchild') {
-        src.removeChild(src.lastChild);
-    }
-    src.innerHTML += "<tbody></tbody>";
-    const arr = [];
-    document.querySelectorAll(".dropdownbox").forEach(function (d, i) {
-        //temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+d.innerText.trim()+"</td></tr>"
-        arr.push(d.innerText.trim())
-    });
-    let temp = "";
-    arr.sort().forEach(function (d, i) {
-        let tt = "close_modal('#showAllModal');searchSuggestion(this.innerHTML);";
-        temp += "<tr><th scope=\"row\">" + (i + 1) + "</th><td class='show_all_tag' onclick=" + tt + ">" + d + "</td></tr>"
-    });
-    $("#listTable > tbody").append(temp);
-});
-
-
-$('#exampleModal').on('shown.bs.modal', function (e) {
-    statement = "match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$', poemID);
-    var config = {
-        container_id: "viz",
-        server_url: "bolt://localhost:7687",
-        server_user: "neo4j",
-        server_password: "123123147",
-        labels: {
-            "Tag": {
-                "caption": "name",
-                "title_properties": [
-                    "name"
-                ]
+function load_graph () {
+        statement = "match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$', poemID);
+        var config = {
+            container_id: "viz",
+            server_url: "bolt://localhost:7687",
+            server_user: "neo4j",
+            server_password: "123123147",
+            labels: {
+                "Tag": {
+                    "caption": "name",
+                    "title_properties": [
+                        "name"
+                    ]
+                },
+                "Word": {
+                    "caption": "name",
+                    "title_properties": [
+                        "name"
+                    ]
+                }
             },
-            "Word": {
-                "caption": "name",
-                "title_properties": [
-                    "name"
-                ]
-            }
-        },
-        relationships: {
-            "tag": {
-                "caption": false
-            }
-        },
-        arrows: true,
-        initial_cypher: statement
-    };
-    viz = new NeoVis.default(config);
-    viz.render();
-});
+            relationships: {
+                "tag": {
+                    "caption": false
+                }
+            },
+            arrows: true,
+            initial_cypher: statement
+        };
+        viz = new NeoVis.default(config);
+        viz.render();
+}
+
+
 
 function getDefinition() {
     //The term we want the definition of is in var right_clicked

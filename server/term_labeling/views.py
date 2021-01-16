@@ -512,5 +512,11 @@ def edit_poem_line(request):
         data = request.GET
         poem_id, line, asdr, ajuz = data.get('id'), data.get('line'), data.get('sadr'), data.get('ajuz')
 
+def get_Tags_frequency_in_poem(request):
+    if request.method == 'GET':
+        data = request.GET
+        t = Tagging()
+        result ,total = t. get_all_tagged_words_in_Poem(data.get('id'))
+        return JsonResponse({'tags':result,'total':total})
 
 mutex = Lock()
