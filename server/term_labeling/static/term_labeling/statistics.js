@@ -15,9 +15,13 @@ $(document).ready(function() {
             { title: "#" },
             { title: "Term" },
             { title: "Frequency" },
-            { title: "Proportion" },
+            { title: "Approximate Proportion" },
+            { title: "Percent of Total" },
         ]
     } );
+      $('[data-toggle="tooltip"]').tooltip({
+        trigger : 'hover'
+       });
 } );
 
 function Create_frequency_array(number){
@@ -108,8 +112,13 @@ function createWordCloud(obj, event,num){
       get_terms_freq(obj.innerText,num,currentPeriod).done(function(d){
       var delayInMilliseconds = 500;
       setTimeout(function() {
-  //your code to be executed after 1 second
+      //your code to be executed after 0.5 second
+        d.t.forEach(function(part, index) {
+          var num = part.freq*100
+          part.freq = num.toFixed(2);
+        });
         var chart = anychart.tagCloud(d.t);
+        console.log(d.t)
         if (num == 1)
             chart.title('$ most frequent words'.replace('$',d.m));
         else {
@@ -124,6 +133,7 @@ function createWordCloud(obj, event,num){
           // set the color range length
         chart.colorRange().length('80%');// display the word cloud chart
         chart.container("cloud");
+        chart.tooltip().format("Frequency:{%value}\nPercent of Total:{%freq}%");
         chart.draw();
         document.getElementById("loader").style.display = "none";
         }, delayInMilliseconds);
@@ -137,17 +147,16 @@ function createList(obj,event,num){
     setTimeout(function() {
             el.style.removeProperty("display");
      }, 30);
-     table.clear().draw()
+    table.clear().draw()
+    document.getElementById("tablePageHeader").innerText = 'Table: $ most frequent words'.replace('$',obj.innerText)
     document.getElementById("loader2").style.display = "block";
     get_terms_freq(obj.innerText,num,currentPeriod2).done(function(d){
         data = d.t
         var temp = ""
         data.forEach(function(l , i){
-            //src.innerHTML += "<li class=\"list-group-item\">"+l.x+"<span class=\"badge badge-primary badge-pill\">"+l.value+"</span></li>";
-             //temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+l.x+"</td><td>"+l.value+"</td><td>"+l.freq+"</td></tr>"
-             table.row.add( [i+1,l.x,l.value,l.freq]).draw()
+             var percent = (l.freq*100).toFixed(2)+"%"
+             table.row.add( [i+1,l.x,l.value,parseFloat(l.freq.toFixed(5)),percent]).draw()
          });
-        //$("#listTable > tbody").append(temp);
         document.getElementById("loader2").style.display = "none";
     });
 }
@@ -174,6 +183,7 @@ function savePeriod(obj){
      }
 
 }
+
 function savePeriod2(obj){
     var el = obj.parentNode;
     el.style.display = "none"

@@ -34,7 +34,7 @@ class Research(object):
         termsNum = len(Count)
         d = []
         for key, value in dict(Count.most_common()).items():
-            d.append(dict(x=key, value=value,freq=(value/termsNum)))
+            d.append(dict(x=key, value=value,freq=(value/termswithoutStop)))
         d2=[dict(poetsNum=poetsNum,tokensNum=tokensNum,poemsNum=poemsNum,termswithoutStop=termswithoutStop,stopWordsNum=stopWordsNum,termsNum=termsNum)]
         cur_path = os.path.dirname(__file__)
         new_path = os.path.relpath('..\\static\\images\\Analysis', cur_path)
@@ -70,12 +70,11 @@ class Research(object):
             Count = Counter(filtered_sentence)
             d1 = []
             for key, value in dict(Count.most_common()).items():
-                d1.append(dict(x=key, value=value , freq=(value/len(Count))))
+                d1.append(dict(x=key, value=value , freq=(value/len(filtered_sentence))))
             d[str(p)] = d1
 
         cur_path = os.path.dirname(__file__)
         new_path = os.path.relpath('..\\static\\images\\Analysis', cur_path)
-        #filename = "$.json".replace("$", '11')
         with open(os.path.join(new_path, "TermFreqperPeriod.json"), "w") as outfile:
             json.dump(d, outfile)
         return all , word2vec

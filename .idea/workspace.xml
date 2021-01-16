@@ -3,8 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/main_tags_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/main_tags_style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/poemsAnalysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/poemsAnalysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/statistics.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/statistics.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/statistics_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/statistics_style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/statistics.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/statistics.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -273,13 +276,6 @@
       <workItem from="1604572704097" duration="1334000" />
       <workItem from="1604593172244" duration="15000" />
       <workItem from="1604661622107" duration="4279000" />
-    </task>
-    <task id="LOCAL-00032" summary="#30 Fetch all poem terms and their tags">
-      <created>1604850808610</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1604850808611</updated>
     </task>
     <task id="LOCAL-00033" summary="#35 stemmer for arabic words">
       <created>1605015479530</created>
@@ -617,7 +613,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610804619844</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="minor bugs">
+      <created>1610805669091</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1610805669091</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -637,7 +640,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add tags features to hierarchy tree&#10;fixed some bugs on tags drop down window" />
     <MESSAGE value="fix selected tags , suggestions and remove tag from word" />
     <MESSAGE value="back home function" />
     <MESSAGE value="create modal for all tags by alphabet" />
@@ -662,7 +664,8 @@
     <MESSAGE value="merge two terms" />
     <MESSAGE value="minor changes" />
     <MESSAGE value="tooltip for buttons on manage tags page" />
-    <option name="LAST_COMMIT_MESSAGE" value="tooltip for buttons on manage tags page" />
+    <MESSAGE value="minor bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor bugs" />
   </component>
   <component name="WindowStateProjectService">
     <state x="699" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603147034115">
