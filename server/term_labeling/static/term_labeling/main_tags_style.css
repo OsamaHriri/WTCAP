@@ -449,7 +449,17 @@ ul.tree > li > ul > li > ul > li > a > label:before {
     direction: rtl;
 }
 
+.show_all_tag{
+    font-family: 'Markazi Text', sans-serif;
+    font-size: large;
+}
 
+.show_all_tag:hover{
+    color: #33aaaa;
+    cursor: pointer;
+}
+
+/* Paper modal */
 .paper-modal {
     position: relative;
     display: -ms-flexbox;
