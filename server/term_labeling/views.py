@@ -13,6 +13,7 @@ import json
 from django.contrib.staticfiles import finders
 from collections import Counter
 import re
+
 # Create your views here.
 
 stemmer = FarasaStemmer(interactive=True)
@@ -63,6 +64,7 @@ def tags(request):
     }
     return render(request, 'manage_tags.html', context)
 
+
 @login_required()
 def settings(request):
     context = {
@@ -77,9 +79,9 @@ def statistics(request):
     periods = c.get_periods()
     frequency = [10, 20, 30, 50, 70, 80, 100, 200, 300, 400, 500, 1000]
     frequency.reverse()
-    range = ['0-50', '50-100', '100-150', '150-200', '200-250', '250-300', '300-350', '350-400', '400-450',
-             '450-500', '500-550', '550-600', '600-650', '650-700', '700-750', '750-800', '800-850', '850-900',
-             '900-950', '950-1000']
+    ranges = ['0-50', '50-100', '100-150', '150-200', '200-250', '250-300', '300-350', '350-400', '400-450',
+              '450-500', '500-550', '550-600', '600-650', '650-700', '700-750', '750-800', '800-850', '850-900',
+              '900-950', '950-1000']
     reslut = finders.find('images/Analysis/generalInfo.json')
     f = open(reslut)
     json_string = f.read()
@@ -90,7 +92,7 @@ def statistics(request):
         'title': 'Statistics',
         'frequency': frequency,
         'info': data[0],
-        'range': range,
+        'range': ranges,
         'periods': periods
     }
     return render(request, 'statistics.html', context)
@@ -117,7 +119,7 @@ def poet_poems(request):
         poems_tagged = t.get_Tagged_poems(poems)
         if poems is not None:
             return JsonResponse({
-                "poem_ids": poems , "tagged" : poems_tagged})
+                "poem_ids": poems, "tagged": poems_tagged})
         else:
             return HttpResponse("not found")
     else:
@@ -158,8 +160,9 @@ def suggest_tags(request):
         t = Tagging()
         mutex.acquire()
         try:
-            suggestions = t.searchTagsOfWord(term ,data.get('id'),int(data.get('place')), int(data.get('row')), int(data.get('position')))
-            if len(suggestions) > 0 :
+            suggestions = t.searchTagsOfWord(term, data.get('id'), int(data.get('place')), int(data.get('row')),
+                                             int(data.get('position')))
+            if len(suggestions) > 0:
                 Count = Counter(suggestions)
                 total = sum(Count.values())
                 freq_percentage = list({k: v / total for k, v in Count.items()}.items())
@@ -168,7 +171,7 @@ def suggest_tags(request):
         finally:
             mutex.release()
         if suggestions is not None:
-            return JsonResponse({"suggestions":freq_percentage})
+            return JsonResponse({"suggestions": freq_percentage})
         else:
             return HttpResponse("not found")
 
@@ -199,7 +202,7 @@ def get_parent(request):
 
 def get_roots(request):
     if request.method == 'GET':
-        data = request.GET
+        data = request.GET  # ???????????
         t = Tag()
         roots = t.getAllheads()
         if roots is not None:
@@ -213,9 +216,9 @@ def add_root(request):
         data = request.GET
         term = data.get('term')
         t = Tag()
-        bool = t.addTag(term)
-        if bool is not None:
-            return JsonResponse(bool)
+        bol = t.addTag(term)
+        if bol is not None:
+            return JsonResponse(bol)
         else:
             return HttpResponse("not found")
 
@@ -226,9 +229,9 @@ def add_tag(request):
         term = data.get('term')
         parent = data.get('parent')
         t = Tag()
-        bool = t.addTag(term, parent)
-        if bool is not None:
-            return JsonResponse(bool)
+        bol = t.addTag(term, parent)
+        if bol is not None:
+            return JsonResponse(bol)
         else:
             return HttpResponse("not found")
 
@@ -324,13 +327,14 @@ def delete_all(request):
 def get_all_tags(request):
     if request.method == 'GET':
         t = Tag()
-        tags = t.getAllTags()
-        if tags is not None:
-            return JsonResponse(tags)
+        all_tags = t.getAllTags()
+        if all_tags is not None:
+            return JsonResponse(all_tags)
         else:
             return HttpResponse("not found")
 
 
+# TODO ARE WE STILL USING THIS?
 def get_all_poems(request):
     """
     Given a GET request returns all poems from database.
@@ -437,10 +441,10 @@ def get_words_analyzation(request):
         l = " "
         dictenory = {}
         Rootofwords = {}
-        for row , j in enumerate(poem["context"]):
+        for row, j in enumerate(poem["context"]):
             s = ""
             if 'sadr' in j:
-                for pos , word in enumerate(j['sadr'].split()):
+                for pos, word in enumerate(j['sadr'].split()):
                     temp = stemmer.stem(araby.strip_tashkeel(word))
                     Rootofwords[word] = temp
                     position = pos + 1
@@ -452,7 +456,7 @@ def get_words_analyzation(request):
                     s += temp + " "
                 # s += stemmer.stem(araby.strip_tashkeel(j['sadr'])) + " "
             if 'ajuz' in j:
-                for pos , word in enumerate(j['ajuz'].split()):
+                for pos, word in enumerate(j['ajuz'].split()):
                     temp = stemmer.stem(araby.strip_tashkeel(word))
                     Rootofwords[word] = temp
                     position = pos + 1
@@ -466,25 +470,26 @@ def get_words_analyzation(request):
         tokens = re.findall(r"[\w']+", l)
         suggestion = []
         for s in w.get_suggestions(tokens):
-          suggestion += dictenory.get(s["word"])
+            suggestion += dictenory.get(s["word"])
         ##suggestion.append(dictenory[s])
-        return JsonResponse({"tagged": currentTagged, "suggested":suggestion ,"roots":Rootofwords})
+        return JsonResponse({"tagged": currentTagged, "suggested": suggestion, "roots": Rootofwords})
 
 
 def term_current_tags(request):
     if request.method == 'GET':
         req = request.GET
         w = Tagging()
-        currentTagged = w.get_term_current_tags(int(req.get('row')),int(req.get('place')),int(req.get('position')),req.get('id'))
+        currentTagged = w.get_term_current_tags(int(req.get('row')), int(req.get('place')), int(req.get('position')),
+                                                req.get('id'))
         return JsonResponse({"tags": currentTagged})
-
 
 
 def remove_tag_from_word(request):
     if request.method == 'GET':
         req = request.GET
         w = Tagging()
-        suc =w.remove_tag_reletion(int(req.get('row')),int(req.get('place')),int(req.get('position')),req.get('id'),req.get('tag'))
+        suc = w.remove_tag_reletion(int(req.get('row')), int(req.get('place')), int(req.get('position')), req.get('id'),
+                                    req.get('tag'))
         return JsonResponse(suc)
 
 
@@ -493,6 +498,19 @@ def get_Root_of_Word(request):
         req = request.GET
         term = araby.strip_tashkeel(req.get('word')).strip()
         r = stemmer.stem(term)
-        return JsonResponse({"root":r})
+        return JsonResponse({"root": r})
+
+
+def edit_poem_line(request):
+    """
+    Given 1. poem id 2. line number 3. sadr text 4. ajuz text, change this line number in this poem to the given text
+
+    :param request: GET request with the four arguments.
+    :return: success or failure based on status.
+    """
+    if request.method == 'GET':
+        data = request.GET
+        poem_id, line, asdr, ajuz = data.get('id'), data.get('line'), data.get('sadr'), data.get('ajuz')
+
 
 mutex = Lock()

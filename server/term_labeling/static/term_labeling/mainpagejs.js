@@ -1,6 +1,7 @@
 let selected_term = "";
 let selected_obj = "";
-let right_clicked = "";
+let right_clicked = ""; //The term we right clicked and open a menu for - the term we need the definition of
+let right_clicked_line = 0; //The line of the right clicked term
 let orange = "rgb(255, 165, 0)";
 let tagParent = "";
 let depth = 0;
@@ -14,30 +15,30 @@ let allroots;
 
 $(document).ready(function () {
     getHeaders();
-    var obj = document.getElementById("poem_id");
+    const obj = document.getElementById("poem_id");
     poemID = obj.innerText;
     obj.remove();
     myUL = document.getElementById('myUL');
     $(document).click(function (e) {
-        if ($('#tagsDropDown').is(':visible') && e.target.id != "mySearchInput" && e.target.className != "dropdownbox") {
+        if ($('#tagsDropDown').is(':visible') && e.target.id !== "mySearchInput" && e.target.className !== "dropdownbox") {
             $('#tagsDropDown').hide();
         }
     });
     get_words_analyzation(poemID).done(function (d) {
         tagged_terms_list = d.tagged;
-        suggested_term_list = d.suggested
+        suggested_term_list = d.suggested;
         tagged_terms_list.forEach(function (d) {
-            const id = d.row + "_" + d.sader + "_" + d.position
+            const id = d.row + "_" + d.sader + "_" + d.position;
             document.getElementById(id).style.color = "green"
         });
         suggested_term_list.forEach(function (d) {
             if (!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)) {
-                const id = d.row + "_" + d.sader + "_" + d.position
+                const id = d.row + "_" + d.sader + "_" + d.position;
                 document.getElementById(id).style.color = "blue"
             }
         });
-        allroots = d.roots
-        tooltips = $('[data-toggle="tooltip"]').tooltip()
+        allroots = d.roots;
+        tooltips = $('[data-toggle="tooltip"]').tooltip();
         tooltips.each(function (ndx, elem) {
             $(elem).attr('title', allroots[elem.innerHTML.trim()])
                 .tooltip('_fixTitle')
@@ -54,11 +55,11 @@ $(document).ready(function () {
                 selected_obj[0].style.color = "black"
             }
         }
-        if (second_term != "")
-            second_term[0].style.color = "black"
-        second_term = ""
-        full_term = ""
-        merging = false
+        if (second_term !== "")
+            second_term[0].style.color = "black";
+        second_term = "";
+        full_term = "";
+        merging = false;
         reset();
         $(this).css("color", "orange");
         selected_obj = $(this);
@@ -66,10 +67,11 @@ $(document).ready(function () {
         term_current_tags();
         load_suggestions(selected_term);
     }).bind('contextmenu', function (e) {// disable right click and show custom context menu
-        right_clicked = this.innerHTML
-        if (merging == false)
-            second_term = $(this)
-        close_open_windows()
+        right_clicked = this.innerHTML;
+        right_clicked_line = this.id.split("_")[0];
+        if (merging === false)
+            second_term = $(this);
+        close_open_windows();
         const windowHeight = $(window).height() + $(window).scrollTop();
         const top = e.pageY + 5;
         const left = e.pageX;
@@ -87,7 +89,6 @@ $(document).ready(function () {
         return false;
     });
 
-
     // Hide context menu
     $(document).bind('contextmenu click', function () {
         $(".term-menu").hide();
@@ -102,6 +103,8 @@ $(document).ready(function () {
     $('.term-menu a').click(function () {
         $(".term-menu").hide();
     });
+
+
 });
 
 
@@ -157,14 +160,14 @@ function add_tag(obj) {
     const tag_text = text[0].innerText.slice(0, text[0].innerText.lastIndexOf("-"));
     save_term_tag(tag_text).done(function (d) {
         if (d === "Success") {
-            const term_id = selected_obj.attr('id').split('_').map(x => +x)
+            const term_id = selected_obj.attr('id').split('_').map(x => +x);
             if (!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)) {
                 tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
             }
             build_tag(tag_text);
-            $("#collapseOne").collapse("show")
-            obj.remove()
-            if ($('.suggested_container').children().length == 0) {
+            $("#collapseOne").collapse("show");
+            obj.remove();
+            if ($('.suggested_container').children().length === 0) {
                 $("#collapseTwo").collapse("hide")
             }
         } else {
@@ -241,9 +244,9 @@ function remove_tag(text) {
 }
 
 function remove_tag_from_word(text, term_id) {
-    var t = selected_term
-    if (merging == true)
-        t = full_term
+    var t = selected_term;
+    if (merging === true)
+        t = full_term;
     return $.ajax({
         type: "GET",
         url: "remove_tag_from_word/",
@@ -330,7 +333,6 @@ function getAllTags(text) {
 
 }
 
-
 function change_parent() {
     text = document.getElementById("change-parent").value;
     if (text === "") {
@@ -352,17 +354,16 @@ function change_parent() {
                 window.alert("Error ,you can't add a descendant tag as parent");
                 return
             }
-            document.getElementById("change-parent").value = ""
-            search2(rightclicked)
+            document.getElementById("change-parent").value = "";
+            search2(rightclicked);
             $('#changeParentModal').modal('hide')
         });
-
     }
 }
 
 function delete_tag() {
     getParent(rightclicked).done(function (d) {
-        var parent = d.parent;
+        const parent = d.parent;
         remove_tag(rightclicked).done(function (d2) {
             document.getElementById(rightclicked).remove();
             all_tags = all_tags.filter(e => e !== rightclicked);
@@ -381,7 +382,7 @@ function delete_tag() {
 
 function delete_all() {
     getParent(rightclicked).done(function (d) {
-        var parent = d.parent;
+        const parent = d.parent;
         remove_tag_children(rightclicked).done(function (d2) {
             all_tags = [];
             loadTags();
@@ -399,21 +400,19 @@ function delete_all() {
 }
 
 function new_parent() {
-
     text = document.getElementById("parent-name").value;
     if (text === "") {
         $("#myToast").attr("class", "toast show danger_toast").fadeIn();
         document.getElementById("toast-body").innerHTML = "The field is empty ,Please insert a tag before clicking";
         timeout();
     }
-    // window.alert("The field is empty ,Please insert a tag before clicking");
     else {
         if (text === rightclicked) {
             window.alert("Error , you can`t add the term itself as parent");
             return
         }
         add_parent(rightclicked, text).done(function (d) {
-            if (d.add == false) {
+            if (d.add === false) {
                 window.alert("Error , the parent already exist somewhere");
                 return
             }
@@ -448,12 +447,10 @@ function edit_tag() {
         }
         close_modal('#editNameModal');
     });
-
-
 }
 
 function new_child() {
-    text = document.getElementById("child-name").value
+    text = document.getElementById("child-name").value;
     if (text === "")
         window.alert("The field is empty ,Please insert a tag before clicking");
     else {
@@ -482,7 +479,6 @@ function new_root() {
         document.getElementById("toast-body").innerHTML = "The field is empty ,Please insert a tag before clicking";
         timeout();
     }
-    // window.alert("The field is empty ,Please insert a tag before clicking");
     else {
         add_new_root(text).done(function (d) {
             if (d.Tag === false) {
@@ -500,7 +496,6 @@ function new_root() {
             close_modal('#insertRootModal')
         });
     }
-
 }
 
 function close_modal(id) {
@@ -532,7 +527,7 @@ function emptyTree() {
 function item_clicked1(obj, event) {
     //clicking on parent
     event.stopPropagation();
-    close_open_windows()
+    close_open_windows();
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
     if (event.target !== obj)
@@ -547,7 +542,7 @@ function item_clicked1(obj, event) {
 function item_clicked2(obj, event) {
     //clicking on child depth 1
     event.stopPropagation();
-    close_open_windows()
+    close_open_windows();
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
     if (event.target !== obj)
@@ -561,7 +556,7 @@ function item_clicked2(obj, event) {
 function item_clicked3(obj, event) {
     //clicking on child depth 2
     event.stopPropagation();
-    close_open_windows()
+    close_open_windows();
     const elem = $(obj);
     const text = elem[0].textContent.split(/\r?\n/)[0];
     depth = depth + 1;
@@ -619,8 +614,7 @@ function item_clicked(text) {
 }
 
 function build_il(item, index) {
-    //var ul = document.querySelector('.tree');
-    var li = document.createElement("li");
+    const li = document.createElement("li");
     li.appendChild(document.createTextNode(item.child.name));
     li.setAttribute('onclick', "item_clicked3(this, event)");
     li.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
@@ -630,8 +624,8 @@ function build_il(item, index) {
 }
 
 function build_il_headers(item, index) {
-    var ul = document.querySelector('.tree');
-    var li = document.createElement("li");
+    const ul = document.querySelector('.tree');
+    const li = document.createElement("li");
     li.appendChild(document.createTextNode(item.root.name));
     li.setAttribute('onclick', "item_clicked3(this,event)");
     li.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
@@ -643,12 +637,12 @@ function remove_tag_in_selected(obj) {
     const elem = $(obj);
     const btn = elem[0].getElementsByClassName("btn-txt");
     const text = btn[0].innerHTML;
-    var term_id = selected_obj.attr('id').split('_');
+    let term_id = selected_obj.attr('id').split('_');
     remove_tag_from_word(text, term_id).done(function (d) {
-        if (d.exist == true && d.last == true) {
-            term_id = term_id.map(x => +x)
+        if(d.exist === true && d.last === true) {
+            term_id = term_id.map(x => +x);
             tagged_terms_list = tagged_terms_list.filter(function (value, index, arr) {
-                if (value.position == term_id[2] && value.row == term_id[0] && value.sader == term_id[1])
+                if(value.position == term_id[2] && value.row == term_id[0] && value.sader == term_id[1])
                     return false;
                 else return true;
             });
@@ -666,10 +660,10 @@ function right_click_tag(obj, e) {
     e.preventDefault();
 
     const text = obj.innerText.split(/\r?\n/)[0];
-    if (e.target != obj)
+    if (e.target !== obj)
         return;
     rightclicked = text;
-    close_open_windows()
+    close_open_windows();
     const windowHeight = $(window).height() + $(window).scrollTop();
     const windowWidth = $(window).width() + $(window).scrollLeft();
     const top = e.pageY + 5;
@@ -712,15 +706,15 @@ function add_tag_to_selected(obj, e) {
     event.stopPropagation();
     //prevent default menu
     e.preventDefault();
-    if (merging == false && selected_term === "") {
+    if (merging === false && selected_term === "") {
         $("#myToast").attr("class", "toast show danger_toast").fadeIn();
         document.getElementById("toast-body").innerHTML = "First you need to choose a term";
         timeout();
 
     } else {
         save_term_tag(rightclicked).done(function (d) {
-            if (d == "Success") {
-                const term_id = selected_obj.attr('id').split('_').map(x => +x)
+            if (d === "Success") {
+                const term_id = selected_obj.attr('id').split('_').map(x => +x);
                 if (!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)) {
                     tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
                 }
@@ -750,12 +744,11 @@ function build_tag(tag_name) {
 
 }
 
-
 function save_term_tag(tag) {
     const term_id = selected_obj.attr('id').split('_');
-    var t = selected_term
-    if (merging == true)
-        t = full_term
+    let t = selected_term;
+    if (merging === true)
+        t = full_term;
 
     return $.ajax({
         type: "GET",
@@ -803,10 +796,10 @@ function load_suggestions(term) {
         dataType: "json",
         success: function (data) {
             const suggestions = data.suggestions;
-            if (suggestions === undefined || suggestions.length == 0) {
+            if (suggestions === undefined || suggestions.length === 0) {
                 $("#collapseTwo").collapse("hide")
             } else {
-                suggestions.forEach(build_suggestion)
+                suggestions.forEach(build_suggestion);
                 $("#collapseTwo").collapse("show")
             }
         }
@@ -826,12 +819,12 @@ function term_current_tags() {
         },
         dataType: "json",
         success: function (data) {
-            if (data.tags === undefined || data.tags.length == 0) {
+            if (data.tags === undefined || data.tags.length === 0) {
                 $("#collapseOne").collapse("hide")
 
             } else {
                 const tags_term = data.tags.map(a => a.tag);
-                tags_term.forEach(build_tag)
+                tags_term.forEach(build_tag);
                 $("#collapseOne").collapse("show")
             }
         }
@@ -849,7 +842,6 @@ function build_suggestion(item, index) {
     $(".tag-btn").bind('contextmenu', function (e) {
         const tag_text = this.innerText.slice(1, this.innerText.lastIndexOf("-"));
         $("#txt_id").val(tag_text);
-
         const top = e.pageY + 5;
         const left = e.pageX;
         // Show contextmenu
@@ -920,22 +912,23 @@ $('#showAllModal').on('shown.bs.modal', function (e) {
     while (src.lastChild.id !== 'Fchild') {
         src.removeChild(src.lastChild);
     }
-    src.innerHTML += "<tbody></tbody>"
-    var arr = []
+    src.innerHTML += "<tbody></tbody>";
+    const arr = [];
     document.querySelectorAll(".dropdownbox").forEach(function (d, i) {
         //temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+d.innerText.trim()+"</td></tr>"
         arr.push(d.innerText.trim())
     });
-    var temp = ""
+    let temp = "";
     arr.sort().forEach(function (d, i) {
-        temp += "<tr><th scope=\"row\">" + (i + 1) + "</th><td>" + d + "</td></tr>"
+        let tt = "close_modal('#showAllModal');searchSuggestion(this.innerHTML);";
+        temp += "<tr><th scope=\"row\">" + (i + 1) + "</th><td class='show_all_tag' onclick=" + tt + ">" + d + "</td></tr>"
     });
     $("#listTable > tbody").append(temp);
-})
+});
 
 
 $('#exampleModal').on('shown.bs.modal', function (e) {
-    statement = "match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$', poemID)
+    statement = "match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$', poemID);
     var config = {
         container_id: "viz",
         server_url: "bolt://localhost:7687",
@@ -944,16 +937,12 @@ $('#exampleModal').on('shown.bs.modal', function (e) {
         labels: {
             "Tag": {
                 "caption": "name",
-                //"size": "pagerank",
-                //"community": "community",
                 "title_properties": [
                     "name"
                 ]
             },
             "Word": {
                 "caption": "name",
-                //"size": "pagerank",
-                //"community": "community",
                 "title_properties": [
                     "name"
                 ]
@@ -961,14 +950,12 @@ $('#exampleModal').on('shown.bs.modal', function (e) {
         },
         relationships: {
             "tag": {
-                //"thickness": "weight",
                 "caption": false
             }
         },
         arrows: true,
         initial_cypher: statement
     };
-
     viz = new NeoVis.default(config);
     viz.render();
 });
@@ -992,8 +979,44 @@ function get_definition(text) {
     // data: {'id': poemID},
     // dataType: "json",
     // });
+}
 
-};
+function buildLine() {
+    const tbl = document.getElementById('poem');
+    const row = tbl.rows[right_clicked_line - 1];
+    document.getElementById('edited-sadr').value = row_to_string(row.cells[1]);
+    document.getElementById('edited-ajuz').value = row_to_string(row.cells[2]);
+}
+
+function row_to_string(cell) {
+    let line = "";
+    const children = cell.children;
+    for (let i = 0; i < children.length; i++) {
+        line += children[i].innerHTML;
+    }
+    return line
+}
+
+function save_edited_line() {
+    const sadr = document.getElementById('edited-sadr').value;
+    const ajuz = document.getElementById('edited-ajuz').value;
+    //TODO finish the actual saving part
+    $.ajax({
+        type: "GET",
+        url: "edit_poem_line/",
+        data: {
+            'sadr': sadr,
+            'ajuz': ajuz,
+            'line': right_clicked_line - 1,
+            'id': poemID
+        },
+        dataType: "json",
+        success: function (data) {
+            //close modal and toast success message
+            // maybe reload the page with the updated line ?
+        }
+    });
+}
 
 let second_term = "";
 let merging = false;
@@ -1001,12 +1024,10 @@ let full_term = "";
 
 function merge_term(obj, event) {
     event.preventDefault();
-
     if (selected_obj === "") {
         $("#myToast").attr("class", "toast show danger_toast").fadeIn();
         document.getElementById("toast-body").innerHTML = "To merge ,First you need to select a term";
         timeout();
-        // window.alert("")
         second_term = "";
         return
     }
@@ -1014,7 +1035,6 @@ function merge_term(obj, event) {
         $("#myToast").attr("class", "toast show danger_toast").fadeIn();
         document.getElementById("toast-body").innerHTML = "you already merged two terms , reclick on the first term or any other to reset";
         timeout();
-        // window.alert("")
         return
     }
     const first_term_properties = selected_obj.attr('id').split('_').map(x => +x);
@@ -1028,7 +1048,7 @@ function merge_term(obj, event) {
     }
     merging = true;
     reset();
-    second_term[0].style.color = "orange"
+    second_term[0].style.color = "orange";
     full_term = selected_obj[0].innerHTML.trim() + second_term[0].innerHTML.trim();
     term_current_tags();
     load_suggestions(full_term);
