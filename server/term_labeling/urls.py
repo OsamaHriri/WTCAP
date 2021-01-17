@@ -40,4 +40,5 @@ urlpatterns = [
     re_path('remove_tag_from_word/$', views.remove_tag_from_word, name='remove_tag_from_word'),
     re_path('get_Root_of_Word/$', views.get_Root_of_Word, name='get_Root_of_Word'),
     re_path('get_Tags_frequency_in_poem/$', views.get_Tags_frequency_in_poem, name='get_Tags_frequency_in_poem'),
+    re_path('add_all_suggestions/$', views.add_all_suggestions, name='add_all_suggestions'),
 ]

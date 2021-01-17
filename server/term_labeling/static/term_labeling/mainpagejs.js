@@ -71,9 +71,8 @@ $(document).ready(function () {
         }
         if (second_term !== ""){
               const properties = second_term.attr('id').split('_').map(x => +x);
-                console.log(second_term)
             if (tagged_terms_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
-                ssecond_term[0].style.color = "green"
+                second_term[0].style.color = "green"
             } else if (suggested_term_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
                 second_term[0].style.color = "blue"
             } else {
@@ -222,6 +221,9 @@ function add_tag(obj) {
             obj.remove();
             if ($('.suggested_container').children().length === 0) {
                 $("#collapseTwo").collapse("hide")
+            }
+            if ($('.suggested_container').children().length == 1) {
+                document.getElementById('All_suggestions').style.display = 'none';
             }
         } else {
             window.alert("something went Wrong, reClick again on the term")
@@ -699,7 +701,7 @@ function remove_tag_in_selected(obj) {
     const elem = $(obj);
     const btn = elem[0].getElementsByClassName("btn-txt");
     const text = btn[0].innerHTML;
-    let term_id = selected_obj.attr('id').split('_');
+    var term_id = selected_obj.attr('id').split('_');
     remove_tag_from_word(text, term_id).done(function (d) {
         if(d.exist === true && d.last === true) {
             term_id = term_id.map(x => +x);
@@ -860,8 +862,12 @@ function load_suggestions(term) {
             const suggestions = data.suggestions;
             if (suggestions === undefined || suggestions.length === 0) {
                 $("#collapseTwo").collapse("hide")
+                document.getElementById('All_suggestions').style.display = 'none';
             } else {
                 suggestions.forEach(build_suggestion);
+                if(suggestions.length>1)
+                    document.getElementById('All_suggestions').style.display = 'flex';
+                else document.getElementById('All_suggestions').style.display = 'none';
                 $("#collapseTwo").collapse("show")
             }
         }
@@ -1063,4 +1069,56 @@ function merge_term(obj, event) {
     full_term = selected_obj[0].innerHTML.trim() + second_term[0].innerHTML.trim();
     term_current_tags(full_term);
     load_suggestions(full_term);
+}
+
+function btn_add_all_suggestions(){
+    const dict = {}
+    const keys = []
+    document.getElementsByClassName("suggested_container")[0].childNodes.forEach(function(d){
+        if(d.className.includes("btn")){
+            const text = d.getElementsByClassName("btn-txt");
+            const tag_text = text[0].innerText.slice(0, text[0].innerText.lastIndexOf("-"));
+            keys.push(tag_text)
+            dict[tag_text] = d
+        }
+    })
+    var term_id = selected_obj.attr('id').split('_');
+    add_all_suggestions_ajax(keys,term_id).done(function(data){
+       term_id = term_id.map(x=>+x)
+       for (const d in data){
+            if(data[d] === true){
+                if (!tagged_terms_list.some(item => item.row === term_id[0] && item.sader === term_id[1] && item.position === term_id[2])) {
+                     tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
+                }
+                build_tag(d);
+                dict[d].remove()
+            }
+       }
+       $("#collapseOne").collapse("show");
+       if ($('.suggested_container').children().length === 0) {
+           $("#collapseTwo").collapse("hide")
+           document.getElementById('All_suggestions').style.display = 'none';
+       }
+       if ($('.suggested_container').children().length == 1) {
+           document.getElementById('All_suggestions').style.display = 'none';
+       }
+    });
+}
+
+function add_all_suggestions_ajax(keys ,term_id){
+    var t = selected_term;
+    if (merging === true)
+        t = full_term;
+    return $.ajax({
+        type: "GET",
+        url: "add_all_suggestions/",
+        data: {
+            'row': term_id[0],
+            'place': term_id[1],
+            'position': term_id[2],
+            'term': t,
+            'tags[]':keys,
+            'id': poemID,
+        }
+    });
 }

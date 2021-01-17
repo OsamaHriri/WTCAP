@@ -219,9 +219,11 @@
 
 .suggested_container {
     padding: 0 5px 5px 5px;
-    max-height: 300px;
+    max-height: 100px;
     letter-spacing: 0.15ch;
+    overflow:auto;
 }
+
 
 .treeview {
     -ms-user-select: none;

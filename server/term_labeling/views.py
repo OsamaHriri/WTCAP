@@ -133,7 +133,7 @@ def save_term_tag(request):
         # remove term tashkeel and white space
         term = araby.strip_tashkeel(term).strip()
         term = stemmer.stem(term)
-        tag = data.get('tag')
+        tag = data.get('tag').strip()
         poem_id = data.get('id')
         t = Tagging()
         mutex.acquire()
@@ -148,6 +148,32 @@ def save_term_tag(request):
             return HttpResponse("not Success")
     else:
         return HttpResponse("not found")
+
+
+def add_all_suggestions(request):
+    if request.method == 'GET':
+        data = request.GET
+        term = data.get('term')
+        # remove term tashkeel and white space
+        term = araby.strip_tashkeel(term).strip()
+        term = stemmer.stem(term)
+        tags = data.getlist('tags[]')
+        poem_id = data.get('id')
+        t = Tagging()
+        mutex.acquire()
+        d = {}
+        try:
+            for tag in tags:
+                suc = t.tagWord(term, tag, poem_id, int(data.get('place')), int(data.get('row')),
+                                int(data.get('position')))
+                d[tag] = suc
+        finally:
+            mutex.release()
+
+        return JsonResponse(d)
+    else:
+        return HttpResponse("not found")
+
 
 
 def suggest_tags(request):
