@@ -479,8 +479,10 @@ def term_current_tags(request):
     if request.method == 'GET':
         req = request.GET
         w = Tagging()
+        term = araby.strip_tashkeel(req.get('term')).strip()
+        term = stemmer.stem(term)
         currentTagged = w.get_term_current_tags(int(req.get('row')), int(req.get('place')), int(req.get('position')),
-                                                req.get('id'))
+                                                req.get('id'),term)
         return JsonResponse({"tags": currentTagged})
 
 

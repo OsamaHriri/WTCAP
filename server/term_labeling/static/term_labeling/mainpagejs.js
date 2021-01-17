@@ -63,12 +63,22 @@ $(document).ready(function () {
             const properties = selected_obj.attr('id').split('_').map(x => +x);
             if (tagged_terms_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
                 selected_obj[0].style.color = "green"
+            } else if (suggested_term_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
+                selected_obj[0].style.color = "blue"
             } else {
                 selected_obj[0].style.color = "black"
             }
         }
-        if (second_term !== "")
-            second_term[0].style.color = "black";
+        if (second_term !== ""){
+              const properties = second_term.attr('id').split('_').map(x => +x);
+                console.log(second_term)
+            if (tagged_terms_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
+                ssecond_term[0].style.color = "green"
+            } else if (suggested_term_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
+                second_term[0].style.color = "blue"
+            } else {
+                second_term[0].style.color = "black"
+            }}
         second_term = "";
         full_term = "";
         merging = false;
@@ -76,7 +86,7 @@ $(document).ready(function () {
         $(this).css("color", "orange");
         selected_obj = $(this);
         selected_term = this.innerHTML;
-        term_current_tags();
+        term_current_tags(selected_term);
         load_suggestions(selected_term);
     }).bind('contextmenu', function (e) {// disable right click and show custom context menu
         right_clicked = this.innerHTML;
@@ -858,7 +868,7 @@ function load_suggestions(term) {
     });
 }
 
-function term_current_tags() {
+function term_current_tags(term) {
     const term_id = selected_obj.attr('id').split('_');
     $.ajax({
         type: "GET",
@@ -867,7 +877,8 @@ function term_current_tags() {
             'row': term_id[0],
             'place': term_id[1],
             'position': term_id[2],
-            'id': poemID
+            'id': poemID,
+            'term': term,
         },
         dataType: "json",
         success: function (data) {
@@ -1073,7 +1084,7 @@ function merge_term(obj, event) {
     }
     const first_term_properties = selected_obj.attr('id').split('_').map(x => +x);
     const second_term_properties = second_term.attr('id').split('_').map(x => +x);
-    if (first_term_properties[0] != second_term_properties[0] || second_term_properties[2] != 1 || second_term_properties[1] === first_term_properties[1] ||
+    if (first_term_properties[0] != second_term_properties[0] || second_term_properties[2] != 1 || second_term_properties[1] <= first_term_properties[1] ||
         selected_obj[0].parentNode.getElementsByTagName("span").length != first_term_properties[2]) {
         $("#myToast").attr("class", "toast show danger_toast").fadeIn();
         document.getElementById("toast-body").innerHTML = "you cant merge this two terms";
@@ -1084,6 +1095,6 @@ function merge_term(obj, event) {
     reset();
     second_term[0].style.color = "orange";
     full_term = selected_obj[0].innerHTML.trim() + second_term[0].innerHTML.trim();
-    term_current_tags();
+    term_current_tags(full_term);
     load_suggestions(full_term);
 }

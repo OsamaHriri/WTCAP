@@ -22,7 +22,7 @@ class Tagging(object):
                             """
         self.checkWords = """match (:Tag)<-[r:tag]-(w:Word) where  r.poemID=$poem  return distinct r.position as position,r.row as row , r.sader as sader """
         self.checkpoems = """ match (:Tag)<-[r:tag]-(:Word) where r.poemID in $poems return distinct r.poemID as poemID """
-        self.tagsOfword = """ match (t:Tag)<-[r:tag]-(:Word) where r.poemID = $poem and r.sader = $place and r.position = $position and r.row = $row return t.name as tag"""
+        self.tagsOfword = """ match (t:Tag)<-[r:tag]-(w:Word) where r.poemID = $poem and w.name=$word and r.sader = $place and r.position = $position and r.row = $row return t.name as tag"""
         self.removeTagrelationQ = """ match(t:Tag)<-[r:tag]-(w:Word) where t.name =$tag and r.poemID = $poem and r.sader = $place and r.position = $position and r.row = $row  delete r return w.name as name"""
         self.suggestionQ = """ match(:Tag)<-[r:tag]-(w:Word) where w.name in $words return distinct w.name as word"""
         self.checkremainingRelations = """ match(:Tag)<-[r:tag]-(:Word) where r.poemID = $poem and r.sader = $place and r.position = $position and r.row=$row return count(r) as count"""
@@ -137,7 +137,7 @@ class Tagging(object):
             l.append(p["id"])
         return self.graph.run(self.checkpoems, poems = l).data()
 
-    def get_term_current_tags(self ,row ,place ,position ,id):
+    def get_term_current_tags(self ,row ,place ,position ,id , term):
         """
         # get a all tags of term that's reside in specific poem .
         :param row:
@@ -146,7 +146,7 @@ class Tagging(object):
         :param id:
         :return:
         """
-        return self.graph.run(self.tagsOfword, poem = id , row=row , position= position , place = place).data()
+        return self.graph.run(self.tagsOfword, poem = id , row=row , position= position , place = place , word=term).data()
 
     def remove_tag_reletion(self,row ,place ,position ,id ,tag):
         """
