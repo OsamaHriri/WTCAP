@@ -368,31 +368,6 @@ ul.tree > li > ul > li > ul > li > a > label:before {
     top: 3px;
 }
 
-/* RIGHT CLICK THINGY */
-#context-menu {
-    display: none;
-    position: absolute;
-    border-radius: 10px;
-    width: auto;
-    background: #6e6658;
-    z-index: 100;
-    padding: 5px 10px 3px;
-}
-
-.context-menu a {
-    color: white;
-    text-decoration: none;
-}
-
-.context-menu a:hover {
-    color: #112D32;
-}
-
-.context-menu a img {
-    width: 30px;
-    height: 30px;
-}
-
 /* context menu */
 .tag-menu {
     display: none;

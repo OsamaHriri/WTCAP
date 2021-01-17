@@ -901,42 +901,8 @@ function build_suggestion(item, index) {
         '                    <span class="btn-txt">' + item[0] + '-' + parseFloat(item[1].toFixed(4)) + '</span>\n' +
         '                </button>');
 
-    // disable right click and show custom context menu
-    $(".tag-btn").bind('contextmenu', function (e) {
-        const tag_text = this.innerText.slice(1, this.innerText.lastIndexOf("-"));
-        $("#txt_id").val(tag_text);
-        const top = e.pageY + 5;
-        const left = e.pageX;
-        // Show contextmenu
-        $(".context-menu").toggle(100).css({
-            top: top + "px",
-            left: left + "px"
-        });
-        // disable default context menu
-        return false;
-    });
-
-    // Hide context menu
-    $(document).bind('contextmenu click', function () {
-        $(".context-menu").hide();
-    });
-
-    // disable context-menu from custom menu
-    $('.context-menu').bind('contextmenu', function () {
-        return false;
-    });
-
-    // Clicked context-menu item
-    $('.context-menu a').click(function () {
-        $(".context-menu").hide();
-    });
 }
 
-function suggestionRightClick() {
-    let sugg = $('#txt_id').val();
-    sugg = sugg.replace(/^\s+|\s+$/g, '');
-    searchSuggestion(sugg);
-}
 
 function searchSuggestion(text) {
     getDepth(text).done(function (d) {
