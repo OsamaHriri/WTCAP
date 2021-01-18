@@ -36,7 +36,7 @@ $(document).ready(function() {
 } );
 
 function Create_frequency_array(number){
-    array = frequency.slice()
+    var array = frequency.slice()
     var i = 0;
     while (i < array.length && array[i]<number) {
         i++;
@@ -52,7 +52,7 @@ function Create_frequency_array(number){
 
 
 function Create_range_array(number){
-     array = range.slice()
+     var array = range.slice()
      var i = 0;
      var temp = ""
      while (i < array.length) {
@@ -138,7 +138,6 @@ function createWordCloud(obj, event,num){
           part.freq = num.toFixed(2);
         });
         var chart = anychart.tagCloud(d.t);
-        console.log(d.t)
         if (num == 1)
             chart.title('$ most frequent words'.replace('$',d.m));
         else {
