@@ -60,11 +60,10 @@
 }
 
 .dropbtn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 8px;
-    font-size: 16px;
-    border: none;
+    background-color: transparent;
+    padding: 0 5px 0 5px;
+    border: solid 2px #4CAF50;
+    margin-bottom: 1px;
 }
 
 .dropdown {
@@ -103,12 +102,13 @@
 
 .dropdown:hover .dropbtn {
     background-color: #3e8e41;
+    color: white;
 }
 
 .bookshelf_wrapper {
     position: relative;
     top: 50%;
-    left : 0%;
+    left : 0;
     display: none;
     transform: scale(0.5)
 }
