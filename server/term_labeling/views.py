@@ -77,6 +77,7 @@ def settings(request):
 def statistics(request):
     c = Connector()
     periods = c.get_periods()
+    poets = c.get_poets()
     frequency = [10, 20, 30, 50, 70, 80, 100, 200, 300, 400, 500, 1000]
     frequency.reverse()
     ranges = ['0-50', '50-100', '100-150', '150-200', '200-250', '250-300', '300-350', '350-400', '400-450',
@@ -93,7 +94,8 @@ def statistics(request):
         'frequency': frequency,
         'info': data[0],
         'range': ranges,
-        'periods': periods
+        'periods': periods,
+        'poets': poets
     }
     return render(request, 'statistics.html', context)
 
@@ -546,5 +548,14 @@ def get_Tags_frequency_in_poem(request):
         t = Tagging()
         result ,total = t. get_all_tagged_words_in_Poem(data.get('id'))
         return JsonResponse({'tags':result,'total':total})
+
+def get_all_tags_for_poet(request):
+    if request.method == 'GET':
+        data = request.GET
+        t = Tagging()
+        c = Connector()
+        poems = c.get_poems_by_poet(int(data.get('id')))
+        result ,total = t.get_all_tags_for_poet(poems);
+        return JsonResponse({"tags":result ,'total':total})
 
 mutex = Lock()

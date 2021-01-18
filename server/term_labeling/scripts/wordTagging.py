@@ -29,6 +29,8 @@ class Tagging(object):
         self.removeWordwithoutr = """match (w:Word) where w.name=$word and not (w)--() delete (w)"""
         self.getAllTaggedWords =""" Match (w:Word) -[r:tag]-> (t:Tag) where r.poemID= $poem with  t , count(r) as c 
                                         return {name :t.name  , frequency: c } as Tag order by c Desc """
+        self.allTagsInPoems = """ Match (w:Word) -[r:tag]-> (t:Tag) where r.poemID in $poems with  t , count(r) as c 
+                                        return {name :t.name  , frequency: c } as Tag order by c Desc"""
 
     def ifExists(self, word=None, tag=None, ):
         """
@@ -188,5 +190,15 @@ class Tagging(object):
                 total+= t['Tag']['frequency']
         return result , total
 
+    def get_all_tags_for_poet(self,all_poems):
+        arr=[]
+        for p in all_poems:
+            arr.append(p['id'])
+        result = self.graph.run(self.allTagsInPoems, poems=arr).data()
+        total = 0
+        if len(result) > 0:
+            for t in result:
+                total += t['Tag']['frequency']
+        return result, total
 
 

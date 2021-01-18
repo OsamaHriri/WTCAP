@@ -1,4 +1,5 @@
 let table
+let table2
 var currentPeriod="all periods"
 var currentPeriod2="all periods"
 // connect to server and get the created word cloud based on period parameter.
@@ -16,6 +17,16 @@ $(document).ready(function() {
             { title: "Term" },
             { title: "Frequency" },
             { title: "Approximate Proportion" },
+            { title: "Percent of Total" },
+        ]
+    } );
+    table2 = $('#tagTable').DataTable( {
+        responsive: true,
+        "pageLength": 10,
+         columns: [
+            { title: "#" },
+            { title: "Term" },
+            { title: "Frequency" },
             { title: "Percent of Total" },
         ]
     } );
@@ -76,6 +87,15 @@ function get_max_freq(p) {
         type: "GET",
         url: "maxFrequencyinPeriod/",
         data: {'p':p},
+        dataType: "json",
+    });
+}
+
+function get_all_tags_for_poet(id) {
+    return $.ajax({
+        type: "GET",
+        url: "get_all_tags_for_poet/",
+        data: {'id':id},
         dataType: "json",
     });
 }
@@ -202,4 +222,23 @@ function savePeriod2(obj){
            create_dropdown("Frequency2","Range2","createList",array1,array2)
        });
     }
+}
+
+function get_tags_for_poet(obj){
+    var el = obj.parentNode;
+    el.style.display = "none"
+    setTimeout(function() {
+            el.style.removeProperty("display");
+    }, 30);
+    var src = document.getElementById("poetbtn");
+    src.value = obj.innerText
+    poet_id = obj.id
+    table2.clear().draw()
+    get_all_tags_for_poet(poet_id).done(function(d){
+        data = d.tags
+        data.forEach(function(l , i){
+             var percent = (l.Tag.frequency/d.total).toFixed(2)+"%"
+             table2.row.add( [i+1,l.Tag.name,l.Tag.frequency,percent]).draw()
+         });
+    });
 }

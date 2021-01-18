@@ -67,6 +67,10 @@
             <a class="nav-link" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list"
                aria-selected="false">List View</a>
         </li>
+         <li class="nav-item">
+            <a class="nav-link" id="tag-tab" data-toggle="tab" href="#tag" role="tab" aria-controls="tag"
+               aria-selected="false">Poems</a>
+        </li>
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -165,6 +169,23 @@
                     <div class="shelf"></div>
                 </div>
                 <table class="table" id="listTable" style="font-family:initial">
+                    <thead class="thead-dark">
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade show active" id="tag" role="tabpanel" aria-labelledby="tag-tab">
+            <h3 >Tags in Poems</h3>
+            <div class=".col-md- mt-5">
+                <div class="dropdown">
+                    <input type="button" id="poetbtn" class="dropbtn" value="poet">
+                        <div class="dropdown-content">
+                            {% for p in poets %}
+                                <a href="javascript:void(0)" onclick="get_tags_for_poet(this)" id="{{p.id}}"> {{ p.name }} </a>
+                            {% endfor %}
+                        </div>
+                </div>
+                <table class="table" id="tagTable" style="font-family:initial">
                     <thead class="thead-dark">
                     </thead>
                 </table>
