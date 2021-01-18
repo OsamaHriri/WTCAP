@@ -23,6 +23,9 @@
 
 {% block content %}
 <div class="container text-center">
+    <div class="page-header pt-4">
+        <h1>Statistics</h1>
+    </div>
     <div class="container mb-5 mt-5">
         <div class="row">
             <div class="col-md-3">
@@ -58,6 +61,7 @@
             </div>
         </div>
     </div>
+
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
@@ -75,36 +79,43 @@
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <h3>Word Cloud</h3>
-            <div class="dropdown">
-                <input type="button" id="periodbtn" class="dropbtn" value="All Periods" data-toggle="tooltip"
-                              data-placement="top" title="Which Period to Focus On">
-                <div class="dropdown-content">
-                    <a href="javascript:void(0)" onclick="savePeriod(this)">All Periods</a>
-                    {% for p in periods %}
-                    <a href="javascript:void(0)" onclick="savePeriod(this)"> {{p}} </a>
-                    {% endfor %}
+            <div>
+                To generate a world cloud choose the desired filters
+                <br> Period -
+                <div class="dropdown">
+                    <input type="button" id="periodbtn" class="dropbtn" value="All Periods" data-toggle="tooltip"
+                           data-placement="top" title="Which Period to Focus On">
+                    <div class="dropdown-content">
+                        <a href="javascript:void(0)" onclick="savePeriod(this)">All Periods</a>
+                        {% for p in periods %}
+                        <a href="javascript:void(0)" onclick="savePeriod(this)"> {{p}} </a>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-            <div class="dropdown">
-                <label> : Choose a </label>
-                <input type="button" id="topbtn1" class="dropbtn" value="Top N" data-toggle="tooltip"
-                              data-placement="top" title="Show the Top N most frequent words based on specific period or all data">
-                <div id="Frequency1" class="dropdown-content">
-                    {% for f in frequency %}
-                    <a href="javascript:void(0)" onclick="createWordCloud(this,event,1)"> {{f}} </a>
-                    {% endfor %}
+                <br> Number of words to show -
+                <div class="dropdown">
+                    <input type="button" id="topbtn1" class="dropbtn" value="# of words" data-toggle="tooltip"
+                           data-placement="top"
+                           title="Show the Top N most frequent words based on specific period or all data">
+                    <div id="Frequency1" class="dropdown-content">
+                        {% for f in frequency %}
+                        <a href="javascript:void(0)" onclick="createWordCloud(this,event,1)"> {{f}} </a>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-            <div class="dropdown">
-                <label> or a </label>
-                <input type="button" id="rangebtn1" class="dropbtn" value="Range" data-toggle="tooltip"
-                              data-placement="top" title="Show the top x to top y most frequent words when the range of words is [x,y]">
-                <label> number to generate a Word Cloud </label>
-                <div id="Range1" class="dropdown-content">
-                    {% for r in range %}
-                    <a href="javascript:void(0)" id="{{r}}" onclick="createWordCloud(this,event,2)"> {{r}} </a>
-                    {% endfor %}
+                <br> Range of words
+                <div class="dropdown">
+                    <input type="button" id="rangebtn1" class="dropbtn" value="Range" data-toggle="tooltip"
+                           data-placement="top"
+                           title="Show the top x to top y most frequent words when the range of words is [x,y]">
+                    <div id="Range1" class="dropdown-content">
+                        {% for r in range %}
+                        <a href="javascript:void(0)" id="{{r}}" onclick="createWordCloud(this,event,2)"> {{r}} </a>
+                        {% endfor %}
+                    </div>
                 </div>
+
+
             </div>
             <br><br>
             <div id="cloud" style="height:700px">
@@ -126,7 +137,7 @@
             <h3 id="tablePageHeader">Table</h3>
             <div class="dropdown">
                 <input type="button" id="period2btn" class="dropbtn" value="All Periods" data-toggle="tooltip"
-                              data-placement="top" title="Which Period to Focus On">
+                       data-placement="top" title="Which Period to Focus On">
                 <div class="dropdown-content">
                     <a href="javascript:void(0)" onclick="savePeriod2(this)">All Periods</a>
                     {% for p in periods %}
@@ -137,7 +148,8 @@
             <div class="dropdown">
                 <label> : Choose a </label>
                 <input type="button" id="topbtn2" class="dropbtn" value="Top N" data-toggle="tooltip"
-                              data-placement="top" title="Show the Top N most frequent words based on specific period or all data">
+                       data-placement="top"
+                       title="Show the Top N most frequent words based on specific period or all data">
                 <div id="Frequency2" class="dropdown-content">
                     {% for f in frequency %}
                     <a href="javascript:void(0)" onclick="createList(this,event,1)"> {{f}} </a>
@@ -147,7 +159,8 @@
             <div class="dropdown">
                 <label> or a </label>
                 <input type="button" id="rangebtn2" class="dropbtn" value="Range" data-toggle="tooltip"
-                              data-placement="top" title="Show the top x to top y most frequent words when the range of words is [x,y]">
+                       data-placement="top"
+                       title="Show the top x to top y most frequent words when the range of words is [x,y]">
                 <label> number to generate a Frequencies List </label>
                 <div id="Range2" class="dropdown-content">
                     {% for r in range %}
@@ -194,6 +207,4 @@
     </div>
 </div>
 
-
 {% endblock content %}
-

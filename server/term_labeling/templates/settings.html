@@ -15,8 +15,6 @@
     });
 </script>
 
-<!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
-<!--<script src='https://kit.fontawesome.com/a076d05399.js'></script>-->
 {% endblock stylesheets %}
 
 
@@ -28,7 +26,9 @@
 
     <div class="card text-center w-50 d-inline-block mt-4">
         <!--        <img class="card-img-top bg-transparent center" src="{% static 'term_labeling/img/Novelist writing-rafiki.png' %}" alt="Card image">-->
-        <h4 class="card-header" id="users_header" onclick="toggle_body(this.id)">Users</h4>
+
+        <h4 class="card-header" id="users_header" onclick="toggle_body(this.id)"><i class="fa fa-users fa-fw"
+                                                                                    aria-hidden="true"></i> Users</h4>
         <div class="card-body">
             <p class="card-text">Add a new user<br>
                 <a href="{% url 'register' %}" class="btn btn-outline-info">Add User</a>
@@ -40,7 +40,9 @@
     </div>
 
     <div class="card text-center w-50 d-inline-block mt-4">
-        <h4 class="card-header" id="db_header" onclick="toggle_body(this.id)">Databases</h4>
+        <h4 class="card-header" id="db_header" onclick="toggle_body(this.id)"><i class="fa fa-database fa-fw"
+                                                                                 aria-hidden="true"></i>
+            Databases</h4>
         <div class="card-body">
             <p class="card-text">Load any new poems added to Fozi's databse<br>
                 <a href="#" class="btn btn-outline-info">Sync Poems Database</a>
