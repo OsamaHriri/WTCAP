@@ -1,7 +1,6 @@
 let table
 let table2
 var currentPeriod="all periods"
-var currentPeriod2="all periods"
 // connect to server and get the created word cloud based on period parameter.
 var frequency = [10,20,30,50,70,80,100,200,300,400,500,1000]
 var range= ['0-50', '50-100', '100-150', '150-200', '200-250', '250-300', '300-350', '350-400', '400-450',
@@ -160,16 +159,16 @@ function createWordCloud(obj, event,num){
 
 }
 
-function createList(obj,event,num){
+function createList(obj,event){
     var el = obj.parentNode;
     el.style.display = "none"
     setTimeout(function() {
             el.style.removeProperty("display");
      }, 30);
     table.clear().draw()
-    document.getElementById("tablePageHeader").innerText = 'Table: $ most frequent words'.replace('$',obj.innerText)
+    document.getElementById("tablePageHeader").innerText = 'فترة $ '.replace('$',obj.innerText)
     document.getElementById("loader2").style.display = "block";
-    get_terms_freq(obj.innerText,num,currentPeriod2).done(function(d){
+    get_terms_freq(" ",3,obj.id).done(function(d){
         data = d.t
         data.forEach(function(l , i){
              var percent = (l.freq*100).toFixed(2)+"%"
@@ -202,27 +201,6 @@ function savePeriod(obj){
 
 }
 
-function savePeriod2(obj){
-    var el = obj.parentNode;
-    el.style.display = "none"
-    setTimeout(function() {
-            el.style.removeProperty("display");
-     }, 30);
-    var src = document.getElementById("period2btn");
-    src.value = obj.innerText
-    currentPeriod2 = obj.innerText.toLowerCase();
-       if(currentPeriod2 == "all periods"){
-            create_dropdown("Frequency2","Range2","createList",frequency.reverse(),range)
-       }
-    else {
-        get_max_freq(currentPeriod2).done(function(d){
-           array1 = Create_frequency_array(d.max)
-           array2 = Create_range_array(d.max)
-           create_dropdown("Frequency2","Range2","createList",array1,array2)
-       });
-    }
-}
-
 function get_tags_for_poet(obj){
     var el = obj.parentNode;
     el.style.display = "none"
@@ -240,4 +218,20 @@ function get_tags_for_poet(obj){
              table2.row.add( [i+1,l.Tag.name,l.Tag.frequency,percent]).draw()
          });
     });
+}
+
+function filterFunction(dropDownId, inputId) {
+    let input, filter, ul, li, a, i;
+    input = document.getElementById(inputId);
+    filter = input.value.toUpperCase();
+    let divv = document.getElementById(dropDownId);
+    a = divv.getElementsByTagName("a");
+    for (i = 0; i < a.length; i++) {
+        txtValue = a[i].textContent || a[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            a[i].style.display = "";
+        } else {
+            a[i].style.display = "none";
+        }
+    }
 }

@@ -409,7 +409,6 @@ def get_terms_freq(request):
         f = open(reslut)
         json_string = f.read()
         f.close()
-
         # Convert json string to python object
         data = json.loads(json_string)
         if int(req.get('n')) == 1:
@@ -426,7 +425,7 @@ def get_terms_freq(request):
                     d = data[period][:x]
                     max = x
             return JsonResponse({"t": d, "m": max})
-        else:
+        elif int(req.get('n')) == 2:
             y = req.get('f').strip().split("-")
             if req.get('p') == "all periods":
                 d = data[int(y[0]):int(y[1])]
@@ -441,6 +440,13 @@ def get_terms_freq(request):
                     d = data[period][int(y[0]):int(y[1])]
                     max = int(y[1])
             return JsonResponse({"t": d, "m": max})
+        elif int(req.get('n')) == 3:
+            if req.get('p') == "all periods":
+                d = data[:2000]
+            else:
+                period = req.get('p').strip()
+                d = data[period][:2000]
+            return JsonResponse({"t": d})
 
 
 def maxFrequencyinPeriod(request):
