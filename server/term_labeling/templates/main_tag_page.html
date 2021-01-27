@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/main_tags_style.css'%}">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -398,6 +398,7 @@
                                 <thead class="thead-dark">
                                 </thead>
                             </table>
+                           <div style="text-align:left"><a href="#" onclick="ConvertToExcel()">Download to Excel</a></div>
                       </div>
                     </div>
                 </div>

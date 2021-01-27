@@ -13,6 +13,7 @@ let tagged_terms_list;
 let suggested_term_list;
 let allroots;
 let table
+let Excel
 $(document).ready(function () {
     getHeaders();
     const obj = document.getElementById("poem_id");
@@ -150,9 +151,13 @@ $(document).ready(function () {
         table.clear().draw()
         load_tags_freq().done(function(d){
             data = d.tags
+            Excel = []
+            Excel.push(["#","Term","Frequency","Percent Of Total"])
             data.forEach(function(l , i){
                  var percent = (l.Tag.frequency/d.total*100).toFixed(2)+"%"
-                 table.row.add( [i+1,l.Tag.name,l.Tag.frequency,percent]).draw()
+                 r = [i+1,l.Tag.name,l.Tag.frequency,percent]
+                 table.row.add(r).draw()
+                 Excel.push(r)
              });
         });
     });
@@ -1121,4 +1126,15 @@ function add_all_suggestions_ajax(keys ,term_id){
             'id': poemID,
         }
     });
+}
+
+function ConvertToExcel(){
+    if(typeof Excel === 'undefined') {
+        return
+     }
+    const array = XLSX.utils.aoa_to_sheet(Excel)
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, array, 'Tags Frequency')
+    XLSX.writeFile(wb, 'Tags Frequency.xlsx')
+
 }

@@ -5,6 +5,7 @@
 <script src="{% static 'term_labeling/statistics.js' %}"></script>
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-tag-cloud.min.js"></script>
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/statistics_style.css'%}">
 <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
 <!--<script src='https://kit.fontawesome.com/a076d05399.js'></script>-->
@@ -177,6 +178,7 @@
                             {% endfor %}
                         </div>
                 </div>
+                <div id="ExcelDownload" style="text-align:left;Display:none"><a href="javascript:void(0)" onclick="ConvertToExcel()">Download to Excel</a></div>
                 <div style="height:700px">
                     <table class="table" id="tagTable" style="font-family:initial">
                         <thead class="thead-dark">

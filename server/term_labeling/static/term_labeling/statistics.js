@@ -1,5 +1,6 @@
 let table
 let table2
+let Excel
 var currentPeriod="all periods"
 // connect to server and get the created word cloud based on period parameter.
 var frequency = [10,20,30,50,70,80,100,200,300,400,500,1000]
@@ -211,11 +212,19 @@ function get_tags_for_poet(obj){
     src.value = obj.innerText
     poet_id = obj.id
     table2.clear().draw()
+    document.getElementById("ExcelDownload").style.display = "none";
     get_all_tags_for_poet(poet_id).done(function(d){
         data = d.tags
+        Excel = []
+        Excel.push(["#","Term","Frequency","Percent Of Total"])
+        if (data.length > 0){
+            document.getElementById("ExcelDownload").style.display = "block";
+        }
         data.forEach(function(l , i){
              var percent = (l.Tag.frequency/d.total).toFixed(2)+"%"
-             table2.row.add( [i+1,l.Tag.name,l.Tag.frequency,percent]).draw()
+             const r = [i+1,l.Tag.name,l.Tag.frequency,percent]
+             table2.row.add(r).draw()
+             Excel.push(r)
          });
     });
 }
@@ -234,4 +243,15 @@ function filterFunction(dropDownId, inputId) {
             a[i].style.display = "none";
         }
     }
+}
+
+function ConvertToExcel(){
+    if(typeof Excel === 'undefined') {
+        return
+     }
+    const array = XLSX.utils.aoa_to_sheet(Excel)
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, array, 'Tags Frequency')
+    XLSX.writeFile(wb, 'Tags Frequency.xlsx')
+
 }
