@@ -929,6 +929,15 @@ function refreshVis() {
     viz.reload()
 }
 
+function Convert_to_Png(e) {
+     const canvas = document.getElementById("viz").getElementsByTagName("canvas")[0]
+     can = canvas.toDataURL()
+     var link = document.createElement("a")
+     link.href = can
+     link.download = 'Graph'
+     link.click()
+}
+
 function search2(text) {
     getDepth(text).done(function (d) {
         depth = d.depth + 1;

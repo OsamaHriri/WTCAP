@@ -4,9 +4,7 @@
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/statistics.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/statistics.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/statistics.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/statistics.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -275,13 +273,6 @@
       <workItem from="1604572704097" duration="1334000" />
       <workItem from="1604593172244" duration="15000" />
       <workItem from="1604661622107" duration="4279000" />
-    </task>
-    <task id="LOCAL-00041" summary="#33 loader for manage-tags">
-      <created>1607627053866</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1607627053866</updated>
     </task>
     <task id="LOCAL-00042" summary="fix select poem page bug.">
       <created>1607627135027</created>
@@ -619,7 +610,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611765991672</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="#62 tags to Excel File in both statistics and main page.">
+      <created>1611774275100</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1611774275101</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -639,7 +637,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="adjust loader position in manage tags." />
     <MESSAGE value="adjust loader position in statistic." />
     <MESSAGE value="new border" />
     <MESSAGE value="create collapse windows in main tag page" />
@@ -664,7 +661,8 @@
     <MESSAGE value="#54 tagged poems in statistics" />
     <MESSAGE value="style for the btns in statistic page" />
     <MESSAGE value="list view now always show up to 2000 words per period" />
-    <option name="LAST_COMMIT_MESSAGE" value="list view now always show up to 2000 words per period" />
+    <MESSAGE value="#62 tags to Excel File in both statistics and main page." />
+    <option name="LAST_COMMIT_MESSAGE" value="#62 tags to Excel File in both statistics and main page." />
   </component>
   <component name="WindowStateProjectService">
     <state x="699" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603147034115">
