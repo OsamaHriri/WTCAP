@@ -452,18 +452,18 @@
                     <td>
                         <!--                        <input type="checkbox" name="{{ forloop.counter }}" value="{{ forloop.counter }}"-->
                         <!--                               id="{{ forloop.counter }}" class="tblcheckbox">-->
-                        <label> {{ poem.row_index }} </label>
+                        <label> {{poem.row_index}} </label>
                     </td>
                     <td>
                         {% for term in poem.sadr %}
                         <span class='term'
-                              id="{{ forloop.parentloop.counter}}_0_{{ forloop.counter }}" data-toggle="tooltip" data-placement="top"> {{term}} </span>
+                              id="{{forloop.parentloop.counter}}_0_{{forloop.counter}}" data-toggle="tooltip" data-placement="top"> {{term}} </span>
                         {% endfor %}
                     </td>
                     <td>
                         {% for term in poem.ajuz %}
                         <span class='term'
-                              id="{{ forloop.parentloop.counter}}_1_{{ forloop.counter }}" data-toggle="tooltip" data-placement="top" > {{term}} </span>
+                              id="{{forloop.parentloop.counter}}_1_{{forloop.counter}}" data-toggle="tooltip" data-placement="top" > {{term}} </span>
                         {% endfor %}
                     </td>
                 </tr>

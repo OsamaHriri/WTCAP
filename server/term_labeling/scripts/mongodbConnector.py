@@ -71,4 +71,4 @@ class Connector:
 
 if __name__ == "__main__":
 
-    print(Connector().get_periods_name())
+    print(len(Connector().get_periods_name()))

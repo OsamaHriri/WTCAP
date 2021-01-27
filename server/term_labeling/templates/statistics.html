@@ -74,9 +74,9 @@
             <div class="dropdown">
                 <input type="button" id="periodbtn" class="dropbtn" value="All Periods">
                 <div class="dropdown-content">
-                    <a href="javascript:void(0)" onclick="savePeriod(this)">All Periods</a>
+                    <a href="javascript:void(0)"  id = 'all periods'  onclick="savePeriod(this)">All Periods</a>
                     {% for p in periods %}
-                    <a href="javascript:void(0)" onclick="savePeriod(this)"> {{p}} </a>
+                    <a href="javascript:void(0)"  id = {{p.id}}  onclick="savePeriod(this)"> {{p.name}} </a>
                     {% endfor %}
                 </div>
             </div>
@@ -123,7 +123,7 @@
                 <div class="dropdown-content">
                     <a href="javascript:void(0)" onclick="savePeriod2(this)">All Periods</a>
                     {% for p in periods %}
-                    <a href="javascript:void(0)" onclick="savePeriod2(this)"> {{p}} </a>
+                    <a href="javascript:void(0)" id = {{p.id}}  onclick="savePeriod2(this)"> {{p.name}} </a>
                     {% endfor %}
                 </div>
             </div>

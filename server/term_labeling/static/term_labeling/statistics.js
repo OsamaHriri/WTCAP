@@ -161,7 +161,7 @@ function savePeriod(obj){
      }, 30);
     var src = document.getElementById("periodbtn");
     src.value = obj.innerText
-    currentPeriod = obj.innerText.toLowerCase();
+    currentPeriod = obj.id;
     if(currentPeriod == "all periods"){
         create_dropdown("Frequency1","Range1","createWordCloud",frequency.reverse(),range)
 
@@ -182,7 +182,7 @@ function savePeriod2(obj){
      }, 30);
     var src = document.getElementById("period2btn");
     src.value = obj.innerText
-    currentPeriod2 = obj.innerText.toLowerCase();
+    currentPeriod2 = obj.id
        if(currentPeriod2 == "all periods"){
             create_dropdown("Frequency2","Range2","createList",frequency.reverse(),range)
        }

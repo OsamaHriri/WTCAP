@@ -21,7 +21,7 @@ stemmer = FarasaStemmer(interactive=True)
 
 bot = ALmaanyBot() 
 
-
+@login_required()
 def main_tag_page(request):
     t = Tag()
     all_tags = t.getAllTags()["tags"]
@@ -60,22 +60,10 @@ def main_tag_page(request):
 
 def index(request):
 
-    t = Tag()
-   # json_tags = t.getAllTagsbyjson()
-
-    all_tags = t.getAllTags()
-    c = Connector()
-    if request.method == 'POST':
-        id = request.POST['poem_iid']
-    else:
-        id = 2066
-    poem = (c.get_poem(id))[0]
-
     context = {
-        'poems': poem,
-        'title': 'Home',
-
-        'all_tags': all_tags
+    
+    
+        'title': 'Main Page',
 
     }
     return render(request, 'index.html', context)
@@ -102,7 +90,9 @@ def settings(request):
 @login_required()
 def statistics(request):
     c = Connector()
-    periods = c.get_periods()
+    periods = c.get_periods_name()
+    print("num of per is:" + str(len(periods)))
+    
     frequency = [10, 20, 30, 50, 70, 80, 100, 200, 300, 400, 500, 1000]
     frequency.reverse()
     range = ['0-50', '50-100', '100-150', '150-200', '200-250', '250-300', '300-350', '350-400', '400-450',
