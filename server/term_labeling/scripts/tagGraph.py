@@ -3,7 +3,9 @@ from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from json import dumps
 
-
+"""
+    this class responsible for managing the tags hierarchy.
+"""
 class Tag(object):
     def __init__(self):
         """
