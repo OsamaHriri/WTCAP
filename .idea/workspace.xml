@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="#61 graph to png">
+    <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/NotoNaskhArabic-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/createGraph.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/createGraph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/poemsAnalysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/poemsAnalysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/tagGraph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/scripts/wordTagging.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/scripts/wordTagging.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_js.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/select_poet_js.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/statistics.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/statistics.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -280,13 +276,6 @@
       <workItem from="1604572704097" duration="1334000" />
       <workItem from="1604593172244" duration="15000" />
       <workItem from="1604661622107" duration="4279000" />
-    </task>
-    <task id="LOCAL-00043" summary="fix some element display in statistic and manage tag pages">
-      <created>1608138419925</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1608138419925</updated>
     </task>
     <task id="LOCAL-00044" summary="optimize poems analysis run time">
       <created>1608142363845</created>
@@ -624,7 +613,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611779245783</updated>
     </task>
-    <option name="localTasksCounter" value="92" />
+    <task id="LOCAL-00092" summary="documentation">
+      <created>1612805859362</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1612805859363</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -644,7 +640,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="new border" />
     <MESSAGE value="create collapse windows in main tag page" />
     <MESSAGE value="new navbar hover" />
     <MESSAGE value="fix custom menu not showing correctly in the end of page" />
@@ -669,7 +664,8 @@
     <MESSAGE value="list view now always show up to 2000 words per period" />
     <MESSAGE value="#62 tags to Excel File in both statistics and main page." />
     <MESSAGE value="#61 graph to png" />
-    <option name="LAST_COMMIT_MESSAGE" value="#61 graph to png" />
+    <MESSAGE value="documentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="documentation" />
   </component>
   <component name="WindowStateProjectService">
     <state x="699" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603147034115">

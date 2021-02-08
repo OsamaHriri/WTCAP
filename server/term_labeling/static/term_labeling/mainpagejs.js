@@ -1,4 +1,6 @@
-
+/*
+this js file to handle the poem tag page.
+ */
 // ################################ global parameters ################################
 
 let selected_term = ""; // the clicked term name by
@@ -1222,7 +1224,7 @@ function merge_term(obj, event) {
 }
 
 function ConvertToExcel(){
-    // create downloadable excel file.
+    // create a downloadable excel file.
     if(typeof Excel === 'undefined') {
         return
      }

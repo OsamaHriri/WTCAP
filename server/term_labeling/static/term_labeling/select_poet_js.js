@@ -1,14 +1,20 @@
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-let all_poets = [];
+
+/*
+this js file to handle the select poem page.
+ */
+
+
+let all_poets = []; //all poets in the db.
 
 // A $( document ).ready() block.
 $(document).ready(function () {
     getAllPoets().done(function (d) {
+        //get all poets from db
         all_poets = d['poets'];
         update_poets_list()
     });
     $(document).click(function (e) {
+        // hide opened windows
         if ($('#poetDropDown').is(':visible') && e.target.id !== "poetbtn" && e.target.className !== "poet-link" && e.target.id !== "poetInput") {
             $('#poetDropDown').toggle();
         } else if ($('#poemDropDown').is(':visible') && e.target.id !== "poembtn" && e.target.className !== "poems-link" && e.target.id !== "poemInput") {
@@ -18,6 +24,7 @@ $(document).ready(function () {
 });
 
 function toggleDropDown(id) {
+    // show/hide search bar
     if (id === 'poetDropDown')
         $('#poetDropDown').toggle();
     else {
@@ -27,6 +34,7 @@ function toggleDropDown(id) {
 
 
 function update_poets_list() {
+    // create record for each poet and insert it in the poet dropdowncontent
     let poetDropDown = document.getElementById('poetDropDown');
     let poets_html = "";
     all_poets.forEach(function (p) {
@@ -36,6 +44,7 @@ function update_poets_list() {
 }
 
 function update_poems_list(poems_list, tagged_list) {
+    //for specific poet , create record for all  of his relevant poems and insert it in the poet dropdowncontent
     const poetDropDown = document.getElementById('poemDropDown');
     let poems_html = "";
     poems_list.forEach(function (p) {
@@ -64,6 +73,7 @@ function getAllPoets() {
 
 
 function filterFunction(dropDownId, inputId) {
+    // when searching in poem/poets bar , filter the result
     let input, filter, ul, li, a, i;
     input = document.getElementById(inputId);
     filter = input.value.toUpperCase();
@@ -80,6 +90,7 @@ function filterFunction(dropDownId, inputId) {
 }
 
 function choosePoet(obj) {
+    // when poet is selected , get all relevant poems
     const id = obj.id;
     const value = obj.text;
     let btn = document.getElementById("poetbtn");
@@ -96,6 +107,7 @@ function choosePoet(obj) {
 }
 
 function choosePoem(obj) {
+    // when poem is selected , save poem id
     const id = obj.id;
     const value = obj.text;
     let btn = document.getElementById("poembtn");
@@ -118,5 +130,6 @@ function get_relevant(id) {
 }
 
 function submitPoem() {
+    //open tag page for the selected poem
     window.location = '/main_tag_page/?poem_id=' + poemid;
 }

@@ -1,14 +1,20 @@
-let table
-let table2
-let Excel
-var currentPeriod="all periods"
+/*
+this js file to handle the statistic page.
+ */
+
+let table // first table object for list tab
+let table2 // first table object for tagsin poems tab
+let Excel // tags dict to be downloaded as excel file
+
+var currentPeriod="all periods" // all periods are selected by default in word cloud tab
 // connect to server and get the created word cloud based on period parameter.
-var frequency = [10,20,30,50,70,80,100,200,300,400,500,1000]
+var frequency = [10,20,30,50,70,80,100,200,300,400,500,1000] // default settings for frequency and range
 var range= ['0-50', '50-100', '100-150', '150-200', '200-250', '250-300', '300-350', '350-400', '400-450',
             '450-500', '500-550', '550-600', '600-650', '650-700', '700-750', '750-800', '800-850', '850-900', '900-950', '950-1000']
 
 
 $(document).ready(function() {
+    // define first table
     table = $('#listTable').DataTable( {
         responsive: true,
         "pageLength": 100,
@@ -20,6 +26,7 @@ $(document).ready(function() {
             { title: "Percent of Total" },
         ]
     } );
+     // define second table
     table2 = $('#tagTable').DataTable( {
         responsive: true,
         "pageLength": 10,
@@ -30,12 +37,14 @@ $(document).ready(function() {
             { title: "Percent of Total" },
         ]
     } );
+        // apply tooltip
       $('[data-toggle="tooltip"]').tooltip({
         trigger : 'hover'
        });
 } );
 
 function Create_frequency_array(number){
+    // return array of frequency based on the given number.
     var array = frequency.slice()
     var i = 0;
     while (i < array.length && array[i]<number) {
@@ -52,6 +61,7 @@ function Create_frequency_array(number){
 
 
 function Create_range_array(number){
+    // return array of ranges based on the given number.
      var array = range.slice()
      var i = 0;
      var temp = ""
@@ -72,7 +82,7 @@ function Create_range_array(number){
       return array
 
 }
-
+// ################################ ajax section ################################
 function get_terms_freq(f , n , p) {
     return $.ajax({
         type: "GET",
@@ -100,7 +110,13 @@ function get_all_tags_for_poet(id) {
     });
 }
 
+
+// ################################ end of ajax section ################################
+
+
+
 function create_dropdown(freqencyId , rangeId , clickfunction , array1 , array2){
+        // from given paramets create dropdown content
        var src = document.getElementById(freqencyId);
        if (src.hasChildNodes()) {
           src.innerHTML = '';
@@ -117,8 +133,8 @@ function create_dropdown(freqencyId , rangeId , clickfunction , array1 , array2)
        });
 }
 
-// this function responsible for creating image of word cloud based on top k after receiving it from server.
 function createWordCloud(obj, event,num){
+    // this function responsible for creating image of word cloud based on top k after receiving it from server.
     var el = obj.parentNode;
     el.style.display = "none";
     setTimeout(function() {
@@ -132,7 +148,6 @@ function createWordCloud(obj, event,num){
       get_terms_freq(obj.innerText,num,currentPeriod).done(function(d){
       var delayInMilliseconds = 500;
       setTimeout(function() {
-      //your code to be executed after 0.5 second
         d.t.forEach(function(part, index) {
           var num = part.freq*100
           part.freq = num.toFixed(2);
@@ -161,6 +176,7 @@ function createWordCloud(obj, event,num){
 }
 
 function createList(obj,event){
+    // this function responsible for creating list of words based on period or all periods , top are 2000 words to reduce lags.
     var el = obj.parentNode;
     el.style.display = "none"
     setTimeout(function() {
@@ -181,6 +197,7 @@ function createList(obj,event){
 
 
 function savePeriod(obj){
+    // save clicked period and the adjust filter options
     var el = obj.parentNode;
     el.style.display = "none"
     setTimeout(function() {
@@ -203,6 +220,7 @@ function savePeriod(obj){
 }
 
 function get_tags_for_poet(obj){
+    // when poet is selected , get all tags for the poet poems.
     var el = obj.parentNode;
     el.style.display = "none"
     setTimeout(function() {
@@ -230,6 +248,7 @@ function get_tags_for_poet(obj){
 }
 
 function filterFunction(dropDownId, inputId) {
+    // when searching in poet searchbar , filter the result
     let input, filter, ul, li, a, i;
     input = document.getElementById(inputId);
     filter = input.value.toUpperCase();
@@ -246,6 +265,7 @@ function filterFunction(dropDownId, inputId) {
 }
 
 function ConvertToExcel(){
+    // create a downloadable excel file.
     if(typeof Excel === 'undefined') {
         return
      }
