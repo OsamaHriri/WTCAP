@@ -46,6 +46,10 @@ only when document ready , do all required functions.
             $('#tagsDropDown').hide();
         }
     });
+       // save all tags for fuzzy search purpose
+      document.querySelectorAll(".dropdownbox").forEach(function (d, i) {
+            all_tags.push(d.innerText.trim())
+       });
     get_words_analyzation(poemID).done(function (d) {
         // analyze the poem words and color it using this rules , green for a tagged term , blue for suggested term
         tagged_terms_list = d.tagged;
@@ -224,23 +228,31 @@ function update_tags_list() {
     });
 }
 
+function checkAvailability(arr, val) {
+  return arr.some(function(arrVal) {
+    return val.trim() === arrVal.target.trim();
+  });
+}
 
-function filterSearch() {
-    // when searching in searchbar , filter the result
-    $('#tagsDropDown').show();
-    let input, filter, ul, li, a, i, txtValue;
+function filterSearch(){
+    let input , filter, ul, li, a, i, txtValue;
     input = document.getElementById("mySearchInput");
-    filter = input.value.toUpperCase();
+    filter = input.value
+    const options = {
+      allowTypo: false, // if you don't care about allowing typos
+    }
+    const results = fuzzysort.go(filter, all_tags,options)
     ul = document.getElementById("myUL");
     li = ul.getElementsByTagName("li");
     for (i = 0; i < li.length; i++) {
         a = li[i].getElementsByTagName("a")[0];
-        txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        if ( typeof a != 'undefined'){
+        txtValue =a.innerText;
+        if (filter.length ===0 || checkAvailability(results,txtValue)) {
             li[i].style.display = "";
         } else {
             li[i].style.display = "none";
-        }
+        }}
     }
 }
 
