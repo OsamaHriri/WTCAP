@@ -4,9 +4,6 @@
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/manage_tags.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -275,13 +272,6 @@
       <workItem from="1604572704097" duration="1334000" />
       <workItem from="1604593172244" duration="15000" />
       <workItem from="1604661622107" duration="4279000" />
-    </task>
-    <task id="LOCAL-00045" summary="create word2vec model">
-      <created>1608551974974</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1608551974974</updated>
     </task>
     <task id="LOCAL-00046" summary="#18 2nd phase of preprocessing">
       <created>1608559847863</created>
@@ -619,7 +609,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612808938853</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="#51 fuzzysearch">
+      <created>1612819364950</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1612819364950</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -639,7 +636,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="create collapse windows in main tag page" />
     <MESSAGE value="new navbar hover" />
     <MESSAGE value="fix custom menu not showing correctly in the end of page" />
     <MESSAGE value="fix searchbar not displaying correctly" />
@@ -664,7 +660,8 @@
     <MESSAGE value="#62 tags to Excel File in both statistics and main page." />
     <MESSAGE value="#61 graph to png" />
     <MESSAGE value="documentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="documentation" />
+    <MESSAGE value="#51 fuzzysearch" />
+    <option name="LAST_COMMIT_MESSAGE" value="#51 fuzzysearch" />
   </component>
   <component name="WindowStateProjectService">
     <state x="699" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603147034115">

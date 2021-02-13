@@ -51,9 +51,10 @@ only when document ready , do all required functions.
             all_tags.push(d.innerText.trim())
        });
     get_words_analyzation(poemID).done(function (d) {
-        // analyze the poem words and color it using this rules , green for a tagged term , blue for suggested term
+        // analyze the poem words and color it using this rules , save currently tagged terms and suggested term in global
         tagged_terms_list = d.tagged;
         suggested_term_list = d.suggested;
+        // green color for a tagged term , blue color for suggested term
         tagged_terms_list.forEach(function (d) {
             const id = d.row + "_" + d.sader + "_" + d.position;
             document.getElementById(id).style.color = "green"
@@ -64,6 +65,7 @@ only when document ready , do all required functions.
                 document.getElementById(id).style.color = "blue"
             }
         });
+        // save all roots of words
         allroots = d.roots;
         tooltips = $('.term').tooltip();
         // add tooltip for each term that's show the root
@@ -72,6 +74,7 @@ only when document ready , do all required functions.
                 .tooltip('_fixTitle')
         })
     });
+    // in page loading , show only third container
     $("#collapseOne").collapse('hide');
     $("#collapseThree").collapse('show');
     // init table for all tags
@@ -92,16 +95,20 @@ only when document ready , do all required functions.
         //when client click on a term , check prev clicked term and adjust its color
         if (selected_obj !== "" && selected_obj.css("color") === orange) {
             const properties = selected_obj.attr('id').split('_').map(x => +x);
+               // if prev term is tagged , color it again with green.
             if (tagged_terms_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
                 selected_obj[0].style.color = "green"
+               // if prev is not tagged but have a suggestion , color it with blue.
             } else if (suggested_term_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
                 selected_obj[0].style.color = "blue"
             } else {
+                // if none of the above , color it with default black.
                 selected_obj[0].style.color = "black"
             }
         }
         // check if a merging between 2 terms existed before and adjust the second term color
         if (second_term !== ""){
+                // check the same rules as above
               const properties = second_term.attr('id').split('_').map(x => +x);
             if (tagged_terms_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
                 second_term[0].style.color = "green"
@@ -110,24 +117,29 @@ only when document ready , do all required functions.
             } else {
                 second_term[0].style.color = "black"
             }}
-         // clear some prev parameters
+         // clear some prev parameters , clear all merging parameters and containers
         second_term = "";
         full_term = "";
         merging = false;
         reset();
         // this clicked term to orange color
         $(this).css("color", "orange");
+        // save both term obj and name
         selected_obj = $(this);
         selected_term = this.innerHTML;
         // load term current tags and suggestions
         term_current_tags(selected_term);
         load_suggestions(selected_term);
     }).bind('contextmenu', function (e) {// disable right click and show custom context menu
+        // save right clicked term
         right_clicked = this.innerHTML;
         right_clicked_line = this.id.split("_")[0];
+        // in case of not merging , save this term as potential merge option
         if (merging === false)
             second_term = $(this);
+        // in case other custom menus are visible
         close_open_windows();
+        // this lines to show term custom menu
         const windowHeight = $(window).height() + $(window).scrollTop();
         const top = e.pageY + 5;
         const left = e.pageX;
@@ -136,7 +148,7 @@ only when document ready , do all required functions.
         if (windowHeight < menuHeight + top) {
             y = windowHeight - menuHeight
         }
-        // Show contextmenu
+        // Show custom menu
         $(".term-menu").toggle(100).css({
             top: y + "px",
             left: left + "px"
@@ -162,35 +174,43 @@ only when document ready , do all required functions.
     // when clicking on current tags buttons , show first tab
      $('#exampleModal').on('shown.bs.modal', function (e) {
         $('a[href=\\#graph]').tab('show')
+        // show graph in first tab
         load_graph()
      });
      // when clicking on show all tags button
     $('#showAllModal').on('shown.bs.modal', function (e) {
         const src = document.getElementById("listTable");
+        // remove all prev records
         while (src.lastChild.id !== 'Fchild') {
             src.removeChild(src.lastChild);
         }
         src.innerHTML += "<tbody></tbody>";
         const arr = [];
+        //get all cuurent tags
         document.querySelectorAll(".dropdownbox").forEach(function (d, i) {
-            //temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+d.innerText.trim()+"</td></tr>"
             arr.push(d.innerText.trim())
         });
         let temp = "";
+        // create new table records
         arr.sort().forEach(function (d, i) {
             let tt = "close_modal('#showAllModal');searchSuggestion(this.innerHTML);";
             temp += "<tr><th scope=\"row\">" + (i + 1) + "</th><td class='show_all_tag' onclick=" + tt + ">" + d + "</td></tr>"
         });
+        // push all records
         $("#listTable > tbody").append(temp);
     });
     // when clicking on second tab of #examplemodal
     $('a[href=\\#list]').on('shown.bs.tab', function (e) {
+        // clear prev table records
         table.clear().draw()
+        // get all current tags and their frequencies in this poem
         load_tags_freq().done(function(d){
             data = d.tags
             Excel = []
+            // make excel file ready in case of download option
             Excel.push(["#","Term","Frequency","Percent Of Total"])
             data.forEach(function(l , i){
+                 // create table records and push it
                  let percent = (l.Tag.frequency/d.total*100).toFixed(2)+"%"
                  r = [i+1,l.Tag.name,l.Tag.frequency,percent]
                  table.row.add(r).draw()
@@ -203,7 +223,7 @@ only when document ready , do all required functions.
 
 
 function close_open_windows() {
-    // hide visible custom menus
+    // hide visible custom menus , tag and term custom menus
     if ($('#tag-menu').is(':visible')) {
         $('#tag-menu').hide();
     }
@@ -229,6 +249,7 @@ function update_tags_list() {
 }
 
 function checkAvailability(arr, val) {
+    // if val exist in the array return true otherwise false.
   return arr.some(function(arrVal) {
     return val.trim() === arrVal.target.trim();
   });
@@ -237,13 +258,17 @@ function checkAvailability(arr, val) {
 function filterSearch(){
     let input , filter, ul, li, a, i, txtValue;
     input = document.getElementById("mySearchInput");
+    // key the client try to seach for
     filter = input.value
     const options = {
       allowTypo: false, // if you don't care about allowing typos
     }
+    // get result of search
     const results = fuzzysort.go(filter, all_tags,options)
     ul = document.getElementById("myUL");
+    // all tags in search bar
     li = ul.getElementsByTagName("li");
+        // iterare over all tags in search bar , hide/show tag depend on fuzzy search result
     for (i = 0; i < li.length; i++) {
         a = li[i].getElementsByTagName("a")[0];
         if ( typeof a != 'undefined'){
@@ -434,6 +459,7 @@ function save_term_tag(tag) {
 }
 
 function load_suggestions(term) {
+    // load all suggestion for current term
     const term_id = selected_obj.attr('id').split('_');
     $.ajax({
         type: "GET",
@@ -448,14 +474,21 @@ function load_suggestions(term) {
         dataType: "json",
         success: function (data) {
             const suggestions = data.suggestions;
+            // in case there is no suggestions
             if (suggestions === undefined || suggestions.length === 0) {
+                // hide suggestion container
                 $("#collapseTwo").collapse("hide")
+                // hide add all suggestion btn
                 document.getElementById('All_suggestions').style.display = 'none';
             } else {
+                // in case there is at least 1 suggestion
                 suggestions.forEach(build_suggestion);
                 if(suggestions.length>1)
+                    // if there is more than 2 suggestion , show add all suggestions btn
                     document.getElementById('All_suggestions').style.display = 'flex';
+                    // otherwise hide
                 else document.getElementById('All_suggestions').style.display = 'none';
+                //show suggestion container
                 $("#collapseTwo").collapse("show")
             }
         }
@@ -463,6 +496,7 @@ function load_suggestions(term) {
 }
 
 function term_current_tags(term) {
+    // load all tags that's been tagged to this term
     const term_id = selected_obj.attr('id').split('_');
     $.ajax({
         type: "GET",
@@ -476,10 +510,13 @@ function term_current_tags(term) {
         },
         dataType: "json",
         success: function (data) {
+            // in case there is no tags
             if (data.tags === undefined || data.tags.length === 0) {
+                // hide tagged tags container.
                 $("#collapseOne").collapse("hide")
 
             } else {
+                // otherwise , build all tags btn and show tags container
                 const tags_term = data.tags.map(a => a.tag);
                 tags_term.forEach(build_tag);
                 $("#collapseOne").collapse("show")
@@ -489,6 +526,7 @@ function term_current_tags(term) {
 }
 
 function add_all_suggestions_ajax(keys ,term_id){
+    // when clicked in add all suggestions btn
     let t = selected_term;
     if (merging === true)
         t = full_term;
@@ -513,29 +551,34 @@ function add_all_suggestions_ajax(keys ,term_id){
 
 //  ################################ tree view section #######################################
 function change_parent() {
-    // change parent of tag in the hierarchy.
+    // change parent of tag in the hierarchy. new parent must exist
     text = document.getElementById("change-parent").value;
+    // empty insert
     if (text === "") {
         $("#myToast").attr("class", "toast show danger_toast").fadeIn();
         document.getElementById("toast-body").innerHTML = "The field is empty ,Please insert a tag before clicking";
         timeout();
     } else {
+        // parent equal to selected tag
         if (text === rightclicked) {
             window.alert("Error , you can`t add the term itself as parent");
             return
         }
         changeParent(rightclicked, text).done(function (d) {
+            // in case the add tag not exist
             if (d.exist === false) {
                 window.alert("The parent doesnt exist ,Please insert a valid one");
                 return
             }
+            // changing parent to decedant one will create a circle in the hierarchy which not allowed
             if (d.change === false) {
                 window.alert("Error ,you can't add a descendant tag as parent");
                 return
             }
             document.getElementById("change-parent").value = "";
+            // refresh the tree main tag to be the right clicked tag
             search2(rightclicked);
-            $('#changeParentModal').modal('hide')
+            close_modal('#changeParentModal');
         });
     }
 }
@@ -543,17 +586,23 @@ function change_parent() {
 function delete_tag() {
     // delete tag from the hierarchy
     getParent(rightclicked).done(function (d) {
+        // parent of the tag
         const parent = d.parent;
+        // remove tag
         remove_tag(rightclicked).done(function (d2) {
+            // remove tag from search bar
             document.getElementById(rightclicked).remove();
+            //remove tag from all tags array
             all_tags = all_tags.filter(e => e !== rightclicked);
             if (parent.length === 0) {
+                // if there is no parent , go back to all roots
                 emptyTree();
                 getHeaders();
                 depth = 0;
                 tagParent = "";
                 flag = false;
             } else {
+                // if there is parent , parent is current tag in the tree view.
                 search2(parent[0].parent.name)
             }
         });
@@ -565,15 +614,19 @@ function delete_all() {
     getParent(rightclicked).done(function (d) {
         const parent = d.parent;
         remove_tag_children(rightclicked).done(function (d2) {
+            // because delete all is a difficult delete , load all tags from db
             all_tags = [];
             loadTags();
+            // if the removed tag have no parent
             if (parent.length === 0) {
+                // go back to all roots in tree view
                 emptyTree();
                 getHeaders();
                 depth = 0;
                 tagParent = "";
                 flag = false;
             } else {
+                 // parent is the current tag in tree view
                 search2(parent[0].parent.name)
             }
         });
@@ -581,7 +634,7 @@ function delete_all() {
 }
 
 function new_parent() {
-    // add new parent for tag in the hierarchy.
+    // add new parent for tag in the hierarchy. parent mustn't exist
     text = document.getElementById("parent-name").value;
     if (text === "") {
         $("#myToast").attr("class", "toast show danger_toast").fadeIn();
@@ -589,6 +642,7 @@ function new_parent() {
         timeout();
     }
     else {
+        // parent is the same as selected tag
         if (text === rightclicked) {
             window.alert("Error , you can`t add the term itself as parent");
             return
@@ -598,6 +652,7 @@ function new_parent() {
                 window.alert("Error , the parent already exist somewhere");
                 return
             }
+            // add new tag to all tags array and search bar
             all_tags.push(text);
             myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
             document.getElementById("parent-name").value = "";
@@ -615,17 +670,23 @@ function edit_tag() {
             window.alert("Error , the edit name already exist");
             return
         }
+        //remove tag from searchbar
         document.getElementById(rightclicked).remove();
+        // remove tag from all tags array
         all_tags = all_tags.filter(e => e !== rightclicked);
+        // add new edited tag to search bar and all tags array
         all_tags.push(text);
         myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
         document.getElementById("edited-name").value = "";
         emptyTree();
         if (tagParent === "") {
+            // in case edited tag is in all roots page in tree view
             getHeaders()
         } else if (tagParent === rightclicked)
+            // if we're changing the current tag in hierarchy/tree view
             item_clicked(text);
         else {
+            // if we're changing a child in the hierarchy/tree view
             item_clicked(tagParent)
         }
         close_modal('#editNameModal');
@@ -636,17 +697,22 @@ function new_child() {
     // add new child for tag in the hierarchy
     text = document.getElementById("child-name").value;
     if (text === "")
+        // empty insert
         window.alert("The field is empty ,Please insert a tag before clicking");
     else {
         if (text === rightclicked) {
+            // child is the same as parent , no need to send to db to check if its exist or not
             window.alert("Error , you can`t add the term itself as child");
             return
         }
+        //ajax call
         add_child(text, rightclicked).done(function (d) {
             if (d.Tag === false) {
+                // if tag already exist
                 window.alert("The tag already exist");
                 return
             }
+            // new tag to be pushed in all tags array and search bar
             all_tags.push(text);
             myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
             document.getElementById("child-name").value = "";
@@ -665,11 +731,14 @@ function new_root() {
         timeout();
     }
     else {
+        //ajax call
         add_new_root(text).done(function (d) {
             if (d.Tag === false) {
+                // if tag already exist
                 window.alert("The tag already exist");
                 return
             }
+             // new tag to be pushed in all tags array and search bar , and then go back to all roots page
             all_tags.push(text);
             myUL.innerHTML += "<li><a href=\"javascript:void(0)\" class=\"dropdownbox\" id=" + text + " onclick=\"searchTag(this)\">" + text + "</a></li>";
             document.getElementById("root-name").value = "";
@@ -723,11 +792,14 @@ function item_clicked1(obj, event) {
     //clicking on parent element of the selected tag , that's also mean were going back in the hierarchy
     event.stopPropagation();
     close_open_windows();
+    // get clicked tag name
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
     if (event.target !== obj)
         return;
+    // going back in hierarchy mean the depth is now less by 1
     depth = depth - 1;
+    // clear tree view
     emptyTree();
     if (depth === 1)
         flag = false;
@@ -735,15 +807,18 @@ function item_clicked1(obj, event) {
 }
 
 function item_clicked2(obj, event) {
-    //clicking on the selected tag . can be used for refresh or to dected if the clicking term have no parent and were going back to show all roots.
+    //clicking on the selected tag . can be used for refresh or to detect if the clicking term have no parent and were going back to show all roots.
     event.stopPropagation();
     close_open_windows();
+     // get clicked tag name
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
     if (event.target !== obj)
         return;
+     // clear tree view
     emptyTree();
     if (depth === 1)
+        // if we're in depth one and we clicked on the parent of selected tag , thats mean we want to go back to all roots , so flag is true
         flag = true;
     item_clicked(text);
 }
@@ -752,9 +827,12 @@ function item_clicked3(obj, event) {
     //clicking on tags children ,that's also mean were advancing in the hierarchy .in addition when roots are only shown they are treated as a child element
     event.stopPropagation();
     close_open_windows();
+    // get clicked tag name
     const elem = $(obj);
     const text = elem[0].textContent.split(/\r?\n/)[0];
+    // going forwad in hierarchy mean the depth is now increased by 1
     depth = depth + 1;
+    // clear tree view
     emptyTree();
     if (depth === 1)
         flag = false;
@@ -788,6 +866,7 @@ function item_clicked(text) {
             pNode.appendChild(ul1);
             ul1.appendChild(current);
         }
+        // create selected tag element
         current.appendChild(document.createTextNode(text));
         current.setAttribute('onclick', "item_clicked2(this,event)");
         current.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
@@ -795,6 +874,7 @@ function item_clicked(text) {
         current.setAttribute('id', "c");
         current.setAttribute("style", "color: green");
         if (parent.length === 0)
+            // if there is no parent add tag to first layer
             ul.appendChild(current);
         ul2 = document.createElement('ul');
         current.appendChild(ul2);
@@ -805,6 +885,7 @@ function item_clicked(text) {
             dataType: "json",
             success: function (data) {
                 const children = data.children;
+                 // create children elements
                 children.forEach(build_il);
             }
         });
@@ -891,10 +972,13 @@ function right_click_tag(obj, e) {
 function remove_tag_in_selected(obj) {
     // remove tag from the term selected tags
     const elem = $(obj);
+    // get tag name
     const btn = elem[0].getElementsByClassName("btn-txt");
     const text = btn[0].innerHTML;
+    //ajax call
     let term_id = selected_obj.attr('id').split('_');
     remove_tag_from_word(text, term_id).done(function (d) {
+        // d.last true mean its the last tag for the term , so we need to remove the term from all tagged term list
         if(d.exist === true && d.last === true) {
             term_id = term_id.map(x => +x);
             tagged_terms_list = tagged_terms_list.filter(function (value, index, arr) {
@@ -902,6 +986,7 @@ function remove_tag_in_selected(obj) {
                     return false;
                 else return true;
             });
+            // no tags left , hide the selected tags containers.
             $("#collapseOne").collapse("hide")
         }
         elem.remove();
@@ -913,20 +998,25 @@ function add_tag_to_selected(obj, e) {
     event.stopPropagation();
     //prevent default menu
     e.preventDefault();
+    // in case there is no merging and not a term selected
     if (merging === false && selected_term === "") {
         $("#myToast").attr("class", "toast show danger_toast").fadeIn();
         document.getElementById("toast-body").innerHTML = "First you need to choose a term";
         timeout();
 
     } else {
+        //ajax call
         save_term_tag(rightclicked).done(function (d) {
             if (d === "Success") {
                 const term_id = selected_obj.attr('id').split('_').map(x => +x);
+                // if the term tagged for the first time , save it in all tagged terms list
                 if (!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)) {
                     // in case that was the last tag for the clicked term , remove it from tagged term file.
                     tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
                 }
+                // create tag element in container.
                 build_tag(rightclicked);
+                // show selected tags if it was hidden
                 $("#collapseOne").collapse("show")
             } else {
                 $("#myToast").attr("class", "toast show danger_toast").fadeIn();
@@ -942,6 +1032,7 @@ function btn_add_all_suggestions(){
     const dict = {}
     const keys = []
     document.getElementsByClassName("suggested_container")[0].childNodes.forEach(function(d){
+        // get all suggestions and push them to dictionary
         if(d.className.includes("btn")){
             const text = d.getElementsByClassName("btn-txt");
             const tag_text = text[0].innerText.slice(0, text[0].innerText.lastIndexOf("-"));
@@ -950,23 +1041,30 @@ function btn_add_all_suggestions(){
         }
     })
     let term_id = selected_obj.attr('id').split('_');
+    //ajax call
     add_all_suggestions_ajax(keys,term_id).done(function(data){
        term_id = term_id.map(x=>+x)
        for (const d in data){
+            // iterate over all keys and check if they all was added
             if(data[d] === true){
+                // in case the term wasn't in the all tagged term list
                 if (!tagged_terms_list.some(item => item.row === term_id[0] && item.sader === term_id[1] && item.position === term_id[2])) {
                      tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
                 }
                 build_tag(d);
+                //remove suggestion btn
                 dict[d].remove()
             }
        }
+       // show selected tag container
        $("#collapseOne").collapse("show");
        if ($('.suggested_container').children().length === 0) {
+           // if there was no suggestion left , hide suggestion container
            $("#collapseTwo").collapse("hide")
            document.getElementById('All_suggestions').style.display = 'none';
        }
        if ($('.suggested_container').children().length == 1) {
+           // if there was only one suggestion left , hide add all suggestion btn
            document.getElementById('All_suggestions').style.display = 'none';
        }
     });
@@ -988,9 +1086,11 @@ function add_tag(obj) {
             $("#collapseOne").collapse("show");
             obj.remove();
             if ($('.suggested_container').children().length === 0) {
+                // if there was no suggestion left , hide suggestion container
                 $("#collapseTwo").collapse("hide")
             }
             if ($('.suggested_container').children().length == 1) {
+                // if there was only one suggestion left , hide add all suggestion btn
                 document.getElementById('All_suggestions').style.display = 'none';
             }
         } else {
