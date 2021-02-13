@@ -218,6 +218,34 @@ only when document ready , do all required functions.
              });
         });
     });
+    $('#myinfo').on('shown.bs.modal', function (e) {
+             // create info modal for poem tag page.
+             modal = document.getElementById("myinfo")
+             body = modal.getElementsByClassName('modal-body')[0];
+             body.innerHTML = "<ul><li>This page handle the process of tagging words.</li>"
+             +"<li>Term colors logic:<ul><li><span style=\"color: green\">Green</span> color - the word has been tagged or have at least one tag.</li>"
+             +"<li><span style=\"color: blue\">Blue</span> color - the system have a suggestion for what this word should be tagged as.</li>"
+             +"<li><span style=\"color: orange\">Orange</span> color - you are currently tagging this word.</li>"
+             +"<li><span style=\"color: black\">Black</span> color - mean nothing special.</li></ul></li>"
+             +"<li>Hover over the term to show its root(stem version) , this root is used to save the term with its relations</li>"
+             +"<li>Term Right Click - custom menu features<ul><li>Get definition of the term from 'almaany' dictionary.</li>"
+             +"<li>Merge terms: first you need to choose a term and then choose another term to merge.</li>"
+             +"<li>Merge terms only used for two terms where the first term is the last term in 'sadr' and the second term is the first term in the 'ajez' of the same row.</li>"
+             +"<li>Edit line will open a window to edit the whole row , <span style=\"color: red\">WARNING</span> : changing any tagged term will strip it of all of its current tags.</li></ul></li>"
+             +"<li>Selected Tags Container - show all tags of the clicked term</li>"
+             +"<li>Suggested Tags Container - show all suggested tags for the clicked term</li>"
+             +"<li>Hierarchy/Tree view Container - show all current tags in the server ,to travel further down in the tree press on the tag and you’ll be able to see it’s children, to go backwards you can press on the current father node."
+             +"<ul><li>Right click on tags and choose add tag will tag the selected term.</li>"
+             +"<li>For more information on tag right click features , go to manage tags page.</li>"
+             +"<li>Add Root - allows you to add a root.</li>"
+             +"<li>Show All - opens a popup which shows all the tags in alphabet order.</li>"
+             +"<li>Reset - resets the tags hierarchy to its original form (showing the roots).</li></ul></li>"
+             +"<li>Current Tags Button: statistics about the tagged terms in this specific poem.<ul>"
+             +"<li>Graph Tab- display all tagged terms and their tags as graph.</li>"
+             +"<li>List Tab- display all tagged terms and their tags in a list where the order of tags is based on the tag frequency.</li>"
+             +"<li>You can download the tags in Image and Excel format for graph tab and list tab ,respectively.</li></ul></li>"
+             +"<li>Click on history icon to show your previous accessed poems.</li></ul>"
+     });
 
 });
 

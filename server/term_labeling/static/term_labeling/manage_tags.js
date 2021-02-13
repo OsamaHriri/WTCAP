@@ -39,6 +39,24 @@ only when document ready , do all required functions.
       document.querySelectorAll(".dropdownbox").forEach(function (d, i) {
             all_tags.push(d.innerText.trim())
        });
+     $('#myinfo').on('shown.bs.modal', function (e) {
+             // create info modal for statistics page.
+             modal = document.getElementById("myinfo")
+             body = modal.getElementsByClassName('modal-body')[0];
+             body.innerHTML = "<ul><li>Tree View - Here you can see the full tags hierarchy, at first glance you only see the roots, to travel further down press on the root and you’ll be able to see it’s children, to go backwards you can press on the current father node (the top right one).</li>"
+             +"<li>Tag Right Click- custom menu<ul><li>Add parent - opens a popup which allows you to add a parent to the current tag.</li>"
+             +"<li>Add child - opens a popup which allows you to add a child to the current tag.</li>"
+             +"<li>Edit - opens a popup which allows you to edit the tag name.</li>"
+             +"<li>Change parent - opens a popup which allows you to type the name of the new parent of this tag and it changes it’s location.</li>"
+             +"<li>Delete tag - deletes the tag, if the tag has children it levels them up</li>"
+             +"<li>Delete all - deletes the tag and all its children</li></ul></li>"
+             +"<li>Tree View Buttons<ul><li>Add Root - allows you to add a root.</li>"
+             +"<li>Reset - resets the tags hierarchy to its original form (showing the roots).</li></ul></li>"
+             +"<li>Graph Buttons<ul><li>Refresh - refreshed the loaded graph.</li>"
+             +"<li>Disable Network - disables the network, you can use it when it’s taking too long to load. </li>"
+             +"<li>Show Subtree - shows/hide the subtrees of the current node.</li></ul></li>"
+             +"<li>Click on history icon to show your previous accessed poems.</li></ul>"
+     });
 });
 
 

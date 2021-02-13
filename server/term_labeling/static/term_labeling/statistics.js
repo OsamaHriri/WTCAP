@@ -41,6 +41,27 @@ $(document).ready(function() {
       $('[data-toggle="tooltip"]').tooltip({
         trigger : 'hover'
        });
+
+     $('#myinfo').on('shown.bs.modal', function (e) {
+             // create info modal for statistics page.
+             modal = document.getElementById("myinfo")
+             body = modal.getElementsByClassName('modal-body')[0];
+             body.innerHTML = "<ul><li>This page have some general info about our current poems and poets in the database, it can be changed after a successful sync to fuzi database.</li>"
+             +"<li>WordCloud Tab: Display Top Frequents Words"
+             +"<ul><li>'All periods' are the default parameter , you can choose another time period to display their current top words.</li>"
+             +"<li>TOP N : choose how many words to display , for a max of 1000 words.</li>"
+             +"<li>Range: choose a range of words to display , example: 50-100 will show the top 50th most frequent word till the 100th most frequent word.</li>"
+             +"<li>When a period was chosen the top N and range scale will be adjusted to match that period max number of words.</li></ul></li>"
+             +"<li>List View Tab : Display Top Frequent Words"
+             +"<ul><li>Choosing a period or all periods will result a max of 2000 words , Any more words will have a negative effect on the browser performance.</li>"
+             +"<li>There is a search bar to search for the requested word.</li>"
+             +"<li>By clicking on one of the table titles , the table will be sorted by that title content in alphabet.</li></ul></li>"
+             +"<li>Poems Tab: Display Top Frequents Tags<ul>"
+             +"<li>Choose a poet and the tags in all that poet poem's will be fetched from the DB , each tag will be counted and displayed in a table in freqeuncy order.</li>"
+             +"<li>There is a search bar to search for the requested Tag.</li>"
+             +"<li>By clicking on one of the table titles , the table will be sorted by that title content in alphabet.</li></ul></li>"
+             +"<li>Click on history icon to show your previous accessed poems.</li></ul>"
+     });
 } );
 
 function Create_frequency_array(number){

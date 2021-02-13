@@ -21,6 +21,14 @@ $(document).ready(function () {
             $('#poemDropDown').toggle();
         }
     });
+    $('#myinfo').on('shown.bs.modal', function (e) {
+             // create info modal for statistics page.
+             modal = document.getElementById("myinfo")
+             body = modal.getElementsByClassName('modal-body')[0];
+             body.innerHTML = "<ul><li>To access a specific poem , first you need to choose a poet and then choose one of his poems.</li>"
+             +"<li>Poems that was colored with <span style=\"color: blue\">Blue</span> indicates a poem that's has been tagged before.</li>"
+             +"<li>Click on history icon to show your previous accessed poems.</li></ul>"
+     });
 });
 
 function toggleDropDown(id) {
