@@ -37,17 +37,25 @@ class ALmaanyBot():
         return search.get_attribute('innerHTML') , url 
 
 
-def main(argv):
+# def main(argv):
+#     tick = time()
+#     bot = ALmaanyBot()
+#     tack = time()
+#     print(tack-tick)
+#     tick = time()
+    
+#     # print(bot.search('اسد'))
+    
+#     print( bot.serch_doha('اسد'))
+
+
+if __name__ == "__main__":
     tick = time()
     bot = ALmaanyBot()
     tack = time()
     print(tack-tick)
     tick = time()
     
-    print(bot.search('اسد'))
+    # print(bot.search('اسد'))
     
-    print( bot.serch_doha('اسد'))
-
-
-if __name__ == "__main__":
-   main(sys.argv[1:])
+    print( bot.search_doha('اسد'))

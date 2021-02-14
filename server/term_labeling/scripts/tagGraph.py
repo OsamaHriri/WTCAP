@@ -4,7 +4,6 @@ from django.core.serializers.json import DjangoJSONEncoder
 from json import dumps
 
 
-
 class Tag(object):
     def __init__(self):
         """
@@ -26,7 +25,7 @@ class Tag(object):
         self.removeTagQ = """Match (t:Tag) where t.name=$name DETACH DELETE t """
         self.createReletionQ = """ Match (t:Tag) ,(n:Tag) where t.name=$parent and n.name=$name create (t)-[:Parent]->(n)  """
         self.removeParentQ = """ Match (t:Tag) -[p:Parent] -> (n:Tag) where n.name=$name delete p """
-        self.setToRootQ= """ Match (n:Tag) where n.name=$name set n.parent=-1 """
+        self.setToRootQ = """ Match (n:Tag) where n.name=$name set n.parent=-1 """
         self.getAllTagsQ = """ Match (t:Tag) return t.name as name  """
         self.getAllRootsQ = """ Match (t:Tag) where t.parent=-1 return {name : t.name } as root  """
         self.jsonQuery = """ MATCH r=(t:Tag)-[:Parent*]->(rs:Tag)  where t.parent=-1 WITH COLLECT(r) AS rs CALL apoc.convert.toTree(rs, true ,{ nodes: { Tag:['name']} }) yield value   RETURN value as tags """
@@ -67,7 +66,7 @@ class Tag(object):
         # return all the heads(roots) in the hierarchy.
         """
         roots = self.graph.run(self.getAllRootsQ).data()
-        return {'roots' : roots}
+        return {'roots': roots}
 
     def getParent(self, name):
         """
@@ -75,7 +74,7 @@ class Tag(object):
         # return empty list if the tag is a root.
         """
         search = self.graph.run(self.getParentQ, name=name).data()
-        return {'parent' : search}
+        return {'parent': search}
 
     def getParentInline(self, name):
         """
@@ -85,22 +84,21 @@ class Tag(object):
         search = self.graph.run(self.getParentQ1, name=name).data()[0]
         return search
 
-    def getChildrens(self,name):
+    def getChildrens(self, name):
         """
         # return the tags children's name.
         # return empty list if the tag is a leaf.
         """
         search = self.graph.run(self.getChildrenQ, name=name).data()
-        return {'children' : search}
+        return {'children': search}
 
-    def getBrothers(self, name , parent):
+    def getBrothers(self, name, parent):
         """
         # return the tags children's name.
         # return empty list if the tag is a leaf.
         """
-        search = self.graph.run(self.getBrothersQ, name=name ,parent=parent).data()
+        search = self.graph.run(self.getBrothersQ, name=name, parent=parent).data()
         return {'brothers': search}
-
 
     def addTag(self, name, parent=None):
         """
@@ -111,14 +109,14 @@ class Tag(object):
             return {"Tag": False}
         maxID = self.graph.run(self.getMaxIDQ).data()[0]["max"] + 1
         if parent is None:
-            self.graph.create(Node("Tag", id=maxID, name=name,parent=-1))
-            return {"Tag":True}
+            self.graph.create(Node("Tag", id=maxID, name=name, parent=-1))
+            return {"Tag": True}
         if not self.ifExists(parent):
-            return {"Tag":True,"parent":False}
-        parentID= self.getAttrOfTag(parent)["id"]
+            return {"Tag": True, "parent": False}
+        parentID = self.getAttrOfTag(parent)["id"]
         self.graph.create(Node("Tag", id=maxID, name=name, parent=parentID))
-        self.graph.run(self.createReletionQ,name=name,parent=parent)
-        return {"Tag":True,"parent":True}
+        self.graph.run(self.createReletionQ, name=name, parent=parent)
+        return {"Tag": True, "parent": True}
 
     def removeTag(self, name):
         """
@@ -126,16 +124,16 @@ class Tag(object):
           # when removing tags , we remove all of their relation with words(from word tagging) and tags.
           """
         if not self.ifExists(name):
-            return {"remove":False }
-        if self.getAttrOfTag(name)["parent"] ==-1:
+            return {"remove": False}
+        if self.getAttrOfTag(name)["parent"] == -1:
             self.graph.run(self.updateRootAttQ, name=name)
         else:
             self.graph.run(self.updatechildrenQ, name=name)
-            self.graph.run(self.updateAttrQ, name=name )
+            self.graph.run(self.updateAttrQ, name=name)
         self.graph.run(self.removeTagQ, name=name)
-        return {"remove":True}
+        return {"remove": True}
 
-    def checkCycle(self,source ,target):
+    def checkCycle(self, source, target):
         """
         check if connecting two nodes create a cycle in the hierarchy.
         :param source:
@@ -144,13 +142,13 @@ class Tag(object):
         """
         s = self.getAttrOfTag(source)
         t = self.getAttrOfTag(target)
-        if t["parent"] == s["id"] :
+        if t["parent"] == s["id"]:
             return True
-        while t["parent"] != -1 :
+        while t["parent"] != -1:
             temp = self.getParentInline(t["name"])
             if temp["parent"] == s["id"]:
                 return True
-            t=temp
+            t = temp
         return False
 
     def change_Parent(self, name, newParent=None):
@@ -163,33 +161,33 @@ class Tag(object):
         if newParent is None:
             if not self.ifExists(name):
                 return False
-            else :
+            else:
                 self.graph.run(self.removeParentQ, name=name)
-                self.graph.run(self.setToRootQ , name=name)
+                self.graph.run(self.setToRootQ, name=name)
                 return True
-        if self.checkCycle(name ,newParent):
+        if self.checkCycle(name, newParent):
             return False
-        self.graph.run(self.removeParentQ , name=name)
-        self.graph.run(self.createReletionQ , name=name , parent=newParent)
+        self.graph.run(self.removeParentQ, name=name)
+        self.graph.run(self.createReletionQ, name=name, parent=newParent)
         self.graph.run(self.updateAttQ, name=name)
         return True
 
-    def findDepth(self ,target):
+    def findDepth(self, target):
         """
         # return the depth of target in the tree.
         :param target: name of tag.
         :return:
         """
         if not self.ifExists(target):
-            return {"depth" : -1}
+            return {"depth": -1}
         t = self.getAttrOfTag(target)
         depth = 0
         while t["parent"] != -1:
             depth = depth + 1
             t = self.getAttrOfTag(self.getParentInline(t["name"])["name"])
-        return {"depth" : depth}
+        return {"depth": depth}
 
-    def newParent(self ,name , newParent):
+    def newParent(self, name, newParent):
         """
         # create new parent for given tag
         :param name: name of tag
@@ -198,14 +196,13 @@ class Tag(object):
         """
         if not self.addTag(newParent)["Tag"]:
             return {"add": False}
-        if not self.getAttrOfTag(name)["parent"] == -1 :
+        if not self.getAttrOfTag(name)["parent"] == -1:
             t = self.getParentInline(name)["name"]
             self.graph.run(self.setParentQ, name=newParent, parent=t)
-        self.change_Parent(name,newParent)
-        return {"add" : True}
+        self.change_Parent(name, newParent)
+        return {"add": True}
 
-
-    def changeParent(self ,name , newParent):
+    def changeParent(self, name, newParent):
         """
         # change tag parent to another existing one.
         :param name: name of tag
@@ -213,11 +210,11 @@ class Tag(object):
         :return:
         """
         if not self.ifExists(newParent):
-            return {"exist":False ,"change":False}
-        if not self.change_Parent(name,newParent):
-            return {"exist":True ,"change":False}
-        else :
-            return {"exist":True ,"change" :True}
+            return {"exist": False, "change": False}
+        if not self.change_Parent(name, newParent):
+            return {"exist": True, "change": False}
+        else:
+            return {"exist": True, "change": True}
 
     def editTag(self, name, newName):
         """
@@ -226,18 +223,19 @@ class Tag(object):
         :param newName: new tag name.
         :return:
         """
-        if  self.ifExists(newName) or not self.ifExists(name):
-            return {"edit":False}
-        self.graph.run(self.editTagQ, name= name , newName=newName)
-        return {"edit":True}
+        if self.ifExists(newName) or not self.ifExists(name):
+            return {"edit": False}
+        self.graph.run(self.editTagQ, name=name, newName=newName)
+        return {"edit": True}
 
-    def deleteAllChildrens(self,name):
+    def deleteAllChildrens(self, name):
         """
         # delete all subtree of given tag.
         :param name:
         :return: false if the tag not exist otherwise True
         """
         if not self.ifExists(name):
+
             return {"delete":False}
         self.graph.run(self.deleteAllQ ,name = name)
         return {"delete":True}

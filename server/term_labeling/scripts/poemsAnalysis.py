@@ -35,7 +35,7 @@ class Research(object):
         d = []
         
         for key, value in dict(Count.most_common()).items():
-            d.append(dict(x=key, value=value,freq=(value/termsNum)))
+            d.append(dict(x=key, value=value,freq=(value/termswithoutStop)))
         d2=[dict(poetsNum=poetsNum,tokensNum=tokensNum,poemsNum=poemsNum,termswithoutStop=termswithoutStop,stopWordsNum=stopWordsNum,termsNum=termsNum)]
         
         
@@ -72,7 +72,7 @@ class Research(object):
             Count = Counter(filtered_sentence)
             d1 = []
             for key, value in dict(Count.most_common()).items():
-                d1.append(dict(x=key, value=value , freq=(value/len(Count))))
+                d1.append(dict(x=key, value=value , freq=(value/len(filtered_sentence))))
             d[str(p)] = d1
 
 

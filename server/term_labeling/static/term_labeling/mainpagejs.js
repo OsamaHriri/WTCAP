@@ -1,6 +1,7 @@
 let selected_term = "";
 let selected_obj = "";
-let right_clicked = "";
+let right_clicked = ""; //The term we right clicked and open a menu for - the term we need the definition of
+let right_clicked_line = 0; //The line of the right clicked term
 let orange = "rgb(255, 165, 0)";
 let tagParent = "";
 let depth = 0;
@@ -11,71 +12,93 @@ let myUL;
 let tagged_terms_list;
 let suggested_term_list;
 let allroots;
-
+let table
 $(document).ready(function () {
     getHeaders();
-    var obj = document.getElementById("poem_id");
+    const obj = document.getElementById("poem_id");
     poemID = obj.innerText;
     obj.remove();
     myUL = document.getElementById('myUL');
     $(document).click(function (e) {
-        if ($('#tagsDropDown').is(':visible') && e.target.id != "mySearchInput" && e.target.className != "dropdownbox") {
+        if ($('#tagsDropDown').is(':visible') && e.target.id !== "mySearchInput" && e.target.className !== "dropdownbox") {
             $('#tagsDropDown').hide();
         }
     });
     get_words_analyzation(poemID).done(function (d) {
         tagged_terms_list = d.tagged;
-        suggested_term_list = d.suggested
+        suggested_term_list = d.suggested;
         tagged_terms_list.forEach(function (d) {
-            const id = d.row + "_" + d.sader + "_" + d.position
+            const id = d.row + "_" + d.sader + "_" + d.position;
             document.getElementById(id).style.color = "green"
         });
         suggested_term_list.forEach(function (d) {
             if (!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)) {
-                const id = d.row + "_" + d.sader + "_" + d.position
+                const id = d.row + "_" + d.sader + "_" + d.position;
                 document.getElementById(id).style.color = "blue"
             }
         });
-        allroots = d.roots
-        tooltips = $('[data-toggle="tooltip"]').tooltip()
-        tooltips.each(function(ndx, elem) {
+        allroots = d.roots;
+        tooltips = $('.term').tooltip();
+        tooltips.each(function (ndx, elem) {
             $(elem).attr('title', allroots[elem.innerHTML.trim()])
-              .tooltip('_fixTitle')
+                .tooltip('_fixTitle')
         })
-     });
+    });
     $("#collapseOne").collapse('hide');
     $("#collapseThree").collapse('show');
+    table = $('#TaglistTable').DataTable( {
+        responsive: true,
+         columns: [
+            { title: "#" },
+            { title: "Tag" },
+            { title: "Frequency" },
+            { title: "Percent of Total" },
+        ]
+    } );
+       $('.btn').tooltip({
+            trigger:'hover'
+        });
     $(".term").click(function () {
-            if (selected_obj !== "" && selected_obj.css("color") === orange) {
-                const properties = selected_obj.attr('id').split('_').map(x => +x);
-                if (tagged_terms_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
-                    selected_obj[0].style.color = "green"
-                } else{
-                        selected_obj[0].style.color = "black"
-                      }
+        if (selected_obj !== "" && selected_obj.css("color") === orange) {
+            const properties = selected_obj.attr('id').split('_').map(x => +x);
+            if (tagged_terms_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
+                selected_obj[0].style.color = "green"
+            } else if (suggested_term_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
+                selected_obj[0].style.color = "blue"
+            } else {
+                selected_obj[0].style.color = "black"
             }
-            if(second_term != "")
+        }
+        if (second_term !== ""){
+              const properties = second_term.attr('id').split('_').map(x => +x);
+            if (tagged_terms_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
+                second_term[0].style.color = "green"
+            } else if (suggested_term_list.some(item => item.row === properties[0] && item.sader === properties[1] && item.position === properties[2])) {
+                second_term[0].style.color = "blue"
+            } else {
                 second_term[0].style.color = "black"
-            second_term = ""
-            full_term = ""
-            merging = false
-            reset();
-            $(this).css("color", "orange");
-            selected_obj = $(this);
-            selected_term = this.innerHTML;
-            term_current_tags();
-            load_suggestions(selected_term);
+            }}
+        second_term = "";
+        full_term = "";
+        merging = false;
+        reset();
+        $(this).css("color", "orange");
+        selected_obj = $(this);
+        selected_term = this.innerHTML;
+        term_current_tags(selected_term);
+        load_suggestions(selected_term);
     }).bind('contextmenu', function (e) {// disable right click and show custom context menu
-        right_clicked = this.innerHTML
-        if(merging == false)
-            second_term = $(this)
-        close_open_windows()
-        const windowHeight = $(window).height()+$(window).scrollTop();
-        const top = e.pageY +5;
+        right_clicked = this.innerHTML;
+        right_clicked_line = this.id.split("_")[0];
+        if (merging === false)
+            second_term = $(this);
+        close_open_windows();
+        const windowHeight = $(window).height() + $(window).scrollTop();
+        const top = e.pageY + 5;
         const left = e.pageX;
         const menuHeight = $(".term-menu").outerHeight();
         var y = top;
-        if(windowHeight < menuHeight + top ){
+        if (windowHeight < menuHeight + top) {
             y = windowHeight - menuHeight
         }
         // Show contextmenu
@@ -86,7 +109,6 @@ $(document).ready(function () {
         // disable default context menu
         return false;
     });
-
 
     // Hide context menu
     $(document).bind('contextmenu click', function () {
@@ -102,15 +124,48 @@ $(document).ready(function () {
     $('.term-menu a').click(function () {
         $(".term-menu").hide();
     });
+     $('#exampleModal').on('shown.bs.modal', function (e) {
+        $('a[href=\\#graph]').tab('show')
+        load_graph()
+     });
+    $('#showAllModal').on('shown.bs.modal', function (e) {
+        const src = document.getElementById("listTable");
+        while (src.lastChild.id !== 'Fchild') {
+            src.removeChild(src.lastChild);
+        }
+        src.innerHTML += "<tbody></tbody>";
+        const arr = [];
+        document.querySelectorAll(".dropdownbox").forEach(function (d, i) {
+            //temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+d.innerText.trim()+"</td></tr>"
+            arr.push(d.innerText.trim())
+        });
+        let temp = "";
+        arr.sort().forEach(function (d, i) {
+            let tt = "close_modal('#showAllModal');searchSuggestion(this.innerHTML);";
+            temp += "<tr><th scope=\"row\">" + (i + 1) + "</th><td class='show_all_tag' onclick=" + tt + ">" + d + "</td></tr>"
+        });
+        $("#listTable > tbody").append(temp);
+    });
+    $('a[href=\\#list]').on('shown.bs.tab', function (e) {
+        table.clear().draw()
+        load_tags_freq().done(function(d){
+            data = d.tags
+            data.forEach(function(l , i){
+                 var percent = (l.Tag.frequency/d.total*100).toFixed(2)+"%"
+                 table.row.add( [i+1,l.Tag.name,l.Tag.frequency,percent]).draw()
+             });
+        });
+    });
+
 });
 
 
-function close_open_windows(){
+function close_open_windows() {
     if ($('#tag-menu').is(':visible')) {
-         $('#tag-menu').hide();
+        $('#tag-menu').hide();
     }
     if ($('#term-menu').is(':visible')) {
-            $('#term-menu').hide();
+        $('#term-menu').hide();
     }
 }
 
@@ -157,15 +212,18 @@ function add_tag(obj) {
     const tag_text = text[0].innerText.slice(0, text[0].innerText.lastIndexOf("-"));
     save_term_tag(tag_text).done(function (d) {
         if (d === "Success") {
-            const term_id = selected_obj.attr('id').split('_').map(x => +x)
+            const term_id = selected_obj.attr('id').split('_').map(x => +x);
             if (!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)) {
                 tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
             }
             build_tag(tag_text);
-            $("#collapseOne").collapse("show")
-            obj.remove()
-            if($('.suggested_container').children().length == 0){
+            $("#collapseOne").collapse("show");
+            obj.remove();
+            if ($('.suggested_container').children().length === 0) {
                 $("#collapseTwo").collapse("hide")
+            }
+            if ($('.suggested_container').children().length == 1) {
+                document.getElementById('All_suggestions').style.display = 'none';
             }
         } else {
             window.alert("something went Wrong, reClick again on the term")
@@ -176,6 +234,15 @@ function add_tag(obj) {
 let ul1;
 let ul2;
 
+function load_tags_freq() {
+    return $.ajax({
+        type: "GET",
+        url: " get_Tags_frequency_in_poem/",
+        data: {'id': poemID},
+        dataType: "json",
+    });
+}
+
 function get_words_analyzation(text) {
     return $.ajax({
         type: "GET",
@@ -185,8 +252,8 @@ function get_words_analyzation(text) {
     });
 }
 
-function getRootofWord(text){
-   return $.ajax({
+function getRootofWord(text) {
+    return $.ajax({
         type: "GET",
         url: " get_Root_of_Word/",
         data: {'word': text},
@@ -241,9 +308,9 @@ function remove_tag(text) {
 }
 
 function remove_tag_from_word(text, term_id) {
-     var t = selected_term
-     if(merging == true)
-        t = full_term
+    var t = selected_term;
+    if (merging === true)
+        t = full_term;
     return $.ajax({
         type: "GET",
         url: "remove_tag_from_word/",
@@ -330,7 +397,6 @@ function getAllTags(text) {
 
 }
 
-
 function change_parent() {
     text = document.getElementById("change-parent").value;
     if (text === "") {
@@ -352,17 +418,16 @@ function change_parent() {
                 window.alert("Error ,you can't add a descendant tag as parent");
                 return
             }
-            document.getElementById("change-parent").value = ""
-            search2(rightclicked)
+            document.getElementById("change-parent").value = "";
+            search2(rightclicked);
             $('#changeParentModal').modal('hide')
         });
-
     }
 }
 
 function delete_tag() {
     getParent(rightclicked).done(function (d) {
-        var parent = d.parent;
+        const parent = d.parent;
         remove_tag(rightclicked).done(function (d2) {
             document.getElementById(rightclicked).remove();
             all_tags = all_tags.filter(e => e !== rightclicked);
@@ -381,7 +446,7 @@ function delete_tag() {
 
 function delete_all() {
     getParent(rightclicked).done(function (d) {
-        var parent = d.parent;
+        const parent = d.parent;
         remove_tag_children(rightclicked).done(function (d2) {
             all_tags = [];
             loadTags();
@@ -399,21 +464,19 @@ function delete_all() {
 }
 
 function new_parent() {
-
     text = document.getElementById("parent-name").value;
     if (text === "") {
         $("#myToast").attr("class", "toast show danger_toast").fadeIn();
         document.getElementById("toast-body").innerHTML = "The field is empty ,Please insert a tag before clicking";
         timeout();
     }
-    // window.alert("The field is empty ,Please insert a tag before clicking");
     else {
         if (text === rightclicked) {
             window.alert("Error , you can`t add the term itself as parent");
             return
         }
         add_parent(rightclicked, text).done(function (d) {
-            if (d.add == false) {
+            if (d.add === false) {
                 window.alert("Error , the parent already exist somewhere");
                 return
             }
@@ -448,12 +511,10 @@ function edit_tag() {
         }
         close_modal('#editNameModal');
     });
-
-
 }
 
 function new_child() {
-    text = document.getElementById("child-name").value
+    text = document.getElementById("child-name").value;
     if (text === "")
         window.alert("The field is empty ,Please insert a tag before clicking");
     else {
@@ -482,7 +543,6 @@ function new_root() {
         document.getElementById("toast-body").innerHTML = "The field is empty ,Please insert a tag before clicking";
         timeout();
     }
-    // window.alert("The field is empty ,Please insert a tag before clicking");
     else {
         add_new_root(text).done(function (d) {
             if (d.Tag === false) {
@@ -500,7 +560,6 @@ function new_root() {
             close_modal('#insertRootModal')
         });
     }
-
 }
 
 function close_modal(id) {
@@ -532,7 +591,7 @@ function emptyTree() {
 function item_clicked1(obj, event) {
     //clicking on parent
     event.stopPropagation();
-    close_open_windows()
+    close_open_windows();
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
     if (event.target !== obj)
@@ -547,7 +606,7 @@ function item_clicked1(obj, event) {
 function item_clicked2(obj, event) {
     //clicking on child depth 1
     event.stopPropagation();
-    close_open_windows()
+    close_open_windows();
     const elem = $(obj);
     const text = elem[0].innerText.split(/\r?\n/)[0];
     if (event.target !== obj)
@@ -561,7 +620,7 @@ function item_clicked2(obj, event) {
 function item_clicked3(obj, event) {
     //clicking on child depth 2
     event.stopPropagation();
-    close_open_windows()
+    close_open_windows();
     const elem = $(obj);
     const text = elem[0].textContent.split(/\r?\n/)[0];
     depth = depth + 1;
@@ -619,8 +678,7 @@ function item_clicked(text) {
 }
 
 function build_il(item, index) {
-    //var ul = document.querySelector('.tree');
-    var li = document.createElement("li");
+    const li = document.createElement("li");
     li.appendChild(document.createTextNode(item.child.name));
     li.setAttribute('onclick', "item_clicked3(this, event)");
     li.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
@@ -630,8 +688,8 @@ function build_il(item, index) {
 }
 
 function build_il_headers(item, index) {
-    var ul = document.querySelector('.tree');
-    var li = document.createElement("li");
+    const ul = document.querySelector('.tree');
+    const li = document.createElement("li");
     li.appendChild(document.createTextNode(item.root.name));
     li.setAttribute('onclick', "item_clicked3(this,event)");
     li.setAttribute('oncontextmenu', 'right_click_tag(this, event)');
@@ -645,10 +703,10 @@ function remove_tag_in_selected(obj) {
     const text = btn[0].innerHTML;
     var term_id = selected_obj.attr('id').split('_');
     remove_tag_from_word(text, term_id).done(function (d) {
-        if (d.exist == true && d.last == true) {
-            term_id = term_id.map(x => +x)
+        if(d.exist === true && d.last === true) {
+            term_id = term_id.map(x => +x);
             tagged_terms_list = tagged_terms_list.filter(function (value, index, arr) {
-                if (value.position == term_id[2] && value.row == term_id[0] && value.sader == term_id[1])
+                if(value.position == term_id[2] && value.row == term_id[0] && value.sader == term_id[1])
                     return false;
                 else return true;
             });
@@ -666,29 +724,29 @@ function right_click_tag(obj, e) {
     e.preventDefault();
 
     const text = obj.innerText.split(/\r?\n/)[0];
-    if (e.target != obj)
+    if (e.target !== obj)
         return;
     rightclicked = text;
-    close_open_windows()
-    const windowHeight = $(window).height()+$(window).scrollTop();
-    const windowWidth = $(window).width()+$(window).scrollLeft();
-    const top = e.pageY +5;
+    close_open_windows();
+    const windowHeight = $(window).height() + $(window).scrollTop();
+    const windowWidth = $(window).width() + $(window).scrollLeft();
+    const top = e.pageY + 5;
     const left = e.pageX;
     const menuHeight = $(".tag-menu").outerHeight();
     const menuwidth = $(".tag-menu").outerWidth();
     // Show contextmenu
     var x = left;
     var y = top;
-    if(windowHeight < top + menuHeight) {
-            y = windowHeight - menuHeight - 5
+    if (windowHeight < top + menuHeight) {
+        y = windowHeight - menuHeight - 5
     }
-    if(windowWidth < left + menuwidth ){
-            x = left  - menuwidth -5
+    if (windowWidth < left + menuwidth) {
+        x = left - menuwidth - 5
     }
 
     $(".tag-menu").toggle(100).css({
-            top: y + "px",
-            left: x + "px"
+        top: y + "px",
+        left: x + "px"
     });
 
     // Hide context menu
@@ -712,20 +770,20 @@ function add_tag_to_selected(obj, e) {
     event.stopPropagation();
     //prevent default menu
     e.preventDefault();
-    if (merging == false && selected_term === "") {
+    if (merging === false && selected_term === "") {
         $("#myToast").attr("class", "toast show danger_toast").fadeIn();
         document.getElementById("toast-body").innerHTML = "First you need to choose a term";
         timeout();
 
     } else {
         save_term_tag(rightclicked).done(function (d) {
-            if (d == "Success") {
-                const term_id = selected_obj.attr('id').split('_').map(x => +x)
+            if (d === "Success") {
+                const term_id = selected_obj.attr('id').split('_').map(x => +x);
                 if (!tagged_terms_list.some(item => item.row === d.row && item.sader === d.sader && item.position === d.position)) {
                     tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
                 }
                 build_tag(rightclicked);
-                 $("#collapseOne").collapse("show")
+                $("#collapseOne").collapse("show")
             } else {
                 $("#myToast").attr("class", "toast show danger_toast").fadeIn();
                 document.getElementById("toast-body").innerHTML = "Something went wrong, maybe the tag exists";
@@ -750,12 +808,11 @@ function build_tag(tag_name) {
 
 }
 
-
 function save_term_tag(tag) {
     const term_id = selected_obj.attr('id').split('_');
-    var t = selected_term
-    if(merging == true)
-        t = full_term
+    let t = selected_term;
+    if (merging === true)
+        t = full_term;
 
     return $.ajax({
         type: "GET",
@@ -788,7 +845,6 @@ function reset() {
 }
 
 
-
 function load_suggestions(term) {
     const term_id = selected_obj.attr('id').split('_');
     $.ajax({
@@ -804,17 +860,21 @@ function load_suggestions(term) {
         dataType: "json",
         success: function (data) {
             const suggestions = data.suggestions;
-            if (suggestions === undefined || suggestions.length == 0) {
+            if (suggestions === undefined || suggestions.length === 0) {
                 $("#collapseTwo").collapse("hide")
-             }
-             else{
-                suggestions.forEach(build_suggestion)
+                document.getElementById('All_suggestions').style.display = 'none';
+            } else {
+                suggestions.forEach(build_suggestion);
+                if(suggestions.length>1)
+                    document.getElementById('All_suggestions').style.display = 'flex';
+                else document.getElementById('All_suggestions').style.display = 'none';
                 $("#collapseTwo").collapse("show")
-        }}
+            }
+        }
     });
 }
 
-function term_current_tags() {
+function term_current_tags(term) {
     const term_id = selected_obj.attr('id').split('_');
     $.ajax({
         type: "GET",
@@ -823,18 +883,20 @@ function term_current_tags() {
             'row': term_id[0],
             'place': term_id[1],
             'position': term_id[2],
-            'id': poemID
+            'id': poemID,
+            'term': term,
         },
         dataType: "json",
         success: function (data) {
-        if (data.tags === undefined || data.tags.length == 0) {
-            $("#collapseOne").collapse("hide")
+            if (data.tags === undefined || data.tags.length === 0) {
+                $("#collapseOne").collapse("hide")
 
-        } else {
-            const tags_term = data.tags.map(a => a.tag);
-            tags_term.forEach(build_tag)
-            $("#collapseOne").collapse("show")
-        }}
+            } else {
+                const tags_term = data.tags.map(a => a.tag);
+                tags_term.forEach(build_tag);
+                $("#collapseOne").collapse("show")
+            }
+        }
     });
 }
 
@@ -845,43 +907,8 @@ function build_suggestion(item, index) {
         '                    <span class="btn-txt">' + item[0] + '-' + parseFloat(item[1].toFixed(4)) + '</span>\n' +
         '                </button>');
 
-    // disable right click and show custom context menu
-    $(".tag-btn").bind('contextmenu', function (e) {
-        const tag_text = this.innerText.slice(1, this.innerText.lastIndexOf("-"));
-        $("#txt_id").val(tag_text);
-
-        const top = e.pageY + 5;
-        const left = e.pageX;
-        // Show contextmenu
-        $(".context-menu").toggle(100).css({
-            top: top + "px",
-            left: left + "px"
-        });
-        // disable default context menu
-        return false;
-    });
-
-    // Hide context menu
-    $(document).bind('contextmenu click', function () {
-        $(".context-menu").hide();
-    });
-
-    // disable context-menu from custom menu
-    $('.context-menu').bind('contextmenu', function () {
-        return false;
-    });
-
-    // Clicked context-menu item
-    $('.context-menu a').click(function () {
-        $(".context-menu").hide();
-    });
 }
 
-function suggestionRightClick() {
-    let sugg = $('#txt_id').val();
-    sugg = sugg.replace(/^\s+|\s+$/g, '');
-    searchSuggestion(sugg);
-}
 
 function searchSuggestion(text) {
     getDepth(text).done(function (d) {
@@ -917,63 +944,42 @@ function back_home() {
     flag = false;
 }
 
-$('#showAllModal').on('shown.bs.modal', function (e) {
-    const src = document.getElementById("listTable");
-    while (src.lastChild.id !== 'Fchild') {
-        src.removeChild(src.lastChild);
-    }
-    src.innerHTML += "<tbody></tbody>"
-    var arr = []
-    document.querySelectorAll(".dropdownbox").forEach(function (d, i) {
-        //temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+d.innerText.trim()+"</td></tr>"
-        arr.push(d.innerText.trim())
-    });
-    var temp = ""
-    arr.sort().forEach(function (d, i) {
-        temp += "<tr><th scope=\"row\">" + (i + 1) + "</th><td>" + d + "</td></tr>"
-    });
-    $("#listTable > tbody").append(temp);
-})
 
+function load_graph () {
+        statement = "match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$', poemID);
+        var config = {
+            container_id: "viz",
+            server_url: "bolt://132.75.251.93:7687",
+            server_user: "neo4j",
+            server_password: "123123147",
+            labels: {
+                "Tag": {
+                    "caption": "name",
+                    "title_properties": [
+                        "name"
+                    ]
+                },
+                "Word": {
+                    "caption": "name",
+                    "title_properties": [
+                        "name"
+                    ]
+                }
 
-$('#exampleModal').on('shown.bs.modal', function (e) {
-    statement = "match p=()-[r:tag{poemID:'$'}]->() RETURN p".replace('$', poemID)
-    var config = {
-        container_id: "viz",
-        server_url: "bolt://132.75.251.93:7687",
-        server_user: "neo4j",
-        server_password: "123123147",
-        labels: {
-            "Tag": {
-                "caption": "name",
-                //"size": "pagerank",
-                //"community": "community",
-                "title_properties": [
-                    "name"
-                ]
             },
-            "Word": {
-                "caption": "name",
-                //"size": "pagerank",
-                //"community": "community",
-                "title_properties": [
-                    "name"
-                ]
-            }
-        },
-        relationships: {
-            "tag": {
-                //"thickness": "weight",
-                "caption": false
-            }
-        },
-        arrows: true,
-        initial_cypher: statement
-    };
+            relationships: {
+                "tag": {
+                    "caption": false
+                }
+            },
+            arrows: true,
+            initial_cypher: statement
+        };
+        viz = new NeoVis.default(config);
+        viz.render();
+}
 
-    viz = new NeoVis.default(config);
-    viz.render();
-});
+
 
 function getDefinition() {
 	
@@ -996,6 +1002,7 @@ function getDefinition() {
 }
 
 function get_definition(text) {
+
     return $.ajax({
         type: "GET",
 	    url: " getDefWord/",
@@ -1003,34 +1010,130 @@ function get_definition(text) {
 		dataType: "json",
 		});
 
-};
+}
 
-let second_term = ""
-let merging = false
-let full_term = ""
+function buildLine() {
+    const tbl = document.getElementById('poem');
+    const row = tbl.rows[right_clicked_line - 1];
+    document.getElementById('edited-sadr').value = row_to_string(row.cells[1]);
+    document.getElementById('edited-ajuz').value = row_to_string(row.cells[2]);
+}
 
-function merge_term(obj, event){
-     event.preventDefault()
-     if(selected_obj == ""){
-         window.alert("To merge ,First you need to select a term")
-         second_term = ""
-         return
-     }
-     if(merging == true){
-        window.alert("you already merged two terms , reclick on the first term or any other to reset")
+
+function row_to_string(cell) {
+    let line = "";
+    const children = cell.children;
+    for (let i = 0; i < children.length; i++) {
+        line += children[i].innerHTML;
+    }
+    return line
+}
+
+function save_edited_line() {
+    const sadr = document.getElementById('edited-sadr').value;
+    const ajuz = document.getElementById('edited-ajuz').value;
+    //TODO finish the actual saving part
+    $.ajax({
+        type: "GET",
+        url: "edit_poem_line/",
+        data: {
+            'sadr': sadr,
+            'ajuz': ajuz,
+            'line': right_clicked_line - 1,
+            'id': poemID
+        },
+        dataType: "json",
+        success: function (data) {
+            //close modal and toast success message
+            // maybe reload the page with the updated line ?
+        }
+    });
+}
+
+let second_term = "";
+let merging = false;
+let full_term = "";
+
+function merge_term(obj, event) {
+    event.preventDefault();
+    if (selected_obj === "") {
+        $("#myToast").attr("class", "toast show danger_toast").fadeIn();
+        document.getElementById("toast-body").innerHTML = "To merge ,First you need to select a term";
+        timeout();
+        second_term = "";
         return
-     }
-     const first_term_properties = selected_obj.attr('id').split('_').map(x => +x)
-     const second_term_properties = second_term.attr('id').split('_').map(x => +x)
-     if(first_term_properties[0] != second_term_properties[0] || second_term_properties[2]!=1 || second_term_properties[1] === first_term_properties[1] ||
-             selected_obj[0].parentNode.getElementsByTagName("span").length != first_term_properties[2]){
-                window.alert("you cant merge this two terms")
-                return;
-      }
-     merging = true
-     reset();
-     second_term[0].style.color = "orange"
-     full_term = selected_obj[0].innerHTML.trim()+second_term[0].innerHTML.trim()
-     term_current_tags();
-     load_suggestions(full_term);
+    }
+    if (merging === true) {
+        $("#myToast").attr("class", "toast show danger_toast").fadeIn();
+        document.getElementById("toast-body").innerHTML = "you already merged two terms , reclick on the first term or any other to reset";
+        timeout();
+        return
+    }
+    const first_term_properties = selected_obj.attr('id').split('_').map(x => +x);
+    const second_term_properties = second_term.attr('id').split('_').map(x => +x);
+    if (first_term_properties[0] != second_term_properties[0] || second_term_properties[2] != 1 || second_term_properties[1] <= first_term_properties[1] ||
+        selected_obj[0].parentNode.getElementsByTagName("span").length != first_term_properties[2]) {
+        $("#myToast").attr("class", "toast show danger_toast").fadeIn();
+        document.getElementById("toast-body").innerHTML = "you cant merge this two terms";
+        timeout();
+        return;
+    }
+    merging = true;
+    reset();
+    second_term[0].style.color = "orange";
+    full_term = selected_obj[0].innerHTML.trim() + second_term[0].innerHTML.trim();
+    term_current_tags(full_term);
+    load_suggestions(full_term);
+}
+
+function btn_add_all_suggestions(){
+    const dict = {}
+    const keys = []
+    document.getElementsByClassName("suggested_container")[0].childNodes.forEach(function(d){
+        if(d.className.includes("btn")){
+            const text = d.getElementsByClassName("btn-txt");
+            const tag_text = text[0].innerText.slice(0, text[0].innerText.lastIndexOf("-"));
+            keys.push(tag_text)
+            dict[tag_text] = d
+        }
+    })
+    var term_id = selected_obj.attr('id').split('_');
+    add_all_suggestions_ajax(keys,term_id).done(function(data){
+       term_id = term_id.map(x=>+x)
+       for (const d in data){
+            if(data[d] === true){
+                if (!tagged_terms_list.some(item => item.row === term_id[0] && item.sader === term_id[1] && item.position === term_id[2])) {
+                     tagged_terms_list.push({position: term_id[2], row: term_id[0], sader: term_id[1]});
+                }
+                build_tag(d);
+                dict[d].remove()
+            }
+       }
+       $("#collapseOne").collapse("show");
+       if ($('.suggested_container').children().length === 0) {
+           $("#collapseTwo").collapse("hide")
+           document.getElementById('All_suggestions').style.display = 'none';
+       }
+       if ($('.suggested_container').children().length == 1) {
+           document.getElementById('All_suggestions').style.display = 'none';
+       }
+    });
+}
+
+function add_all_suggestions_ajax(keys ,term_id){
+    var t = selected_term;
+    if (merging === true)
+        t = full_term;
+    return $.ajax({
+        type: "GET",
+        url: "add_all_suggestions/",
+        data: {
+            'row': term_id[0],
+            'place': term_id[1],
+            'position': term_id[2],
+            'term': t,
+            'tags[]':keys,
+            'id': poemID,
+        }
+    });
 }

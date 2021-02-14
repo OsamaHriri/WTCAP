@@ -4,9 +4,9 @@
     <list default="true" id="9629654c-257b-4ca3-b3d1-99f89f30b618" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/server/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/mainpagejs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/manage_tags_style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/main_tag_page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/statistics.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/statistics.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/statistics_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/static/term_labeling/statistics_style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/term_labeling/templates/statistics.html" beforeDir="false" afterPath="$PROJECT_DIR$/server/term_labeling/templates/statistics.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -56,17 +56,17 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
+      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server" />
+      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\term_labeling\img" />
       <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\term_labeling" />
       <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\images\WordCloud" />
       <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\static\images" />
       <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\mzmir\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
-      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server" />
-      <recent name="C:\Users\Odin\PycharmProjects\semantic-labeling-arabic\server\term_labeling\scripts" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -275,76 +275,6 @@
       <workItem from="1604572704097" duration="1334000" />
       <workItem from="1604593172244" duration="15000" />
       <workItem from="1604661622107" duration="4279000" />
-    </task>
-    <task id="LOCAL-00029" summary="updated meetings">
-      <created>1603893110568</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1603893110568</updated>
-    </task>
-    <task id="LOCAL-00030" summary="#15 - saves information">
-      <created>1604665347514</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1604665347514</updated>
-    </task>
-    <task id="LOCAL-00031" summary="sort view and delete unneeded queries">
-      <created>1604754621302</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1604754621302</updated>
-    </task>
-    <task id="LOCAL-00032" summary="#30 Fetch all poem terms and their tags">
-      <created>1604850808610</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1604850808611</updated>
-    </task>
-    <task id="LOCAL-00033" summary="#35 stemmer for arabic words">
-      <created>1605015479530</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1605015479530</updated>
-    </task>
-    <task id="LOCAL-00034" summary="change stemmer library">
-      <created>1605018291622</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1605018291622</updated>
-    </task>
-    <task id="LOCAL-00035" summary="poems from specific period">
-      <created>1606137395544</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1606137395544</updated>
-    </task>
-    <task id="LOCAL-00036" summary="word cloud">
-      <created>1606225582091</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1606225582091</updated>
-    </task>
-    <task id="LOCAL-00037" summary="#36 word cloud">
-      <created>1606405871419</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1606405871420</updated>
-    </task>
-    <task id="LOCAL-00038" summary="#37 loader for WordCloud">
-      <created>1606480398864</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1606480398865</updated>
     </task>
     <task id="LOCAL-00039" summary="bug fix">
       <created>1606835948771</created>
@@ -619,7 +549,77 @@
       <option name="project" value="LOCAL" />
       <updated>1610454251365</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="merge two terms">
+      <created>1610465074904</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1610465074904</updated>
+    </task>
+    <task id="LOCAL-00079" summary="minor changes">
+      <created>1610801674418</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1610801674418</updated>
+    </task>
+    <task id="LOCAL-00080" summary="tooltip for buttons on manage tags page">
+      <created>1610804619843</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1610804619844</updated>
+    </task>
+    <task id="LOCAL-00081" summary="minor bugs">
+      <created>1610805669091</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1610805669091</updated>
+    </task>
+    <task id="LOCAL-00082" summary="add tooltip and fix some bugs in statistic page">
+      <created>1610816309294</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1610816309295</updated>
+    </task>
+    <task id="LOCAL-00083" summary="list of tagged words in main tag page">
+      <created>1610831717967</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1610831717968</updated>
+    </task>
+    <task id="LOCAL-00084" summary="#57 fix term color">
+      <created>1610893666938</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1610893666941</updated>
+    </task>
+    <task id="LOCAL-00085" summary="remove suggestion right click">
+      <created>1610896265332</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1610896265332</updated>
+    </task>
+    <task id="LOCAL-00086" summary="add all in suggestions">
+      <created>1610912393117</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1610912393118</updated>
+    </task>
+    <task id="LOCAL-00087" summary="#54 tagged poems in statistics">
+      <created>1610977631785</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1610977631785</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -639,16 +639,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="#39 color poems thats been tagged when choosing poets" />
-    <MESSAGE value="remove some uncommit messages" />
-    <MESSAGE value="add tags features to hierarchy tree&#10;fixed a bug when clicking on tag dropdown window" />
-    <MESSAGE value="add tags features to hierarchy tree&#10;fixed some bugs on tags drop down window" />
-    <MESSAGE value="fix selected tags , suggestions and remove tag from word" />
-    <MESSAGE value="back home function" />
-    <MESSAGE value="create modal for all tags by alphabet" />
-    <MESSAGE value="#18 color words thats have suggestions" />
-    <MESSAGE value="#18 fix colors in mainpage and loader in manage tags" />
-    <MESSAGE value="fix modal not hiding in manage tags page" />
     <MESSAGE value="fix some display in mangae tags" />
     <MESSAGE value="new border visualization" />
     <MESSAGE value="adjust loader position in manage tags." />
@@ -664,7 +654,17 @@
     <MESSAGE value="fix manage tags drop down window not closing in some occasions.&#10;create reset button function and apply it." />
     <MESSAGE value="show/hide collapse windows if its empty or not" />
     <MESSAGE value="new feature in main tag page that's show info,history..etc" />
-    <option name="LAST_COMMIT_MESSAGE" value="new feature in main tag page that's show info,history..etc" />
+    <MESSAGE value="merge two terms" />
+    <MESSAGE value="minor changes" />
+    <MESSAGE value="tooltip for buttons on manage tags page" />
+    <MESSAGE value="minor bugs" />
+    <MESSAGE value="add tooltip and fix some bugs in statistic page" />
+    <MESSAGE value="list of tagged words in main tag page" />
+    <MESSAGE value="#57 fix term color" />
+    <MESSAGE value="remove suggestion right click" />
+    <MESSAGE value="add all in suggestions" />
+    <MESSAGE value="#54 tagged poems in statistics" />
+    <option name="LAST_COMMIT_MESSAGE" value="#54 tagged poems in statistics" />
   </component>
   <component name="WindowStateProjectService">
     <state x="699" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603147034115">

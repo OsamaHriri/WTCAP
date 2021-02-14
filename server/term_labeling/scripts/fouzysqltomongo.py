@@ -4,7 +4,7 @@ import json
 import os
 import pymongo
 import mysql.connector
-from . import  mongodbConnector as mdbc
+# from  mongodbConnector import Connector 
 
 class ArabicRhetoricSyncer():
 
@@ -64,13 +64,16 @@ class ArabicRhetoricSyncer():
         
 
     def sync_periods(self):
-        cur_per = self.poetsCollections.distinct("period")
+        cur_per = self.periodCollections.find({},{'id':1})
+        cur_per = [x['id'] for x in list(cur_per) ]
+
         mycursor = self.mydb.cursor()
         sql2 = "SELECT id,name  FROM period"
         mycursor.execute(sql2)
         period = mycursor.fetchall()
         col=[]
         for p in period:
+
             _dict = {}
             _dict['id'] = p[0]
             _dict['name'] = p[1]
@@ -174,9 +177,8 @@ class ArabicRhetoricSyncer():
                     
                     
 if __name__ =="__main__":
+    c = Connector()
     ars = ArabicRhetoricSyncer()
-
-    ars.sync_poets()
-    print("periods synced")
-    ars.sync_poems()
-    print("periods synced")
+    print(len(c.get_periods_name()))
+    ars.sync_periods()
+    print(len(c.get_periods_name()))

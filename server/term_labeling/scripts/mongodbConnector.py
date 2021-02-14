@@ -2,6 +2,7 @@ import pandas as pd
 import json
 import os
 import pymongo
+import time
 
 """  
    connector class, pre-made to ease the access to the mongodb database, 
@@ -17,6 +18,7 @@ class Connector:
         self.poemsCollections = self.db["poems"]
         self.poetsCollections = self.db["poets"]
         self.periodsCollections = self.db["period"]
+        self.userHistoryCollections = self.db["userHistory"]
         
     def get_poem(self, poemID):
         return list(self.poemsCollections.find({"id": str(poemID)}))
@@ -68,7 +70,29 @@ class Connector:
                                             'as': 'results' }}])
         return list(result)
 
+    def add_user_entry(self, user_id , poem_id):
+
+        _dict = {'וuser_id':user_id,'poem_id':poem_id,'time':time.time()}
+        self.userHistoryCollections.insert_one(_dict)
+
+
+    def get_user_history(self, user_id ):
+        return list(self.userHistoryCollections.find({'וuser_id':user_id},{'poem_id':1,'time':1}))
+
+    def edit_poem_line(self,poem_id, line, sadr, ajuz):
+
+        line = int(line)+1
+        self.poemsCollections.update_one({'id':str(poem_id),'context.row_index':str(line)},
+            {'$set':{'context.$.sadr':sadr , 'context.$.ajuz':ajuz}}, upsert=True)
+
 
 if __name__ == "__main__":
 
-    print(len(Connector().get_periods_name()))
+
+
+    # print(len(Connector().get_periods_name()))
+
+    # poem_id, line, sadr, ajuz = 2092, 0 ,' بانَت  سُعادُ  فَفي  العَينَينِ  مَلمولُ' , ' مِن  حُبِّها  وَصَحيحُ  الجِسمِ  مَخولُ '
+    # print(list(Connector().poemsCollections.find({"id":str(poem_id),"context.row_index":str(line)})))
+    # Connector().edit_poem_line(poem_id, line, sadr, ajuz)
+    print(list(Connector().userHistoryCollections.find({})))

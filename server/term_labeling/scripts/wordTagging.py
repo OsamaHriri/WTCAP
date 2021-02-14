@@ -24,11 +24,15 @@ class Tagging(object):
                             """
         self.checkWords = """match (:Tag)<-[r:tag]-(w:Word) where  r.poemID=$poem  return distinct r.position as position,r.row as row , r.sader as sader """
         self.checkpoems = """ match (:Tag)<-[r:tag]-(:Word) where r.poemID in $poems return distinct r.poemID as poemID """
-        self.tagsOfword = """ match (t:Tag)<-[r:tag]-(:Word) where r.poemID = $poem and r.sader = $place and r.position = $position and r.row = $row return t.name as tag"""
+        self.tagsOfword = """ match (t:Tag)<-[r:tag]-(w:Word) where r.poemID = $poem and w.name=$word and r.sader = $place and r.position = $position and r.row = $row return t.name as tag"""
         self.removeTagrelationQ = """ match(t:Tag)<-[r:tag]-(w:Word) where t.name =$tag and r.poemID = $poem and r.sader = $place and r.position = $position and r.row = $row  delete r return w.name as name"""
         self.suggestionQ = """ match(:Tag)<-[r:tag]-(w:Word) where w.name in $words return distinct w.name as word"""
         self.checkremainingRelations = """ match(:Tag)<-[r:tag]-(:Word) where r.poemID = $poem and r.sader = $place and r.position = $position and r.row=$row return count(r) as count"""
         self.removeWordwithoutr = """match (w:Word) where w.name=$word and not (w)--() delete (w)"""
+        self.getAllTaggedWords =""" Match (w:Word) -[r:tag]-> (t:Tag) where r.poemID= $poem with  t , count(r) as c 
+                                        return {name :t.name  , frequency: c } as Tag order by c Desc """
+        self.allTagsInPoems = """ Match (w:Word) -[r:tag]-> (t:Tag) where r.poemID in $poems with  t , count(r) as c 
+                                        return {name :t.name  , frequency: c } as Tag order by c Desc"""
 
     def ifExists(self, word=None, tag=None, ):
         """
@@ -137,7 +141,7 @@ class Tagging(object):
             l.append(p["id"])
         return self.graph.run(self.checkpoems, poems = l).data()
 
-    def get_term_current_tags(self ,row ,place ,position ,id):
+    def get_term_current_tags(self ,row ,place ,position ,id , term):
         """
         # get a all tags of term that's reside in specific poem .
         :param row:
@@ -146,7 +150,7 @@ class Tagging(object):
         :param id:
         :return:
         """
-        return self.graph.run(self.tagsOfword, poem = id , row=row , position= position , place = place).data()
+        return self.graph.run(self.tagsOfword, poem = id , row=row , position= position , place = place , word=term).data()
 
     def remove_tag_reletion(self,row ,place ,position ,id ,tag):
         """
@@ -179,6 +183,24 @@ class Tagging(object):
         """
         return self.graph.run(self.suggestionQ,words = array).data()
 
+    def get_all_tagged_words_in_Poem(self,poemID):
 
+        result = self.graph.run(self.getAllTaggedWords, poem=poemID).data()
+        total = 0
+        if len(result) > 0:
+            for t in result:
+                total+= t['Tag']['frequency']
+        return result , total
+
+    def get_all_tags_for_poet(self,all_poems):
+        arr=[]
+        for p in all_poems:
+            arr.append(p['id'])
+        result = self.graph.run(self.allTagsInPoems, poems=arr).data()
+        total = 0
+        if len(result) > 0:
+            for t in result:
+                total += t['Tag']['frequency']
+        return result, total
 
 

@@ -1,4 +1,5 @@
 let table
+let table2
 var currentPeriod="all periods"
 var currentPeriod2="all periods"
 // connect to server and get the created word cloud based on period parameter.
@@ -15,13 +16,27 @@ $(document).ready(function() {
             { title: "#" },
             { title: "Term" },
             { title: "Frequency" },
-            { title: "Proportion" },
+            { title: "Approximate Proportion" },
+            { title: "Percent of Total" },
         ]
     } );
+    table2 = $('#tagTable').DataTable( {
+        responsive: true,
+        "pageLength": 10,
+         columns: [
+            { title: "#" },
+            { title: "Term" },
+            { title: "Frequency" },
+            { title: "Percent of Total" },
+        ]
+    } );
+      $('[data-toggle="tooltip"]').tooltip({
+        trigger : 'hover'
+       });
 } );
 
 function Create_frequency_array(number){
-    array = frequency.slice()
+    var array = frequency.slice()
     var i = 0;
     while (i < array.length && array[i]<number) {
         i++;
@@ -37,7 +52,7 @@ function Create_frequency_array(number){
 
 
 function Create_range_array(number){
-     array = range.slice()
+     var array = range.slice()
      var i = 0;
      var temp = ""
      while (i < array.length) {
@@ -76,6 +91,15 @@ function get_max_freq(p) {
     });
 }
 
+function get_all_tags_for_poet(id) {
+    return $.ajax({
+        type: "GET",
+        url: "get_all_tags_for_poet/",
+        data: {'id':id},
+        dataType: "json",
+    });
+}
+
 function create_dropdown(freqencyId , rangeId , clickfunction , array1 , array2){
        var src = document.getElementById(freqencyId);
        if (src.hasChildNodes()) {
@@ -108,7 +132,11 @@ function createWordCloud(obj, event,num){
       get_terms_freq(obj.innerText,num,currentPeriod).done(function(d){
       var delayInMilliseconds = 500;
       setTimeout(function() {
-  //your code to be executed after 1 second
+      //your code to be executed after 0.5 second
+        d.t.forEach(function(part, index) {
+          var num = part.freq*100
+          part.freq = num.toFixed(2);
+        });
         var chart = anychart.tagCloud(d.t);
         if (num == 1)
             chart.title('$ most frequent words'.replace('$',d.m));
@@ -124,6 +152,7 @@ function createWordCloud(obj, event,num){
           // set the color range length
         chart.colorRange().length('80%');// display the word cloud chart
         chart.container("cloud");
+        chart.tooltip().format("Frequency:{%value}\nPercent of Total:{%freq}%");
         chart.draw();
         document.getElementById("loader").style.display = "none";
         }, delayInMilliseconds);
@@ -137,17 +166,15 @@ function createList(obj,event,num){
     setTimeout(function() {
             el.style.removeProperty("display");
      }, 30);
-     table.clear().draw()
+    table.clear().draw()
+    document.getElementById("tablePageHeader").innerText = 'Table: $ most frequent words'.replace('$',obj.innerText)
     document.getElementById("loader2").style.display = "block";
     get_terms_freq(obj.innerText,num,currentPeriod2).done(function(d){
         data = d.t
-        var temp = ""
         data.forEach(function(l , i){
-            //src.innerHTML += "<li class=\"list-group-item\">"+l.x+"<span class=\"badge badge-primary badge-pill\">"+l.value+"</span></li>";
-             //temp += "<tr><th scope=\"row\">"+(i+1)+"</th><td>"+l.x+"</td><td>"+l.value+"</td><td>"+l.freq+"</td></tr>"
-             table.row.add( [i+1,l.x,l.value,l.freq]).draw()
+             var percent = (l.freq*100).toFixed(2)+"%"
+             table.row.add( [i+1,l.x,l.value,parseFloat(l.freq.toFixed(5)),percent]).draw()
          });
-        //$("#listTable > tbody").append(temp);
         document.getElementById("loader2").style.display = "none";
     });
 }
@@ -161,7 +188,8 @@ function savePeriod(obj){
      }, 30);
     var src = document.getElementById("periodbtn");
     src.value = obj.innerText
-    currentPeriod = obj.innerText.toLowerCase();
+    currentPeriod = obj.id;
+    console.log(currentPeriod)
     if(currentPeriod == "all periods"){
         create_dropdown("Frequency1","Range1","createWordCloud",frequency.reverse(),range)
 
@@ -174,6 +202,7 @@ function savePeriod(obj){
      }
 
 }
+
 function savePeriod2(obj){
     var el = obj.parentNode;
     el.style.display = "none"
@@ -182,7 +211,7 @@ function savePeriod2(obj){
      }, 30);
     var src = document.getElementById("period2btn");
     src.value = obj.innerText
-    currentPeriod2 = obj.innerText.toLowerCase();
+    currentPeriod2 = obj.id
        if(currentPeriod2 == "all periods"){
             create_dropdown("Frequency2","Range2","createList",frequency.reverse(),range)
        }
@@ -193,4 +222,23 @@ function savePeriod2(obj){
            create_dropdown("Frequency2","Range2","createList",array1,array2)
        });
     }
+}
+
+function get_tags_for_poet(obj){
+    var el = obj.parentNode;
+    el.style.display = "none"
+    setTimeout(function() {
+            el.style.removeProperty("display");
+    }, 30);
+    var src = document.getElementById("poetbtn");
+    src.value = obj.innerText
+    poet_id = obj.id
+    table2.clear().draw()
+    get_all_tags_for_poet(poet_id).done(function(d){
+        data = d.tags
+        data.forEach(function(l , i){
+             var percent = (l.Tag.frequency/d.total).toFixed(2)+"%"
+             table2.row.add( [i+1,l.Tag.name,l.Tag.frequency,percent]).draw()
+         });
+    });
 }

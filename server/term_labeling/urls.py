@@ -15,9 +15,13 @@ urlpatterns = [
     path('statistics/', views.statistics, name='statistics'),
     path('poet_poems/', views.poet_poems, name="poet_poems"),
     path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name="logout"),
+
     path('getDefWord/', views.getDefWord, name='getDefWord'),
     re_path('getDefWord/$', views.getDefWord, name='getDefWord'),
     re_path('sync_databases/$', views.sync_databases, name='sync_databases'),
+
+    re_path('edit_poem_line/$', views.edit_poem_line, name='edit_poem_line'),
+
     re_path('save_term_tag/$', views.save_term_tag, name='save_term_tag'),
     re_path('suggest_tags/$', views.suggest_tags, name='suggest_tags'),
     re_path('get_children/$', views.get_children, name='get_children'),
@@ -41,4 +45,7 @@ urlpatterns = [
     re_path('term_current_tags/$', views.term_current_tags, name='term_current_tags'),
     re_path('remove_tag_from_word/$', views.remove_tag_from_word, name='remove_tag_from_word'),
     re_path('get_Root_of_Word/$', views.get_Root_of_Word, name='get_Root_of_Word'),
+    re_path('get_Tags_frequency_in_poem/$', views.get_Tags_frequency_in_poem, name='get_Tags_frequency_in_poem'),
+    re_path('add_all_suggestions/$', views.add_all_suggestions, name='add_all_suggestions'),
+    re_path('get_all_tags_for_poet/$', views.get_all_tags_for_poet, name='get_all_tags_for_poet'),
 ]
