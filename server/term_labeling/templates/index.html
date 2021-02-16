@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block stylesheets %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'term_labeling/main_tags_style.css'%}">
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/style.css'%}">
 
 <script>
@@ -14,34 +16,48 @@
         clickedItem.addClass("text-info");
     });
 </script>
-<style>
-    header {
-        height: 100vh;
-        min-height: 500px;
-        background-image: url("../static/term_labeling/img/index_bg.jpg");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-    }
-</style>
 {% endblock stylesheets %}
 
 
 {% block content %}
 
+
 <!-- Full Page Image Header with Vertically Centered Content -->
 <header class="masthead">
-    <div class="container h-100">
-        <div class="row h-100 align-items-center">
+    <div class="container">
+        <div class="row align-items-center">
             <div class="col-12 text-center">
                 <img src="{% static 'term_labeling/img/logo_transparent.jpg' %}" alt="WTCAP_logo" width="300"
                      height="400">
                 <h1 class="font-weight-light">Word Tagging for Classical Arabic Poetry</h1>
-                <p class="lead">A great starter layout for a landing page</p>
             </div>
         </div>
     </div>
 </header>
+
+<!-- User History -->
+{% if user.is_authenticated %}
+<div class="container-fluid text-center history user">
+    <h1 class="font-weight-light">Your History</h1>
+    {% if history == 'No data' %}
+    <div class="panel panel-info">
+        <div class="panel-heading">No History Available</div>
+        <div class="panel-body">Start tagging poems and you'll see your history here!</div>
+    </div>
+    {% else %}
+    {% for his in history %}
+    <p>we have history</p>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endif %}
+
+<!-- Admin sees history for all users -->
+{% if user.is_superuser %}
+<div class="container-fluid text-center history admin">
+    All User history here - admin only
+</div>
+{% endif %}
 
 <!-- Page Content -->
 <section class="py-5">

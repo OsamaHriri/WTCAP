@@ -14,6 +14,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('main_tag_page/', views.main_tag_page, name='main_tag_page'),
     path('tags/', views.tags, name='tags'),
+    path('testing/', views.testing, name='testing'),
     path('select_poet_page/', views.select_poet_page, name='select_poet_page'),
     path('settings/', views.settings, name='settings'),
     path('statistics/', views.statistics, name='statistics'),
