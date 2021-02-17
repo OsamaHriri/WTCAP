@@ -65,12 +65,14 @@ def index(request):
     history = 'No data'
     if request.user == 'AnonymousUser':
         print(request.user.id)
-    history = [{'וuser_id': 1, 'poem_id': '2065', 'time': 1613306798.4386504},
-               {'וuser_id': 1, 'poem_id': '2065', 'time': 1613306811.504544},
-               {'וuser_id': 1, 'poem_id': '2193', 'time': 1613306821.964943},
-               {'וuser_id': 1, 'poem_id': '2193', 'time': 1613306842.4700627},
-               {'וuser_id': 1, 'poem_id': '2073', 'time': 1613306857.3088331},
-               {'וuser_id': 1, 'poem_id': '2073', 'time': 1613306910.4908977}]
+    history = [{'poem_title': 'قصيدة رقم 11، الكامل،لبِّسِ', 'poet_name': 'ابو الذعيب', 'poem_id': '2065',
+                'time': '2'},
+               {'poem_title': 'قصيدة رقم 11، الكامل،لبِّسِ', 'poet_name': 'ابو الذعيب', 'poem_id': '2065',
+                'time': '4'},
+               {'poem_title': 'قصيدة رقم 3', 'poet_name': 'ابو الذعيب', 'poem_id': '2193', 'time': '15'},
+               {'poem_title': 'قصيدة رقم 11، الكامل،لبِّسِ', 'poet_name': 'ابو الذعيب', 'poem_id': '2193',
+                'time': '15'},
+               {'poem_title': 'قصيدة رقم 3', 'poet_name': 'ابو الذعيب', 'poem_id': '2073', 'time': '16'}]
     context = {
         'title': 'Main Page',
         'history': history,
@@ -82,17 +84,13 @@ def testing(request):
     history = 'No data'
     if request.user == 'AnonymousUser':
         print(request.user.id)
-    history = [{'וuser_id': 1, 'poem_id': '2065', 'time': 1613306798.4386504},
-               {'וuser_id': 1, 'poem_id': '2065', 'time': 1613306811.504544},
-               {'וuser_id': 1, 'poem_id': '2193', 'time': 1613306821.964943},
-               {'וuser_id': 1, 'poem_id': '2193', 'time': 1613306842.4700627},
-               {'וuser_id': 1, 'poem_id': '2073', 'time': 1613306857.3088331},
-               {'וuser_id': 1, 'poem_id': '2073', 'time': 1613306910.4908977}]
+
     context = {
         'title': 'Main Page',
         'history': history,
     }
     return render(request, 'testing.html', context)
+
 
 @login_required()  # only users view this page
 def tags(request):

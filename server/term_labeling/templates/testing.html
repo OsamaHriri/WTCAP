@@ -65,15 +65,22 @@ s60.2,40,120,40s59.8,0,59.8,0l0.2,143H-60V96L-40,95.6z"></path>
             <h1 class="light"> Your History </h1>
             {% if history == 'No data' %}
             <div class="panel panel-info">
-                <div class="panel-heading">No History Available</div>
+                <div class="panel-heading danger">No History Available</div>
                 <div class="panel-body">Start tagging poems and you'll see your history here!</div>
             </div>
             {% else %}
-
-            {% for hist in history %}
-            <p> {{ hist }} </p>
-            {% endfor %}
-
+            <table class="table table-hover">
+                <tbody>
+                {% for hist in history %}
+                <!--               http:// "" -->
+                <tr onclick="document.location='main_tag_page/?poem_id='+ {{ hist.poem_id }};return false;">
+                    <td>{{ hist.poem_title }}</td>
+                    <td>{{ hist.poet_name }}</td>
+                    <td>Last edited {{ hist.time }} days ago</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
             {% endif %}
         </div>
     </div>
@@ -151,12 +158,12 @@ s60.2,40,120,40s59.8,0,59.8,0l0.2,143H-60V96L-40,95.6z"></path>
         </svg>
         <div class="container">
             <h1> The Brain Behind it</h1><br>
-            <h3> WTCAP was build to aid Prof. Ali Hussin (insert link to Ali's website) in his different research
-                questions
-                and to help him discover new insights that would be hard to infer without a tool like this.
-                <br> Prof. Ali is the admin of this website, if you'd like to view it's content reach out to Ali
-                through his email to receive login information. (inset email)
-                <br> add something about Tsvika and Ilai?</h3>
+            <h3> WTCAP was build to aid <a
+                    href="http://arabic.haifa.ac.il/index.php/he/2012-09-03-08-39-17/2014-01-13-09-59-51/79-faculty-staff-re-hours/9-ab/60-ah">Prof.
+                Ali Hussin</a> in his different research questions and to help him discover new insights that would be
+                hard to infer without a tool like this.
+                <br><br> Prof. Ali is the admin of this website, if you'd like to view it's content reach out to Ali
+                through his email to receive login information on ahussein@univ.haifa.ac.il
         </div>
     </div>
 </div>
@@ -370,33 +377,34 @@ c0.4,3.3,0.8,7.6,1.3,10.9c0,13.3,1608,13.3,1608,0c0.4-3.3,0.8-7.6,1.3-10.9C1562,
             <path class="" style="fill: rgb(255, 255, 255);"
                   d="M1638,192c0-25.405-20.595-46-46-46c-20.729,0-38.25,13.713-44,32.561 c-5.75-18.848-23.271-32.561-44-32.561s-38.25,13.713-44,32.561c-5.75-18.848-23.271-32.561-44-32.561s-38.25,13.713-44,32.561 c-5.75-18.848-23.271-32.561-44-32.561s-38.25,13.713-44,32.561c-5.75-18.848-23.271-32.561-44-32.561s-38.25,13.713-44,32.561 c-5.75-18.848-23.271-32.561-44-32.561s-38.25,13.713-44,32.561c-5.75-18.848-23.271-32.561-44-32.561s-38.25,13.713-44,32.561 C1014.25,159.713,996.729,146,976,146s-38.25,13.713-44,32.561C926.25,159.713,908.729,146,888,146s-38.25,13.713-44,32.561 C838.25,159.713,820.729,146,800,146s-38.25,13.713-44,32.561C750.25,159.713,732.729,146,712,146s-38.25,13.713-44,32.561 C662.25,159.713,644.729,146,624,146s-38.25,13.713-44,32.561C574.25,159.713,556.729,146,536,146s-38.25,13.713-44,32.561 C486.25,159.713,468.729,146,448,146s-38.25,13.713-44,32.561C398.25,159.713,380.729,146,360,146s-38.25,13.713-44,32.561 C310.25,159.713,292.729,146,272,146s-38.25,13.713-44,32.561C222.25,159.713,204.729,146,184,146s-38.25,13.713-44,32.561 C134.25,159.713,116.729,146,96,146s-38.25,13.713-44,32.561C46.25,159.713,28.729,146,8,146c-25.405,0-46,20.595-46,46 c0,24.056,18.469,43.787,42,45.816V238h1596v-0.708C1621.589,233.504,1638,214.675,1638,192z"></path>
         </svg>
-        <div class="container">
-            <h1>The Developers</h1>
-            <h3> The project was lead by 3 developers and their 'man7i' Tsvika Kuplin (insert link to his website)</h3>
-            <div class="card-deck mt-5">
-                <div class="card">
-                    <img class="card-img-top" src="..." alt="Card image cap">
+        <div class="container text-center">
+            <h1>The Development Team</h1>
+            <h3 class="mt-5"> The project was lead by 3 developers and their advisor. </h3>
+            <div class="card-deck mt-5 text-center">
+                <div class="card border-0">
+                    <img class="card-img-top" src="{% static 'images/osama.jpeg' %}" alt="Osama Hariri image">
                     <div class="card-body">
-                        <h5 class="card-title">Osama Hariri</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
+                        <h5 class="card-title">Osama Hariri<br> Developer</h5>
                     </div>
                 </div>
-                <div class="card">
-                    <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card border-0">
+                    <img class="card-img-top" src="{% static 'images/muhamad.jpeg' %}" alt="Muhamad Zmiro image">
                     <div class="card-body">
-                        <h5 class="card-title">Muhamad Zmiro</h5>
-                        <p class="card-text">This card has supporting text below as a natural lead-in to additional
-                            content.</p>
+                        <h5 class="card-title">Muhamad Zmiro<br> Developer</h5>
                     </div>
                 </div>
-                <div class="card">
-                    <img class="card-img-top" src="{% static "images/searchicon.png" %}" alt="Card image cap">
+                <div class="card border-0">
+                    <img class="card-img-top" src="{% static 'images/nareed.jpg' %}" alt="Nareed Hashem image">
                     <div class="card-body">
-                        <h5 class="card-title">Nareed Hashem</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This card has even longer content than the first to show that equal
-                            height action.</p>
+                        <h5 class="card-title">Nareed Hashem<br> Developer</h5>
+                    </div>
+                </div>
+                <div class="card border-0">
+                    <img class="card-img-top" src="{% static 'images/tsvika.jpg' %}" alt="Prof. Tsvika Kuflik image">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="https://tsvikak.hevra.haifa.ac.il/" class="text-dark"> Prof.
+                            Tsvika
+                            Kuflik </a><br> Advisor</h5>
                     </div>
                 </div>
             </div>
@@ -422,6 +430,7 @@ c0.4,3.3,0.8,7.6,1.3,10.9c0,13.3,1608,13.3,1608,0c0.4-3.3,0.8-7.6,1.3-10.9C1562,
             <path class="" style="fill: rgb(25, 181, 254);"
                   d="M-4,142.333C121.654,142.333,165.952,18,253.846,18 c75.519,0,45.058,101.856-2.538,78.692c25.067,0,25.385-35.538,2.538-35.538c-36.808,0-26.019,109.154,76.154,109.154 s1276,0,1276,0V216H-4V142.333z"></path>
         </svg>
+        <h1 class="light"> Add Special Thanks for Ilai!</h1>
     </div>
 </div>
 <div class="row dark-blue">
@@ -435,6 +444,7 @@ c0.4,3.3,0.8,7.6,1.3,10.9c0,13.3,1608,13.3,1608,0c0.4-3.3,0.8-7.6,1.3-10.9C1562,
             <polygon class="" style="opacity: 1;fill: #eb9532;"
                      points="1159,69 1220,8 1281,73 1340,14 1399,73 1460,12 1521,73 1578,16 1634,72 1636,73.333 1636,64 1578,6 1520,64 1460,4 1400,64 1340.333,4.333 1280.333,64.333 1220,4 1160,64 1100,4 1040,64 1100,10 "></polygon>
         </svg>
+
     </div>
 </div>
 <div class="row">
