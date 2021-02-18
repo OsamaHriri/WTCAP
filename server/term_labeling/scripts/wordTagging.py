@@ -1,5 +1,8 @@
 from py2neo import Graph, Node
 
+"""
+    this class responsible for  managing the words and its tags connections.
+"""
 
 class Tagging(object):
     def __init__(self):

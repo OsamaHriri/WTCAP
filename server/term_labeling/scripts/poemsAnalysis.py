@@ -12,8 +12,17 @@ nltk.download('stopwords')
 save_dir = '../static/images/Analysis'
 
 
+"""
+    this class responsible for analyzing poems that's exist in mongoDB database.
+    use this script each time you update the poems database.
+"""
+
+
 class Research(object):
     def __init__(self):
+        """
+        # stop words that's need to be removed.
+        """
         self.punctuation = ['!', '"', '#', '?', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':', ';',
                        '<', '=', '>', '...', '.', '..''?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~']
         self.arabic_alpha = ['ا', 'ب', 'پ', 'ت', 'ث', 'ج', 'چ', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'ژ', 'ص', 'ض', 'ط', 'ظ', 'ع',
@@ -21,6 +30,14 @@ class Research(object):
         self.arb_stopwords = nltk.corpus.stopwords.words("arabic")
         self.stemmer = FarasaStemmer(interactive=True)
     def extractInfo(self , all):
+        """
+        this method extracting info from all the words in all poems .
+        info such as : number of all poets , poems , tokens , stopWords and terms .
+        for each word check if its a stopWord or not, remove all stopwords.
+        save the results in 2 json files: 1- termfreq.json for the words frequencies 2- generalinfo.json for all the info we mentioned above
+        :param all: all words in all poems.
+        :return:
+        """
         c = Connector()
         poetsNum = len(c.get_poets())
         poemsNum = len(c.get_poems_context())
@@ -47,6 +64,11 @@ class Research(object):
 
 
     def LMforPeriod(self):
+        """
+        for each period exist in poems , create a language model.
+        for each word remove "tashkel" and return the word to its roots using Farasa stemmer.
+        :return: all words in poems , all rows in poems
+        """
         c = Connector()
         d={}
         all_stops = self.arb_stopwords + self.punctuation + self.arabic_alpha
@@ -82,7 +104,13 @@ class Research(object):
         return all , word2vec
 
     def train_word2vic(self , text):
-    
+
+        """
+        from all rows , create word2vec model and save it for future purposes.
+        :param text: array of arrays where each array is a row in poem
+        :return:
+        """
+
         model = gensim.models.Word2Vec(text, min_count=1,
                                         size=100, window=5, sg=1)
 
@@ -91,6 +119,14 @@ class Research(object):
 
 
 if __name__ == "__main__":
+
+    """
+        first use lmforPeriod to receive all tokens and all rows. 
+        extractinfo require all tokens to work.
+        training word2vec require all rows in all poems.
+        the results will be saved 
+        
+    """
 
     research = Research()
 

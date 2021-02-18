@@ -18,6 +18,7 @@ server/term_labeling/scripts/list.txt
 
 server/term_labeling/scripts/poems.zip
 
+
 server/term_labeling/scripts/poems/*
 
 
@@ -26,5 +27,21 @@ server/term_labeling/static/images/Analysis/*
 server/static/images/Analysis/*
 
 
+server/term_labeling/scripts/poems/
 
+server/db_BACKUP_3126912.sqlite3
+server/db_BASE_3126912.sqlite3
+server/db_LOCAL_3126912.sqlite3
+server/db_REMOTE_3126912.sqlite3
 
+*.log
+
+*.pot
+
+*.pyc
+
+*/*/*/__pycache__/
+
+*/*/__pycache__/
+
+*/__pycache__/

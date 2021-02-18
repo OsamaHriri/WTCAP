@@ -3,11 +3,12 @@ from py2neo import Graph, Node, Relationship
 '''
 this class is only for one use , transfer all data from csv to neo4j .
 neo4j db must be active.
+database.csv have the basic tags for creating tag class in neo4j.
 '''
 
 class Tag(object):
     """
-    simple class that present a tag.
+    # a simple class that represent a tag.
     @number = the unique id of this tag.
     @name = the name of this tag.
     @parent = the parent id of this tag.
@@ -41,6 +42,6 @@ for parent in nodes:
             graph.merge(p(Node("Tag", id=parent.number, parent=parent.parent, name=parent.name),
                           Node("Tag", id=child.number, parent=child.parent, name=child.name)), "Tag", "name")
 
-# cast level , id and parent to int.
+# cast id and parent to int.
 Q = """ Match (n) set n.parent=toInteger(n.parent) , n.id=toInteger(n.id) """
 graph.run(Q).data()

@@ -5,6 +5,7 @@
 <script src="{% static 'term_labeling/statistics.js' %}"></script>
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
 <script src="https://cdn.anychart.com/releases/v8/js/anychart-tag-cloud.min.js"></script>
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/statistics_style.css'%}">
 <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
 <!--<script src='https://kit.fontawesome.com/a076d05399.js'></script>-->
@@ -116,8 +117,6 @@
                         {% endfor %}
                     </div>
                 </div>
-
-
             </div>
             <br><br>
 
@@ -138,10 +137,12 @@
         </div>
         <div class="tab-pane fade show" id="list" role="tabpanel" aria-labelledby="list-tab">
             <h3 id="tablePageHeader">Table</h3>
+            <br><label> Choose a Period </label><br>
             <div class="dropdown">
-                <input type="button" id="period2btn" class="dropbtn" value="All Periods" data-toggle="tooltip"
-                       data-placement="top" title="Which Period to Focus On">
+                <input type="button" id="period2btn" class="dropbtn" value="Periods" data-toggle="tooltip"
+                       data-placement="top" title="Which Period to Focus On" style="padding: 0 50 0 50;">
                 <div class="dropdown-content">
+
                     <a href="javascript:void(0)" id = "all periods" onclick="savePeriod2(this)">All Periods</a>
                     {% for p in periods %}
                     <a href="javascript:void(0)" id = {{p.id}}  onclick="savePeriod2(this)"> {{p.name}} </a>
@@ -168,6 +169,11 @@
                 <div id="Range2" class="dropdown-content">
                     {% for r in range %}
                     <a href="javascript:void(0)" onclick="createList(this,event,2)"> {{r}} </a>
+
+                    <a href="javascript:void(0)" id ="all periods" onclick="createList(this,event)">All Periods</a>
+                    {% for p in periods %}
+                    <a href="javascript:void(0)" id ="{{p}}" onclick="createList(this,event)"> {{p}} </a>
+
                     {% endfor %}
                 </div>
             </div>
@@ -196,12 +202,15 @@
                 <label> Choose a Poet </label><br>
                 <div class="dropdown" style="margin-bottom:40px">
                     <input type="button" id="poetbtn" class="dropbtn" value="Poet" style="padding:3 70px 3 70px">
-                        <div class="dropdown-content">
+                        <div id="poetDropDown" class="dropdown-content">
+                            <input type="text" placeholder="إبحث..." id="poetInput"
+                             onkeyup="filterFunction('poetDropDown',this.id)">
                             {% for p in poets %}
                                 <a href="javascript:void(0)" onclick="get_tags_for_poet(this)" id="{{p.id}}"> {{ p.name }} </a>
                             {% endfor %}
                         </div>
                 </div>
+                <div id="ExcelDownload" style="text-align:left;Display:none"><a href="javascript:void(0)" onclick="ConvertToExcel()">Download to Excel</a></div>
                 <div style="height:700px">
                     <table class="table" id="tagTable" style="font-family:initial">
                         <thead class="thead-dark">

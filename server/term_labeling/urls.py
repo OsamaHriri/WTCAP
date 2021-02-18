@@ -3,6 +3,10 @@ from django.urls import path, include, re_path
 from django.contrib.auth import views as auth_views
 from . import views
 
+"""
+connection between views.py functions and ajax call in frontend.
+"""
+
 # if you change the name here make sure to change it in the navbar in base.html
 
 urlpatterns = [
@@ -10,6 +14,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('main_tag_page/', views.main_tag_page, name='main_tag_page'),
     path('tags/', views.tags, name='tags'),
+    path('testing/', views.testing, name='testing'),
     path('select_poet_page/', views.select_poet_page, name='select_poet_page'),
     path('settings/', views.settings, name='settings'),
     path('statistics/', views.statistics, name='statistics'),
@@ -37,7 +42,6 @@ urlpatterns = [
     re_path('change_parent/$', views.change_parent, name='change_parent'),
     re_path('delete_all/$', views.delete_all, name='delete_all'),
     re_path('get_all_tags/$', views.get_all_tags, name='get_all_tags'),
-    re_path('get_all_poems/$', views.get_all_poems, name='get_all_poems'),
     re_path('get_all_poets/$', views.get_all_poets, name='get_all_poets'),
     re_path('get_terms_freq/$', views.get_terms_freq, name='get_terms_freq'),
     re_path('maxFrequencyinPeriod/$', views.maxFrequencyinPeriod, name='maxFrequencyinPeriod'),
@@ -48,4 +52,5 @@ urlpatterns = [
     re_path('get_Tags_frequency_in_poem/$', views.get_Tags_frequency_in_poem, name='get_Tags_frequency_in_poem'),
     re_path('add_all_suggestions/$', views.add_all_suggestions, name='add_all_suggestions'),
     re_path('get_all_tags_for_poet/$', views.get_all_tags_for_poet, name='get_all_tags_for_poet'),
+    re_path('get_history_user/$', views.get_history_user, name='get_history_user'),
 ]

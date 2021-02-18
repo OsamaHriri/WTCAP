@@ -19,9 +19,12 @@ class Connector:
         self.poetsCollections = self.db["poets"]
         self.periodsCollections = self.db["period"]
         self.userHistoryCollections = self.db["userHistory"]
-        
+
     def get_poem(self, poemID):
         return list(self.poemsCollections.find({"id": str(poemID)}))
+
+    def get_poet_name(self, poet_id):
+        return list(self.poetsCollections.find({"id": poet_id}, {"_id": 0, 'name':1}))
 
     def get_poems_by_poet(self, poet_id):
         return list(self.poemsCollections.find({"poet_id": poet_id}, {"_id": 0, "id": 1, "name": 1}))
@@ -70,14 +73,14 @@ class Connector:
                                             'as': 'results' }}])
         return list(result)
 
-    def add_user_entry(self, user_id , poem_id):
+    def add_user_entry(self, user_id , poem_id, poem_name,poet_name):
 
-        _dict = {'user_id':user_id,'poem_id':poem_id,'time':time.time()}
+        _dict = {'user_id':user_id,'poem_id':poem_id,'poem_name':poem_name,'poet_name':poet_name,'time':time.time()}
         self.userHistoryCollections.insert_one(_dict)
 
 
     def get_user_history(self, user_id ):
-        return list(self.userHistoryCollections.find({'user_id':user_id},{'poem_id':1,'time':1}))
+        return list(self.userHistoryCollections.find({'user_id':user_id},{'poem_name':1,'poet_name':1,'poem_id':1,'time':1}))
 
     def edit_poem_line(self,poem_id, line, sadr, ajuz):
 
@@ -86,13 +89,20 @@ class Connector:
             {'$set':{'context.$.sadr':sadr , 'context.$.ajuz':ajuz}}, upsert=True)
 
 
+    def get_all_user_history(self):
+        return list(self.userHistoryCollections.find({},{'poem_id': 1, 'time': 1, 'poem_title': 1, 'poet_name': 1,'user_id':1}))
+
+
+
+
 if __name__ == "__main__":
 
 
-
+    c = Connector()
     # print(len(Connector().get_periods_name()))
 
     # poem_id, line, sadr, ajuz = 2092, 0 ,' بانَت  سُعادُ  فَفي  العَينَينِ  مَلمولُ' , ' مِن  حُبِّها  وَصَحيحُ  الجِسمِ  مَخولُ '
     # print(list(Connector().poemsCollections.find({"id":str(poem_id),"context.row_index":str(line)})))
     # Connector().edit_poem_line(poem_id, line, sadr, ajuz)
-    print(list(Connector().userHistoryCollections.find({})))
+    # c.userHistoryCollections.drop()
+    print(list(c.userHistoryCollections.find({})))

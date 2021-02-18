@@ -6,8 +6,8 @@
 <link rel="stylesheet" type="text/css" href="{% static 'term_labeling/main_tags_style.css'%}">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+<script src="https://rawgit.com/farzher/fuzzysort/master/fuzzysort.js"></script>
 <script>
     $(document).ready(function () {
         const d = document.getElementsByClassName("navbar")[0];
@@ -394,9 +394,12 @@
                                     <circle cx="10" cy="30" r="7" fill="#5dade2"/>
                                     <text text-anchor="start" x="20" y="34">Tag</text>
                                 </svg>
-                                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="left"
+                                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="Top"
                                         title="Refresh the Graph in case the graph isn't displaying correctly"
                                         style="float:right" onclick="refreshVis()">Refresh</button>
+                                 <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="left"
+                                        title="Download as Image"
+                                        style="float:right" onclick="Convert_to_Png(event)">Download</button>
                             </div>
                       </div>
                       <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="list-tab">
@@ -404,6 +407,7 @@
                                 <thead class="thead-dark">
                                 </thead>
                             </table>
+                           <div style="text-align:left"><a href="#" onclick="ConvertToExcel()">Download to Excel</a></div>
                       </div>
                     </div>
                 </div>
@@ -530,52 +534,6 @@
     </div>
 </div>
 
-<!--            about section            -->
-
-<div class="about">
-    <a class="bg_links social info" data-toggle="modal" data-target="#myinfo">
-        <span class="icon"></span>
-    </a>
-    <a class="bg_links social above" href="#mynavbar">
-        <span class="icon"></span>
-    </a>
-    <a class="bg_links social history" data-toggle="modal" data-target="#myhistory">
-        <span class="icon"></span>
-    </a>
-    <a class="bg_links logo"></a>
-</div>
-
-<div class="modal fade" id="myinfo" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-        <!-- Modal content-->
-        <div class="paper-modal">
-            <div class="modal-header">
-                <h4 class="modal-title">Info</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="myhistory" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-        <!-- Modal content-->
-        <div class="paper-modal">
-            <div class="modal-header">
-                <h4 class="modal-title">History</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            </div>
-        </div>
-    </div>
-</div>
 
 {% endblock content %}
 
