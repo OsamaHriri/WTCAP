@@ -72,12 +72,12 @@ class Connector:
 
     def add_user_entry(self, user_id , poem_id):
 
-        _dict = {'וuser_id':user_id,'poem_id':poem_id,'time':time.time()}
+        _dict = {'user_id':user_id,'poem_id':poem_id,'time':time.time()}
         self.userHistoryCollections.insert_one(_dict)
 
 
     def get_user_history(self, user_id ):
-        return list(self.userHistoryCollections.find({'וuser_id':user_id},{'poem_id':1,'time':1}))
+        return list(self.userHistoryCollections.find({'user_id':user_id},{'poem_id':1,'time':1}))
 
     def edit_poem_line(self,poem_id, line, sadr, ajuz):
 
