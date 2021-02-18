@@ -1,10 +1,11 @@
+from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from .scripts.almaany_translator_bot import ALmaanyBot
 from .scripts.tagGraph import Tag
 from .scripts.mongodbConnector import Connector
 from .scripts.wordTagging import Tagging
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 import requests
 import pyarabic.araby as araby
 from threading import Thread, Lock
@@ -13,6 +14,7 @@ import json
 from django.contrib.staticfiles import finders
 from collections import Counter
 import re
+from datetime import datetime
 
 """
     all clients request will be sent her , in order to establish a connection between frontend and backend.
@@ -22,6 +24,7 @@ import re
 stemmer = FarasaStemmer(interactive=True)
 
 
+@login_required()  # only users view this page
 def main_tag_page(request):
     """
     # the poem tagging page.
@@ -37,7 +40,10 @@ def main_tag_page(request):
         id = 2066
 
     poem = (c.get_poem(id))[0]
-
+    user = request.user
+    poet_name = c.get_poet_name(poem['poet_id'])[0]['name']
+    # add user entry to mongodb
+    c.add_user_entry(user.id, id,poem['name'],poet_name)
     split_context = []
     for row in poem['context']:
         split_context.append({'row_index': row['row_index'],
@@ -61,13 +67,50 @@ def index(request):
     :param request:
     :return:
     """
+    filtered_hist = []
+    history = []
+    if request.user.is_authenticated:
+        # if normal user fetch the last 5 visit poems
+        c = Connector()
+        history = c.get_user_history(request.user.id)[-5:]
+        if len(history) == 0:
+            history = 'No data'
+        else:
+            for item in history:
+                item['time'] = datetime.fromtimestamp(item['time'])
+            history.reverse()
+        if request.user.is_superuser:
+            # in additional if user is super user , fetch the last 100 entries from all users
+            all_history= c.get_all_user_history()[-100:]
+            for item in all_history:
+                if int(item['user_id']) != int(request.user.id):
+                    user = User.objects.get(id=int(item['user_id']))
+                    item['user_name'] = user
+                    item['time'] = datetime.fromtimestamp(item['time'])
+                    filtered_hist.append(item)
+            filtered_hist.reverse()
+
     context = {
         'title': 'Main Page',
+        'history': history,
+        'all_history':filtered_hist,
     }
     return render(request, 'index.html', context)
 
 
-@login_required()
+def testing(request):
+    history = 'No data'
+    if request.user == 'AnonymousUser':
+        print(request.user.id)
+
+    context = {
+        'title': 'Main Page',
+        'history': history,
+    }
+    return render(request, 'testing.html', context)
+
+
+@login_required()  # only users view this page
 def tags(request):
     """
     # this page responsible for managing the tags hierarchy.
@@ -83,7 +126,7 @@ def tags(request):
     return render(request, 'manage_tags.html', context)
 
 
-@login_required()
+@user_passes_test(lambda u: u.is_superuser)  # only superuser can view this page
 def settings(request):
     # this page responsible for managing users and database backups
     context = {
@@ -92,7 +135,7 @@ def settings(request):
     return render(request, 'settings.html', context)
 
 
-@login_required()
+@login_required()  # only users view this page
 def statistics(request):
     """
      # this page responsible for representing all kind of statistics about the website data bases.
@@ -124,7 +167,7 @@ def statistics(request):
     return render(request, 'statistics.html', context)
 
 
-@login_required()
+@login_required()  # only users view this page
 def select_poet_page(request):
     """
      # this page responsible for choosing a poem to start tagging.
@@ -215,7 +258,6 @@ def add_all_suggestions(request):
         return JsonResponse(d)
     else:
         return HttpResponse("not found")
-
 
 
 def suggest_tags(request):
@@ -471,7 +513,6 @@ def get_all_tags(request):
             return HttpResponse("not found")
 
 
-
 def get_all_poets(request):
     """
     Given a GET request returns all poets from database.
@@ -591,9 +632,9 @@ def get_words_analyzation(request):
                     position = pos + 1
                     dict_row = row + 1
                     if temp in dictenory:
-                        dictenory[temp].append(dict(row = dict_row ,sader = 0 ,position =position))
+                        dictenory[temp].append(dict(row=dict_row, sader=0, position=position))
                     else:
-                        dictenory[temp] = [dict(row = dict_row ,sader = 0 ,position = position)]
+                        dictenory[temp] = [dict(row=dict_row, sader=0, position=position)]
                     s += temp + " "
                 # s += stemmer.stem(araby.strip_tashkeel(j['sadr'])) + " "
             if 'ajuz' in j:
@@ -603,17 +644,29 @@ def get_words_analyzation(request):
                     position = pos + 1
                     dict_row = row + 1
                     if temp in dictenory:
-                        dictenory[temp].append(dict(row=dict_row,sader = 1,position=position ))
+                        dictenory[temp].append(dict(row=dict_row, sader=1, position=position))
                     else:
-                        dictenory[temp] = [dict(row=dict_row,sader = 1,position= position)]
+                        dictenory[temp] = [dict(row=dict_row, sader=1, position=position)]
                     s += temp + " "
             l += s
         tokens = re.findall(r"[\w']+", l)
         suggestion = []
         for s in w.get_suggestions(tokens):
             suggestion += dictenory.get(s["word"])
-        ##suggestion.append(dictenory[s])
+        ## suggestion.append(dictenory[s])
         return JsonResponse({"tagged": currentTagged, "suggested": suggestion, "roots": Rootofwords})
+
+
+@login_required()
+def get_history_user(request):
+    # get the last 5 entries for user
+    if request.method == 'GET':
+        c = Connector()
+        history = c.get_user_history(request.user.id)[-5:]
+        for item in history:
+            item['time'] = datetime.fromtimestamp(item['time'])
+        history.reverse()
+        return JsonResponse({'data': history})
 
 
 def term_current_tags(request):
@@ -628,7 +681,7 @@ def term_current_tags(request):
         term = araby.strip_tashkeel(req.get('term')).strip()
         term = stemmer.stem(term)
         currentTagged = w.get_term_current_tags(int(req.get('row')), int(req.get('place')), int(req.get('position')),
-                                                req.get('id'),term)
+                                                req.get('id'), term)
         return JsonResponse({"tags": currentTagged})
 
 
@@ -670,6 +723,7 @@ def edit_poem_line(request):
         data = request.GET
         poem_id, line, asdr, ajuz = data.get('id'), data.get('line'), data.get('sadr'), data.get('ajuz')
 
+
 def get_Tags_frequency_in_poem(request):
     """
     # get all tags in specific poem.
@@ -679,8 +733,9 @@ def get_Tags_frequency_in_poem(request):
     if request.method == 'GET':
         data = request.GET
         t = Tagging()
-        result ,total = t. get_all_tagged_words_in_Poem(data.get('id'))
-        return JsonResponse({'tags':result,'total':total})
+        result, total = t.get_all_tagged_words_in_Poem(data.get('id'))
+        return JsonResponse({'tags': result, 'total': total})
+
 
 def get_all_tags_for_poet(request):
     """
@@ -693,9 +748,12 @@ def get_all_tags_for_poet(request):
         t = Tagging()
         c = Connector()
         poems = c.get_poems_by_poet(int(data.get('id')))
-        result ,total = t.get_all_tags_for_poet(poems);
-        return JsonResponse({"tags":result ,'total':total})
+        result, total = t.get_all_tags_for_poet(poems);
+        return JsonResponse({"tags": result, 'total': total})
 
 
-#use this lock when u need to write on the database , some function thats read may need this mutex in order to avoid incorrect data when someone writing in parallel
+
+
+
+# use this lock when u need to write on the database , some function thats read may need this mutex in order to avoid incorrect data when someone writing in parallel
 mutex = Lock()

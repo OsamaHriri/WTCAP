@@ -130,8 +130,6 @@ function get_all_tags_for_poet(id) {
         dataType: "json",
     });
 }
-
-
 // ################################ end of ajax section ################################
 
 

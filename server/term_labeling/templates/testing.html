@@ -2,8 +2,7 @@
 {% load static %}
 
 {% block stylesheets %}
-<link rel="stylesheet" type="text/css" href="{% static 'term_labeling/index_style.css'%}">
-<script src="{% static 'term_labeling/indexjs.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'term_labeling/testingstyle.css'%}">
 <script>
     $(document).ready(function () {
         const obj = document.getElementById("1link");
@@ -65,23 +64,19 @@ s60.2,40,120,40s59.8,0,59.8,0l0.2,143H-60V96L-40,95.6z"></path>
         <div class="container text-center history">
             <h1 class="light"> Your History </h1>
             {% if history == 'No data' %}
-            <h1 class="light mt-5"> No History Available :(</h1>
-            <h2>Start tagging poems and you'll see your history here!</h2>
+            <div class="panel panel-info">
+                <div class="panel-heading danger">No History Available</div>
+                <div class="panel-body">Start tagging poems and you'll see your history here!</div>
+            </div>
             {% else %}
             <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th scope="col">القصيدة</th>
-                    <th scope="col">الشاعر</th>
-                    <th scope="col"> آخر تعديل</th>
-                </tr>
-                </thead>
                 <tbody>
                 {% for hist in history %}
+                <!--               http:// "" -->
                 <tr onclick="document.location='main_tag_page/?poem_id='+ {{ hist.poem_id }};return false;">
                     <td>{{ hist.poem_title }}</td>
                     <td>{{ hist.poet_name }}</td>
-                    <td>{{ hist.time }}</td>
+                    <td>Last edited {{ hist.time }} days ago</td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -94,7 +89,7 @@ s60.2,40,120,40s59.8,0,59.8,0l0.2,143H-60V96L-40,95.6z"></path>
 
 <!-- Admin sees history for all users -->
 {% if user.is_superuser %}
-<div class="adminrow light-grey">
+<div class="row light-grey">
     <div>
         <svg id="" preserveAspectRatio="xMidYMax meet" class="svg-separator sep2" viewBox="0 0 1600 200"
              style="display: block;" data-height="200">
@@ -104,20 +99,6 @@ s60.2,40,120,40s59.8,0,59.8,0l0.2,143H-60V96L-40,95.6z"></path>
         </svg>
         <div class="container">
             <h1> All Users History </h1>
-              <table class="table" id="listTable" style="font-family:initial">
-                    <thead>
-                    </thead>
-                  <tbody>
-                    {% for all in all_history %}
-                        <tr onclick="document.location='main_tag_page/?poem_id='+ {{ all.poem_id }};return false;">
-                            <td>{{ all.user_name }}</td>
-                            <td>{{ all.poem_title }}</td>
-                            <td>{{ all.poet_name }}</td>
-                            <td>{{ all.time }}</td>
-                        </tr>
-                    {% endfor %}
-                  </tbody>
-              </table>
         </div>
     </div>
 </div>

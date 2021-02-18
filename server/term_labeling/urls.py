@@ -14,6 +14,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('main_tag_page/', views.main_tag_page, name='main_tag_page'),
     path('tags/', views.tags, name='tags'),
+    path('testing/', views.testing, name='testing'),
     path('select_poet_page/', views.select_poet_page, name='select_poet_page'),
     path('settings/', views.settings, name='settings'),
     path('statistics/', views.statistics, name='statistics'),
@@ -45,4 +46,5 @@ urlpatterns = [
     re_path('get_Tags_frequency_in_poem/$', views.get_Tags_frequency_in_poem, name='get_Tags_frequency_in_poem'),
     re_path('add_all_suggestions/$', views.add_all_suggestions, name='add_all_suggestions'),
     re_path('get_all_tags_for_poet/$', views.get_all_tags_for_poet, name='get_all_tags_for_poet'),
+    re_path('get_history_user/$', views.get_history_user, name='get_history_user'),
 ]
