@@ -82,7 +82,7 @@
     <a class="bg_links social info" data-toggle="modal" data-target="#myinfo">
         <span class="icon"></span>
     </a>
-    <a class="bg_links social above" href="#mynavbar">
+    <a class="bg_links social above" href="#top">
         <span class="icon"></span>
     </a>
     {% if user.is_authenticated %}
@@ -124,6 +124,17 @@
                 </button>
             </div>
             <div class="modal-body" style="text-align:center;">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">القصيدة</th>
+                        <th scope="col">الشاعر</th>
+                        <th scope="col"> آخر تعديل</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+            </table>
             </div>
         </div>
     </div>
@@ -159,6 +170,32 @@
 
 <!-- Optional JavaScript -->
 {% block scripts %} {% endblock %}
-
+<script>
+    $(document).ready(function () {
+        $('#myhistory').on('shown.bs.modal', function (e) {
+            get_history().done(function(d){
+                data = d.data
+                hist = document.getElementById('myhistory')
+                tbody = hist.getElementsByTagName('tbody')[0]
+                newhtml = ""
+                data.forEach(function(h){
+                    newhtml += "<tr onclick=\"window.location='/main_tag_page/?poem_id="+h.poem_id+"'\"> <td>"+h.poem_title+"</td> <td>"+h.poet_name+"</td> <td>"+h.time+"</td></tr>"
+                })
+                tbody.innerHTML = newhtml;
+            });
+         });
+       function get_history(){
+         return $.ajax({
+            type: "GET",
+            url: "get_history_user/",
+            dataType: "json",
+            });
+        }
+        $("a[href='#top']").on('click', function(event) {
+           $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
+        });
+    });
+</script>
 </body>
 </html>

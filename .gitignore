@@ -15,3 +15,7 @@ server/term_labeling/scripts/poems.zip
 
 server/term_labeling/scripts/poems/
 
+server/db_BACKUP_3126912.sqlite3
+server/db_BASE_3126912.sqlite3
+server/db_LOCAL_3126912.sqlite3
+server/db_REMOTE_3126912.sqlite3

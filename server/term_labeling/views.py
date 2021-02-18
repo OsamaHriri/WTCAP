@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from .scripts.almaany_translator_bot import ALmaanyBot
@@ -13,6 +14,7 @@ import json
 from django.contrib.staticfiles import finders
 from collections import Counter
 import re
+from datetime import datetime
 
 """
     all clients request will be sent her , in order to establish a connection between frontend and backend.
@@ -38,7 +40,10 @@ def main_tag_page(request):
         id = 2066
 
     poem = (c.get_poem(id))[0]
-
+    user = request.user
+    poet_name = c.get_poet_name(poem['poet_id'])[0]['name']
+    # add user entry to mongodb
+    c.add_user_entry(user.id, id,poem['name'],poet_name)
     split_context = []
     for row in poem['context']:
         split_context.append({'row_index': row['row_index'],
@@ -62,20 +67,33 @@ def index(request):
     :param request:
     :return:
     """
-    history = 'No data'
-    if request.user == 'AnonymousUser':
-        print(request.user.id)
-    history = [{'poem_title': 'قصيدة رقم 11، الكامل،لبِّسِ', 'poet_name': 'ابو الذعيب', 'poem_id': '2065',
-                'time': '2'},
-               {'poem_title': 'قصيدة رقم 11، الكامل،لبِّسِ', 'poet_name': 'ابو الذعيب', 'poem_id': '2065',
-                'time': '4'},
-               {'poem_title': 'قصيدة رقم 3', 'poet_name': 'ابو الذعيب', 'poem_id': '2193', 'time': '15'},
-               {'poem_title': 'قصيدة رقم 11، الكامل،لبِّسِ', 'poet_name': 'ابو الذعيب', 'poem_id': '2193',
-                'time': '15'},
-               {'poem_title': 'قصيدة رقم 3', 'poet_name': 'ابو الذعيب', 'poem_id': '2073', 'time': '16'}]
+    filtered_hist = []
+    history = []
+    if request.user.is_authenticated:
+        # if normal user fetch the last 5 visit poems
+        c = Connector()
+        history = c.get_user_history(request.user.id)[-5:]
+        if len(history) == 0:
+            history = 'No data'
+        else:
+            for item in history:
+                item['time'] = datetime.fromtimestamp(item['time'])
+            history.reverse()
+        if request.user.is_superuser:
+            # in additional if user is super user , fetch the last 100 entries from all users
+            all_history= c.get_all_user_history()[-100:]
+            for item in all_history:
+                if int(item['user_id']) != int(request.user.id):
+                    user = User.objects.get(id=int(item['user_id']))
+                    item['user_name'] = user
+                    item['time'] = datetime.fromtimestamp(item['time'])
+                    filtered_hist.append(item)
+            filtered_hist.reverse()
+
     context = {
         'title': 'Main Page',
         'history': history,
+        'all_history':filtered_hist,
     }
     return render(request, 'index.html', context)
 
@@ -639,6 +657,18 @@ def get_words_analyzation(request):
         return JsonResponse({"tagged": currentTagged, "suggested": suggestion, "roots": Rootofwords})
 
 
+@login_required()
+def get_history_user(request):
+    # get the last 5 entries for user
+    if request.method == 'GET':
+        c = Connector()
+        history = c.get_user_history(request.user.id)[-5:]
+        for item in history:
+            item['time'] = datetime.fromtimestamp(item['time'])
+        history.reverse()
+        return JsonResponse({'data': history})
+
+
 def term_current_tags(request):
     """
     # get all tags of a word.
@@ -720,6 +750,9 @@ def get_all_tags_for_poet(request):
         poems = c.get_poems_by_poet(int(data.get('id')))
         result, total = t.get_all_tags_for_poet(poems);
         return JsonResponse({"tags": result, 'total': total})
+
+
+
 
 
 # use this lock when u need to write on the database , some function thats read may need this mutex in order to avoid incorrect data when someone writing in parallel
