@@ -1,5 +1,4 @@
-from django.contrib import admin
-from django.urls import path, include, re_path
+from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
 from . import views
 
@@ -14,7 +13,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('main_tag_page/', views.main_tag_page, name='main_tag_page'),
     path('tags/', views.tags, name='tags'),
-    path('testing/', views.testing, name='testing'),
     path('select_poet_page/', views.select_poet_page, name='select_poet_page'),
     path('settings/', views.settings, name='settings'),
     path('statistics/', views.statistics, name='statistics'),

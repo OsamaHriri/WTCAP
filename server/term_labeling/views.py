@@ -1,14 +1,12 @@
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from .scripts.almaany_translator_bot import ALmaanyBot
 from .scripts.tagGraph import Tag
 from .scripts.mongodbConnector import Connector
 from .scripts.wordTagging import Tagging
 from django.contrib.auth.decorators import login_required, user_passes_test
-import requests
 import pyarabic.araby as araby
-from threading import Thread, Lock
+from threading import Lock
 from farasa.stemmer import FarasaStemmer
 import json
 from django.contrib.staticfiles import finders
@@ -43,7 +41,7 @@ def main_tag_page(request):
     user = request.user
     poet_name = c.get_poet_name(poem['poet_id'])[0]['name']
     # add user entry to mongodb
-    c.add_user_entry(user.id, id,poem['name'],poet_name)
+    c.add_user_entry(user.id, id, poem['name'], poet_name)
     split_context = []
     for row in poem['context']:
         split_context.append({'row_index': row['row_index'],
@@ -81,7 +79,7 @@ def index(request):
             history.reverse()
         if request.user.is_superuser:
             # in additional if user is super user , fetch the last 100 entries from all users
-            all_history= c.get_all_user_history()[-100:]
+            all_history = c.get_all_user_history()[-100:]
             for item in all_history:
                 if int(item['user_id']) != int(request.user.id):
                     user = User.objects.get(id=int(item['user_id']))
@@ -93,21 +91,9 @@ def index(request):
     context = {
         'title': 'Main Page',
         'history': history,
-        'all_history':filtered_hist,
+        'all_history': filtered_hist,
     }
     return render(request, 'index.html', context)
-
-
-def testing(request):
-    history = 'No data'
-    if request.user == 'AnonymousUser':
-        print(request.user.id)
-
-    context = {
-        'title': 'Main Page',
-        'history': history,
-    }
-    return render(request, 'testing.html', context)
 
 
 @login_required()  # only users view this page
@@ -653,7 +639,7 @@ def get_words_analyzation(request):
         suggestion = []
         for s in w.get_suggestions(tokens):
             suggestion += dictenory.get(s["word"])
-        ## suggestion.append(dictenory[s])
+        # suggestion.append(dictenory[s])
         return JsonResponse({"tagged": currentTagged, "suggested": suggestion, "roots": Rootofwords})
 
 
@@ -748,12 +734,10 @@ def get_all_tags_for_poet(request):
         t = Tagging()
         c = Connector()
         poems = c.get_poems_by_poet(int(data.get('id')))
-        result, total = t.get_all_tags_for_poet(poems);
+        result, total = t.get_all_tags_for_poet(poems)
         return JsonResponse({"tags": result, 'total': total})
 
 
-
-
-
-# use this lock when u need to write on the database , some function thats read may need this mutex in order to avoid incorrect data when someone writing in parallel
+# use this lock when u need to write on the database , some function thats read may need this mutex in order to avoid
+# incorrect data when someone writing in parallel
 mutex = Lock()
