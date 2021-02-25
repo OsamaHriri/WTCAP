@@ -33,11 +33,11 @@ def main_tag_page(request):
     all_tags = t.getAllTags()["tags"]
     c = Connector()
     if request.method == 'GET':
-        id = request.GET['poem_id']
+        poem_id = request.GET['poem_id']
     else:
-        id = 2066
+        poem_id = 2066
 
-    poem = (c.get_poem(id))[0]
+    poem = (c.get_poem(poem_id))[0]
     user = request.user
     poet_name = c.get_poet_name(poem['poet_id'])[0]['name']
     # add user entry to mongodb
@@ -228,13 +228,13 @@ def add_all_suggestions(request):
         # remove term tashkeel and white space
         term = araby.strip_tashkeel(term).strip()
         term = stemmer.stem(term)
-        tags = data.getlist('tags[]')
+        all_tags = data.getlist('tags[]')
         poem_id = data.get('id')
         t = Tagging()
         mutex.acquire()
         d = {}
         try:
-            for tag in tags:
+            for tag in all_tags:
                 suc = t.tagWord(term, tag, poem_id, int(data.get('place')), int(data.get('row')),
                                 int(data.get('position')))
                 d[tag] = suc
@@ -296,7 +296,7 @@ def get_children(request):
 
 def get_parent(request):
     """
-    # get parent of specific tag.
+    Get parent of specific tag.
     :param request:tag in the hierarchy.
     :return: tag parent.
     """
@@ -313,7 +313,7 @@ def get_parent(request):
 
 def get_roots(request):
     """
-    # get all roots in the hierarchy.
+    Get all roots in the hierarchy.
     :param request:
     :return: all roots if success.
     """
@@ -328,7 +328,7 @@ def get_roots(request):
 
 def add_root(request):
     """
-    # add a new root in the hierarchy.
+    Add a new root in the hierarchy.
     :param request: the root to be inserted
     :return: success or fail
     """
@@ -336,16 +336,16 @@ def add_root(request):
         data = request.GET
         term = data.get('term')
         t = Tag()
-        bool = t.addTag(term)
-        if bool is not None:
-            return JsonResponse(bool)
+        boolean = t.addTag(term)
+        if boolean is not None:
+            return JsonResponse(boolean)
         else:
             return HttpResponse("not found")
 
 
 def add_tag(request):
     """
-    # add new tag to the hierarchy
+    Add new tag to the hierarchy
     :param request: tag and its parent
     :return:success or fail.
     """
@@ -354,16 +354,16 @@ def add_tag(request):
         term = data.get('term')
         parent = data.get('parent')
         t = Tag()
-        bool = t.addTag(term, parent)
-        if bool is not None:
-            return JsonResponse(bool)
+        boolean = t.addTag(term, parent)
+        if boolean is not None:
+            return JsonResponse(boolean)
         else:
             return HttpResponse("not found")
 
 
 def get_brothers(request):
     """
-    # get all tags brothers (all tags that's share the same parent as the given tag)
+    Get all tags brothers (all tags that's share the same parent as the given tag)
     :param request: the tag
     :return:all tag brothers.
     """
@@ -381,7 +381,7 @@ def get_brothers(request):
 
 def get_depth(request):
     """
-    # get the depth of specific tag.
+    Get the depth of specific tag.
     :param request:the tag in the heirarchy
     :return: depth of tag
     """
@@ -398,7 +398,7 @@ def get_depth(request):
 
 def remove_tag(request):
     """
-    # remove tag from the hierarchy.
+    Remove a tag from the hierarchy.
     :param request: the tag in the hierarchy.
     :return: success or fail.
     """
@@ -526,10 +526,10 @@ def get_terms_freq(request):
     if request.method == 'GET':
         req = request.GET
         if req.get('p') == "all periods":
-            reslut = finders.find('images/Analysis/TermFreq.json')
+            result = finders.find('images/Analysis/TermFreq.json')
         else:
-            reslut = finders.find('images/Analysis/TermFreqperPeriod.json')
-        f = open(reslut)
+            result = finders.find('images/Analysis/TermFreqperPeriod.json')
+        f = open(result)
         json_string = f.read()
         f.close()
         # Convert json string to python object
@@ -538,31 +538,31 @@ def get_terms_freq(request):
             x = int(req.get('f'))
             if req.get('p') == "all periods":
                 d = data[:x]
-                max = x
+                current_max = x
             else:
                 period = req.get('p').strip()
                 if len(data[period]) < x:
                     d = data[period][:len(data[period])]
-                    max = len(data[period])
+                    current_max = len(data[period])
                 else:
                     d = data[period][:x]
-                    max = x
-            return JsonResponse({"t": d, "m": max})
+                    current_max = x
+            return JsonResponse({"t": d, "m": current_max})
         elif int(req.get('n')) == 2:
             y = req.get('f').strip().split("-")
             if req.get('p') == "all periods":
                 d = data[int(y[0]):int(y[1])]
-                max = int(y[1])
+                current_max = int(y[1])
             else:
                 period = req.get('p').strip()
                 length = len(data[period])
                 if int(y[1]) > length:
                     d = data[period][int(y[0]):length]
-                    max = length
+                    current_max = length
                 else:
                     d = data[period][int(y[0]):int(y[1])]
-                    max = int(y[1])
-            return JsonResponse({"t": d, "m": max})
+                    current_max = int(y[1])
+            return JsonResponse({"t": d, "m": current_max})
         elif int(req.get('n')) == 3:
             if req.get('p') == "all periods":
                 d = data[:2000]
@@ -584,8 +584,8 @@ def maxFrequencyinPeriod(request):
         if period == "all periods":
             return JsonResponse({"max": 1000})
         else:
-            reslut = finders.find('images/Analysis/TermFreqperPeriod.json')
-            f = open(reslut)
+            result = finders.find('images/Analysis/TermFreqperPeriod.json')
+            f = open(result)
             json_string = f.read()
             f.close()
             data = json.loads(json_string)
@@ -594,58 +594,61 @@ def maxFrequencyinPeriod(request):
 
 def get_words_analyzation(request):
     """
-    # when tag page is loaded , get all suggestion words , tagged words and all roots of each word.
-    # use stemmer and strip tashkel on each word.
+    When tag page is loaded , get all suggestion words , tagged words and all roots of each word.
+    use stemmer and strip tashkel on each word.
     :param request: poem id
-    :return: suggestions , tagged  and roots.
+    :return: suggestions, tagged  and roots.
     """
     if request.method == 'GET':
         req = request.GET
-        id = req.get('id')
+        poem_id = req.get('id')
         w = Tagging()
-        currentTagged = w.get_tagged_words_from_poem(id)
+        currentTagged = w.get_tagged_words_from_poem(poem_id)
         c = Connector()
-        poem = (c.get_poem(id))[0]
+        poem = (c.get_poem(poem_id))[0]
         l = " "
-        dictenory = {}
-        Rootofwords = {}
+        dictionary = {}
+        root_of_words = {}
         for row, j in enumerate(poem["context"]):
             s = ""
             if 'sadr' in j:
                 for pos, word in enumerate(j['sadr'].split()):
                     temp = stemmer.stem(araby.strip_tashkeel(word))
-                    Rootofwords[word] = temp
+                    root_of_words[word] = temp
                     position = pos + 1
                     dict_row = row + 1
-                    if temp in dictenory:
-                        dictenory[temp].append(dict(row=dict_row, sader=0, position=position))
+                    if temp in dictionary:
+                        dictionary[temp].append(dict(row=dict_row, sader=0, position=position))
                     else:
-                        dictenory[temp] = [dict(row=dict_row, sader=0, position=position)]
+                        dictionary[temp] = [dict(row=dict_row, sader=0, position=position)]
                     s += temp + " "
                 # s += stemmer.stem(araby.strip_tashkeel(j['sadr'])) + " "
             if 'ajuz' in j:
                 for pos, word in enumerate(j['ajuz'].split()):
                     temp = stemmer.stem(araby.strip_tashkeel(word))
-                    Rootofwords[word] = temp
+                    root_of_words[word] = temp
                     position = pos + 1
                     dict_row = row + 1
-                    if temp in dictenory:
-                        dictenory[temp].append(dict(row=dict_row, sader=1, position=position))
+                    if temp in dictionary:
+                        dictionary[temp].append(dict(row=dict_row, sader=1, position=position))
                     else:
-                        dictenory[temp] = [dict(row=dict_row, sader=1, position=position)]
+                        dictionary[temp] = [dict(row=dict_row, sader=1, position=position)]
                     s += temp + " "
             l += s
         tokens = re.findall(r"[\w']+", l)
         suggestion = []
         for s in w.get_suggestions(tokens):
-            suggestion += dictenory.get(s["word"])
-        # suggestion.append(dictenory[s])
-        return JsonResponse({"tagged": currentTagged, "suggested": suggestion, "roots": Rootofwords})
+            suggestion += dictionary.get(s["word"])
+        # suggestion.append(dictionary[s])
+        return JsonResponse({"tagged": currentTagged, "suggested": suggestion, "roots": root_of_words})
 
 
 @login_required()
 def get_history_user(request):
-    # get the last 5 entries for user
+    """
+    :param request: gets the user's id
+    :return: the user's history
+    """
     if request.method == 'GET':
         c = Connector()
         history = c.get_user_history(request.user.id)[-5:]
@@ -673,7 +676,7 @@ def term_current_tags(request):
 
 def remove_tag_from_word(request):
     """
-    # remove a tag from word.
+    Remove a tag from word.
     :param request:the word and its (position,place,row) , the tag of the word , the poem id
     :return: success or fail
     """
@@ -687,7 +690,7 @@ def remove_tag_from_word(request):
 
 def get_Root_of_Word(request):
     """
-    #root of a specific word using farasa stemmer
+    Root of a specific word using the farasa stemmer
     :param request: word
     :return: root
     """
@@ -738,6 +741,6 @@ def get_all_tags_for_poet(request):
         return JsonResponse({"tags": result, 'total': total})
 
 
-# use this lock when u need to write on the database , some function thats read may need this mutex in order to avoid
+# use this lock when u need to write on the database, some function that are read may need this mutex in order to avoid
 # incorrect data when someone writing in parallel
 mutex = Lock()

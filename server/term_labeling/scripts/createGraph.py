@@ -6,6 +6,7 @@ neo4j db must be active.
 database.csv have the basic tags for creating tag class in neo4j.
 '''
 
+
 class Tag(object):
     """
     # a simple class that represent a tag.

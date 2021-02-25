@@ -15,6 +15,7 @@ stemmer = FarasaStemmer(interactive=True)
     use this script each time you update the poems database.
 """
 
+
 class Research(object):
     def __init__(self):
         """
@@ -23,10 +24,10 @@ class Research(object):
         self.punctuation = ['!', '"', '#', '?', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':', ';',
                        '<', '=', '>', '...', '.', '..''?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~']
         self.arabic_alpha = ['ا', 'ب', 'پ', 'ت', 'ث', 'ج', 'چ', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'ژ', 'ص', 'ض', 'ط', 'ظ', 'ع',
-                        'غ', 'ف', 'ق', 'ک', 'گ', 'ل', 'م', 'ن', 'و', 'ه', 'ی'];
+                        'غ', 'ف', 'ق', 'ک', 'گ', 'ل', 'م', 'ن', 'و', 'ه', 'ی']
         self.arb_stopwords = nltk.corpus.stopwords.words("arabic")
 
-    def extractInfo(self , all):
+    def extractInfo(self, all):
         """
         this method extracting info from all the words in all poems .
         info such as : number of all poets , poems , tokens , stopWords and terms .
@@ -42,21 +43,21 @@ class Research(object):
         tokensNum = len(word_tokens)
         all_stops = self.arb_stopwords + self.punctuation + self.arabic_alpha
         filtered_sentence = [w for w in word_tokens if not w in all_stops]
-        termswithoutStop=len(filtered_sentence)
-        stopWordsNum= tokensNum - termswithoutStop
+        termswithoutStop = len(filtered_sentence)
+        stopWordsNum = tokensNum - termswithoutStop
         Count = Counter(filtered_sentence)
         termsNum = len(Count)
         d = []
         for key, value in dict(Count.most_common()).items():
-            d.append(dict(x=key, value=value,freq=(value/termswithoutStop)))
-        d2=[dict(poetsNum=poetsNum,tokensNum=tokensNum,poemsNum=poemsNum,termswithoutStop=termswithoutStop,stopWordsNum=stopWordsNum,termsNum=termsNum)]
+            d.append(dict(x=key, value=value, freq=(value/termswithoutStop)))
+        d2 = [dict(poetsNum=poetsNum, tokensNum=tokensNum, poemsNum=poemsNum, termswithoutStop=termswithoutStop,
+                   stopWordsNum=stopWordsNum, termsNum=termsNum)]
         cur_path = os.path.dirname(__file__)
         new_path = os.path.relpath('..\\static\\images\\Analysis', cur_path)
         with open(os.path.join(new_path, "TermFreq.json"), "w") as outfile:
             json.dump(d, outfile)
         with open(os.path.join(new_path, "generalInfo.json"), "w") as outfile:
             json.dump(d2, outfile)
-
 
     def LMforPeriod(self):
         """
@@ -81,24 +82,24 @@ class Research(object):
                         if 'ajuz' in j:
                             s += stemmer.stem(araby.strip_tashkeel(j['ajuz'])) + " "
                     temp = re.findall(r"[\w']+", s)
-                    word2vec.append( [w for w in temp if not w in all_stops])
-                    all_in_period += s;
+                    word2vec.append([w for w in temp if not w in all_stops])
+                    all_in_period += s
             all += all_in_period
             word_tokens = re.findall(r"[\w']+", all_in_period)
             filtered_sentence = [w for w in word_tokens if not w in all_stops]
             Count = Counter(filtered_sentence)
             d1 = []
             for key, value in dict(Count.most_common()).items():
-                d1.append(dict(x=key, value=value , freq=(value/len(filtered_sentence))))
+                d1.append(dict(x=key, value=value, freq=(value/len(filtered_sentence))))
             d[str(p)] = d1
 
         cur_path = os.path.dirname(__file__)
         new_path = os.path.relpath('..\\static\\images\\Analysis', cur_path)
         with open(os.path.join(new_path, "TermFreqperPeriod.json"), "w") as outfile:
             json.dump(d, outfile)
-        return all , word2vec
+        return all, word2vec
 
-    def train_word2vic(self , text):
+    def train_word2vic(self, text):
         """
         from all rows , create word2vec model and save it for future purposes.
         :param text: array of arrays where each array is a row in poem
@@ -111,7 +112,6 @@ class Research(object):
         model.save(new_path)
 
 
-
 if __name__ == "__main__":
     """
         first use lmforPeriod to receive all tokens and all rows. 
@@ -121,6 +121,6 @@ if __name__ == "__main__":
         
     """
     research = Research()
-    all_tokens , word2vec = research.LMforPeriod()
+    all_tokens, word2vec = research.LMforPeriod()
     research.extractInfo(all_tokens)
     research.train_word2vic(word2vec)
