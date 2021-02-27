@@ -136,6 +136,12 @@ Machine - in order to fully run the features of the server side you need a linux
    ```
 
 
+### Starting the server 
+
+- run Djange command via python 
+   ```sh
+  python server/manage.py runserver [0.0.0.0/portnumber](optional)
+   ```
 
 
 
